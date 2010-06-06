@@ -1,6 +1,6 @@
 <?php
 
-$file_to_test = realpath('./../../Peak/Router.php');
+$file_to_test = realpath('./../../library/Peak/Router.php');
 include($file_to_test);
 echo 'Tested file: '.$file_to_test;
 

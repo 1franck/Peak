@@ -6,7 +6,7 @@ try {
     $it = new DirectoryIterator(dirname(__FILE__));
 
     while($it->valid()) {
-        if((!in_array($it->getFilename(),array('.','..','index.php','.htaccess','simpletest', 'temps','tests_helpers','classes')))) {
+        if((!in_array($it->getFilename(),array('.','..','index.php','.htaccess','simpletest', 'temps','tests_helpers','classes','.svn')))) {
             //patch for wyn app: rewrite url
             $modified_url = (defined('ROOT_URL')) ? ROOT_URL.'/tests/'.$it->getFilename() : $it->getFilename();
             echo '<li><a href="'.$modified_url.'">'.$it->getFilename().'</a></li>';
