@@ -3,7 +3,7 @@
  * test for PEAK/PATTERN.PHP
  * @version 20100528
  */
-$file_to_test = realpath('./../Peak/Pattern.php');
+$file_to_test = realpath('./../library/Peak/Pattern.php');
 include($file_to_test);
 echo 'Tested file: '.$file_to_test;
 

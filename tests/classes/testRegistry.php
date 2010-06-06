@@ -3,7 +3,7 @@
  * test for /PEAK/REGISTRY.PHP
  * @version 20100528
  */
-$file_to_test = realpath('./../Peak/Registry.php');
+$file_to_test = realpath('./../library/Peak/Registry.php');
 include($file_to_test);
 echo 'Tested file: '.$file_to_test;
 
