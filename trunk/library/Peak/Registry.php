@@ -4,16 +4,16 @@
  * Objects Registry
  * 
  * @author  Francois Lajoie
- * @version 20100602
+ * @version 20100606
  */
 class Peak_Registry
 {
 
-    protected static $registered_objects = array();  //array of regitered $object
+    protected static $_registered_objects = array();  //array of regitered objects
     
     protected static $_instance = null; //instance of registry                                
                           
-    private final function __clone() { trigger_error("Can't clone registry", E_USER_ERROR); }
+    private final function __clone() { trigger_error('Can\'t clone registry', E_USER_ERROR); }
     private final function __construct() { }
 
     
@@ -47,8 +47,8 @@ class Peak_Registry
 	 */
 	public static function set($name,$obj)
 	{
-	    self::$registered_objects[$name] = $obj;
-	    return self::$registered_objects[$name];
+	    self::$_registered_objects[$name] = $obj;
+	    return self::$_registered_objects[$name];
 	}
 	
 	/**
@@ -59,7 +59,7 @@ class Peak_Registry
 	 */
 	public static function get($name)
 	{
-	    if(self::isRegistered($name)) return self::$registered_objects[$name];
+	    if(self::isRegistered($name)) return self::$_registered_objects[$name];
 	}
 	
 	/**
@@ -69,7 +69,7 @@ class Peak_Registry
 	 */
 	public static function unregister($name)
 	{
-	    if(self::isRegistered($name)) unset(self::$registered_objects[$name]);
+	    if(self::isRegistered($name)) unset(self::$_registered_objects[$name]);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ class Peak_Registry
 	 */
 	public static function isRegistered($name)
 	{
-	    return array_key_exists($name,self::$registered_objects) ? true : false;
+	    return array_key_exists($name,self::$_registered_objects) ? true : false;
 	}
 	
 	/**
@@ -92,7 +92,7 @@ class Peak_Registry
 	public static function isInstanceOf($name, $class_name)
 	{
 	    if(self::isRegistered($name)) {
-	        return (self::$registered_objects[$name] instanceof $class_name) ? true : false;
+	        return (self::$_registered_objects[$name] instanceof $class_name) ? true : false;
 	    }
 	    return false;
 	}
@@ -105,7 +105,7 @@ class Peak_Registry
 	 */
 	public function __get($name) 
 	{
-	    return array_key_exists($name,self::$registered_objects) ? self::$registered_objects[$name] : null;
+	    return array_key_exists($name,self::$_registered_objects) ? self::$_registered_objects[$name] : null;
 	}
 	
 	/**
@@ -115,7 +115,7 @@ class Peak_Registry
 	 */
 	public static function getObjectList()
 	{
-	    return array_keys(self::$registered_objects);
+	    return array_keys(self::$_registered_objects);
 	}
 	      
 }
