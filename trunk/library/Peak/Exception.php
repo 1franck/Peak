@@ -3,16 +3,15 @@
 /**
  * Peak exception
  * 
- * @author Francois Lajoie
- * @version 20100404
+ * @author  Francois Lajoie
+ * @version 20100606
  * 
  */
-
 class Peak_Exception extends Exception
 {
 	
-    private $trace;	
-	private $errkey;
+    private $_trace;	
+	private $_errkey;
     
 	const ERR_ROUTER_MOD_NOT_FOUND          = 'Router: module %1$s not found';
 	const ERR_ROUTER_MOD_NOT_SPECIFIED      = 'Router: module not specified';
@@ -25,30 +24,27 @@ class Peak_Exception extends Exception
 		
 	
     /**
-     * Traite l'erreur mysql et renvoi un message, puis log de celle-ci si $error != null 
+     * Set error key constant
      *
      * @param string $errkey
      * @param string $infos
      */
     public function __construct($errkey = null, $infos = null)
-	{	
-	    	    
-	    $this->trace = array('file' => basename(parent::getFile()),'line' => parent::getLine(),'code' => parent::getCode());
+	{		    	    
+	    $this->_trace = array('file' => basename(parent::getFile()),'line' => parent::getLine(),'code' => parent::getCode());
 
-	    $this->errkey = $errkey;    
+	    $this->_errkey = $errkey;    
 	    
-	    $message = $this->handleErrConstToText($errkey,$infos);
-	    
-	    
-	    
+	    $message = $this->handleErrConstToText($errkey,$infos);	    
+   
 		parent::__construct($message);
 	}
 	
 	/**
-	 * Handle pseudo constant error;
+	 * Handle error key constants
 	 *
-	 * @param  integer $no
-	 * @return string
+	 * @param  integer $errkey
+	 * @return string  $info
 	 */
 	public function handleErrConstToText($errkey = null,$infos = null)
 	{ 
@@ -65,14 +61,11 @@ class Peak_Exception extends Exception
 		return $r;
 	}
 	
-	public function getErrkey() { return $this->errkey; }
+	public function getErrkey() { return $this->_errkey; }
 	
-	public function getTraceBase() { return $this->trace; }
+	public function getTraceBase() { return $this->_trace; }
 	
-	public function getLevel() { return $this->level; }
+	public function getLevel() { return $this->_level; }
 	
 	public function getTime() { return date('Y-m-d H:i:s'); }
 }
-
-
-?>
