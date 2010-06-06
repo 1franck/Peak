@@ -15,7 +15,7 @@ class Peak_Controller_Internal_Pkcodegen extends Peak_Controller
     
     public function configForm()
     {
-        //$form = 'PROJECT_NAME: <input type="edit" name="PROJECT_NAME". value="" />';
+        $form = 'PROJECT_NAME: <input type="edit" name="PROJECT_NAME". value="" />';
         $this->view->add('create_config',$form);
 
     }
