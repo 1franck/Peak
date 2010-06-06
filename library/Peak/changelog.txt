@@ -1,0 +1,482 @@
+#Version 0.7.7#
+
+*  Peak_Registry > added static method isInstanceOf()
+
+*  Peak_Lang > added method load()
+
+*  Peak_Lang > method translate() > added translation string replacements and callback function
+
+*  Peek_Application > fixed run(), constants ENABLE_PEAK_CONTROLLER were not properly checked. Also
+   constant ENABLE_PEAK_CONTROLLER becomes ENABLE_PEAK_CONTROLLERS (now with a 'S' at the end)
+
+*  Peak_Lang > remove property $varname and we now use return array('key' => 'translation'); in translation files 
+
+*  CONSTANTS names change: SYSTEM_*** become LIBRARY_***, W_LANG -> APP_LANG, W_THEME -> APP_THEME, 
+   W_DEFAULT_CTRL -> APP_DEFAULT_CTLR, W_LOGIN -> APP_LOGIN_NAME, W_PASS -> APP_LOGIN_PASS
+
+*  Peak_Registry > added method get()
+
+*  Added Peak_View_Render_Virtual
+
+*  Peak_View > added __call() > try to look for unknow method in view engine object
+   or trigger_error if method no found and DEV_MODE is true
+
+*  Peak_Application > added support of peak internal controller if 
+   constant ENABLE_PEAK_CONTROLLER exists
+   internal controllers paths: /Peak/Controller/Internal/
+
+*  Peak_View_Render > added method baseUrl(). 
+
+*  Peak_View_Render > added magic method __call() to silent unknow methods calls
+   inside views files on production environment
+
+*  Peak_Controller > fixed E_STRICT error with method helper()
+
+*  Peak_view > fixed E_STRICT error with method helper()
+
+*  Peak_View > method theme() > replace deprecated function "is_a" by 
+   operator "instanceof" (E_STRICT)
+
+*  Peak_View_Theme > added method __construct() and add call to setOptions()s
+
+*  Peak_View > added method resetVars()
+
+*  Peak_Contoller > added call to postRender() after render(). No more need to explicitly 
+   to call it in your application index
+
+*  Peak_View_Render_XXX > fixed a circular problem with render() since render() 
+   includes views and views have access to $this->render. The problem came from
+   render() behavior and affect all view rendering engines.
+   Also Peak_View_RenderInterface deleted and replace by abstract class Peak_View_Render
+   __get() method added and point to Peak_View::__get()
+
+   !IMPORTANT object $view in TEMPLATE will be deprecated in favor of $this.
+    ex: $this->my_view_var instead $view->my_view_var()
+   
+ 
+   All view rendering engines needs:
+   -render(): - should always authenticate files or throw Peak_Exception if 
+                we need the controller script view, otherwise we just skip it
+                since content is generated inside this method(JSON engine as
+                concrete example).
+              - set properties $scripts_file and $script_paths
+              - return a valid string or an array() of views filepaths
+   -output(): - should be private
+              - includes view(s) filepath(s) only OR output render() content result
+
+*  Peak_view > Seperated the logic behind rendering and outputing of views by 
+               compartmentalize them into differents render engine               
+               Introduce methods engine() and setRenderEngine().
+               Long short story, we can control how we render each of our 
+               application controllers actions views. For now we have
+               Partials, Layouts, Json engines. 
+
+#version 0.7.6#
+
+*  Peak_View_Theme > renamed method iniOptions() to set setOptions()
+
+*  Peak_View > moved $options, getOptions(), getFunctionsFiles(), iniOptions() to new
+   object Peak_View_Theme. We access to Peak_View_Theme methods with Peak_View::theme() 
+
+*  Peak_View > removed useLayout(), noLayout(), getLayoutName(), $layout, $layout_name.
+
+   !IMPORTANT
+   View rendering is done by a render engine object ( Peak/View/Render/ ).
+   - Method render() point to view engine render().
+   - Method engine() added and point to view rendering object
+   - Introduced View Engine Partials.php as default view rendering engine.
+
+   Application now view support multiple themes with multiple partials and layouts pages
+   Application helpers names have priority over Peak/View/Helpers
+   
+
+*  Peak_Controller > removed property $url_path > deprecated since 
+   application dir should be outside public url
+
+*  PROJECT WYNPHP renamed to PEAK Framework
+   - all files have been renamed and restructured. The same for classes name
+   - wystem folder renamed to peak
+   - switch autoload to spl autoload. Classes files and names follow the path scheme like
+     zend framework class : Peak_View_Helpers > Peak/View/Helpers.php
+                            Peak_View         > Peak/View.php
+
+*  class.registry.php > passed property $registered_objects to static and all method too.
+   You can use now every method as static and still able to use the class as singleton
+   added method set(), it do the same as register() method.
+   register() is deprecated and removed, use set() instead
+
+*  added class.wyn_bootstrap.php > abstract class base for application 
+   root bootstrap.php file. Bootstrap are optionnal and will be loaded
+   and executed only if file [application_folder]/bootstrap.php exists
+
+*  class.wyn_controller.php > method listActions() > moved $regexp outside the preg_math loop
+
+*  class.wyn_view.php > fixed bug with iniVars() > var with multiples constants 
+   were not fully replaced
+
+*  autoload.php > moved top code unrelated to autoload to boot.php.
+   boot.php code are for managing critical application configs,
+   starting framework and autoloader
+   !IMPORTANT: app page changes : load app configs and core/boot.php
+   and thats it! you ready to use app object to run your app   
+
+*  Application configs simplified:
+   - Only 13 configs now. 3 of them are optionnal.
+   - Renamed almost very constants name to more explicit,
+     with fewer abbreviations name
+
+*  class.wyn_core.php > removed all $path properties and replaced them by $paths array.
+   setPath() now generate constants and no more include core/constants.php
+
+*  class.wyn_controller.php > change visibility to "protected" for property $view 
+
+*  to avoid sessions collusion with multiple application,
+   app index.php need to specified a session_name() before session_start
+
+*  class.wyn_controller.php > removed property $wyn, removed $ctrl_type param in _construct,
+   and fixed initController() to use router object. 
+   Renamed method handleRequest() to handleAction()
+   Renamed property $request to $params
+
+
+#version 0.7.5#
+
+*  class.registry.php > added method getObjectList()
+
+*  class.wyn.php > !IMPORTANT Replaced route() method by new method run().
+   Removed methods getRequestURI(), setRequest(), getRequest() 
+   and property $request. They are deprecated with the new router class.  
+   
+*  class.router.php > fixed preg_match regex in method getRequestURI()
+
+*  class.wyn_view.php > moved all bottom file functions to functions.wyn_view.php
+
+*  beginning changes that bring class.router.php inside class wyn and wyn_controller.
+   In version 0.7.6, changes implied by the new router object will be resolved
+
+*  added simple url rewriting router > class.router.php 
+   added router object to the registry in class.wyn.php
+   @test unit: tests/router.php
+   This new class allows us to use url like /controller/action/param1 and still permitS the use of    non-rewrited url like index.php?controller=action&param1
+   Requirements Rewriting url: 
+      - apache mod_rewrite
+      - valid .htaccess that points to application public page @see class.router.php
+   !IMPORTANT:
+   All routing mechanism will be moved the router object
+   class.wyn.php will only handle the route object and in the future will be the
+   application launcher object
+   This affect : - class.wyn.php methods > route(), 
+                                           getRequest(), 
+                                           getRequestUri(),
+                                           handleInternRequest()
+                 - class.wyn_controller > method handleRequest()
+
+*  class.wyn_core.php > fix problem with getPath() not being declared as static method
+
+*  class.wyn_core.php > method getController() > remove dependency 
+   to class utils::fileremoveext() 
+
+*  !IMPORTANT Added Registry object class (class.registry.php).  
+   We can now store any objects from anywhere and put them somewhere else easily
+
+   - objects wyn_core, wyn_view, lang removed from class.wyn.php :
+     $wyn->core, $wyn->view and $wyn->lang objects DON'T exists anymore
+   - to get registered object we use : registry::obj->['object registered name']
+   - class.wyn.php load registry and store objects wyn_core, wyn_view and lang
+   - file affected by change: class.wyn_controller.php, class.wyn_core.php, 
+     class.wyn.php, class.viewhelper.php and everywhere we found $wyn->view, $wyn_core, etc
+   - fixed class.wyn_view.php bottom functions to use registry instead of global var
+   - tests unit file > tests/registry.php
+   - current controller object still stored in class.wyn.php (ex: $wyn->controller->name)
+
+*  class.pattern.php > added method range()
+
+*  class.wyn.php > fixed method route() with new core method isModule() and getModule()
+
+*  class.pattern.php > fixed some validation problem with day(), month(), year(), url()
+   @see tests/pattern.php
+
+*  create somes tests unit for wyn application start and wyn system classes
+
+#version 0.7.4#
+
+*  added php tests for wyn with SimpleTest1.0.1 php unit tester
+
+*  class.wyn_view.php > added method getOptions()
+
+*  class.wyn.php > removed unnecessary properties $modules and $controllers, they are already 
+   stored in wyn_core object. They are accessible via core methods 
+   getModules() and getControllers()
+
+*  class.wyn_core.php > added method getModule()
+
+*  class.wyn_core.php > added exceptions to getControllers() if no controllers exists
+
+*  class.wyn_controller.php > deprecated methods setVar(), getVar(), view()
+   view object is now stored in $view
+   ex: old way : $this->setVar('varname', $value);
+       new way : $this->view->varname = $value;
+
+*  class.wyn.php > renamed getRequest() to setRequest(), added method getRequest() and
+   $request visibility changed to protected
+
+*  renamed constants W_LIB_... to W_LIBS_...
+   
+*  !MARJOR CHANGES!
+   application path and system path complete separation achieved started in 0.7.3:
+   - autoloader.php call wyn_core::setPath() if wyn_core class is not loaded
+   - removed params $app_path and $sys_path of method getInstance() > class.wyn.php
+   - all application and system path vars and constants are generated from class wyn_core.php  
+   - application page only needs to include configs.php file and core/autoload.php
+   - now we can create unlimited applications with the same wyn system dirs
+
+*  almost all path constant in configs.php have been moved to core/constants.php.
+   configs.php is now more short and sweet
+
+
+#version 0.7.3#
+
+*  class.wyn_core.php > moved here constants W_VIEWSCRIPTS_ABSPATH,
+   W_VIEWINI_ABSPATH, W_CACHE_ABSPATH
+
+*  class.lang.php > fixed a bug in __construct()
+
+*  class.wyn.php > method getInstance() > added $app_path param 
+   to propage it to wyn_core->setApplicationPath()
+
+*  class.wyn_core.php > added methods setApplicationPath() and getPath().
+   by creating and using those methods, we free the core from configs.php
+   some absolute path constants dependencies. 
+   For now only applcation, controllers and modules, lang path are supported
+   
+   In future, wyn_core will generate absolute path constants contained 
+   in configs.php following its own file structure by only specifying an application path.
+   No constants will be lost and we will be able to simplify and lighten configs.php
+
+*  class.wyn_core.php > added methods isController() and isModule()
+
+*  class.utils.php > added method objectSort() and objectRSort()
+
+*  class.wyn_view.php > added properties $layout_name and method getLayoutName()
+
+*  class.wyn_core.php > added method getModule() and listCoreClasses()
+
+*  autoload.php > function catch_autoload_err() > added trace file and line
+
+*  renamed core/class.wyn_utils.php to core/class.utils.php
+
+*  added core/class.zreflection.php > Zend_Reflection_Class wrapper. 
+   (use libs/zend/reflection/... )
+
+
+#version 0.7.2#
+
+*  added core/class.pattern.php > Check different string pattern validation
+
+*  class.wyn_view.php > moved method debug() to view helpers
+
+*  added class.wyn_viewhelper.php > abstract class base for view helper classes,
+   it add $view object reference for using inside view helpers 
+   to update/change/remove view vars directly
+
+*  class.wyn_controller.php > removed $log stuff and preAction() call moved to handleRequest()
+
+*  class.wyn_controller.php > added postRender() method to fix postAction(). 
+   postAction() was called after view rendering and now it is postRender() job.
+   postAction() is now called after controller requested action.
+
+*  class.wyn_controller.php > added view() method > return $wyn->view object
+
+
+*  class.wyn_view.php > method render() > layouts accept now custom file 
+   layout with path if file exists
+
+   by default : 
+     array('header.php',[CONTENT],'footer.php') 
+     => W_TPL_ABSPATH/header.php, etc.
+   custom:
+     array('header.php','custompath/test.php',[CONTENT],'sidebar.php')
+     => W_TPL_ABSPATH/header.php, 'custompath/test.php',etc
+
+*  class.wyn_core.php > method getConfigs() > added $nologin bool param to 
+   remove W_LOGIN and W_PASS for array of config
+
+*  class.wyn_core.php > change visibility of var $w_modules and $w_controller to protected
+
+
+#version 0.7.1#
+
+
+ * autoload.php > fixed _autoload() > after checking all class path, 
+   if file is not found, it throw a trigger_error()
+
+ * class.wyn.php > removed $this->controller->path overwrite calls in method route() since
+   wyn_controller::initController() fix this behavior.
+
+ * class.wyn_controller.php > lightened __construct() and moved code relative 
+   to controller object variables initialization into initController() 
+   __construct() accept $ctrl_type param as 'module' or 'controller'
+
+ * class.wyn_controller.php > removed setControllerType() method, and removed calls in render()
+
+ * class.wyn_view.php > moved links(),imgs() and cycle() methods to 
+   functions.wyn_view.php wich is included in class.wyn_view.php
+  
+ * wyn.php, class.wyn_view.php > load theme 'functions.php',if file exists, before view print
+   @see wyn_view > getFunctionsFile()
+
+ * autoload.php > fixed a problem with ZEND_LIB_ABSPATH, and added internal zend library
+   since wynphp will use zend reflection classes, it make sense to have the strict minimun:
+   zend/reflection/ and zend/loader/ internally.
+   
+   __autoload() now check in first place if zend class needed exists in wsystem/libs/zend, 
+   otherwise it checkS in W_ZENDLIB_ABSPATH (external zend library) if this config exists.
+   and finally if the file is not found, it throw a trigger_error. 
+
+
+ * class.wyn_view.php > $theme renamed to $options and iniTheme() 
+   renamed to iniOptions()
+   theme.ini arrays loaded into $options if file found.
+   fixed useLayout() to accept strings that points to $options['layouts'][layout string]
+
+ * added ZEND_LIB_ABSPATH in configs.php and modified autoload.php.
+   We can use now Zend framework Library
+   This setting is not essential, if this constant is not found, autoload
+   will simply ignore it. 
+  
+ * class.wyn_core.php > added method getLang()
+
+
+#version 0.7.0#
+
+ * added great shorcut functions in class.wyn_view.php for view object:
+   view(), view_hlp(), view_get(), view_echo().
+
+   ex: "echo view()->myvar" =  "view_echo('myvar')" = "echo $wyn->view->myvar"
+       "view_hlp('text')->truncate($txt,10)" =
+       "$wyn->view->heler('text')->truncate($txt,10)"
+
+ * class.wyn_view.php > removed method handleRenderError(), 
+   no more needed with class.wyn_exception.php
+
+ * class.wyn_controller.php > fixed a bug with handleRequest().
+   when _index() method doesn't exists, we throw a exception 
+   instead of letting the controller trying to call an inexistant method
+
+ * added layout possiblities in class.wyn_view.php, wyn.php. 
+   See method useLayout() and noLayout() in wyn_view class for more info
+  
+   Folder 'theme' will be the 'pseudo layouts' folder and all others
+   controller scripts views files have been moved in their respective view scripts folders
+   /wsystem/view/scripts/[ctrl_name]/[action_name].php
+  
+   One big adavantage of this is to get rid of all thoses
+   <?php include(W_TPL_ABASPATH.'/[header|footer|...].php'); ?> 
+   in every controller views and modules views files 
+ 
+   For example: we create a new controller called 'imanewctrl' so
+   controller class = /wsystem/controllers/imanewctrl.php
+   controller view default = /wsystem/view/scripts/imanewctrl/index.php
+
+   Method action name in the controller are used for view file name
+   ex: imanewctrl.php > action method = _myaction() 
+       view file = /wsystem/view/scripts/imanewctrl/myaction.php 
+
+ * class.wyn_controller.php > added function setControllerType() and variable $type.
+   modified action name by default to _index instead of _default
+
+ * added view helper text.php with miscellenous functions taken form smarty modifier
+   view/helpers/text.php codes from http://smarty.net modifiers
+
+ * updated class.xml.php > support of file_get_content and curl(usefull when 'allow_furl_open' is desactivated)
+
+ * autoload.php > added catch_autoload_err() function.
+   if the class name is not found in loaded file class
+   we throw a custom error instead of letting php standard error handler.
+   Support 'DEV_MODE'
+
+ * wyn.php > exceptions point now to wexception controller
+
+ * class.wyn.php > route() : modules and controller are now verified and throw wyn_exception if failed
+
+ * added /core/class.wyn_exception.php
+
+
+#Version 0.6.9#
+
+ * class.wyn_controller.php > moved checkAlert() to wyn_core class 
+   and renamed it checkConfigs()
+
+ * class.wyn_controller.php > moved handleRenderError() to wyn_view class
+
+ * class.wyn_controller.php >
+   most of render() code copied to wyn_view, 
+   but we still call the controller render() method basicly for controller 
+   pre-render stuff and we let wyn_view class do what it suppose to do: 
+   deal with template file verification and stuff like that.
+
+
+ * class.wyn.php > $tpl object name renamed to $view.
+   Important: use $this->wyn->view->[..] or $wyn->wyn->view->[..] in 
+   controller and template. Quick var $tpl->[..] is style available in template 
+   but no longrt since i renamed $tpl object to $view.
+
+ * class.wyn_router.php > $module renamed to $controller
+
+ * moved /wsystem/core/view/ folder to /wsystem/view/ 
+
+ * fixed wyn_core.php: getControllers() > controllers were not properly cached into session
+
+ * moved all action methods unrelated inside dashboard to controllers classes folder
+
+ * added controllers heleprs /wsystem/controllers/helpers/
+   class.wyn_controller.php > added helper() method
+   ex: $this->helper('myCtrlHelper')->myfunc();
+
+ * fix class.wyn_controller.php > render() to support wyn controllers folder
+   render priority : wdashboard controller, [controller], [modules]
+
+
+#version 0.6.8#
+
+
+ * fix autoload.php: added controllers class detection
+
+ * added /controllers/ folders and move all controllers in /core/ there.
+
+ * added view ini for preloading template variables(default.ini)
+
+ * configs.php: added constants W_VIEWHELPERS_ROOT, W_VIEWINI_ROOT, W_VIEWHELPERS_ABSPATH, 
+   W_VIEWINI_ABSPATH
+
+ * fix class wlang problem in wyn.php and class.wyn.php. 
+   The class was runned twice and not properly encapsulated in router class.wyn.php 
+
+ * tweaked wyn_view.php: helper() > Syntax accepted now in template:
+   $tpl->helper('myhelper')->myfunc(); //load helper and call func
+   $tpl->helper()->myhelper->myfunc(); //only call already loaded helper func
+
+ * dashboard class > added some infos on current apache 
+
+ * param 'php_ext' added in moduled ini file. 
+   Each module ini can now specify requires php extension(s) to run properly.
+
+ * param 'descr' added in moduled ini file.
+ 
+ * fix problem with debug window still available on login page
+
+ * default template file of controller action method is view.[method].php 
+   if $file is not specified
+
+ * dashboard -> added 'about' action
+
+
+#version 0.6.7#
+
+
+ * added view helpers. They are stored in core/helpers/view.[title].php
+   ex:  view.calendar.php  * $tpl->helper('calendar');
+
+ * wyn controller (class.intro.php) name renamed to dashboard(class.dashboard.php)
+
+ * default controller action method name is now '_defaut' instead '_intro'
