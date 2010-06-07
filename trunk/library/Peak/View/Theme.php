@@ -14,7 +14,7 @@ class Peak_View_Theme
      *
      * @var array
      */
-    private $options = array();
+    private $_options = array();
     
     
     public function __construct()
@@ -30,10 +30,10 @@ class Peak_View_Theme
     public function getOptions($key = null)
     {
         if(isset($key)) {
-            if(isset($this->options[$key])) return $this->options[$key];
+            if(isset($this->_options[$key])) return $this->_options[$key];
             else return null;
         }
-        return $this->options;
+        return $this->_options;
     }
     
     /**
@@ -44,10 +44,10 @@ class Peak_View_Theme
     {
         $filepath = THEME_ABSPATH.'/theme.ini';
         if(file_exists($filepath)) {
-            $this->options = parse_ini_file($filepath,true);
-            if(isset($this->options['layouts']['default'])) {
-                $this->useLayout($this->options['layouts']['default']);
-            }
+            $this->_options = parse_ini_file($filepath,true);
+            //if(isset($this->options['layouts']['default'])) {
+            //    $this->useLayout($this->options['layouts']['default']);
+            //}
         }
     
     }
@@ -60,9 +60,6 @@ class Peak_View_Theme
     public function getFunctionsFile()
     {
         $file = THEME_ABSPATH.'/functions.php';
-        if(file_exists($file)) { 
-            return $file;
-        }
-        else return false;
+        return (file_exists($file)) ? $file : false;
     }
 }

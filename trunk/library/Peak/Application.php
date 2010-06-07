@@ -105,13 +105,7 @@ class Peak_Application
         $router->getRequestURI();
         
         $core = Peak_Registry::obj()->core;
-        
-        //print_r($router);
-        //print_r($core->getControllers());
-        //echo '<pre style="text-align:left;">';
-        //print_r($router);
-        //echo '</pre>';
-        
+                
         if($flush_request) $router->controller = $default_ctrl;
         
         if(($router->controller_type === 'module') && (!$is_valid_session)) {
@@ -172,6 +166,7 @@ class Peak_Application
     }
     
     /**
+     * @deprecated
      * Handle internal requests
      */
 	private function handleInternRequest()

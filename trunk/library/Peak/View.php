@@ -71,7 +71,7 @@ class Peak_View
     {
         if(method_exists($this->engine(),$method)) call_user_func_array(array($this->engine(), $method), $args);        
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('View Render method '.$method.'() does\'t exists');
+            trigger_error('DEV_MODE: View Render method '.$method.'() does\'t exists');
         }
     }
        
@@ -156,7 +156,10 @@ class Peak_View
      */
     public function render($file,$path)
     {
-        $this->engine()->render($file,$path);
+        if(is_object($this->view_engine)) {
+            $this->engine()->render($file,$path);
+        }
+        else throw new Peak_Exception('ERR_VIEW_ENGINE_NOT_SET');
     }
       
     
