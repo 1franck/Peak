@@ -50,9 +50,6 @@ class Peak_Application
         
         // register router
         $reg->set('router', new Peak_Router(ROOT));
-
-        // get request from url
-        $this->handleInternRequest();        
         
         // execute app bootstrap
         if(class_exists('bootstrap',false)) new bootstrap();        
@@ -91,8 +88,7 @@ class Peak_Application
     
 
     /**
-     * Route to a valid core controller/module
-	 * by router object
+     * Run application controller from router object
      *
      * @param string $default_ctrl Controller called by default when no request
      * @param bool $flush_request Flush all router request and try to execute controller $default_ctrl
@@ -161,30 +157,9 @@ class Peak_Application
                 else throw new Peak_Exception('ERR_ROUTER_MOD_NOT_SPECIFIED');
             }
         }
-        else $this->controller = new wlogin();
-        
+        else $this->controller = new wlogin();       
     }
-    
-    /**
-     * @deprecated
-     * Handle internal requests
-     */
-	private function handleInternRequest()
-	{
-	    
-	    //flush session
-	    if(isset($this->request['w_flushsession'])) { 
-	        session_unset(); 
-	        session_destroy();
-	        unset($this->request['w_flushsession']);
-	    }
-	    elseif(isset($this->request['wredirect'])) {
-	        if(!headers_sent()) {
-	            header('Location: '.$this->request['wredirect']);
-	        }
-	    }
-	}
-	         
+    	         
 }
 
 
