@@ -13,13 +13,14 @@ class Peak_Exception extends Exception
     private $_trace;	
 	private $_errkey;
     
-	const ERR_ROUTER_MOD_NOT_FOUND          = 'Router: module %1$s not found';
-	const ERR_ROUTER_MOD_NOT_SPECIFIED      = 'Router: module not specified';
-	const ERR_ROUTER_CTRL_NOT_FOUND         = 'Router: controller %1$s not found';
-	const ERR_CORE_NO_CTRL_FOUND            = 'Core: application controllers not found';
-	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found';
-	const ERR_VIEW_TPL_NOT_FOUND            = 'View: template file %1$s not found';
-	const ERR_VIEW_LAYOUT_NOT_FOUND         = 'View: layout template file %1$s not found';
+	const ERR_ROUTER_MOD_NOT_FOUND          = 'Router: module %1$s not found.';
+	const ERR_ROUTER_MOD_NOT_SPECIFIED      = 'Router: module not specified.';
+	const ERR_ROUTER_CTRL_NOT_FOUND         = 'Router: controller %1$s not found.';
+	const ERR_CORE_NO_CTRL_FOUND            = 'Core: application controllers not found.';
+	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found.';
+	const ERR_VIEW_ENGINE_NOT_SET           = 'View rendering engine not set. Use setRenderEngine() from Peak_View before trying to render application controller.';
+	const ERR_VIEW_TPL_NOT_FOUND            = 'View: template file %1$s not found.';
+	const ERR_VIEW_LAYOUT_NOT_FOUND         = 'View: layout template file %1$s not found.';
 	const ERR_DEFAULT                       = 'Request failed';
 		
 	

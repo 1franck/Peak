@@ -9,8 +9,8 @@
 abstract class Peak_View_Render
 {
     
-    protected $_scripts_file;  //controller views path used 
-    protected $_scripts_path;  //controller view file name used
+    protected $_scripts_file;  //controller action view path used 
+    protected $_scripts_path;  //controller action view file name used
     
     /**
      * Point to Peak_View __get method
@@ -33,7 +33,7 @@ abstract class Peak_View_Render
     public function  __call($method, $args)
     {
         if((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('View Render method '.$method.'() does\'t exists');
+            trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
         }
     }
     
@@ -58,5 +58,6 @@ abstract class Peak_View_Render
     {
         return ROOT_URL.'/'.$path;
     }
+    
         
 }
