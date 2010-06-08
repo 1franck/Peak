@@ -8,7 +8,7 @@
  * 
  */
 
-define('_VERSION_','0.7.7');
+define('_VERSION_','0.7.8');
 define('_NAME_','PEAK');
 define('_DESCR_','Php wEb Application Kernel');
 

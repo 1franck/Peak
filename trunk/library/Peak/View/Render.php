@@ -122,14 +122,17 @@ abstract class Peak_View_Render
      *
      * @return bool
      */
-    public function isCached()
+    public function isCached($id = null)
     {
         if(!$this->_use_cache) return false;   
         
         //when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
-        if(!isset($this->_cache_id)) {            
-            $app = Peak_Application::getInstance();            
-            $this->genCacheId($app->controller->path, $app->controller->file);
+        if(!isset($this->_cache_id)) {
+            if(!isset($id)) {
+                $app = Peak_Application::getInstance();
+                $this->genCacheId($app->controller->path, $app->controller->file);
+            }
+            else { $this->genCacheId('', $id); }
         }
         
         $filepath = $this->getCacheFile();
@@ -166,6 +169,42 @@ abstract class Peak_View_Render
     protected function getCacheFile()
     {
         return $this->_cache_path.'/'.$this->_cache_id.'.php';
+    }
+    
+    
+    /**
+     * Allow caching block inside views
+     * Check if a custom cache block is expired
+     *
+     * @param  string $id
+     * @param  integer $expiration
+     * @return bool
+     */
+    protected function isCachedBlock($id, $expiration)
+    {
+        $this->enableCache($expiration);
+        if($this->isCached($id)) return true;
+        else {
+            ob_start();
+            return false;
+        }
+    }
+    
+    /**
+     * Close buffer of a cache block previously started by isCachedBlock()
+     */
+    protected function cacheBlockEnd()
+    {
+        file_put_contents($this->getCacheFile(),ob_get_contents());
+        ob_get_flush();
+    }
+    
+    /**
+     * Get a custom cache block
+     */
+    protected function getCacheBlock()
+    {
+        include($this->getCacheFile());
     }
         
 }
