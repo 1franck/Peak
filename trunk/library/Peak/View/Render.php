@@ -90,6 +90,7 @@ abstract class Peak_View_Render
     
     /**
      * Call child output method and cache it if $_use_cache is true;
+     * Can be overloaded by engines to customize how the cache data
      *
      * @param misc $data
      */
@@ -143,7 +144,7 @@ abstract class Peak_View_Render
     }
     
     /**
-     * Generate cache id from script view and path
+     * Generate md5 cache id from script view and path
      *
      * @param string $path
      * @param string $file
@@ -158,7 +159,7 @@ abstract class Peak_View_Render
     }
     
     /**
-     * Get current cached view script filepath
+     * Get current cached view script complete filepath
      *
      * @return string
      */

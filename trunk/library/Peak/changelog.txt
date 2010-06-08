@@ -9,7 +9,7 @@
                  added properties : $_use_cache, $_cache_expire, $_cache_path, $_cache_id
 
    - Render engines must use preOutput() in their render() method instead of output() directly 
-     they wants to support outputing cache. 
+     if they wants to support outputing cache. 
    - method output() must be protected
 
 *  Peak_Registry > added static method isInstanceOf()
