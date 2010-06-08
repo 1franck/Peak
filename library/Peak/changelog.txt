@@ -1,6 +1,11 @@
+#Version 0.7.8#
+
+*  Peak_Render > added methods : isCachedBlock(), getCacheBlock(), cacheBlockEnd().
+   Those new functions help to cache a block of text/code inside views
+
 #Version 0.7.7#
 
-*  Peak_render > added methods : genCacheId() and getCacheIdFile().
+*  Peak_Render > added methods : genCacheId() and getCacheIdFile().
    enableCache() and disableCache() can be used inside controller and bootstrap.
    isCached() can be used inside controller.
 
