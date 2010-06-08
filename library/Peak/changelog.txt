@@ -1,5 +1,17 @@
 #Version 0.7.7#
 
+*  Peak_render > added methods : genCacheId() and getCacheIdFile().
+   enableCache() and disableCache() can be used inside controller and bootstrap.
+   isCached() can be used inside controller.
+
+*  Peak_Render > Added scripts views outputing cache.
+                 added methods    : enableCache(), disableCache(), preOutput(), isCached()
+                 added properties : $_use_cache, $_cache_expire, $_cache_path, $_cache_id
+
+   - Render engines must use preOutput() in their render() method instead of output() directly 
+     they wants to support outputing cache. 
+   - method output() must be protected
+
 *  Peak_Registry > added static method isInstanceOf()
 
 *  Peak_Lang > added method load()

@@ -10,7 +10,7 @@
  *                     http://example.com/server/php/view/ver
  *
  * @author  Francois Lajoie
- * @version 20100602
+ * @version 20100608
  * 
  * @todo filter variables
  * 
@@ -110,13 +110,15 @@ class Peak_Router
 	protected function resolveRequest()
 	{
 	    // extract data from request
-	    if (count($this->request)) {
-	        //$string, 
-	        //$this->controller = filter_var(urldecode(array_shift($this->request)), FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_HIGH);
-	        $this->controller = array_shift($this->request);
-	        $this->action = array_shift($this->request);
+	    if (count($this->request)) 
+	    {	        
+	        //preserve unparsed request
+	        $request = $this->request;
+	        
+	        $this->controller = array_shift($request);
+	        $this->action = array_shift($request);
 	        $this->action = (empty($this->action)) ? '_index' : '_'.$this->action;
-	        $this->params = $this->request;
+	        $this->params = $request;
 	    }
 	}
 	

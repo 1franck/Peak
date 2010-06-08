@@ -11,19 +11,21 @@ abstract class Peak_Controller
 {
     public $name;                 //child class name
     public $title;                //controller("module") title from wyncore
-    public $path;                 //absolute controller path 
+
+    public $file = null;          //view script file to render
+    public $path;                 //absolute view scripts controller path
     public $type;                 //'controller' or a 'module' controller
        
     public $c_actions = array();  //actions methods list   
     public $c_aprefix = '_';      //action methods name prefix
 
-    protected $view;              //instance of wyn view
+    protected $view;              //instance of view
     
     protected $helpers;           //controller helpers objects
     
     protected $params;            //request params
     protected $action;            //action called by handleRequest()
-    protected $file = null;       //template file to render
+    
         
     public function __construct()
     {   
@@ -34,7 +36,7 @@ abstract class Peak_Controller
         $this->listActions();
 
         //handle controller routing action
-        $this->handleAction();  
+        //$this->handleAction();  
     }
 
     /**
@@ -65,8 +67,6 @@ abstract class Peak_Controller
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
         $this->params = Peak_Registry::obj()->router->params;
-        
-        //$this->init();
     }
     
     /**
@@ -92,7 +92,7 @@ abstract class Peak_Controller
      *
      * @param string $action_by_default   default method name if no request match to module actions
      */   
-    protected function handleAction($action_by_default = '_index')
+    public function handleAction($action_by_default = '_index')
     {
         $this->preAction();
         
@@ -101,14 +101,19 @@ abstract class Peak_Controller
         if((isset($action)) && (in_array($action,$this->c_actions)))
         {
             $this->action = $action;
-            $this->$action();
         }
         elseif((isset($action_by_default)) && (in_array($action_by_default,$this->c_actions)))
         {
+            $action = $action_by_default;
             $this->action = $action_by_default;
-            $this->$action_by_default();
         }
-        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');
+        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
+        
+        //if(!isset($this->file)) {
+            $this->file = ($this->type === 'controller') ? substr($this->action,1).'.php' : 'view.'.substr($this->action,1).'.php';
+        //}
+        
+        $this->$action();    
         
         $this->postAction();
     }
@@ -144,7 +149,6 @@ abstract class Peak_Controller
         $name = $helper_name_prefix.$name;
 
         return $this->helpers[$new_helper];
-
     }
     
         
@@ -156,34 +160,21 @@ abstract class Peak_Controller
     public function getAction()
     {
         return $this->action;
-    }      
-       
+    }
+
+           
     /**
-     * Return template file realpath to render if exists, else return " W_TPL_ABSPATH.'/error_fatal.php'"
-     * Note this method do not include the template file directly, it return instead the proper
-     * template file absolute path so we use: include($wyn->render());
-     * By doing this, we keep access to all variables in the template
+     * Call view render with controller $file and $path
      *
      * @return string
      */    
     public function render()
     {                
-        if(!isset($this->file)) {
-            $this->file = ($this->type === 'controller') ? substr($this->action,1).'.php' : 'view.'.substr($this->action,1).'.php';           
-        }
-
         $this->view->render($this->file,$this->path);
         
         $this->postRender();
     }
     
-    /**
-     * Action after controller init
-     */
-    public function init()
-    { 
-        // Nothing by default    
-    }
 
     /**
      * Action before controller requested action

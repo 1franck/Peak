@@ -67,12 +67,12 @@ class Peak_View_Render_Layouts extends Peak_View_Render
             $this->_scripts_path = $path;
         }
 
-        $this->output($filepath);
+        $this->preOutput($filepath);        
     }
     
-    private function output($viewfiles)
+    protected function output($viewfile)
     {
-        // remove partials group for Peak_View_Render_Partials
+        // remove layout
         // so we can use render() to include a partial file inside view scripts
         $this->noLayout();
                 
@@ -85,8 +85,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         if($view->theme()->getFunctionsFile()) include_once($view->theme()->getFunctionsFile());
 
         // include controller action view with or without partials groups
-        if(is_array($viewfiles)) foreach($viewfiles as $file) include($file);
-        else include($viewfiles);     
+        include($viewfile);     
     }
     
     /**
@@ -98,12 +97,5 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     {
         include($this->_scripts_path.'/'.$this->_scripts_file);
     }
-    
-    
-    public function tedst()
-    {
-        echo 'test';
-    }
-
-    
+        
 }
