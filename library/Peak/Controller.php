@@ -98,21 +98,18 @@ abstract class Peak_Controller
         
         $action = Peak_Registry::obj()->router->action;
         
-        if((isset($action)) && (in_array($action,$this->c_actions)))
-        {
-            $this->action = $action;
-        }
+        if((isset($action)) && (in_array($action,$this->c_actions))) $this->action = $action;
         elseif((isset($action_by_default)) && (in_array($action_by_default,$this->c_actions)))
         {
             $action = $action_by_default;
             $this->action = $action_by_default;
         }
         else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
+
+        //set action filename
+        $this->file = ($this->type === 'controller') ? substr($this->action,1).'.php' : 'view.'.substr($this->action,1).'.php';
         
-        //if(!isset($this->file)) {
-            $this->file = ($this->type === 'controller') ? substr($this->action,1).'.php' : 'view.'.substr($this->action,1).'.php';
-        //}
-        
+        //call requested action
         $this->$action();    
         
         $this->postAction();
