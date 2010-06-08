@@ -95,17 +95,15 @@ class Peak_View_Render_Partials extends Peak_View_Render
                 else $group_filespath[] = $filepath;
             }
             
-            //return $group_filespath;
-            $this->output($group_filespath);
+            $this->preOutput($group_filespath);  
             
         }
         else {
-            //return $filepath;
-            $this->output($filepath);
+            $this->preOutput($filepath);
         }
     }
     
-    private function output($viewfiles)
+    protected function output($viewfiles)
     {
         // remove partials group for Peak_View_Render_Partials
         // so we can use render() to include a single partial file without group inside view scripts

@@ -346,7 +346,7 @@ class Peak_Core
     
     
     /**
-     * Get valid language folders available
+     * Get valid language folders available @test
      * 
      * @example /lang/en/main.php is valid
      *
@@ -372,7 +372,9 @@ class Peak_Core
             $warnings[] = 'DEV_MODE is enabled!';
         }
         
+        //@deprecated
         /* check W_LOGIN and W_PASS */
+        /*
         if(!defined('W_LOGIN')) $warnings[] = 'W_LOGIN config doesn\'t exists!';
         elseif(W_LOGIN === '') $warnings[] = 'W_LOGIN config found but empty';
         else {
@@ -381,7 +383,7 @@ class Peak_Core
         }
         
         if(empty($warnings)) $warnings = null;
-        
+        */
         return $warnings;
     }
         

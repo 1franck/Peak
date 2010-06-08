@@ -4,21 +4,19 @@
  * Peak Application launcher
  * 
  * @author Francois Lajoie
- * @version 20100604
- * 
+ * @version 20100608 
  */
-
 class Peak_Application
 {
     
-    public $bootstrap;    //app bootstrap object if exists
+    public $bootstrap;                //app bootstrap object if exists
   
-    public $controller;   //app object controller
+    public $controller;               //app object controller
         
     private static $_instance = null; //app object itself
     
     /**
-     * Singleton router
+     * Singleton application
      *
      * @return  object instance
      */
@@ -34,12 +32,12 @@ class Peak_Application
     private function __construct()
     {                
         // start registry     
-        $reg = Peak_Registry::getInstance(); 
+        $reg = Peak_Registry::getInstance();                
         
         // register application instance
-        $reg->set('app', $this);
-        
-        // wyn core
+        Peak_Registry::set('app', $this);
+                               
+        // register core
         $core = $reg->set('core', Peak_Core::getInstance());
         
         // register lang translator 
@@ -52,7 +50,7 @@ class Peak_Application
         $reg->set('router', new Peak_Router(ROOT));
         
         // execute app bootstrap
-        if(class_exists('bootstrap',false)) new bootstrap();        
+        if(class_exists('bootstrap',false)) new bootstrap();       
     }
           
     
@@ -84,8 +82,7 @@ class Peak_Application
 	    
 	    return $r;	    
 	}
-
-    
+	   
 
     /**
      * Run application controller from router object
@@ -157,7 +154,11 @@ class Peak_Application
                 else throw new Peak_Exception('ERR_ROUTER_MOD_NOT_SPECIFIED');
             }
         }
-        else $this->controller = new wlogin();       
+        else $this->controller = new wlogin();  
+        
+        // execute controller action
+        $this->controller->handleAction();     
+        
     }
     	         
 }
