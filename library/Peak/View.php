@@ -69,7 +69,7 @@ class Peak_View
      */
     public function  __call($method, $args = null)
     {
-        if(method_exists($this->engine(),$method)) call_user_func_array(array($this->engine(), $method), $args);        
+        if(method_exists($this->engine(),$method)) return call_user_func_array(array($this->engine(), $method), $args);        
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
             trigger_error('DEV_MODE: View Render method '.$method.'() does\'t exists');
         }

@@ -1,5 +1,7 @@
 #Version 0.7.8# 
 
+*  Peak_View > fix problem with __call(). Methods 'return' value/boolean was missing
+
 *  Peak_Render > added compression to caching
 
 *  Peak_Render > added methods : isCachedBlock(), getCacheBlock(), cacheBlockEnd().
