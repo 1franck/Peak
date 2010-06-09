@@ -102,11 +102,9 @@ abstract class Peak_View_Render
             $this->genCacheId();
             
             //use cache instead outputing and evaluating view script
-            if($this->isCached()) {
-                include($this->getCacheFile());
-            }
-            //cache and output current view script
+            if($this->isCached()) include($this->getCacheFile());
             else {
+                //cache and output current view script
                 ob_start();
                 $this->output($data);
                 //if(is_writable($cache_file)) { //fail if file cache doesn't already exists
@@ -119,6 +117,7 @@ abstract class Peak_View_Render
     
     /**
      * Check if current view script file is cached/expired
+     * Note: if $this->_cache_id is not set, this will generate a new id from $id params if set or from the current controller file - path
      *
      * @return bool
      */
@@ -129,10 +128,9 @@ abstract class Peak_View_Render
         //when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
         if(!isset($this->_cache_id)) {
             if(!isset($id)) {
-                $app = Peak_Application::getInstance();
-                $this->genCacheId($app->controller->path, $app->controller->file);
+                $this->genCacheId(Peak_Registry::obj()->app->controller->path, Peak_Registry::obj()->app->controller->file);
             }
-            else { $this->genCacheId('', $id); }
+            else $this->genCacheId('', $id);
         }
         
         $filepath = $this->getCacheFile();
@@ -147,7 +145,8 @@ abstract class Peak_View_Render
     }
     
     /**
-     * Generate md5 cache id from script view and path
+     * Generate md5 cache id from script view filename and path by default
+     * Set a $path and $file to generate a new custom id.
      *
      * @param string $path
      * @param string $file
