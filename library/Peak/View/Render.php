@@ -110,7 +110,7 @@ abstract class Peak_View_Render
                 ob_start();
                 $this->output($data);
                 //if(is_writable($cache_file)) { //fail if file cache doesn't already exists
-                    file_put_contents($this->getCacheFile(),ob_get_contents());
+                    file_put_contents($this->getCacheFile(), preg_replace('!\s+!', ' ', ob_get_contents()));
                 //}
                 ob_get_flush();
             }           
@@ -195,7 +195,7 @@ abstract class Peak_View_Render
      */
     protected function cacheBlockEnd()
     {
-        file_put_contents($this->getCacheFile(),ob_get_contents());
+        file_put_contents($this->getCacheFile(), preg_replace('!\s+!', ' ', ob_get_contents()));
         ob_get_flush();
     }
     
