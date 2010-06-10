@@ -3,8 +3,8 @@
 /**
  * Peak Application launcher
  * 
- * @author   Francois Lajoie
- * @version  20100608 
+ * @author  Francois Lajoie
+ * @version 20100608 
  */
 class Peak_Application
 {
