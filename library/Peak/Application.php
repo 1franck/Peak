@@ -4,7 +4,7 @@
  * Peak Application launcher
  * 
  * @author  Francois Lajoie
- * @version $Id: Application.php 33 2010-06-10 04:32:00Z snake386@hotmail.com 
+ * @version $Id$
  */
 class Peak_Application
 {
