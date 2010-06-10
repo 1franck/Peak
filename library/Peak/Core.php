@@ -3,9 +3,8 @@
 /**
  * Peak Core
  * 
- * @author Francois Lajoie
- * @version 20100604
- * 
+ * @author   Francois Lajoie
+ * @version  $Id$ 
  */
 
 define('_VERSION_','0.7.8');

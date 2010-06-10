@@ -2,7 +2,9 @@
 
 /**
  * View Helper base
- * @version 20100503
+ *  
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 abstract class Peak_View_Helpers
 {

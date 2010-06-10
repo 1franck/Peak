@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Chorno
+ * 
+ * @author   Francois Lajoie
+ * @version  $Id$
+ */
 class Peak_Chrono
 {
     public static $start = false;

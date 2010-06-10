@@ -3,10 +3,10 @@
 /**
  * Wyn utils class
  * 
- * @desc Content all sort of usefull functions found here and there
- * @version 20100321
+ * @desc     Content all sort of usefull functions found here and there
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
-
 class Peak_Utils
 {
     

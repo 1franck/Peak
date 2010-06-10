@@ -2,9 +2,8 @@
 /**
  * Simple lang translator based on php array
  * 
- * @author Francois Lajoie
- * @version 20100605
- *
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_Lang
 {	  

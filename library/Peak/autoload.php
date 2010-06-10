@@ -2,7 +2,9 @@
 
 /**
  * Peak SPL autoload
- *
+ * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 
 //nullify any existing autoloads

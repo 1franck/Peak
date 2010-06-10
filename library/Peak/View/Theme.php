@@ -3,9 +3,8 @@
 /**
  * Manage Application Views Themes
  * 
- * @author  Francois Lajoie
- * @version 20100527
- *
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_View_Theme
 {

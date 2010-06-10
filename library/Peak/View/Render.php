@@ -3,8 +3,8 @@
 /**
  * Peak_View_Render Engine base
  * 
- * @author  Francois Lajoie
- * @version 20100608
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 abstract class Peak_View_Render
 {

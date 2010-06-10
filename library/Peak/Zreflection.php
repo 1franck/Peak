@@ -3,9 +3,9 @@
 /**
  * Zend reflection class wrapper
  * 
- * @uses   Zend_Reflection classes !important
- * @author Francois Lajoie
- * @version 20100503
+ * @uses     Zend_Reflection classes !important
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_Zreflection
 {

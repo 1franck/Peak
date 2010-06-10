@@ -3,8 +3,12 @@
 /**
  * Application boot preparations
  * Next file to include after your application configs.php 
+ * 
  * @desc This file will add importants constants, load wyn_core and call setPath(), call set_include_path 
  *       and finally include core/autoload.php
+ * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 
 // include wyn_core and set system and application path if not already done

@@ -3,10 +3,10 @@
 /**
  * Peak View Render Engine: Virtual
  * 
- * @desc    Output virtual groups view vars
+ * @desc     Output virtual groups view vars
  * 
- * @author  Francois Lajoie
- * @version 20100531
+ * @author   Francois Lajoie
+ * @version  $Id$
  * 
  */
 class Peak_View_Render_Virtual extends Peak_View_Render

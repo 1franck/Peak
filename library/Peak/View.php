@@ -3,12 +3,11 @@
 /**
  * Peak View
  * 
- * @author  Francois Lajoie
- * @version 20100604
+ * @author   Francois Lajoie
+ * @version  $Id$
  * 
- * @desc    template variables registry, helpers object, theme object
- * @uses    Peak_View_Theme, Peak_View_Helpers
- * 
+ * @desc     template variables registry, helpers object, theme object
+ * @uses     Peak_View_Theme, Peak_View_Helpers
  */
 
 include('View/Functions/general.php');

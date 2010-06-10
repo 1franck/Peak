@@ -9,8 +9,8 @@
  *                     http://example.com/[controller]/[action]/[param1]/[param2]/[...]
  *                     http://example.com/server/php/view/ver
  *
- * @author  Francois Lajoie
- * @version 20100608
+ * @author   Francois Lajoie
+ * @version  $Id$
  * 
  * @todo filter variables
  * 
