@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Chorno
+ * Peak Chrono
  * 
  * @author   Francois Lajoie
  * @version  $Id$
