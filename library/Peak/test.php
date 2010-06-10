@@ -3,7 +3,7 @@
 /**
  * asdasdasd
  *
- * $Id$  - $Rev$, $LastChangedDate$, $Author$
+ * $Id$
  */
 class test 
 {
