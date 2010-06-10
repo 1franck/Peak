@@ -1,9 +1,9 @@
-<?php
+<?php 
 
 /**
  * Peak Application launcher
  * 
- * @author Francois Lajoie
+ * @author  Francois Lajoie
  * @version 20100608 
  */
 class Peak_Application
