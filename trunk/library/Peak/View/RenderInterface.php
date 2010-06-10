@@ -3,9 +3,8 @@
 /**
  * View rendering engine base @deprecated
  * 
- * @author  Francois Lajoie
- * @version 20100527
- *
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 interface Peak_View_RenderInterface
 {

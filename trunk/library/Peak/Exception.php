@@ -3,9 +3,8 @@
 /**
  * Peak exception
  * 
- * @author  Francois Lajoie
- * @version 20100606
- * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_Exception extends Exception
 {

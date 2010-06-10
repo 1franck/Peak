@@ -3,8 +3,8 @@
 /**
  * Peak View Render Engine: Partials
  * 
- * @author  Francois Lajoie
- * @version 20100526
+ * @author   Francois Lajoie
+ * @version  $Id$
  * 
  * support groups alias from theme.ini
  * if no groups, only the controller action view file will be render

@@ -2,7 +2,9 @@
 
 /**
  * View Object TEMPLATE SHORCUT FUNCTIONS
- * ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯ 
+ * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 
 /**

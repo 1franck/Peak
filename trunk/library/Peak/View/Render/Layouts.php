@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Peak View Render Engine: Layout
+ * Peak View Render Engine: Layouts
  * 
- * @author  Francois Lajoie
- * @version 20100527
- * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_View_Render_Layouts extends Peak_View_Render
 {

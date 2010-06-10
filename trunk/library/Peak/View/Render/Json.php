@@ -3,11 +3,10 @@
 /**
  * Peak View Render Engine: Json
  * 
- * @desc    Output view vars as json 
+ * @desc     Output view vars as json 
  * 
- * @author  Francois Lajoie
- * @version 20100527
- * 
+ * @author   Francois Lajoie
+ * @version  $Id$ 
  */
 class Peak_View_Render_Json extends Peak_View_Render
 {

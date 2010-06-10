@@ -3,6 +3,8 @@
 /**
  * Simple but very usefull xml class
  * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 class Peak_Xml
 {

@@ -6,7 +6,7 @@
  * @author regex gather from many web site over the internet, other from me(francois lajoie)
  *         all method have been tested with simpletest php tests unit
  * 
- * @version 20100511
+ * @version  $Id$
  *
  */
 class Peak_Pattern

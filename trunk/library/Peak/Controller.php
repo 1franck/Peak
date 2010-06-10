@@ -3,9 +3,8 @@
 /**
  * Peak abstract controller
  * 
- * @author Francois Lajoie
- * @version 20100502
- *
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 abstract class Peak_Controller
 {

@@ -2,7 +2,9 @@
 
 /**
  * Misc functions for transforming data into valid html jquery ui code
- * @author Francois Lajoie
+ * 
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 
 /**
