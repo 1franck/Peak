@@ -4,7 +4,7 @@
  * Peak Application launcher
  * 
  * @author  Francois Lajoie
- * @version 20100608 $Rev$, $LastChangedDate$, $Author$, $Id$
+ * @version 20100608
  */
 class Peak_Application
 {
