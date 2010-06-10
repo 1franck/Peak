@@ -3,9 +3,8 @@
 /**
  * Application Bootstrap base
  * 
- * @author  Francois Lajoie
- * @version 20100521
- *
+ * @author   Francois Lajoie
+ * @version  $Id$
  */
 abstract class Peak_Bootstrap
 {
