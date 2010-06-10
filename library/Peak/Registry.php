@@ -41,8 +41,8 @@ class Peak_Registry
 	/**
 	 * Same as method register but static
 	 *
-	 * @param string $name
-	 * @param object $obj
+	 * @param  string $name
+	 * @param  object $obj
 	 * @return object
 	 */
 	public static function set($name,$obj)
