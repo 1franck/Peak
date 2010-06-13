@@ -6,20 +6,21 @@
  * @desc This is an standalone component and should no be used inside framework MVC!
  *       This class looks for actions keys in global var like $_GET and $_POST and 
  *       dispatch them to action(s) depending on $_recursive_depth properties.
+ *       IMPORTANT. The data of action value are not used neither filtered so be sure to escape/valid action datas before anything
  *  
  * @author  Francois Lajoie
  * @version $Id$
  */
 abstract class Peak_Dispatcher
 {
-      
-    public $request;
+       
+    private $_accepted_globals = array('_GET','_POST','_SESSION'); //global variable allow
     
-    private $_accepted_globals = array('_GET','_POST','_SESSION');
+    public $resource; //always reflect current resource of a called action
     
-    private $_actions;
+    private $_actions;  //actions method list depending on $_accepted_globals
     
-    private $_recursivity  = false;
+    private $_recursivity  = false; //allow multiple actions calls
     
     private $_recursivity_depth = 3;
     
@@ -37,30 +38,35 @@ abstract class Peak_Dispatcher
     }
     
     /**
-     * Start the dispath
-     *
+     * Start the first in, first out action(s) dispath. 
      */
     public function start()
     {
         foreach($this->_accepted_globals as $prefix) 
         {            
             switch($prefix) {
-                case '_GET' : $resource = $_GET; break;
-                case '_POST' : $resource = $_POST; break;
-                case '_SESSION' : $resource = $_SESSION; break;
-                default : $resource = null;
+                case '_GET' : $this->resource = $_GET; break;
+                case '_POST' : $this->resource = $_POST; break;
+                case '_SESSION' : 
+                     if(session_id() !== '') $this->resource = $_SESSION; 
+                     else $this->resource = null;
+                     break;
+                default : $this->resource = null;
             }
             
-            if(is_array($resource))
+            if(is_array($this->resource))
             {                
                 foreach($this->_actions as $action)
                 {                   
                     $action_key = str_ireplace($prefix.'_','',$action);
                                             
-                    if(isset($resource[$action_key])) {
+                    if(isset($this->resource[$action_key])) {
                         ++$this->_action_triggered;
                         $this->$action();
-                        if(!$this->_recursivity) return;
+                        if(!$this->_recursivity) {
+                            $this->stop();
+                            return;
+                        }
                         else {                           
                             if($this->_action_triggered >= $this->_recursivity_depth) {                        
                                 $this->stop();
@@ -82,6 +88,7 @@ abstract class Peak_Dispatcher
     public function stop()
     {
         $this->_recursivity = false;
+        $this->resource = null;
     }
     
     /**
