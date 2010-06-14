@@ -41,7 +41,10 @@ class Peak_Core
     private function __construct()
     {        
         /* check DEV_MODE */
-        if((defined('DEV_MODE')) && (DEV_MODE === true)) error_reporting(E_ALL | E_STRICT);
+        if((defined('DEV_MODE')) && (DEV_MODE === true)) {
+            ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
+            //error_reporting(E_ALL | E_STRICT);
+        }
 
         $this->getControllers();
         $this->getModules();       
