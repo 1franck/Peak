@@ -13,18 +13,19 @@
  */
 abstract class Peak_Dispatcher
 {
+    public $resource;                                              //always reflect current resource of a called action
+    
+    public $response = array();                                    //container for response
        
     private $_accepted_globals = array('_GET','_POST','_SESSION'); //global variable allow
+        
+    private $_actions;                                             //actions method list depending on $_accepted_globals
     
-    public $resource; //always reflect current resource of a called action
+    private $_recursivity  = false;                                //allow multiple actions calls
     
-    private $_actions;  //actions method list depending on $_accepted_globals
+    private $_recursivity_depth = 3;                               //define the maximum of actions that can be called in the hole process
     
-    private $_recursivity  = false; //allow multiple actions calls
-    
-    private $_recursivity_depth = 3;
-    
-    private $_action_triggered = 0;
+    private $_actions_triggered = 0;                               //number of actions called
     
     
     /**
@@ -36,6 +37,7 @@ abstract class Peak_Dispatcher
         $this->setRecursivity($recursivity, $recursivity_depth);
         $this->_listActions();
     }
+    
     
     /**
      * Start the first in, first out action(s) dispath. 
@@ -61,14 +63,14 @@ abstract class Peak_Dispatcher
                     $action_key = str_ireplace($prefix.'_','',$action);
                                             
                     if(isset($this->resource[$action_key])) {
-                        ++$this->_action_triggered;
+                        ++$this->_actions_triggered;
                         $this->$action();
                         if(!$this->_recursivity) {
                             $this->stop();
                             return;
                         }
                         else {                           
-                            if($this->_action_triggered >= $this->_recursivity_depth) {                        
+                            if($this->_actions_triggered >= $this->_recursivity_depth) {                        
                                 $this->stop();
                                 return;
                             }
