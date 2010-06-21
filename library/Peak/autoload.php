@@ -47,7 +47,10 @@ function _autoloadZendInternal($cn)
 function _autoloadAppCtrl($cn)
 {
      $file = CONTROLLERS_ABSPATH .'/'.$cn.'.php';
-     if (!file_exists($file)) return false;
+     if (!file_exists($file)) {
+     	$file = CONTROLLERS_ABSPATH .'/'.$cn.'Controller.php';
+     	if (!file_exists($file)) { return false; }
+     }
      include($file);
 }
 
