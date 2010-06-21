@@ -131,7 +131,7 @@ class Peak_Application
                             $ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
                             $this->controller = new $ctrl_name();             
                         }
-                        else throw new Peak_Exception('ERR_ROUTER_CTRL_NOT_FOUND', $ctrl_name);
+                        else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
                     }
                     else $this->controller = new $ctrl_name();                    
                 }
@@ -139,17 +139,17 @@ class Peak_Application
                 {
                     $this->controller = new $default_ctrl();
                 }
-                else throw new Peak_Exception('ERR_ROUTER_CTRL_NOT_FOUND',$default_ctrl);
+                else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND',$default_ctrl);
             }
             else
             {
                 if(isset($router->controller))
                 {
                 	$ctrl_name = $router->controller.'Controller';                	
-                    if(!$core->isModule($ctrl_name)) throw new Peak_Exception('ERR_ROUTER_MOD_NOT_FOUND', $ctrl_name);                   
+                    if(!$core->isModule($ctrl_name)) throw new Peak_Exception('ERR_APP_MOD_NOT_FOUND', $ctrl_name);                   
                     $this->controller = new $ctrl_name();
                 }
-                else throw new Peak_Exception('ERR_ROUTER_MOD_NOT_SPECIFIED');
+                else throw new Peak_Exception('ERR_APP_MOD_NOT_SPECIFIED');
             }
         }
         else {
