@@ -117,26 +117,23 @@ class Peak_Application
             {
                 if(isset($router->controller))
                 {
+                	$ctrl_name = $router->controller.'Controller';
+                	
                     if((defined('ENABLE_PEAK_CONTROLLERS')) && (ENABLE_PEAK_CONTROLLERS)) {
                         $int_ctrl = LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$router->controller.'.php';
                     }
                     
                     //check is controller is not found in current core controllers
-                    if(!$core->isController($router->controller))
+                    if(!$core->isController($ctrl_name))
                     {
                         //check for peak internal controller
                         if((isset($int_ctrl)) && (file_exists($int_ctrl))) {
                             $ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
                             $this->controller = new $ctrl_name();             
                         }
-                        else { 
-                            throw new Peak_Exception('ERR_ROUTER_CTRL_NOT_FOUND',$router->controller);
-                        }
+                        else throw new Peak_Exception('ERR_ROUTER_CTRL_NOT_FOUND', $ctrl_name);
                     }
-                    else {
-                        $this->controller = new $router->controller();
-                    }
-                    
+                    else $this->controller = new $ctrl_name();                    
                 }
                 elseif((isset($default_ctrl)) && ($core->isController($default_ctrl))) 
                 {
@@ -148,13 +145,16 @@ class Peak_Application
             {
                 if(isset($router->controller))
                 {
-                    if(!$core->isModule($router->controller)) throw new Peak_Exception('ERR_ROUTER_MOD_NOT_FOUND',$router->controller);
-                    $this->controller = new $router->controller();
+                	$ctrl_name = $router->controller.'Controller';                	
+                    if(!$core->isModule($ctrl_name)) throw new Peak_Exception('ERR_ROUTER_MOD_NOT_FOUND', $ctrl_name);                   
+                    $this->controller = new $ctrl_name();
                 }
                 else throw new Peak_Exception('ERR_ROUTER_MOD_NOT_SPECIFIED');
             }
         }
-        else $this->controller = new wlogin();  
+        else {
+        	$this->controller = new LoginController();  
+        }
         
         // execute controller action
         $this->controller->handleAction();     

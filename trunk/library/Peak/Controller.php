@@ -61,7 +61,8 @@ abstract class Peak_Controller
             if(is_null($this->title)) $this->title = $this->name;
         }
         else {
-            $this->path = THEME_SCRIPTS_ABSPATH.'/'.$this->name;
+        	$script_folder = str_ireplace('controller', '', $this->name);
+            $this->path = THEME_SCRIPTS_ABSPATH.'/'.$script_folder;
         }
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
