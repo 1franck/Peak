@@ -13,12 +13,13 @@ define('_DESCR_','Php wEb Application Kernel');
 
 class Peak_Core
 {
-    
+    //core object extension
     protected static $core_ext = array();
    
+    //application and library paths
     protected static $paths = array();                            
     
-    /* Modules and Controller */
+    /* Modules and Controllers */
     protected $modules = array();
     protected $controllers = array();
    
@@ -83,19 +84,24 @@ class Peak_Core
         self::$paths['viewhelpers'] = $lib_path.'/Peak/view/helpers';  //@depreacted
         
         // Generate dynamicly constants from application and peak library path
-        foreach(self::$paths as $pathname => $val)
+        if(defined('SVR_ABSPATH'))
         {
-            if(($pathname === 'application') || ($pathname === 'library')) continue;
-            define(strtoupper($pathname).'_ROOT', self::getPath($pathname,false));
-            define(strtoupper($pathname).'_ABSPATH',$val);
-            //define(strtoupper($pathname).'_URL', SVR_URL.self::getPath($pathname,false));
+        	foreach(self::$paths as $pathname => $val)
+        	{
+        		if(($pathname === 'application') || ($pathname === 'library')) continue;
+        		define(strtoupper($pathname).'_ROOT', self::getPath($pathname,false));
+        		define(strtoupper($pathname).'_ABSPATH',$val);
+        		//define(strtoupper($pathname).'_URL', SVR_URL.self::getPath($pathname,false));
+        	}
         }
         
         // Url constants
-        define('ROOT_URL', SVR_URL.'/'.ROOT);      
-        if(file_exists(ROOT_ABSPATH.'/'.basename(self::$paths['views_themes']).'/'.APP_THEME)) {
-            define('THEME_URL', ROOT_URL.'/themes/'.basename(THEME_ROOT));
-            define('THEME_PUBLIC_ABSPATH', ROOT_ABSPATH.'/themes/'.basename(THEME_ROOT));
+        if(defined('SVR_URL')) {
+        	define('ROOT_URL', SVR_URL.'/'.ROOT);
+        	if(file_exists(ROOT_ABSPATH.'/'.basename(self::$paths['views_themes']).'/'.APP_THEME)) {
+        		define('THEME_URL', ROOT_URL.'/themes/'.basename(THEME_ROOT));
+        		define('THEME_PUBLIC_ABSPATH', ROOT_ABSPATH.'/themes/'.basename(THEME_ROOT));
+        	}
         }
         
     }
@@ -103,7 +109,7 @@ class Peak_Core
     /**
      * Get application different paths
      *
-     * @param string $path
+     * @param  string $path
      * @return string
      */
     public static function getPath($path = 'application', $absolute_path = true) 
@@ -116,11 +122,21 @@ class Peak_Core
         else return false;
     }
     
+    /**
+     * Return paths array
+     *
+     * @return array
+     */
+    public static function getPaths()
+    {
+    	return self::$paths;
+    }
+    
     
     /**
      * Check if controller name exists
      *
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     public function isController($name)
