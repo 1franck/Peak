@@ -1,5 +1,7 @@
 #Version 0.7.8# 
 
+*  Peak_Core > added methods getPaths
+
 *  autoload.php > added 'Controller' suffix support for controllers files and 
    fixed Peak_Application run() method and Peak_Controller initController() method accordly
    Controller files and classes names look likes 'foobarController.php'
