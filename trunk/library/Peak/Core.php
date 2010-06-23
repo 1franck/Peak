@@ -60,16 +60,17 @@ class Peak_Core
     {
 
         /* current app paths */
-        self::$paths['application'] = $app_path;
-        self::$paths['controllers'] = $app_path.'/controllers';
-        self::$paths['modules']     = $app_path.'/modules';
-        self::$paths['lang']        = $app_path.'/lang';
-        self::$paths['cache']       = $app_path.'/cache';
+        self::$paths['application']         = $app_path;
+        self::$paths['controllers']         = $app_path.'/controllers';
+        self::$paths['controllers_helpers'] = $paths['controllers_helpers'].'/helpers';
+        self::$paths['modules']             = $app_path.'/modules';
+        self::$paths['lang']                = $app_path.'/lang';
+        self::$paths['cache']               = $app_path.'/cache';
         
-        self::$paths['views']        = $app_path.'/views';       
-        self::$paths['views_ini']     = self::$paths['views'].'/ini';
-        self::$paths['views_helpers'] = self::$paths['views'].'/helpers';
-        self::$paths['views_themes']  = self::$paths['views'].'/themes';              
+        self::$paths['views']          = $app_path.'/views';       
+        self::$paths['views_ini']      = self::$paths['views'].'/ini';
+        self::$paths['views_helpers']  = self::$paths['views'].'/helpers';
+        self::$paths['views_themes']   = self::$paths['views'].'/themes';              
         
         self::$paths['theme']          = self::$paths['views_themes'].'/'.APP_THEME;
         self::$paths['theme_scripts']  = self::$paths['theme'].'/scripts';
@@ -84,8 +85,7 @@ class Peak_Core
         self::$paths['viewhelpers'] = $lib_path.'/Peak/view/helpers';  //@depreacted
         
         // Generate dynamicly constants from application and peak library path
-        if(defined('SVR_ABSPATH'))
-        {
+        if(defined('SVR_ABSPATH')) {
         	foreach(self::$paths as $pathname => $val)
         	{
         		if(($pathname === 'application') || ($pathname === 'library')) continue;
