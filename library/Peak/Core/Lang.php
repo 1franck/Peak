@@ -1,6 +1,9 @@
 <?php
 
-
+/**
+ * Peak_Core_Lang object extension 
+ *
+ */
 class Peak_Core_Lang
 {
     
@@ -11,7 +14,7 @@ class Peak_Core_Lang
      *
      * @return array
      */
-    public function getLang()
+    public function get()
     {        
         $wlang = array();
         
@@ -21,7 +24,7 @@ class Peak_Core_Lang
 
             while($it->valid()) {
                 if(($it->isDir()) && (!in_array($it->getFilename(),array('.','..')))) {
-                    $wlangfile = Peak_Core::getPath('lang').'/'.$it->getFilename().'/main.php';
+                    $wlangfile = Peak_Core::getPath('lang').'/'.$it->getFilename().'.php';
                     if(file_exists($wlangfile)) $wlang[] = $it->getFilename();       
                 }
                 $it->next();
