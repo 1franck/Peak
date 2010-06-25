@@ -19,12 +19,14 @@ class Peak_Core
     //application and library paths
     protected static $paths = array();                            
     
-    /* Modules and Controllers */
+    // Modules and Controllers
     protected $modules = array();
     protected $controllers = array();
    
+    // core extentension objects
+    protected $extensions = array();
     
-    public $w_errors = array();
+    public $w_errors = array(); //@deprecated
     
     private static $_instance = null; //object itself
         
@@ -62,7 +64,7 @@ class Peak_Core
         /* current app paths */
         self::$paths['application']         = $app_path;
         self::$paths['controllers']         = $app_path.'/controllers';
-        self::$paths['controllers_helpers'] = $paths['controllers_helpers'].'/helpers';
+        self::$paths['controllers_helpers'] = self::$paths['controllers'].'/helpers';
         self::$paths['modules']             = $app_path.'/modules';
         self::$paths['lang']                = $app_path.'/lang';
         self::$paths['cache']               = $app_path.'/cache';
@@ -324,86 +326,28 @@ class Peak_Core
     }
     
     /**
-     * Parse constants of file configs.php
-     *
-     * @return array
-     */
-    public function getConfigs($file, $nologin = false)
-    {
-        $lines = file($file);
-        $configs_vars = array();
-        foreach($lines as $line_num => $line)
-        {
-            if(preg_match('.^(define\().',ltrim($line)))
-            {
-                $temp = explode(';',$line);
-                $temp[0] = str_replace(array('define(',')'),'',$temp[0]);
-                $define = explode(',',$temp[0]);
-                
-                $param = str_replace(array('"','\''),'',$define[0]);
-                $value = $define[1];
-                
-                $info = (isset($temp[1])) ? str_replace(array('#( )','#(!)','#(X)'),'',$temp[1]) : '?';                
-                
-                $configs_vars[$line_num] = array('original_line' => trim($line),
-                                                 'param' => $param,
-                                                 'value' => $value,
-                                                 'line_num'  => $line_num,
-                                                 'eval'  => constant($param),
-                                                 'info'  => trim($info));
-                                                 
-                if(($nologin) && (($param === 'W_LOGIN') || ($param === 'W_PASS') )) {
-                    unset($configs_vars[$line_num]);
-
-                }
-                                                 
-            }
-        }
-        return $configs_vars;
-    }
-    
-    
-    /**
-     * Get valid language folders available @test
+     * Load/return Core extension objects
      * 
-     * @example /lang/en/main.php is valid
-     *
-     * @return array
+     * @param string $name core extension name
      */
-    public function getLang()
-    {               
-        $core_lang = new Peak_Core_Lang();
-        return $core_lang->getLang();
-    }
-    
-    /**
-     * Check different config
-     *
-     * @return array
-     */
-    public function checkConfigs()
+    public function ext($name)
     {
-        $warnings = array();
-        
-        /* check DEV_MODE */
-        if((defined('DEV_MODE')) && (DEV_MODE === true)) { 
-            $warnings[] = 'DEV_MODE is enabled!';
+        $ext_name_prefix = 'Peak_Core_';
+
+        $ext_name = trim(stripslashes(strip_tags($name)));
+        $ext_file = self::$paths['library'].'/Peak/Core/'.$name.'.php';
+
+        $ext_class_name = $ext_name_prefix.$ext_name;
+
+        if(!isset($this->extensions[$ext_name])) {
+            if(file_exists($ext_file)) {
+                include($ext_file);
+                $this->extensions[$ext_name] = new $ext_class_name();
+            }
+            else throw new Peak_Exception('ERR_CORE_EXTENSION_NOT_FOUND');
         }
-        
-        //@deprecated
-        /* check W_LOGIN and W_PASS */
-        /*
-        if(!defined('W_LOGIN')) $warnings[] = 'W_LOGIN config doesn\'t exists!';
-        elseif(W_LOGIN === '') $warnings[] = 'W_LOGIN config found but empty';
-        else {
-            if(!defined('W_PASS')) $warnings[] = 'W_PASS config doesn\'t exists!';
-            elseif(W_PASS === '') $warnings[] = 'W_PASS config found but empty';
-        }
-        
-        if(empty($warnings)) $warnings = null;
-        */
-        return $warnings;
-    }
-        
+
+        return $this->extensions[$ext_name];
+    }        
     
 }

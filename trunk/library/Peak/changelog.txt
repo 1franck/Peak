@@ -1,6 +1,10 @@
-#Version 0.7.8# 
+#VERSION 0.7.8# 
 
-*  Peak_Core > added methods getPaths
+*  Peak_core > Introduce core extensions objects primarily to move methods not used inside the application running process 
+               and by the way, ligthen Peak_Core file. Removed/moved methods getLang(), getConfigs(), checkConfigs() 
+               into extension , and added method ext() to access to them. Extensions objects are stored in $extensions var.
+
+*  Peak_Core > added method getPaths
 
 *  autoload.php > added 'Controller' suffix support for controllers files and 
    fixed Peak_Application run() method and Peak_Controller initController() method accordly
@@ -15,7 +19,7 @@
 *  Peak_Render > added methods : isCachedBlock(), getCacheBlock(), cacheBlockEnd().
    Those new functions help to cache a block of text/code inside views
 
-#Version 0.7.7#
+#VERSION 0.7.7#
 
 *  Peak_Render > added methods : genCacheId() and getCacheIdFile().
    enableCache() and disableCache() can be used inside controller and bootstrap.
@@ -100,7 +104,7 @@
                application controllers actions views. For now we have
                Partials, Layouts, Json engines. 
 
-#version 0.7.6#
+#VERSION 0.7.6#
 
 *  Peak_View_Theme > renamed method iniOptions() to set setOptions()
 
@@ -168,7 +172,7 @@
    Renamed property $request to $params
 
 
-#version 0.7.5#
+#VERSION 0.7.5#
 
 *  class.registry.php > added method getObjectList()
 
@@ -181,7 +185,7 @@
 *  class.wyn_view.php > moved all bottom file functions to functions.wyn_view.php
 
 *  beginning changes that bring class.router.php inside class wyn and wyn_controller.
-   In version 0.7.6, changes implied by the new router object will be resolved
+   In VERSION 0.7.6, changes implied by the new router object will be resolved
 
 *  added simple url rewriting router > class.router.php 
    added router object to the registry in class.wyn.php
@@ -227,7 +231,7 @@
 
 *  create somes tests unit for wyn application start and wyn system classes
 
-#version 0.7.4#
+#VERSION 0.7.4#
 
 *  added php tests for wyn with SimpleTest1.0.1 php unit tester
 
@@ -263,7 +267,7 @@
    configs.php is now more short and sweet
 
 
-#version 0.7.3#
+#VERSION 0.7.3#
 
 *  class.wyn_core.php > moved here constants W_VIEWSCRIPTS_ABSPATH,
    W_VIEWINI_ABSPATH, W_CACHE_ABSPATH
@@ -298,7 +302,7 @@
    (use libs/zend/reflection/... )
 
 
-#version 0.7.2#
+#VERSION 0.7.2#
 
 *  added core/class.pattern.php > Check different string pattern validation
 
@@ -333,7 +337,7 @@
 *  class.wyn_core.php > change visibility of var $w_modules and $w_controller to protected
 
 
-#version 0.7.1#
+#VERSION 0.7.1#
 
 
  * autoload.php > fixed _autoload() > after checking all class path, 
@@ -376,7 +380,7 @@
  * class.wyn_core.php > added method getLang()
 
 
-#version 0.7.0#
+#VERSION 0.7.0#
 
  * added great shorcut functions in class.wyn_view.php for view object:
    view(), view_hlp(), view_get(), view_echo().
@@ -431,7 +435,7 @@
  * added /core/class.wyn_exception.php
 
 
-#Version 0.6.9#
+#VERSION 0.6.9#
 
  * class.wyn_controller.php > moved checkAlert() to wyn_core class 
    and renamed it checkConfigs()
@@ -466,7 +470,7 @@
    render priority : wdashboard controller, [controller], [modules]
 
 
-#version 0.6.8#
+#VERSION 0.6.8#
 
 
  * fix autoload.php: added controllers class detection
@@ -500,7 +504,7 @@
  * dashboard -> added 'about' action
 
 
-#version 0.6.7#
+#VERSION 0.6.7#
 
 
  * added view helpers. They are stored in core/helpers/view.[title].php
