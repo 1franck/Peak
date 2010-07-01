@@ -31,4 +31,14 @@ abstract class Peak_Bootstrap
         }
     }
     
+    /**
+     * Get environment in .htaccess
+     *
+     * @return string
+     */
+    private function getEnvironment()
+    {
+    	return getenv('APPLICATION_ENV'); 	
+    }
+
 }

@@ -23,7 +23,7 @@ define('APP_DEFAULT_CTRL','".$data['APP_DEFAULT_CTRL']."');
 // enable error reporting / set to false on production
 define('DEV_MODE', ".$data['DEV_MODE'].");
 
-# --- Server URL ---#
+# --- Server URL --- #
 
 // server url ex: http://www.example.com
 define('SVR_URL', '".$data['SVR_URL']."');
@@ -42,4 +42,5 @@ define('APPLICATION_ROOT', '".$data['APPLICATION_ROOT']."');
 // zend framework library folder  of where is located Zend
 define('ZEND_LIB_ROOT', '".$data['ZEND_LIB_ROOT']."');
 
+# --- PEAK --- #
 define('ENABLE_PEAK_CONTROLLERS', ".$data['ENABLE_PEAK_CONTROLLERS'].");";

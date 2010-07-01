@@ -1,5 +1,7 @@
 #VERSION 0.7.8# 
 
+*  Peak_Bootstrap > added method getEnvironment() and support 'APPLICATION_ENV' inside from .htaccess
+
 *  added Peak_core_Codegen class > generate application code files
 
 *  Peak_core > Introduce core extensions objects primarily to move methods not used inside the application running process 
