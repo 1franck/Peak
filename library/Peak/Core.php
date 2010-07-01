@@ -344,7 +344,7 @@ class Peak_Core
                 include($ext_file);
                 $this->extensions[$ext_name] = new $ext_class_name();
             }
-            else throw new Peak_Exception('ERR_CORE_EXTENSION_NOT_FOUND');
+            else throw new Peak_Exception('ERR_CORE_EXTENSION_NOT_FOUND', $ext_name);
         }
 
         return $this->extensions[$ext_name];

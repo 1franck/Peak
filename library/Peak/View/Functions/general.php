@@ -62,7 +62,7 @@ function view_echo($var,$lc = '',$rc = '')
  */
 
 /**
- * Create rewrited url 
+ * Create rewrited url @deprecated
  *
  * @param string $controller
  * @param string $action
