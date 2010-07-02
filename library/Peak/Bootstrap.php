@@ -36,7 +36,7 @@ abstract class Peak_Bootstrap
      *
      * @return string
      */
-    private function getEnvironment()
+    public function getEnvironment()
     {
     	return getenv('APPLICATION_ENV'); 	
     }
