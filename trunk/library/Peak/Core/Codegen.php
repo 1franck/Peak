@@ -93,10 +93,13 @@ class Peak_Core_Codegen
 
     }
     
-    public function BootstrapFileContent()
-    {        
-
+    public function controllerSample($data)
+    {
+    	$original_data = array('ctrl_name' => 'index');
+    	$data = array_merge((array)$original_data, (array)$data);        
+        return $data;
     }
+    
     
     
 }

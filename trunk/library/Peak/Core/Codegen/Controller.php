@@ -1,6 +1,8 @@
 <?php
 
-return 'class '.$data['ctrl_name'].'Controller extends Peak_Controller
+return '<?php
+
+class '.$data['ctrl_name'].'Controller extends Peak_Controller
 {
 
 	/**
