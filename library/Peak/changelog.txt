@@ -1,12 +1,16 @@
 #VERSION 0.7.8# 
 
+*  Peak_Application > fixed modules class load of method run()
+
+*  Added Zend_Db to the framework
+
 *  Peak_Bootstrap > added method getEnvironment() and support 'APPLICATION_ENV' inside from .htaccess
 
 *  added Peak_core_Codegen class > generate application code files
 
 *  Peak_core > Introduce core extensions objects primarily to move methods not used inside the application running process 
                and by the way, ligthen Peak_Core file. Removed/moved methods getLang(), getConfigs(), checkConfigs() 
-               into extension , and added method ext() to access to them. Extensions objects are stored in $extensions var.
+               into extensions , and added method ext() to access to them. Extensions objects are stored in $extensions var.
 
 *  Peak_Core > added method getPaths
 

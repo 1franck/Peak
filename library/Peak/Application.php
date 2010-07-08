@@ -145,7 +145,7 @@ class Peak_Application
             {
                 if(isset($router->controller))
                 {
-                	$ctrl_name = $router->controller.'Controller';                	
+                	$ctrl_name = $router->controller;                	
                     if(!$core->isModule($ctrl_name)) throw new Peak_Exception('ERR_APP_MOD_NOT_FOUND', $ctrl_name);                   
                     $this->controller = new $ctrl_name();
                 }
