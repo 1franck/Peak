@@ -27,13 +27,13 @@ if(!defined('_VERSION_')) {
 //add W_LIB_ABSPATH to include path
 set_include_path(implode(PATH_SEPARATOR, array(LIBS_ABSPATH, get_include_path())));
 
-//if zend lib specified, we include Zend Autoloader
+//if zend lib specified we add it to include path
 if(defined('ZEND_LIB_ABSPATH')) {   
     set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), ZEND_LIB_ABSPATH)));
 }
 
 //*optionnal
-//just load immediately files that will be loaded anyway to each execution of an application
+//just load immediately files that anyway will be loaded at each execution of an application
 //by doing this we save some autoload magic function calls and reduce lightly execution time 
 include(LIBRARY_ABSPATH.'/Peak/Registry.php');
 include(LIBRARY_ABSPATH.'/Peak/Router.php');
