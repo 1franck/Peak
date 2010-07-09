@@ -1,3 +1,10 @@
+#VERSION 0.7.9#
+
+*  autoload.php > added application custom loading class. 
+                  Classes names mimic the directory structure that Peak use but under your application folder.
+                  Ex: class Application_Models_User    = file: application/yourapp/models/user.php,
+                      class Application_Libs_Tools_Xyz = file: application/yourapp/libs/tools/xyz.php,...
+
 #VERSION 0.7.8# 
 
 *  Peak_Application > fixed modules class load of method run()

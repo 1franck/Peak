@@ -58,9 +58,20 @@ function _autoloadAppMod($cn)
      include($file);
 }
 
+function _autoloadAppCustom($cn)
+{
+	$strtopath = str_replace('_','/',$cn).'.php';
+	$strtopath = str_replace('Application/','',$strtopath);
+    $file = APPLICATION_ABSPATH.'/'.$strtopath;
+
+    if(!file_exists($file)) return false;
+    include($file);
+}
+
 spl_autoload_register('_autoloadPeak');
 spl_autoload_register('_autoloadAppCtrl');
 spl_autoload_register('_autoloadAppMod');
+spl_autoload_register('_autoloadAppCustom');
 spl_autoload_register('_autoloadZendInternal');
 if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
  

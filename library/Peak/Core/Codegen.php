@@ -70,6 +70,12 @@ class Peak_Core_Codegen
 		return false;
 	}
     
+	/**
+	 * Application configs.php
+	 *
+	 * @param  array $data
+	 * @return array
+	 */
     public function configsSample($data)
     {        
     	$original_data = array('PROJECT_NAME'     => 'MyApp',
@@ -93,11 +99,30 @@ class Peak_Core_Codegen
 
     }
     
+    /**
+     * Application controller
+     *
+     * @param  array $data
+     * @return array
+     */
     public function controllerSample($data)
     {
     	$original_data = array('ctrl_name' => 'index');
     	$data = array_merge((array)$original_data, (array)$data);        
         return $data;
+    }
+    
+    /**
+     * Application public index
+     *
+     * @param  array $data
+     * @return array
+     */
+    public function indexSample($data)
+    {
+    	$original_data = array('');
+    	$data = array_merge((array)$original_data, (array)$data);
+    	return $data;
     }
     
     
