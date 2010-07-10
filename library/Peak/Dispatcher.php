@@ -4,9 +4,11 @@
  * Peak_Dispatcher
  * 
  * @desc This is an standalone component and should no be used inside framework MVC!
- *       This class looks for actions keys in global var like $_GET and $_POST and 
- *       dispatch them to action(s) depending on $_recursive_depth properties.
- *       IMPORTANT. The data of action value are not used neither filtered so be sure to escape/valid action datas before anything
+ *       This class looks for actions keys names in global variable like $_GET, $_POST, $_SESSION and 
+ *       dispatch them to action(s) depending on $_recursive_depth properties. 
+ *       Usefull for standalone page and to regroup logic behind ajax request
+ *       IMPORTANT. The data of action value and $resource are not filtered so be sure to sanitize/valid action 
+ *       datas and resource before doing anything 
  *  
  * @author  Francois Lajoie
  * @version $Id$
@@ -64,7 +66,7 @@ abstract class Peak_Dispatcher
                     $action_key = str_ireplace($prefix.'_','',$action);                        
                     if(isset($this->resource[$action_key])) {
                     	++$this->_actions_triggered;
-                        $this->$action();                                           	
+                        $this->$action();
                         if(!$this->_recursivity) {
                             $this->stop();
                             return;
