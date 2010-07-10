@@ -5,7 +5,7 @@
  */
 $file_to_test = realpath('./../library/Peak/Pattern.php');
 include($file_to_test);
-echo 'Tested file: '.$file_to_test;
+echo 'Tested file: '.$file_to_test.'<br />';
 
 
 /**
