@@ -1,5 +1,7 @@
 #VERSION 0.7.9#
 
+*  Peak_Dispatcher > added method getAcceptedGlobals()
+
 *  autoload.php > added application custom loading class. 
                   Classes names mimic the directory structure that Peak use but under your application folder.
                   Ex: class Application_Models_User    = file: application/yourapp/models/user.php,

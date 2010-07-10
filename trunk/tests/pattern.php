@@ -8,7 +8,7 @@ include(dirname(__FILE__) . '/simpletest/autorun.php');
 include(dirname(__FILE__) . '/tests_helpers/showpasses.php');
 
 
-$test = &new TestSuite('class.pattern.php tests suite');
+$test = &new TestSuite('Peak_Pattern tests suite');
 
 $test->addTestFile('classes/testPattern.php');
 

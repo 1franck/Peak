@@ -12,4 +12,6 @@ $test = &new TestSuite('class.router.php tests suite');
 
 $test->addTestFile('./../classes/testRouter.php');
 
+$curpath = str_replace('\\','/',dirname(__FILE__));
+
 $test->run(new ShowPasses());

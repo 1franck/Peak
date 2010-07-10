@@ -1,4 +1,4 @@
-<h3>Tests Unit:</h3>
+<h3>Peak Tests Unit:</h3>
 <ul>
 <?php
 

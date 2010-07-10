@@ -13,13 +13,14 @@
  */
 abstract class Peak_Dispatcher
 {
+	
     public $resource;                                              //always reflect current resource of a called action
     
     public $response = array();                                    //container for response
        
     private $_accepted_globals = array('_GET','_POST','_SESSION'); //global variable allow
         
-    private $_actions;                                             //actions method list depending on $_accepted_globals
+    private $_actions = array();                                   //actions method list depending on $_accepted_globals
     
     private $_recursivity  = false;                                //allow multiple actions calls
     
@@ -140,6 +141,46 @@ abstract class Peak_Dispatcher
     public function getActions()
     {
         return $this->_actions;
+    }
+    
+    /**
+     * Return accepted globals
+     * 
+     * @return array
+     */
+    public function getAcceptedGlobals()
+    {
+    	return $this->_accepted_globals;
+    }
+    
+    /**
+     * Return recursivity
+     * 
+     * @return array
+     */
+    public function getRecursivity()
+    {
+    	return $this->_recursivity;
+    }
+    
+    /**
+     * Return recursivity depth
+     * 
+     * @return array
+     */
+    public function getRecursivityDepth()
+    {
+    	return $this->_recursivity_depth;
+    }
+    
+    /**
+     * Return number of actions triggered
+     * 
+     * @return array
+     */
+    public function getActionsTriggered()
+    {
+    	return $this->_actions_triggered;
     }
     
 }
