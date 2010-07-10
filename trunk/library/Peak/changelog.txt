@@ -3,7 +3,9 @@
 *  Peak_View_Render_Partials > fix render() to allow inclusion of partials scripts inside view 
                                without specifying the whole path
 
-*  Peak_Dispatcher > added method getAcceptedGlobals()
+*  Peak_Dispatcher > added method reset(), getActions(), getRecursivity(), getAcceptedGlobals(),
+                     getRecursivityDepth() and getActionsTriggered()
+                     fixed method _listActions() : flush _actions array before retreiving them
 
 *  autoload.php > added application custom loading class. 
                   Classes names mimic the directory structure that Peak use but under your application folder.

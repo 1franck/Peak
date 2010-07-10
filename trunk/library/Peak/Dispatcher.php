@@ -61,11 +61,10 @@ abstract class Peak_Dispatcher
             {                
                 foreach($this->_actions as $action)
                 {                   
-                    $action_key = str_ireplace($prefix.'_','',$action);
-                                            
+                    $action_key = str_ireplace($prefix.'_','',$action);                        
                     if(isset($this->resource[$action_key])) {
-                        ++$this->_actions_triggered;
-                        $this->$action();
+                    	++$this->_actions_triggered;
+                        $this->$action();                                           	
                         if(!$this->_recursivity) {
                             $this->stop();
                             return;
@@ -76,6 +75,7 @@ abstract class Peak_Dispatcher
                                 return;
                             }
                         }
+                        
                     }
                 }
             }
@@ -92,6 +92,20 @@ abstract class Peak_Dispatcher
     {
         $this->_recursivity = false;
         $this->resource = null;
+    }
+    
+    /**
+     * Reset object to default value
+     */
+    public function reset()
+    {
+    	$this->_actions_triggered = 0;
+    	$this->_recursivity = false;
+    	$this->_recursivity_depth = 3;
+    	$this->_accepted_globals = array('_GET','_POST','_SESSION');
+        $this->resource = null;
+        $this->response = array();
+        $this->_listActions();
     }
     
     /**
@@ -116,11 +130,10 @@ abstract class Peak_Dispatcher
             $l = strlen($prefix) + 1;
             $regexps[] = '/^(['.$prefix.'_]{'.$l.'}[a-zA-Z]{1})/';
         }
-        //print_r($regexps);
                 
         $c_methods = get_class_methods(get_class($this));
         
-        //print_r($c_methods);
+        $this->_actions = array();
         
         if(!is_null($c_methods)) {
             foreach($c_methods as $method) {
