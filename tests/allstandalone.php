@@ -16,5 +16,7 @@ $test->addTestFile('classes/testPattern.php');
 
 $test->addTestFile('classes/testRegistry.php');
 
+$test->addTestFile('classes/testDispatcher.php');
+
 
 $test->run(new ShowPasses());
