@@ -66,18 +66,22 @@ class Peak_View_Render_Partials extends Peak_View_Render
      * @param string $path
      * @return array/string
      */
-    public function render($file,$path)
+    public function render($file,$path = null)
     {    
         //CONTROLLER FILE VIEW       
         $this->_scripts_file = $file;
         $this->_scripts_path = $path;
         
+        if(!isset($path)) {
+        	$this->_scripts_path = THEME_PARTIALS_ABSPATH;
+        	$path = THEME_PARTIALS_ABSPATH;
+        }
+        
         $filepath = $path.'/'.$file;
 
         if(!file_exists($filepath)) {
             $filepath = str_replace(SVR_ABSPATH,'',$filepath);
-            throw new Peak_Exception('ERR_VIEW_TPL_NOT_FOUND', $filepath); //echo $filepath.' view not found'; //
-            
+            throw new Peak_Exception('ERR_VIEW_TPL_NOT_FOUND', $filepath); //echo $filepath.' view not found'; //           
         }
         
         //Partials group FILES VIEW IF EXISTS
