@@ -1,5 +1,9 @@
 #VERSION 0.7.9#
 
+*  Peak_View_Helpers class renamed to singular as the same for /helpers/ folder
+
+*  Peak_View > added magic method __unset()
+
 *  Peak_View_Render_Partials > fix render() to allow inclusion of partials scripts inside view 
                                without specifying the whole path
 
