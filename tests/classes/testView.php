@@ -18,14 +18,48 @@ class TestOfView extends UnitTestCase
     function testOfProperties()
     {    	
     	$vars = $this->view->getVars();
+    	$engine = $this->view->engine();
     	$this->assertTrue(is_array($vars),'$vars is not a valid array');
     	$this->assertTrue(empty($vars),'$vars is not empty');
+    	$this->assertTrue(is_string($engine),'engine should be not set');
+    }
+    
+    function testOfViewVars()
+    {    	
+    	$this->view->test = 'abc';
+    	$this->assertTrue(($this->view->test === 'abc'),'setting var $test failed');
     	
-    	/*$actions = $this->_d->getActions();
-    	$this->assertTrue(is_array($actions),'$_actions is not a valid array');   	
-    	$this->assertTrue(is_bool($this->_d->getRecursivity()),'$_recursivity is not a boolean');   
-    	$this->assertTrue(is_integer($this->_d->getRecursivityDepth()),'$_recursivity_depth is not a integer');
-    	$this->assertTrue(($this->_d->getActionsTriggered() === 0),'$_action_triggered should be 0'); */
+    	unset($this->view->test);
+    	$this->assertTrue(!isset($this->view->test),'$test variable should be unset');
+    	$this->assertFalse(isset($this->view->test456),'$test456 variable should be not set');
+
+    }
+    
+    function testOfViewMethod()
+    {  	
+    	define('DEV_MODE',true);    	
+    	//$this->expectError($this->view->unknowmethod(),'unknow method should trigger error with DEV_MODE = true');   	
+    	//$this->expectException($this->view->unknowmethod(),'unknow method should trigger error with DEV_MODE = true');   	
+    		
+    	$c = $this->view->countVars();
+    	$this->assertTrue(is_integer($c),'countVars() should return integer');
+    	$this->assertTrue(($c == 0),'countVars() should return 0');
+
+    	$this->view->test = 'abc';
+    	$c = $this->view->countVars();
+    	$this->assertTrue(($c == 1),'countVars() should return 1');
+    	
+    	$this->view->resetVars();
+    	$c = $this->view->countVars();
+    	$this->assertTrue(($c == 0),'countVars() should return 0 after calling resetVars()');
+    	
+    	$vars = $this->view->getVars();
+    	
+    	
+
+    	
+    	
+    	
     }
     
    

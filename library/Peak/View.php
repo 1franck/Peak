@@ -49,6 +49,16 @@ class Peak_View
     }
     
     /**
+     * Unset $vars namekey
+     *
+     * @param string $name
+     */
+    public function __unset($name)
+    {
+    	if(array_key_exists($name,$this->vars)) unset($this->vars[$name]);
+    }
+    
+    /**
      * Get view variable
      *
      * @param  string $name
@@ -183,7 +193,7 @@ class Peak_View
     {
         if(isset($name)) {
             
-            $helper_prefix = '';            
+            $helper_prefix = 'Peak_View_Helper_';            
             $name = trim(stripslashes(strip_tags($name)));
             $helper_file = VIEWS_HELPERS_ABSPATH.'/'.$name.'.php';
             $helper_class_name = $helper_prefix.$name;
@@ -193,8 +203,7 @@ class Peak_View
                 //if application views helpers file doesn't exists, 
                 //we check internal Peak/View/Helpers/ folder
                 if(!file_exists($helper_file)) {
-                    $helper_file = LIBRARY_ABSPATH.'/Peak/View/Helpers/'.$name.'.php';
-                    $helper_prefix = 'View_Helpers_';
+                    $helper_file = LIBRARY_ABSPATH.'/Peak/View/Helper/'.$name.'.php';
                     $helper_class_name = $helper_prefix.$name;
                 }
                 
