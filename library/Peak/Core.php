@@ -48,9 +48,6 @@ class Peak_Core
             ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
             //error_reporting(E_ALL | E_STRICT);
         }
-
-        $this->getControllers();
-        $this->getModules();       
     }
     
     /**
@@ -143,7 +140,11 @@ class Peak_Core
      */
     public function isController($name)
     {
+    	if(empty($this->controllers)) {
+    		return (file_exists(self::getPath('controllers').'/'.$name.'.php')) ? true : false;
+    	}
         return (in_array($name,$this->controllers)) ? true : false;
+        
     }
     
     /**
@@ -154,6 +155,9 @@ class Peak_Core
      */
     public function isModule($name)
     {
+    	if(empty($this->modules)) {
+    		return (file_exists(self::getPath('modules').'/'.$name.'/'.$name.'.php')) ? true : false;
+    	}
         return (array_key_exists($name, $this->modules)) ? true : false;
     }
     
