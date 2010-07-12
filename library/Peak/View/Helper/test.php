@@ -1,6 +1,6 @@
 <?php
 
-class View_Helpers_Test extends Peak_View_Helper
+class Peak_View_Helper_Test extends Peak_View_Helper
 {
 
     public function calc($a,$b)

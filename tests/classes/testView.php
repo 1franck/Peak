@@ -7,7 +7,11 @@ class TestOfView extends UnitTestCase
 {
     public $view;
     
-    
+    public function peak($parent = false)
+    {
+    	if(!$parent) return realpath('./../library/Peak');
+    	else return realpath('./../library');
+    }
     
     function testOfInstanciate()
     {  	
@@ -54,13 +58,57 @@ class TestOfView extends UnitTestCase
     	$this->assertTrue(($c == 0),'countVars() should return 0 after calling resetVars()');
     	
     	$vars = $this->view->getVars();
-    	
-    	
 
+    }
+    
+    function testOfViewTheme()
+    {
+    	include($this->peak().'/View/Theme.php');
+    	$theme = $this->view->theme();
+    	$this->assertTrue(is_a($theme,'Peak_View_Theme') ,'$theme is not an object of Peak_View_Theme');
+    }
+    
+    function testOfViewEngine()
+    {
+    	try {   		
+    		$this->view->render('test','test');
+    	}
+    	catch (Peak_Exception $e) {
+    		$exception = 'render() expected to fail when no engine have been loaded before';
+    	}
     	
+    	$this->assertTrue(isset($exception), $exception);
+    	
+    	include($this->peak().'/View/Render.php');
+    	include($this->peak().'/View/Render/Partials.php');
+    	
+    	$this->view->setRenderEngine('unknow');
+    	$engine = $this->view->engine();
+    	$this->assertTrue(is_a($engine,'Peak_View_Render_Partials'),'Peak_View_Render_Partials should be set when calling setRenderEngine() with unknown engine');
+    }
+    
+    
+    function testOfHelper()
+    {
+    	//define('VIEWS_HELPERS_ABSPATH',$this->peak());
+    	define('LIBRARY_ABSPATH',$this->peak(true));
+    	include($this->peak().'/View/Helper.php');
+    	$object = $this->view->helper('icons');
+    	$this->assertTrue(is_a($object,'Peak_View_Helper_Icons'),'Peak_View_Helper_Icons should be set when calling helper(\'icons\')');
+    	
+    	try {   		
+    		$test = @$this->view->helper('ic767ons');
+    		$this->assertFalse(is_object($test),'helper() excepted to fail when calling unknow helper name');
+    	}
+    	catch (Peak_Exception $e) {
+    		$exception = 'helper() excepted to fail when calling unknow helper name';
+    	}   	
+    	//$this->assertTrue(isset($exception), $exception);
     	
     	
     }
     
    
 }
+
+class Peak_Exception extends Exception { }

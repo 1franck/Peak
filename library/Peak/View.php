@@ -135,14 +135,14 @@ class Peak_View
                 break;
                 
             default :
-                $options = null;
+                $this->setRenderEngine('Partials');
+                return;
                 break;
         }
         
         $engine_class = 'Peak_View_Render_'.$engine;
         
-        $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();           
-               
+        $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();               
     }
     
     /**
