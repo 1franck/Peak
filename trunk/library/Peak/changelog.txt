@@ -1,7 +1,7 @@
 #VERSION 0.7.9#
 
 *  Peak_View > fixed issue with setRenderEngine() when calling unknow rendering engine.
-               Peak_View_Render_Partials is now loaded by default no engine found.
+               Peak_View_Render_Partials is now loaded by default if no engine found.
 
 *  Peak_View_Helpers class renamed to singular as the same for /helpers/ folder
 
