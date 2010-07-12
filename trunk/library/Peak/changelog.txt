@@ -1,5 +1,8 @@
 #VERSION 0.7.9#
 
+*  Peak_Core > tweaked isController() and isModules() to check for the files instead of listing all controllers.
+               It speedup application controllers/modules routing. Controllers and modules still can be listed on demandé
+
 *  Peak_View > fixed issue with setRenderEngine() when calling unknow rendering engine.
                Peak_View_Render_Partials is now loaded by default if no engine found.
 
