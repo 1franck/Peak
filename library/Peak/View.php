@@ -15,6 +15,7 @@ include('View/Functions/general.php');
 
 class Peak_View
 {
+	
     protected $vars = array();            //view vars
     
     private $helpers;                     //view helpers objects  

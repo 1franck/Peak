@@ -104,8 +104,22 @@ class TestOfView extends UnitTestCase
     		$exception = 'helper() excepted to fail when calling unknow helper name';
     	}   	
     	//$this->assertTrue(isset($exception), $exception);
+    }
+    
+    
+    function testOfViewIni()
+    {
+    	//$path = realpath('./temps/view.ini');
+    	define('VIEWS_INI_ABSPATH', realpath('./temps/'));
+    	//include($path);
     	
+    	$this->view->resetVars();
+    	$c = $this->view->countVars();
+    	$this->assertTrue(($c == 0),'countVars() should return 0 after calling resetVars()');
     	
+    	$this->view->iniVar('view.ini');
+    	$c = $this->view->countVars();
+    	$this->assertTrue(($c == 5),'countVars() should return 5 after calling iniVar()');
     }
     
    

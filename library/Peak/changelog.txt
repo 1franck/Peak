@@ -1,5 +1,8 @@
 #VERSION 0.7.9#
 
+
+*  Peak_Render > modified method baseUrl(). Deprecated $view object variable in views file. Use $this instead.
+
 *  Peak_Render > added method enableCacheStrip() and property $_cache_strip. By default $_cache_strip is false. 
 
 *  Peak_Router > added method setBaseUri() and moved code from __construct() there.
