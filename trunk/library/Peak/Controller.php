@@ -32,7 +32,7 @@ abstract class Peak_Controller
         $this->initController();
         
         //list all methods name beginning by $c_aprefix
-        $this->listActions();
+        //$this->listActions();
 
         //handle controller routing action
         //$this->handleAction();  
@@ -86,6 +86,41 @@ abstract class Peak_Controller
             if(preg_match($regexp,$method)) $this->c_actions[] = $method;
         }
     }
+    
+    /**
+     * Check if action exists. Support zend controller action method name
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isAction($name)
+    {
+    	return (method_exists($this->name,$name)) ? true : false;
+    }
+    
+    /**
+     * Check if zend action exists.
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isZendAction($name)
+    {
+    	$name = $this->zendAction($name);
+    	if(method_exists($this->name,$name)) {
+    		return true;
+    	}
+    }
+    
+    /**
+     * Format peak action to zend action syntax
+     *
+     * @param string $action
+     */
+    public function zendAction($name)
+    {
+    	return str_replace('_','',$name).'Action';
+    }
        
     /**
      * Analyse router and lauch associated action method
@@ -98,8 +133,13 @@ abstract class Peak_Controller
         
         $action = Peak_Registry::obj()->router->action;
         
-        if((isset($action)) && (in_array($action,$this->c_actions))) $this->action = $action;
-        elseif((isset($action_by_default)) && (in_array($action_by_default,$this->c_actions)))
+        if((isset($action)) && ($this->isAction($action))) $this->action = $action;
+        elseif((isset($action)) && ($this->isZendAction($action))) 
+        {
+        	$this->action = $action;
+        	$action = $this->zendAction($action);
+        }
+        elseif((isset($action_by_default)) && ($this->isAction($action_by_default)))
         {
             $action = $action_by_default;
             $this->action = $action_by_default;
