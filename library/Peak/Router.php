@@ -66,11 +66,21 @@ class Peak_Router
      */
     public function __construct($base_uri)
     {
-        //fix '/' missing at left and right of $base_uri
+    	$this->setBaseUri($base_uri);   
+    }
+    
+    /**
+     * Set the base of url request
+     *
+     * @param string $base_uri
+     */
+    public function setBaseUri($base_uri)
+    {
+    	//fix '/' missing at left and right of $base_uri
         if(substr($base_uri, 0, 1) !== '/') $base_uri = '/'.$base_uri;
         if(substr($base_uri, -1, 1) !== '/') $base_uri = $base_uri.'/';
         
-        $this->base_uri = $base_uri;       
+        $this->base_uri = $base_uri;   
     }
 
         
