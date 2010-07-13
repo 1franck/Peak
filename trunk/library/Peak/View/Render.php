@@ -62,7 +62,10 @@ abstract class Peak_View_Render
      */
     public function baseUrl($path = null)
     {
-        return ROOT_URL.'/'.$path;
+    	if(defined('ROOT_URL')) return ROOT_URL.'/'.$path;
+    	elseif(isset($_SERVER['DOCUMENT_ROOT'])) {
+    		return $_SERVER['DOCUMENT_ROOT'].'/'.$path;
+    	}
     }
     
     

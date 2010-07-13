@@ -79,15 +79,10 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     {
         // remove layout
         // so we can use render() to include a partial file inside view scripts
-        $this->noLayout();
-                
-        // shorcut for view var
-        // Will be deprecated in v0.8
-        // use $this->var_name instead of $view->var_name inside views file
-        $view = Peak_Registry::obj()->view;        
+        $this->noLayout();      
         
         // include theme functions.php    
-        if($view->theme()->getFunctionsFile()) include_once($view->theme()->getFunctionsFile());
+        if(Peak_Registry::obj()->view->theme()->getFunctionsFile()) include_once(Peak_Registry::obj()->view->theme()->getFunctionsFile());
 
         // include controller action view with or without partials groups
         include($layout);     

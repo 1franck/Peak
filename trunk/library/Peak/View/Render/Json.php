@@ -28,7 +28,7 @@ class Peak_View_Render_Json extends Peak_View_Render
         
         $json = json_encode($viewvars);
 
-        $this->output($json);
+        $this->preOutput($json);
     }
     
     /**

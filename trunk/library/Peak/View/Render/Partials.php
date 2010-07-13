@@ -111,15 +111,10 @@ class Peak_View_Render_Partials extends Peak_View_Render
     {
         // remove partials group for Peak_View_Render_Partials
         // so we can use render() to include a single partial file without group inside view scripts
-        $this->noGroup();
-                
-        // shorcut for view var
-        // Will be deprecated in v0.8
-        // use $this->var_name instead of $view->var_name inside views files
-        $view = Peak_Registry::obj()->view;        
+        $this->noGroup();  
         
         // include theme functions.php    
-        if($view->theme()->getFunctionsFile()) include_once($view->theme()->getFunctionsFile());
+        if(Peak_Registry::obj()->view->theme()->getFunctionsFile()) include_once(Peak_Registry::obj()->view->theme()->getFunctionsFile());
         
         // include controller action view with or without partials groups
         if(is_array($viewfiles)) foreach($viewfiles as $file) include($file);
