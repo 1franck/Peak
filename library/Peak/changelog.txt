@@ -1,5 +1,11 @@
 #VERSION 0.7.9#
 
+*  Peak_Controller > added methods isAction(), isZendAction() and zendAction(). Tweaked handleAction() of
+                     controller to support 2 actions name styntax: 
+                     ex: _index() or indexAction().
+                     Note that _index() syntax have priority over indexAction() syntax.
+ 
+
 *  Peak_Core > tweaked isController() and isModules() to check for the files instead of listing all controllers.
                It speedup application controllers/modules routing. Controllers and modules still can be listed on demandé
 
