@@ -16,6 +16,7 @@ abstract class Peak_View_Render
     protected $_cache_expire;          //script cache expiration time
     protected $_cache_path;            //scripts view cache path. generate by enableCache()
     protected $_cache_id;              //current script view md5 key. generate by preOutput() 
+    protected $_cache_strip = false;   //will strip all repeating space caracters
     
     /**
      * Point to Peak_View __get method
@@ -107,8 +108,10 @@ abstract class Peak_View_Render
                 //cache and output current view script
                 ob_start();
                 $this->output($data);
-                //if(is_writable($cache_file)) { //fail if file cache doesn't already exists
-                    file_put_contents($this->getCacheFile(), preg_replace('!\s+!', ' ', ob_get_contents()));
+                //if(is_writable($cache_file)) { //fail if file cache doesn't already 
+                    $content = ob_get_contents();
+                    if($this->_cache_strip) $content = preg_replace('!\s+!', ' ', $content);
+                    file_put_contents($this->getCacheFile(), $content);
                 //}
                 ob_get_flush();
             }           
@@ -170,6 +173,15 @@ abstract class Peak_View_Render
         return $this->_cache_path.'/'.$this->_cache_id.'.php';
     }
     
+    /**
+     * Enable/disable cache compression
+     *
+     * @param bool $status
+     */
+    public function enableCacheStrip($status)
+    {
+    	if(is_bool($status)) $this->_cache_strip = $status;
+    }
     
     /**
      * Allow caching block inside views

@@ -1,6 +1,10 @@
 #VERSION 0.7.9#
 
-*  Peak_controller > remove _listAction() from __construct(). Can be called on demand inside controllers child
+*  Peak_Render > added method enableCacheStrip() and property $_cache_strip. By default $_cache_strip is false. 
+
+*  Peak_Router > added method setBaseUri() and moved code from __construct() there.
+
+*  Peak_controller > remove _listActions() from __construct(). Can be called on demand inside controllers child
                      but no more needed each time by handleAction()
 
 *  Peak_Controller > added methods isAction(), isZendAction() and zendAction(). Tweaked handleAction() of
