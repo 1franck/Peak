@@ -31,7 +31,7 @@ abstract class Peak_Controller
         //initialize ctrl
         $this->initController();
         
-        //list all methods name beginning by $c_aprefix
+        //list all methods name beginning by $c_aprefix @deprecated
         //$this->listActions();
 
         //handle controller routing action

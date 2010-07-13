@@ -1,5 +1,8 @@
 #VERSION 0.7.9#
 
+*  Peak_controller > remove _listAction() from __construct(). Can be called on demand inside controllers child
+                     but no more needed each time by handleAction()
+
 *  Peak_Controller > added methods isAction(), isZendAction() and zendAction(). Tweaked handleAction() of
                      controller to support 2 actions name styntax: 
                      ex: _index() or indexAction().
