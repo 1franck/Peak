@@ -7,7 +7,7 @@
 
 *  Peak_Router > added method setBaseUri() and moved code from __construct() there.
 
-*  Peak_controller > remove _listActions() from __construct(). Can be called on demand inside controllers child
+*  Peak_Controller > remove _listActions() from __construct(). Can be called on demand inside controllers child
                      but no more needed each time by handleAction()
 
 *  Peak_Controller > added methods isAction(), isZendAction() and zendAction(). Tweaked handleAction() of
@@ -17,7 +17,7 @@
  
 
 *  Peak_Core > tweaked isController() and isModules() to check for the files instead of listing all controllers.
-               It speedup application controllers/modules routing. Controllers and modules still can be listed on demandé
+               It speedup application controllers/modules routing. Controllers and modules still can be listed on demand
 
 *  Peak_View > fixed issue with setRenderEngine() when calling unknow rendering engine.
                Peak_View_Render_Partials is now loaded by default if no engine found.
@@ -55,7 +55,7 @@
 *  Peak_Core > added method getPaths
 
 *  autoload.php > added 'Controller' suffix support for controllers files and 
-   fixed Peak_Application run() method and Peak_Controller initController() method accordly
+   fixed Peak_Application run() method and Peak_Controller initController() method accordly.
    Controller files and classes names look likes 'foobarController.php'
 
 *  Added Peak_Dispatcher
@@ -128,11 +128,11 @@
 *  Peak_View_Render_XXX > fixed a circular problem with render() since render() 
    includes views and views have access to $this->render. The problem came from
    render() behavior and affect all view rendering engines.
-   Also Peak_View_RenderInterface deleted and replace by abstract class Peak_View_Render
+   Also Peak_View_RenderInterface deleted and replace by abstract class Peak_View_Render.
    __get() method added and point to Peak_View::__get()
 
    !IMPORTANT object $view in TEMPLATE will be deprecated in favor of $this.
-    ex: $this->my_view_var instead $view->my_view_var()
+    ex: $this->my_view_var instead $view->my_view_var
    
  
    All view rendering engines needs:
