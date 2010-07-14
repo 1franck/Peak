@@ -62,7 +62,7 @@ abstract class Peak_Controller
         }
         else {
         	$script_folder = str_ireplace('controller', '', $this->name);
-            $this->path = THEME_SCRIPTS_ABSPATH.'/'.$script_folder;
+            $this->path = $core->getPath('theme_scripts').'/'.$script_folder;
         }
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
