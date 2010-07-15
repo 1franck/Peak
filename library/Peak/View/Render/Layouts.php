@@ -29,7 +29,18 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function useLayout($layout)
     {
-        if(file_exists($this->_layouts_path.'/'.$layout.'.php')) $this->_layout_file = $layout.'.php';
+        if($this->isLayout($layout)) $this->_layout_file = $layout.'.php';
+    }
+    
+    /**
+     * Verify if layout exists
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isLayout($name)
+    {
+    	return (file_exists($this->_layout_path.'/'.$name.'.php')) ? true : false;
     }
 
     /**
@@ -48,8 +59,12 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      * @param string $path
      * @return array/string
      */
-    public function render($file,$path)
+    public function render($file,$path = null)
     {
+        if(!isset($path)) {
+        	//$this->_scripts_path = THEME_LAYOUTS_ABSPATH;
+        	$path = THEME_LAYOUTS_ABSPATH;
+        }
         
         //CONTROLLER FILE VIEW       
         $filepath = $path.'/'.$file;
@@ -58,7 +73,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
             $filepath = str_replace(SVR_ABSPATH,'',$filepath);
             throw new Peak_Exception('ERR_VIEW_TPL_NOT_FOUND', $filepath); //echo $filepath.' view not found'; //
         }
-                       
+                     
         //LAYOUT FILES VIEW IF EXISTS
         if(isset($this->_layout_file)) {
             $filepath = $this->_layouts_path.'/'.$this->_layout_file;
