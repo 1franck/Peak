@@ -39,14 +39,14 @@ abstract class Peak_Controller
     final private function initController()
     {       
         $this->view = Peak_Registry::obj()->view;
-                
-        $core = Peak_Registry::obj()->core;
-               
+                               
         $this->name = get_class($this);       
         
         $this->title = $this->name;
         
         $this->type = Peak_Registry::obj()->router->controller_type;
+        
+        $core = Peak_Registry::obj()->core;
         
         if($this->type === 'module') {
             $this->path = $core->getPath('modules').'/'.$this->name;
