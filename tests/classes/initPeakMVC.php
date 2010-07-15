@@ -7,12 +7,13 @@ include($app.'/configs.php');
 
 function peak($parent = false)
 {
+	//global $basepath;
 	if(!$parent) return $basepath.'./../../library/Peak';
 	else return $basepath.'./../../library';
 }
 
 /* app boot */
-include(peak().'/boot.php');
+include($basepath.'./../../library/Peak/boot.php');
 
 /* app start */
 try {
@@ -20,10 +21,10 @@ try {
     /* load app obj */
     $app = Peak_Application::getInstance();
     
-    $core = Peak_Registry::obj()->core;
+    //$core = Peak_Registry::obj()->core;
        
     /* run app */    
-    $app->run(APP_DEFAULT_CTRL);   
+    //$app->run(APP_DEFAULT_CTRL);   
 
     /* render controllers view(s) file(s) */
     //$app->controller->render();    

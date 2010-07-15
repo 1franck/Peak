@@ -1,5 +1,6 @@
 #VERSION 0.7.9#
 
+*  Peak_Controller > remove property $c_prefix. renamed property $c_actions to $actions.
 
 *  Peak_Render > modified method baseUrl(). Deprecated $view object variable in views file. Use $this instead.
 

@@ -15,8 +15,7 @@ abstract class Peak_Controller
     public $path;                 //absolute view scripts controller path
     public $type;                 //'controller' or a 'module' controller
        
-    public $c_actions = array();  //actions methods list   
-    public $c_aprefix = '_';      //action methods name prefix
+    public $actions = array();    //actions methods list
 
     protected $view;              //instance of view
     
@@ -30,12 +29,6 @@ abstract class Peak_Controller
     {   
         //initialize ctrl
         $this->initController();
-        
-        //list all methods name beginning by $c_aprefix @deprecated
-        //$this->listActions();
-
-        //handle controller routing action
-        //$this->handleAction();  
     }
 
     /**
@@ -75,15 +68,17 @@ abstract class Peak_Controller
      *
      * @param string $prefix
      */
-    protected function listActions($prefix = '_')
+    public function listActions($prefix = '_')
     {
         $c_methods = get_class_methods($this->name);
-        
-        $this->c_aprefix = $prefix;
-        $regexp = '/^(['.$this->c_aprefix.']{1}[a-zA-Z]{1})/';
-         
+     
+        $regexp = '/^([_]{1}[a-zA-Z]{1})/';
+        $regexp2 = '/^([a-zA-Z]*)Action$/';
+        $methods_ignored = array('preAction','postAction','isAction','handleAction','isZendAction','zendAction','getAction');
+              
         foreach($c_methods as $method) {            
-            if(preg_match($regexp,$method)) $this->c_actions[] = $method;
+            if(preg_match($regexp,$method)) $this->actions[] = $method;
+            elseif((preg_match($regexp2,$method)) && (!in_array($method,$methods_ignored))) $this->actions[] = $method;
         }
     }
     
