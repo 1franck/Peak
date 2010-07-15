@@ -27,11 +27,12 @@ class TestOfController extends UnitTestCase
     	$this->assertTrue(($this->ctrl->title === 'testController') ,'$title is not testController');
     	$this->assertNull($this->ctrl->file,'$file should be null');
     	
-    	$this->assertTrue(is_array($this->ctrl->c_actions) ,'$c_actions is not an array');
-    	$this->assertTrue(empty($this->ctrl->c_actions) ,'$c_actions is not empty');
+    	$this->assertTrue(is_array($this->ctrl->actions) ,'$c_actions is not an array');
+    	$this->assertTrue(empty($this->ctrl->actions) ,'$c_actions is not empty');
     	
     	$this->ctrl->listActions();
-    	print_r($this->ctrl->c_actions);
+    	$this->assertTrue((count($this->ctrl->actions) == 2  ) ,'count $actions should be 2');
+    	//print_r($this->ctrl->actions);
     }
     
     
@@ -41,20 +42,10 @@ class TestOfController extends UnitTestCase
 class testController extends Peak_Controller 
 { 
 	
-	//public function index()
-	//{
-		
-//	}
+	public function index()	{ }
 	
-	public function indexAction()
-	{
-		
-	}
+	public function indexAction() { }
 	
-	public function contactAction()
-	{
-		
-	}
-	
+	public function contactAction()	{ }
 
 }
