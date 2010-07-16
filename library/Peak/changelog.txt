@@ -1,5 +1,11 @@
 #VERSION 0.7.9#
 
+*  Peak_Router > added property $params_assoc. fixed resolveRequest() to added params as associative array.
+                 added property $params_assoc to Peak_controller too.
+
+*  Peak_Render > fixed __call() for unknow method to check in Peak_View object if method exits and call it.
+                 Removed method helper().
+
 *  fixed an issue of render() in Peak_Render_Layouts and Peak_Render_Partials 
    when use cache and render some file inside views.
 

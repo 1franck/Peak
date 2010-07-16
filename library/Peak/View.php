@@ -10,7 +10,7 @@
  * @uses     Peak_View_Theme, Peak_View_Helpers
  */
 
-include('View/Functions/general.php');
+//include('View/Functions/general.php');
 
 
 class Peak_View

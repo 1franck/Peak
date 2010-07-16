@@ -33,19 +33,21 @@
 class Peak_Router
 {
         
-    public $base_uri;         //default url relative root set with __construct()
+    public $base_uri;                   //default url relative root set with __construct()
     
-    public $request_uri;      //$_SERVER['REQUEST_URI'] without base_uri.
+    public $request_uri;                //$_SERVER['REQUEST_URI'] without base_uri.
     
-    public $request;          //original unparsed request array
+    public $request;                    //original unparsed request array
     
-    public $controller;       //controller name
+    public $controller;                 //controller name
     
-    public $controller_type;  //controller type
+    public $controller_type;            //controller type
     
-    public $action;           //requested action
+    public $action;                     //requested action
     
-    public $params;           //action param(s) array
+    public $params = array();           //action param(s) array
+    
+    public $params_assoc = array();    //actions param(s) associative array
     
     /**
      * Reserved first param keyword for designating the king of controllers we request
@@ -129,6 +131,11 @@ class Peak_Router
 	        $this->action = array_shift($request);
 	        $this->action = (empty($this->action)) ? '_index' : '_'.$this->action;
 	        $this->params = $request;
+	        $i = 0;
+	        foreach($this->params as $k => $v) {
+	        	if($i == 0) { $key = $v; ++$i; }
+	        	else { $this->params_assoc[$key] = $v; $i = 0; }
+	        }
 	    }
 	}
 	

@@ -27,7 +27,8 @@ class TestOfRouter extends UnitTestCase
               Type: '.$router->controller_type.'<br /><br />
               Controller: '.$router->controller.'<br />
               Action: '.$router->action.'<br />
-              Params: '.print_r($router->params,true).'<br />';
+              Params: '.print_r($router->params,true).'<br />
+              Params assoc: '.print_r($router->params_assoc,true).'<br />';
         
         //print_r($router->request);
         

@@ -38,21 +38,13 @@ abstract class Peak_View_Render
      */
     public function  __call($method, $args)
     {
-        if((defined('DEV_MODE')) && (DEV_MODE)) {
+    	$view =& Peak_Registry::obj()->view;
+    	if(method_exists($view,$method)) return call_user_func_array(array($view, $method), $args);
+        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
             trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
         }
     }
-    
-    /**
-     * Return view helpers object from Peak_View::helper()
-     *
-     * @param  string $name
-     * @return object
-     */
-    public function helper($name = null)
-    {
-        return Peak_Registry::obj()->view->helper($name);
-    }
+
     
     /**
      * Return public root url of your application
