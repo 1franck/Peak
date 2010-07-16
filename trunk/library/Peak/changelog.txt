@@ -1,7 +1,7 @@
 #VERSION 0.7.9#
 
 *  Peak_Render_Layouts > added method isLayout(). fix render() to allow inclusion of layout scripts 
-                         inside view without specifying the whole path
+                         inside view without specifying the whole path. Tweaked useLayout() to use isLayout().
 
 *  Peak_Controller > remove property $c_prefix. renamed property $c_actions to $actions.
 

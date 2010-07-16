@@ -42,10 +42,12 @@ class TestOfController extends UnitTestCase
 class testController extends Peak_Controller 
 { 
 	
-	public function index()	{ }
+	public function preAction() { }
 	
-	public function indexAction() { }
-	
+	public function _index() { }
+		
 	public function contactAction()	{ }
+	
+	public function postAction() { }
 
 }
