@@ -40,7 +40,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function isLayout($name)
     {
-    	return (file_exists($this->_layout_path.'/'.$name.'.php')) ? true : false;
+    	return (file_exists($this->_layouts_path.'/'.$name.'.php')) ? true : false;
     }
 
     /**
