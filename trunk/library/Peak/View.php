@@ -218,7 +218,7 @@ class Peak_View
                         trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT, E_USER_WARNING);
                     }
                     $this->helpers[$name] = new $helper_class_name(); //<--------------------------- NEED FIX
-                    if(!is_object($this->helpers[$name])) echo 'merde';
+                    if(!is_object($this->helpers[$name])) echo '';
                     return $this->helpers[$name];
                 }
                 else { //die('test');

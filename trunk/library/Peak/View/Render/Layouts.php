@@ -64,6 +64,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         if(!isset($path)) {
         	//$this->_scripts_path = THEME_LAYOUTS_ABSPATH;
         	$path = THEME_LAYOUTS_ABSPATH;
+        	$no_cache = true;
         }
         
         //CONTROLLER FILE VIEW       
@@ -81,7 +82,8 @@ class Peak_View_Render_Layouts extends Peak_View_Render
             $this->_scripts_path = $path;
         }
 
-        $this->preOutput($filepath);        
+        if(isset($no_cache)) $this->output($filepath);
+        else $this->preOutput($filepath);        
     }
     
      

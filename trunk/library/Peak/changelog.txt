@@ -1,5 +1,8 @@
 #VERSION 0.7.9#
 
+*  fixed an issue of render() in Peak_Render_Layouts and Peak_Render_Partials 
+   when use cache and render some file inside views.
+
 *  Peak_Render_Layouts > added method isLayout(). fix render() to allow inclusion of layout scripts 
                          inside view without specifying the whole path. Tweaked useLayout() to use isLayout().
 
