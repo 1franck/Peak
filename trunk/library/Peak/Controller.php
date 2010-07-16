@@ -21,7 +21,8 @@ abstract class Peak_Controller
     
     protected $helpers;           //controller helpers objects
     
-    protected $params;            //request params
+    protected $params;            //request params array
+    protected $params_assoc;      //request params associative array
     protected $action;            //action called by handleRequest()
     
         
@@ -60,6 +61,7 @@ abstract class Peak_Controller
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
         $this->params = Peak_Registry::obj()->router->params;
+        $this->params_assoc = Peak_Registry::obj()->router->params_assoc;
     }
     
     /**
