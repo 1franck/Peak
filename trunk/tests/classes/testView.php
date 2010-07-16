@@ -81,10 +81,20 @@ class TestOfView extends UnitTestCase
     	
     	include($this->peak().'/View/Render.php');
     	include($this->peak().'/View/Render/Partials.php');
+    	include($this->peak().'/View/Render/Layouts.php');
+    	include($this->peak().'/View/Render/Json.php');
     	
     	$this->view->setRenderEngine('unknow');
     	$engine = $this->view->engine();
-    	$this->assertTrue(is_a($engine,'Peak_View_Render_Partials'),'Peak_View_Render_Partials should be set when calling setRenderEngine() with unknown engine');
+    	$this->assertTrue(is_a($engine,'Peak_View_Render_Partials'),'Peak_View_Render_Partials should be set when calling setRenderEngine() with unknown engine.');    	
+    	
+    	$this->view->setRenderEngine('Layouts');
+    	$engine = $this->view->engine();
+    	$this->assertTrue(is_a($engine,'Peak_View_Render_Layouts'),'Peak_View_Render_Layouts should be set when calling setRenderEngine(\'Layouts\').');
+    	
+    	$this->view->setRenderEngine('Json');
+    	$engine = $this->view->engine();
+    	$this->assertTrue(is_a($engine,'Peak_View_Render_Json'),'Peak_View_Render_Json should be set when calling setRenderEngine(\'Json\').');
     }
     
     

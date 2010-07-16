@@ -34,9 +34,7 @@ class TestOfController extends UnitTestCase
     	$this->assertTrue((count($this->ctrl->actions) == 2  ) ,'count $actions should be 2');
     	//print_r($this->ctrl->actions);
     }
-    
-    
-   
+
 }
 
 class testController extends Peak_Controller 

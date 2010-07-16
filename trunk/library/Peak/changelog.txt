@@ -1,5 +1,7 @@
 #VERSION 0.7.9#
 
+*  Peak_View > fixed a second issue with setRenderEngine() when calling unknow rendering engine.
+
 *  Peak_Router > added property $params_assoc. fixed resolveRequest() to added params as associative array.
                  added property $params_assoc to Peak_controller too.
 

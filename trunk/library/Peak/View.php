@@ -136,8 +136,10 @@ class Peak_View
                 break;
                 
             default :
-                $this->setRenderEngine('Partials');
-                return;
+            	if(!class_exists('Peak_View_Render_'.$engine)) {
+            		$this->setRenderEngine('Partials');
+            		return;
+            	}
                 break;
         }
         
