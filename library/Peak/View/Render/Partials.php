@@ -75,6 +75,7 @@ class Peak_View_Render_Partials extends Peak_View_Render
         if(!isset($path)) {
         	$this->_scripts_path = THEME_PARTIALS_ABSPATH;
         	$path = THEME_PARTIALS_ABSPATH;
+        	$no_cache = true;
         }
         
         $filepath = $path.'/'.$file;
@@ -103,7 +104,8 @@ class Peak_View_Render_Partials extends Peak_View_Render
             
         }
         else {
-            $this->preOutput($filepath);
+        	if(isset($no_cache)) $this->output($filepath);
+            else $this->preOutput($filepath);
         }
     }
     

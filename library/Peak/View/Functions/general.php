@@ -1,90 +1,10 @@
 <?php
 
 /**
- * View Object TEMPLATE SHORCUT FUNCTIONS
+ * View basic html functions
  * 
  * @author   Francois Lajoie
  * @version  $Id$
- */
-
-/**
- * Shorcut of $wyn->view object
- * 
- * @example view()->variablex; = $wyn->view->variablex;
- *          view()->func($param1); = $wyn->view->func($param1);
- *
- * @return object
- */
-function view()
-{
-    return Peak_Registry::obj()->view;
-}
-
-
-/**
- * Shortcut of $wyn->view->helper([helper name])->[helper_func](...)
- *
- * @example view_hlp('hello')->say();  =  $wyn->view->helper('hello')->say();
- * 
- * @param helper name $name
- * @return object
- */
-function view_hlp($name = null)
-{
-    return view()->helper($name);
-}
-
-/**
- * Shortcut of $wyn->view->$variable
- *
- * @param string $var
- * @return any type
- */
-function view_get($var)
-{
-    return view()->$var;
-}
-
-/**
- * Shortcut of echo $wyn->view->$variable
- *
- * @param string $var variable name
- * @param string $lc  left  variable content
- * @param string $rc  right variable content
- */
-function view_echo($var,$lc = '',$rc = '')
-{
-    echo $lc.view()->$var.$rc;
-}
-
-/**
- * Basic view function
- */
-
-/**
- * Create rewrited url @deprecated
- *
- * @param string $controller
- * @param string $action
- * @param array $params
- * @return string
- */
-function baseurl($controller = null,$action = null,$params = null)
-{
-    $url = ROOT_URL;
-    if(isset($controller)) $url .= '/'.$controller;
-    if(isset($action))     $url .= '/'.$action;
-    if(isset($params))
-    {
-        if(is_array($params)) $url .= '/'.implode('/',$params);
-    }
-    return $url;
-}
-
-
-/**
- * Misc template html functions
- * ----------------------------
  */
 
 
