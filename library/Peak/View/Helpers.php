@@ -6,7 +6,7 @@
  * @author   Francois Lajoie 
  * @version  $Id$
  */
-class Peak_View_Helpers extends ArrayObject
+class Peak_View_Helpers
 {
     
     private $_objects = array();
@@ -19,7 +19,7 @@ class Peak_View_Helpers extends ArrayObject
      */
 	public function __get($name)
 	{
-		if(isset($this[$name])) return $this[$name];
+		if(isset($this->_objects[$name])) return $this->_objects[$name];
 		else 
 		{
 			$helper_prefix = 'Peak_View_Helper_';
@@ -42,9 +42,9 @@ class Peak_View_Helpers extends ArrayObject
 					set_error_handler('catch_autoload_err');
 					trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT, E_USER_WARNING);
 				}
-				$this[$name] = new $helper_class_name(); //<--------------------------- NEED FIX
-				//if(!is_object($this[$name])) echo '';
-				return $this[$name];
+				$this->_objects[$name] = new $helper_class_name(); //<--------------------------- NEED FIX
+				//if(!is_object($this->_objects[$name])) echo '';
+				return $this->_objects[$name];
 			}
 			else {
 				//throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND');
