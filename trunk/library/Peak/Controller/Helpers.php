@@ -6,7 +6,7 @@
  * @author   Francois Lajoie 
  * @version  $Id$ 
  */
-class Peak_Controller_Helpers extends ArrayObject
+class Peak_Controller_Helpers
 {
     
     private $_objects = array();
@@ -19,7 +19,7 @@ class Peak_Controller_Helpers extends ArrayObject
      */
 	public function __get($name)
 	{
-		if(isset($this[$name])) return $this[$name];
+		if(isset($this->_objects[$name])) return $this->_objects[$name];
 		else
 		{
 			$helper_name_prefix = 'ctrl_helper_';
@@ -28,17 +28,17 @@ class Peak_Controller_Helpers extends ArrayObject
 
 			$new_helper = $helper_name_prefix.$name;
 
-			if(!isset($this[$new_helper])) {
+			if(!isset($this->_objects[$new_helper])) {
 				if(file_exists($helper_file)) {
 					include($helper_file);
-					$this[$name] = new $new_helper();
+					$this->_objects[$name] = new $new_helper();
 				}
 				else {
 					throw new Peak_Exception('ERR_CTRL_HELPER_NOT_FOUND');
 				}
 			}
 			
-			return $this[$name];
+			return $this->_objects[$name];
 		}
 	}
     
