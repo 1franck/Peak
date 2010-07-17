@@ -153,36 +153,14 @@ abstract class Peak_Controller
     }
     
     /**
-     * Load helpers objects method and return helper obj
+     * Load/access to controllers helpers objects
      * 
-     * controller helper class name syntax  --> ctrl_helper_[title]
-     * controller helper class file name    --> controllers/helpers/[title].php
-     * controller helper call in ctrl class --> $this->helper([title])->myfunc([$param],[$param2],[..]);
-     *
-     * @param string $name specify an helper to load or ignore this param
+     * @return object Peak_Controller_Helpers
      */
-    public function helper($name)
+    public function helper()
     {
-        $helper_name_prefix = 'ctrl_helper_';
-
-        $name = trim(stripslashes(strip_tags($name)));
-        $helper_file = CONTROLLERS_ABSPATH.'/helpers/'.$name.'.php';
-
-        $new_helper = $helper_name_prefix.$name;
-
-        if(!isset($this->helpers[$new_helper])) {
-            if(file_exists($helper_file)) {
-                include($helper_file);
-                $this->helpers[$new_helper] = new $new_helper();
-            }
-            else {
-                throw new Peak_Exception('ERR_CTRL_HELPER_NOT_FOUND');
-            }
-        }
-        
-        $name = $helper_name_prefix.$name;
-
-        return $this->helpers[$new_helper];
+        if(!is_object($this->helpers)) $this->helpers = new Peak_Controller_Helpers();
+    	return $this->helpers;
     }
     
         
