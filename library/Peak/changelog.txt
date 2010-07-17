@@ -1,9 +1,9 @@
 #VERSION 0.7.9#
 
-*  added object Peak_Controller_Helpers > fixed Peak_Controller helper(). Same changes as Peak_View helper()
+*  added class Peak_Controller_Helpers > fixed Peak_Controller helper(). Same changes as Peak_View helper()
 
 
-*  added object Peak_View_Helpers > fixed Peak_View helper() to use this new helpers objects wrapper.
+*  added class Peak_View_Helpers > fixed Peak_View helper() to use this new helpers objects wrapper.
                                     We use now $this->helper()->myclass->mymethod() instead of
                                     $this->helper('myclass')->mymethod()
 
