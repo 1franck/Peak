@@ -110,11 +110,12 @@ class TestOfView extends UnitTestCase
     	//define('VIEWS_HELPERS_ABSPATH',$this->peak());
     	define('LIBRARY_ABSPATH',$this->peak(true));
     	include($this->peak().'/View/Helper.php');
-    	$object = $this->view->helper('icons');
-    	$this->assertTrue(is_a($object,'Peak_View_Helper_Icons'),'Peak_View_Helper_Icons should be set when calling helper(\'icons\')');
+    	include($this->peak().'/View/Helpers.php');
+    	$object = $this->view->helper()->icons;
+    	$this->assertTrue(is_a($object,'Peak_View_Helper_Icons'),'Peak_View_Helper_Icons should be set when calling helper()->icons');
     	
     	try {   		
-    		$test = @$this->view->helper('ic767ons');
+    		$test = @$this->view->helper()->ic767ons;
     		$this->assertFalse(is_object($test),'helper() excepted to fail when calling unknow helper name');
     	}
     	catch (Peak_Exception $e) {
