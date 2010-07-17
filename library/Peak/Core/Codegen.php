@@ -3,6 +3,8 @@
 /**
  * Peak_Core_Codegen object extension 
  *
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_Core_Codegen
 {
