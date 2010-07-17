@@ -2,7 +2,9 @@
 
 /**
  * Peak_Core_Configs object extension 
- *
+ * 
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_Core_Configs
 {

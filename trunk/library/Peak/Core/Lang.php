@@ -3,6 +3,8 @@
 /**
  * Peak_Core_Lang object extension 
  *
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_Core_Lang
 {
