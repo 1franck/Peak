@@ -3,6 +3,10 @@ $file_to_test = realpath('./../library/Peak/View.php');
 include($file_to_test);
 echo 'Tested file: '.$file_to_test.'<br />';
 
+$file_to_test = realpath('./../library/Peak/View/Theme.php');
+include($file_to_test);
+echo 'Tested file: '.$file_to_test.'<br />';
+
 class TestOfView extends UnitTestCase
 {
     public $view;
@@ -63,9 +67,12 @@ class TestOfView extends UnitTestCase
     
     function testOfViewTheme()
     {
-    	include($this->peak().'/View/Theme.php');
     	$theme = $this->view->theme();
     	$this->assertTrue(is_a($theme,'Peak_View_Theme') ,'$theme is not an object of Peak_View_Theme');
+    	
+    	$options = $theme->getOptions();
+    	$this->assertTrue(is_array($options) ,'$options should be an array');
+    	$this->assertTrue(empty($options) ,'$options should be empty');
     }
     
     function testOfViewEngine()

@@ -44,11 +44,7 @@ class Peak_View_Theme
         $filepath = THEME_ABSPATH.'/theme.ini';
         if(file_exists($filepath)) {
             $this->_options = parse_ini_file($filepath,true);
-            //if(isset($this->options['layouts']['default'])) {
-            //    $this->useLayout($this->options['layouts']['default']);
-            //}
-        }
-    
+        }    
     }
     
     /**
@@ -61,4 +57,5 @@ class Peak_View_Theme
         $file = THEME_ABSPATH.'/functions.php';
         return (file_exists($file)) ? $file : false;
     }
+
 }
