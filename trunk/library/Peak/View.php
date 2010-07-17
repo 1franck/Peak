@@ -7,7 +7,7 @@
  * @version  $Id$
  * 
  * @desc     template variables registry, helpers object, theme object
- * @uses     Peak_View_Theme, Peak_View_Helpers
+ * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
  */
 
 //include('View/Functions/general.php');
@@ -18,7 +18,7 @@ class Peak_View
 	
     protected $vars = array();            //view vars
     
-    private $helpers;                     //view helpers objects  
+    private $helpers;                     //view helpers object 
     
     private $theme;                       //view theme object
     
@@ -190,50 +190,12 @@ class Peak_View
     /**
      * Load helpers objects method and return helper obj
      *
-     * @param string $name specify an helper to load or ignore this param
+     * @return object Peak_View_Helpers
      */
-    public function helper($name = null)
+    public function helper()
     {
-        if(isset($name)) {
-            
-            $helper_prefix = 'Peak_View_Helper_';            
-            $name = trim(stripslashes(strip_tags($name)));
-            $helper_file = VIEWS_HELPERS_ABSPATH.'/'.$name.'.php';
-            $helper_class_name = $helper_prefix.$name;
-
-            if(!isset($this->helpers[$name])) {
-                
-                //if application views helpers file doesn't exists, 
-                //we check internal Peak/View/Helpers/ folder
-                if(!file_exists($helper_file)) {
-                    $helper_file = LIBRARY_ABSPATH.'/Peak/View/Helper/'.$name.'.php';
-                    $helper_class_name = $helper_prefix.$name;
-                }
-                
-                
-                if(file_exists($helper_file)) {
-                    include($helper_file);
-                    
-                    if(!class_exists($helper_class_name,false))  {
-                        //throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND'); {
-                        set_error_handler('catch_autoload_err');
-                        trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT, E_USER_WARNING);
-                    }
-                    $this->helpers[$name] = new $helper_class_name(); //<--------------------------- NEED FIX
-                    if(!is_object($this->helpers[$name])) echo '';
-                    return $this->helpers[$name];
-                }
-                else { //die('test');
-                    //throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND');
-                    set_error_handler('catch_autoload_err');
-                    trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT,E_USER_WARNING);
-                }
-            }
-            else { return $this->helpers[$name]; }
-        }
-        
-
-        return $this->helpers;     
+    	if(!is_object($this->helpers)) $this->helpers = new Peak_View_Helpers();
+    	return $this->helpers;
     }
     
     /**
