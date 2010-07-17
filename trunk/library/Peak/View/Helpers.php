@@ -3,7 +3,7 @@
 /**
  * Peak View Helpers Object containers
  *  
- * @author   Francois Lajoie
+ * @author   Francois Lajoie 
  * @version  $Id$
  */
 class Peak_View_Helpers extends ArrayObject
