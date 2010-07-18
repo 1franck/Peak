@@ -145,7 +145,9 @@ class Peak_View
         
         $engine_class = 'Peak_View_Render_'.$engine;
         
-        $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();               
+        $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
+
+        //return $this;       
     }
     
     /**
