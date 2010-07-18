@@ -1,8 +1,10 @@
 <?php
 
 /**
- * Debug tree
+ * Debug array display
  *
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_View_Helper_Debug extends Peak_View_Helper
 {   

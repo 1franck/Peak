@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Check for icons and get url path
+ *
+ * @author  Francois Lajoie
+ * @version $Id$
+ */
 class Peak_View_Helper_Icons extends Peak_View_Helper
 {   
     

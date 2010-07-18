@@ -2,6 +2,9 @@
 
 /**
  * Misc usefull view helper functions for text
+ * 
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_View_Helper_Text extends Peak_View_Helper
 {
