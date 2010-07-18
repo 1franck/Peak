@@ -7,6 +7,29 @@
  * @version  $Id$
  */
 
+/**
+ * Generate html doctype
+ *
+ * @param  string $type
+ * @return string
+ */
+function html_doctype($type = 'CUSTOM')
+{
+	$dt = array('XHTML11'             => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">',
+                'XHTML1_STRICT'       => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
+                'XHTML1_TRANSITIONAL' => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+                'XHTML1_FRAMESET'     => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
+                'XHTML_MP'            => '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">',
+                'XHTML_BASIC1'        => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">',
+                'XHTML5'              => '<!DOCTYPE html>',
+                'HTML4_STRICT'        => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
+                'HTML4_LOOSE'         => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">',
+                'HTML4_FRAMESET'      => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">',
+                'HTML5'               => '<!DOCTYPE html>');
+                      
+    if(!isset($dt[$type])) $type = 'XHTML1_STRICT';
+    return $dt[$type]."\n";
+}
 
 /**
  * Transform css file or array of css files into meta link stylesheet tags
@@ -43,7 +66,7 @@ function html_meta_script($files)
 /**
  * Put css code inside <style> tags
  *
- * @param string $code
+ * @param  string $code
  * @return string
  */
 function html_style_code($code)
@@ -54,11 +77,11 @@ function html_style_code($code)
 /**
  * Put js code inside <script>
  *
- * @param string $code
- * @param string $type
+ * @param  string $code
+ * @param  string $type
  * @return string
  */
-function html_script_code($code,$type = 'text/javascript')
+function html_script_code($code, $type = 'text/javascript')
 {
     return '<script type="'.$type.'">'.$code.'</script>';
 }
@@ -66,7 +89,7 @@ function html_script_code($code,$type = 'text/javascript')
 /**
  * Put jquery code inside <script>
  *
- * @param string $code
+ * @param  string $code
  * @return string
  */
 function html_jquery_code($code)
@@ -77,13 +100,13 @@ function html_jquery_code($code)
 /**
  * Transform to img html 
  *
- * @param string $img    image url file path name
- * @param string $attrs  html tag attribute
+ * @param  string $img    image url file path name
+ * @param  string $attrs  html tag attribute
  * @return string
  */
-function html_img($img,$attrs = array('alt' => ''))
+function html_img($img, $attrs = array('alt' => ''))
 {
-    $img = W_TPL_URL.'/images/'.trim(stripslashes(strip_tags($img)));
+    $img = trim(stripslashes(strip_tags($img)));
 
     $attrs_html = '';
 
@@ -105,7 +128,7 @@ function html_img($img,$attrs = array('alt' => ''))
  * @param string $sep
  * @return string
  */
-function html_links($array,$class = '',$sep = ' | ')
+function html_links($array, $class = '', $sep = ' | ')
 {
     $result = '';
     if(is_array($array)) {
