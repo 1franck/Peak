@@ -3,19 +3,12 @@
 /**
  * Peak Simple Calendar helper
  * 
+ * @author  Francois Lajoie
+ * @version $Id$
  */
 class Peak_View_Helper_Calendar extends Peak_View_Helper
 {   
-    
-    
-    public function display($name,$attrs = '')
-    {
-        if($this->isIcons($name)) {
-            return '<img '.$attrs.' src="'.$this->getUrl($name).'" />';
-        }
-
-    } 
-        
+            
     public function thisMonth()
     {
         $calendar = array();
