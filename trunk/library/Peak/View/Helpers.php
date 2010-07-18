@@ -37,20 +37,14 @@ class Peak_View_Helpers
 			if(file_exists($helper_file)) {
 				include($helper_file);
 
-				if(!class_exists($helper_class_name,false))  {
-					//throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND'); {
-					set_error_handler('catch_autoload_err');
-					trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT, E_USER_WARNING);
-				}
-				$this->_objects[$name] = new $helper_class_name(); //<--------------------------- NEED FIX
-				//if(!is_object($this->_objects[$name])) echo '';
+				if(!class_exists($helper_class_name,false))	throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND',$name);
+				
+				$this->_objects[$name] = new $helper_class_name(); 
+				
 				return $this->_objects[$name];
 			}
-			else {
-				//throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND');
-				set_error_handler('catch_autoload_err');
-				trigger_error('Class name '.$helper_class_name.' not found in '.VIEWS_HELPERS_ROOT,E_USER_WARNING);
-			}
+			else throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND',$name);
+			
 		}
 	}
     

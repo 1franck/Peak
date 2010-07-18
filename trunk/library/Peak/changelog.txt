@@ -1,5 +1,13 @@
 #VERSION 0.7.9#
 
+*  autoload.php > removed method catch_autoload_err() and _autoload_err().
+                  use method Peak_Exception::getDebugTrace() instead
+
+*  Peak_Exception > added method getDebugTrace(), added constants ERR_VIEW_HELPER_NOT_FOUND and ERR_CTRL_HELPER_NOT_FOUND.
+                    updated Peak_View_Helpers and Peak_Controller_Helpers accordly to this.
+
+*  Peak_Application > change to sha1 all md5 in validSession()
+
 *  added class Peak_Controller_Helpers > fixed Peak_Controller helper(). Same changes as Peak_View helper()
 
 

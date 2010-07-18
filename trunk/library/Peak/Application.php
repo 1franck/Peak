@@ -64,17 +64,17 @@ class Peak_Application
 	    $r = false;
 	    
 	    if(isset($_POST['lognow'])) {
-            $_SESSION['wName'] = md5(_clean($_POST['wname']));
-            $_SESSION['wPass'] = md5(_clean($_POST['wpass']));
+            $_SESSION['wName'] = sha1(_clean($_POST['wname']));
+            $_SESSION['wPass'] = sha1(_clean($_POST['wpass']));
         }
 	    
 	    if(!isset($_SESSION['wName'])) $_SESSION['wName'] = '';
 	    if(!isset($_SESSION['wPass'])) $_SESSION['wPass'] = '';   
 	    	    
 	    if(defined('APP_LOGIN_NAME')) {
-	        if(((md5(APP_LOGIN_NAME) === $_SESSION['wName']))) {
+	        if(((sha1(APP_LOGIN_NAME) === $_SESSION['wName']))) {
 	            $r = true;
-	            if((defined('APP_LOGIN_PASS')) && (md5(APP_LOGIN_PASS) !== $_SESSION['wPass'])) $r = false;            
+	            if((defined('APP_LOGIN_PASS')) && (sha1(APP_LOGIN_PASS) !== $_SESSION['wPass'])) $r = false;            
 	        }
 	        else $r = false;
 	    }
