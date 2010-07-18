@@ -4,14 +4,14 @@
  * Application boot preparations
  * Next file to include after your application configs.php 
  * 
- * @desc This file will add importants constants, load wyn_core and call setPath(), call set_include_path 
- *       and finally include core/autoload.php
+ * @desc This file will add importants constants, load Peak_Core and call setPath(), call set_include_path 
+ *       and finally include autoload.php
  * 
  * @author   Francois Lajoie
  * @version  $Id$
  */
 
-// include wyn_core and set system and application path if not already done
+// include Peak_Core and set system and application path if not already done
 if(!defined('_VERSION_')) {
     include(realpath(dirname(__FILE__)).'\Core.php');
     
@@ -24,10 +24,10 @@ if(!defined('_VERSION_')) {
     Peak_Core::setPath(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
 }
 
-//add W_LIB_ABSPATH to include path
+//add LIBS_ABSPATH to include path
 set_include_path(implode(PATH_SEPARATOR, array(LIBS_ABSPATH, get_include_path())));
 
-//if zend lib specified we add it to include path
+//if ZEND_LIB_ABSPATH is specified, we add it to include path
 if(defined('ZEND_LIB_ABSPATH')) {   
     set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), ZEND_LIB_ABSPATH)));
 }

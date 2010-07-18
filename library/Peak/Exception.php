@@ -18,8 +18,10 @@ class Peak_Exception extends Exception
 	const ERR_CORE_NO_CTRL_FOUND            = 'Core: application controllers not found.';
 	const ERR_CORE_EXTENSION_NOT_FOUND      = 'Core: extension %1$s not found.';
 	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found.';
+	const ERR_CTRL_HELPER_NOT_FOUND         = 'Controller: helper \'%1$s\' not found.';
 	const ERR_VIEW_ENGINE_NOT_SET           = 'View rendering engine not set. Use setRenderEngine() from Peak_View before trying to render application controller.';
-	const ERR_VIEW_TPL_NOT_FOUND            = 'View: template file %1$s not found.';
+	const ERR_VIEW_HELPER_NOT_FOUND         = 'View: helper \'%1$s\' not found.';
+	const ERR_VIEW_TPL_NOT_FOUND            = 'View: theme file %1$s not found.';
 	const ERR_VIEW_LAYOUT_NOT_FOUND         = 'View: layout template file %1$s not found.';
 	const ERR_DEFAULT                       = 'Request failed';
 		
@@ -59,13 +61,32 @@ class Peak_Exception extends Exception
 	        else $r = sprintf($r,trim($infos));	        
 	    }
 
-		return $r;
+		return $r."\n";
+	}
+		
+	public function getDebugTrace()
+	{
+		$trace = debug_backtrace();
+
+		$err_propagation = array();
+		foreach($trace as $i => $v) {
+			if(isset($v['file']) && isset($v['line'])) $err_propagation[$v['line']] = $v['file'];
+		}
+
+		$debug = 'Files:<br />';
+		foreach($err_propagation as $line => $file) $debug .= '- '.$file.' (Line: '.$line.')<br />';
+
+		if((defined('DEV_MODE')) && (DEV_MODE)) {
+			$debug .= '<br />Trace dump ['.$this->getTime().']:<pre>';
+			$debug .= print_r($trace,true);
+			$debug .= '</pre>';
+		}
+		
+		return $debug;
 	}
 	
 	public function getErrkey() { return $this->_errkey; }
-	
-	public function getTraceBase() { return $this->_trace; }
-	
+		
 	public function getLevel() { return $this->_level; }
 	
 	public function getTime() { return date('Y-m-d H:i:s'); }
