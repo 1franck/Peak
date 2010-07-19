@@ -11,7 +11,6 @@ include('./../library/Peak/Exception.php');
 
 class TestOfView extends UnitTestCase
 {
-    public $view;
     
     public function peak($parent = false)
     {
