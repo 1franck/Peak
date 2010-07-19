@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Tests for Peak_Pattern
+ * Tests for Peak_Core
  */
 
 include(dirname(__FILE__) . '/simpletest/autorun.php');
 include(dirname(__FILE__) . '/tests_helpers/showpasses.php');
 
 
-$test = &new TestSuite('Peak_Pattern tests suite');
+$test = &new TestSuite('Peak_Core tests suite');
 
-$test->addTestFile('classes/testPattern.php');
+$test->addTestFile('classes/testCore.php');
 
 $test->run(new ShowPasses());

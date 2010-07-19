@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Tests for wyn Application
+ * Tests for Peak_Router
  */
 
 include(dirname(__FILE__) . './../simpletest/autorun.php');
 include(dirname(__FILE__) . './../tests_helpers/showpasses.php');
 
 
-$test = &new TestSuite('class.router.php tests suite');
+$test = &new TestSuite('Peak_Router tests suite');
 
 $test->addTestFile('./../classes/testRouter.php');
 
