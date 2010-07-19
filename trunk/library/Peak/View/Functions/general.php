@@ -19,9 +19,10 @@ function html_doctype($type = 'CUSTOM')
                 'XHTML1_STRICT'       => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
                 'XHTML1_TRANSITIONAL' => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
                 'XHTML1_FRAMESET'     => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">',
-                'XHTML_MP'            => '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">',
                 'XHTML_BASIC1'        => '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.0//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic10.dtd">',
-                'XHTML5'              => '<!DOCTYPE html>',
+                'XHTML_MP1'           => '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">',
+                'XHTML_MP11'          => '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.1//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile11.dtd">',
+                'XHTML_MP12'          => '<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">',
                 'HTML4_STRICT'        => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">',
                 'HTML4_LOOSE'         => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">',
                 'HTML4_FRAMESET'      => '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">',
@@ -32,9 +33,21 @@ function html_doctype($type = 'CUSTOM')
 }
 
 /**
+ * Return meta name/content tag
+ *
+ * @param  string $name
+ * @param  string $content
+ * @return string
+ */
+function html_meta($name, $content)
+{
+	return '<meta name="'.$name.'" content="'.$content.'" />';
+}
+
+/**
  * Transform css file or array of css files into meta link stylesheet tags
  *
- * @param string/array $files
+ * @param  string/array $files
  * @return string
  */
 function html_meta_link_ss($files)

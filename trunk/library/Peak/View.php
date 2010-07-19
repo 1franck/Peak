@@ -9,10 +9,6 @@
  * @desc     template variables registry, helpers object, theme object
  * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
  */
-
-//include('View/Functions/general.php');
-
-
 class Peak_View
 {
 	
@@ -22,7 +18,7 @@ class Peak_View
     
     private $theme;                       //view theme object
     
-    private $view_engine = 'partials';    //rendering objects * partials by default       
+    private $view_engine = 'partials';    //view rendering object * partials by default       
   
     /**
      * Start template - set an array as template variable(optionnal)
@@ -79,7 +75,12 @@ class Peak_View
      */
     public function  __call($method, $args = null)
     {
-        if(method_exists($this->engine(),$method)) return call_user_func_array(array($this->engine(), $method), $args);        
+        if(method_exists($this->engine(),$method)) {
+        	return call_user_func_array(array($this->engine(), $method), $args);        
+        }
+        elseif(isset($this->helper()->$method)) {
+        	return $this->helper()->$method;
+        }
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
             trigger_error('DEV_MODE: View Render method '.$method.'() does\'t exists');
         }

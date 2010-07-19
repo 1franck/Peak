@@ -39,10 +39,7 @@ abstract class Peak_View_Render
     public function  __call($method, $args)
     {
     	$view =& Peak_Registry::obj()->view;
-    	if(method_exists($view,$method)) return call_user_func_array(array($view, $method), $args);
-        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
-        }
+    	return call_user_func_array(array($view, $method), $args);
     }
 
     
