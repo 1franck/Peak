@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Tests for wyn Application
+ * Tests for Peak_Registry
  */
 
 include(dirname(__FILE__) . '/simpletest/autorun.php');

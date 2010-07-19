@@ -20,14 +20,7 @@ try {
 
     /* load app obj */
     $app = Peak_Application::getInstance();
-    
-    //$core = Peak_Registry::obj()->core;
-       
-    /* run app */    
-    //$app->run(APP_DEFAULT_CTRL);   
-
-    /* render controllers view(s) file(s) */
-    //$app->controller->render();    
+ 
 }
 /* app exception */
 catch (Peak_Exception $e) {
