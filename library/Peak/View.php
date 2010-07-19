@@ -68,7 +68,9 @@ class Peak_View
     
     /**
      * We try to call View Render Engine object method.
-     * So every Rendering Engine Method can be called directly inside Peak_View
+     * If not, we try to return a helper object based on $method name.
+     * So every Rendering Engine Method can be called directly inside Peak_View and
+     * every instanciated Peak_View_Helpers
      *
      * @param string $method
      * @param array  $args
@@ -82,7 +84,7 @@ class Peak_View
         	return $this->helper()->$method;
         }
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('DEV_MODE: View Render method '.$method.'() does\'t exists');
+            trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
         }
     }
        
