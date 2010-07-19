@@ -47,5 +47,17 @@ class Peak_View_Helpers
 			
 		}
 	}
+	
+	public function __isset($object_name)
+	{
+		return (isset($this->_objects[$object_name])) ? true : false;
+	}
+	
+	/*public function isObject($object_name)
+	{
+		return (isset($this->_objects[$object_name])) ? true : false;
+	}*/
+	
+	
     
 }

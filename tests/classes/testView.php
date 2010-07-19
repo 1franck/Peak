@@ -7,6 +7,8 @@ $file_to_test = realpath('./../library/Peak/View/Theme.php');
 include($file_to_test);
 echo 'Tested file: '.$file_to_test.'<br />';
 
+include('./../library/Peak/Exception.php');
+
 class TestOfView extends UnitTestCase
 {
     public $view;
@@ -142,5 +144,3 @@ class TestOfView extends UnitTestCase
     
    
 }
-
-class Peak_Exception extends Exception { }
