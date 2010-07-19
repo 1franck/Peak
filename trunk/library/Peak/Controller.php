@@ -31,6 +31,23 @@ abstract class Peak_Controller
         //initialize ctrl
         $this->initController();
     }
+    
+    /**
+     * Try to return a helper object based the method name.
+     *
+     * @param  string $helper
+     * @param  null   $args not used
+     * @return object
+     */
+    public function __call($helper, $args = null)
+    {
+    	if(isset($this->helper()->$helper)) {
+        	return $this->helper()->$helper;
+        }
+        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
+            trigger_error('DEV_MODE: Controller method '.$method.'() doesn\'t exists');
+        }
+    }
 
     /**
      * Initialize controller $name, $title, $path, $url_path and $type
@@ -182,8 +199,7 @@ abstract class Peak_Controller
      */    
     public function render()
     {                
-        $this->view->render($this->file,$this->path);
-        
+        $this->view->render($this->file,$this->path);     
         $this->postRender();
     }
     

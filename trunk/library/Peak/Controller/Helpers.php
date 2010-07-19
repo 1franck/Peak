@@ -41,5 +41,16 @@ class Peak_Controller_Helpers
 			return $this->_objects[$name];
 		}
 	}
+	
+	/**
+	 * Check if $_objects key name exists
+	 *
+	 * @param  string $object_name
+	 * @return bool
+	 */
+	public function __isset($object_name)
+	{
+		return (isset($this->_objects[$object_name])) ? true : false;
+	}
     
 }

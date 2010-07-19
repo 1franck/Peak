@@ -1,5 +1,11 @@
 #VERSION 0.7.95#
 
+*  Peak_Controller > added magic method __call(). We can now call a controller helper name like method name.
+                     Note: this method won't load a helper and can't be used if helper 
+                     name wasn't loaded before with method helper(). This restriction affect Peak_View::_call() too.
+
+*  Peak_Controller_Helpers > added magic method __isset().
+
 *  Peak_View_Helpers > added magic method __isset(). 
 
 *  Peak_View > __call() will now in order check if method is a View_Engine method or Helper object name.
