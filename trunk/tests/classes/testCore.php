@@ -36,6 +36,21 @@ class TestOfCore extends UnitTestCase
     	$this->assertTrue(is_array($m) ,'$m should be an array');
     	$this->assertTrue((count($m) == 1) ,'modules count should return 1');
     }
+    
+    function testOfPaths()
+    {
+    	$p = $this->core->getPaths();
+    	$this->assertTrue(is_array($p) ,'$p should be an array');
+    	
+    	$p = Peak_Core::getPaths();
+    	$this->assertTrue(is_array($p) ,'$p should be an array');
+    }
+    
+    function testOfExt()
+    {
+    	$ext = $this->core->ext('lang');
+    	$this->assertTrue(is_a($ext,'Peak_Core_Lang') ,'$ext is not an object of Peak_Core_Lang');
+    }
   
 
 }
