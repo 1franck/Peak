@@ -1,5 +1,10 @@
 #VERSION 0.7.95#
 
+*  Peak_View > __call() can now load a new helper on the fly. 
+               So you are no more obligated to call helper()->object_name before using object_name() method shorcut
+
+*  Peak_View_Helpers > added method exists(). Check if helper file name is found or not.
+
 *  Peak_Controller > added magic method __call(). We can now call a controller helper name like method name.
                      Note: this method won't load a helper and can't be used if helper 
                      name wasn't loaded before with method helper(). This restriction affect Peak_View::_call() too.
@@ -9,10 +14,10 @@
 *  Peak_View_Helpers > added magic method __isset(). 
 
 *  Peak_View > __call() will now in order check if method is a View_Engine method or Helper object name.
-                        if nothing is find, it simply silence error or, on DEV_MODE, will trigger E_NOTICE.
-                        We can now call a view helper name like method name too:
-                        Normal way -> $this->helper()->text->truncate('...')
-                        New way -> $this->text()->truncate('...')
+               if nothing is find, it simply silence error or, on DEV_MODE, will trigger E_NOTICE.
+               We can now call a view helper name like method name too:
+               Normal way -> $this->helper()->text->truncate('...')
+               New way -> $this->text()->truncate('...')
 
 *  Peak_View_Render > remove some code in __call(). Now __call() will use Peak_View object for 
                       calling unknow Peak_Render methods like helpers and theme.
