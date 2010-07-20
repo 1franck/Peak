@@ -33,14 +33,10 @@ class Peak_View_Helpers
 				$helper_class_name = $helper_prefix.$name;
 			}
 
-
 			if(file_exists($helper_file)) {
 				include($helper_file);
-
-				if(!class_exists($helper_class_name,false))	throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND',$name);
-				
-				$this->_objects[$name] = new $helper_class_name(); 
-				
+				if(!class_exists($helper_class_name,false))	throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND',$name);				
+				$this->_objects[$name] = new $helper_class_name(); 			
 				return $this->_objects[$name];
 			}
 			else throw new Peak_Exception('ERR_VIEW_HELPER_NOT_FOUND',$name);			
