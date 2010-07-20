@@ -1,5 +1,9 @@
 #VERSION 0.7.95#
 
+*  added Zend_Mail and Zend_Mime, updated files to zend version 1.10.6
+
+*  Peak_View_Render > fixed baseUrl(). Sanitize url and add boolean option $return
+
 *  Peak_View > __call() can now load a new helper on the fly. 
                So you are no more obligated to call helper()->object_name before using object_name() method shorcut
 

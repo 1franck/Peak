@@ -49,12 +49,15 @@ abstract class Peak_View_Render
      * @param  string $path Add custom paths/files to the end
      * @return string
      */
-    public function baseUrl($path = null)
+    public function baseUrl($path = null, $return = false)
     {
-    	if(defined('ROOT_URL')) return ROOT_URL.'/'.$path;
+    	if(defined('ROOT_URL')) $url = ROOT_URL.'/'.$path;
     	elseif(isset($_SERVER['DOCUMENT_ROOT'])) {
-    		return $_SERVER['DOCUMENT_ROOT'].'/'.$path;
+    		$url = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
     	}
+    	$url = str_replace(array('//','http:/'),array('/','http://'),$url);    	
+    	if(!$return) echo $url;
+    	else return $url;
     }
     
     
