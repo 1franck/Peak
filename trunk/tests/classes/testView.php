@@ -108,7 +108,6 @@ class TestOfView extends UnitTestCase
     
     function testOfHelper()
     {
-    	//define('VIEWS_HELPERS_ABSPATH',$this->peak());
     	define('LIBRARY_ABSPATH',$this->peak(true));
     	include($this->peak().'/View/Helper.php');
     	include($this->peak().'/View/Helpers.php');
@@ -121,8 +120,21 @@ class TestOfView extends UnitTestCase
     	}
     	catch (Peak_Exception $e) {
     		$exception = 'helper() excepted to fail when calling unknow helper name';
-    	}   	
-    	//$this->assertTrue(isset($exception), $exception);
+    	}    	
+    	$this->assertTrue(isset($exception), $exception);
+    	
+    	try {   		
+    		$test = @$this->view->unknowhelper();
+    		$this->assertFalse(is_object($test),'unknowhelper() excepted to fail when calling unknow doesn\'t exists');
+    	}
+    	catch (Peak_Exception $e) {
+    		$exception = 'unknowhelper() excepted to fail when calling unknow doesn\'t exists';
+    	}    	
+    	$this->assertTrue(isset($exception), $exception);
+
+    	$object = $this->view->text();
+    	$this->assertTrue(is_a($object,'Peak_View_Helper_Text'),'Peak_View_Helper_Text should be set when calling text()');
+   	
     }
     
     
