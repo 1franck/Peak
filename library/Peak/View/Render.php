@@ -55,8 +55,7 @@ abstract class Peak_View_Render
     	elseif(isset($_SERVER['DOCUMENT_ROOT'])) {
     		$url = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
     	}
-    	$url = str_replace(array('//','http:/'),array('/','http://'),$url);    	
-    	if(!$return) echo $url;
+    	if(!$return) echo $url;  
     	else return $url;
     }
     
