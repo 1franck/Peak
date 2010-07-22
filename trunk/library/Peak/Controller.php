@@ -69,10 +69,11 @@ abstract class Peak_Controller
         if($this->type === 'module') {
             $this->path = $core->getPath('modules').'/'.$this->name;
             $this->title = $core->getModule($this->name,'title');
-            if(is_null($this->title)) $this->title = $this->name;
+            if(is_null($this->title)) $this->title = str_ireplace('controller', '', $this->name);
         }
         else {
         	$script_folder = str_ireplace('controller', '', $this->name);
+        	$this->title = $script_folder;
             $this->path = $core->getPath('theme_scripts').'/'.$script_folder;
         }
 
