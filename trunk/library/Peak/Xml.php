@@ -40,7 +40,7 @@ class Peak_Xml
     {
         $filepath = trim($filepath);
 
-        self::_load_and_parse($filepath,$replaces);
+       self::_load_and_parse($filepath,$replaces);
     }
     
     /**
@@ -56,7 +56,7 @@ class Peak_Xml
         
         $data = $data[0];
         
-        $tempfile = W_CACHE_ABSPATH.'/'.$tempfile;
+        $tempfile = CACHE_ABSPATH.'/'.$tempfile;
         
         $fp = fopen($tempfile, "w");
         if($data === false) fwrite($fp,'fail to get '.$filepath);
