@@ -1,6 +1,7 @@
 <?php
+include(realpath('./classes/initPeakMVC.php'));
 $file_to_test = realpath('./../library/Peak/View.php');
-include($file_to_test);
+//include($file_to_test);
 echo 'Tested file: '.$file_to_test.'<br />';
 
 $file_to_test = realpath('./../library/Peak/View/Theme.php');
@@ -46,7 +47,7 @@ class TestOfView extends UnitTestCase
     
     function testOfViewMethod()
     {  	
-    	define('DEV_MODE',true);    	
+    	//define('DEV_MODE',true);    	
     	//$this->expectError($this->view->unknowmethod(),'unknow method should trigger error with DEV_MODE = true');   	
     	//$this->expectException($this->view->unknowmethod(),'unknow method should trigger error with DEV_MODE = true');   	
     		
@@ -87,10 +88,10 @@ class TestOfView extends UnitTestCase
     	
     	$this->assertTrue(isset($exception), $exception);
     	
-    	include($this->peak().'/View/Render.php');
-    	include($this->peak().'/View/Render/Partials.php');
-    	include($this->peak().'/View/Render/Layouts.php');
-    	include($this->peak().'/View/Render/Json.php');
+    	//include($this->peak().'/View/Render.php');
+    	//include($this->peak().'/View/Render/Partials.php');
+    	//include($this->peak().'/View/Render/Layouts.php');
+    	//include($this->peak().'/View/Render/Json.php');
     	
     	$this->view->setRenderEngine('unknow');
     	$engine = $this->view->engine();
@@ -108,9 +109,9 @@ class TestOfView extends UnitTestCase
     
     function testOfHelper()
     {
-    	define('LIBRARY_ABSPATH',$this->peak(true));
-    	include($this->peak().'/View/Helper.php');
-    	include($this->peak().'/View/Helpers.php');
+    	//define('LIBRARY_ABSPATH',$this->peak(true));
+    	//include($this->peak().'/View/Helper.php');
+    	//include($this->peak().'/View/Helpers.php');
     	$object = $this->view->helper()->icons;
     	$this->assertTrue(is_a($object,'Peak_View_Helper_Icons'),'Peak_View_Helper_Icons should be set when calling helper()->icons');
     	
@@ -141,7 +142,7 @@ class TestOfView extends UnitTestCase
     function testOfViewIni()
     {
     	//$path = realpath('./temps/view.ini');
-    	define('VIEWS_INI_ABSPATH', realpath('./temps/'));
+    	//define('VIEWS_INI_ABSPATH', realpath('./temps/'));
     	//include($path);
     	
     	$this->view->resetVars();

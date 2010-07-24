@@ -24,7 +24,7 @@ class TestOfController extends UnitTestCase
     function testOfVar()
     {
     	$this->assertTrue(($this->ctrl->name === 'testController') ,'$name is not testController');
-    	$this->assertTrue(($this->ctrl->title === 'testController') ,'$title is not testController');
+    	$this->assertTrue(($this->ctrl->title === 'test') ,'$title is not test');
     	$this->assertNull($this->ctrl->file,'$file should be null');
     	
     	$this->assertTrue(is_array($this->ctrl->actions) ,'$c_actions is not an array');
