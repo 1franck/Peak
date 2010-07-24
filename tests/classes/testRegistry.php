@@ -75,7 +75,7 @@ class TestOfRegistry extends UnitTestCase
     
     function testOfInstanceOf()
     {
-        $this->assertTrue(Peak_Registry::isInstanceOf('teststatic', RegisteredClass),'test object is suppose to be an RegisteredClass object');
+        $this->assertTrue(Peak_Registry::isInstanceOf('teststatic', 'RegisteredClass'),'test object is suppose to be an RegisteredClass object');
     }
     
     

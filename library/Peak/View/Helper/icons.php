@@ -9,13 +9,13 @@
 class Peak_View_Helper_Icons extends Peak_View_Helper
 {   
     
-    protected $icons_path;
-    protected $icons_path_url;
+    public $icons_path;
+    public $icons_path_url;
 
     public function __construct()
     {
-        $this->icons_path = THEME_PUBLIC_ABSPATH.'/img/icons';
-        $this->icons_url  = THEME_URL.'/img/icons';              
+        $this->icons_path = ROOT_ABSPATH.'/img/icons';
+        $this->icons_url  = ROOT_URL.'/img/icons';              
     }
     
     public function display($name,$attrs = '')
