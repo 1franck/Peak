@@ -85,9 +85,11 @@ class Peak_Exception extends Exception
 		return $debug;
 	}
 	
+		
 	public function getErrkey() { return $this->_errkey; }
 		
 	public function getLevel() { return $this->_level; }
 	
 	public function getTime() { return date('Y-m-d H:i:s'); }
+
 }

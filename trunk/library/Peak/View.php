@@ -149,7 +149,7 @@ class Peak_View
         
         $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
 
-        //return $this;       
+        return $this;       
     }
     
     /**
@@ -216,7 +216,7 @@ class Peak_View
             //check for constants ( ini constant syntax = #CONST_NAME# )
             foreach($ini_vars as $k => $v)
             {
-                $pattern = '/#(?P<name>\w+)#/i';
+                $pattern = '/#(?P<name>\w+)#/i';  //# in ini is deprecated in php 5.3.x, need to be fix or change
                 preg_match_all($pattern, $v, $m);
                                 
                 if(isset($m['name'])) {
