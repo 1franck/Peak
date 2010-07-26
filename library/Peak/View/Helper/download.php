@@ -41,7 +41,7 @@ class Peak_View_Helper_Download
 			header('Content-Type: application/force-download');
 			header('Content-Type: application/octet-stream');
 			header('Content-Type: application/download');
-			header('Content-Disposition: attachment; filename="'.$this->_file.'";');
+			header('Content-Disposition: attachment; filename="'.basename($this->_file).'";');
 			header('Content-Transfer-Encoding:­ binary');
 			header('Content-Length: '.$filesize);
 			readfile($this->_file);
