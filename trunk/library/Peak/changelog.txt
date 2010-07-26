@@ -1,5 +1,7 @@
 #VERSION 0.7.95#
 
+*  fixed Peak_View_Helper_Download problem with file name.
+
 *  added Zend_Mail and Zend_Mime, updated files to zend version 1.10.6
 
 *  Peak_View_Render > fixed baseUrl(). Sanitize url and add boolean option $return
