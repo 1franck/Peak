@@ -41,7 +41,7 @@ class Peak_Application
         $core = $reg->set('core', Peak_Core::getInstance());
         
         // register lang translator 
-        $reg->set('lang', new Peak_Lang(APP_LANG) );
+        //$reg->set('lang', new Peak_Lang(APP_LANG) );
         
         // register template + setting wyn modules var
         $reg->set('view', new Peak_View('default.ini') );
@@ -153,6 +153,7 @@ class Peak_Application
             }
         }
         else {
+        	if(!$core->isController('loginController')) throw new Peak_Exception('ERR_APP_LOGIN_CTRL_NOT_FOUND');
         	$this->controller = new LoginController();  
         }
         
