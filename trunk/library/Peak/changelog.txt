@@ -1,5 +1,7 @@
 #VERSION 0.7.95#
 
+*  Peak_Application > add exception when using internal login but application can't find the login controller
+
 *  Peak_View_Render > fixed baseUrl(). remove unwanted double slash // in url
 
 *  fixed Peak_View_Helper_Download problem with file name.
