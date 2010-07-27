@@ -55,6 +55,10 @@ abstract class Peak_View_Render
     	elseif(isset($_SERVER['DOCUMENT_ROOT'])) {
     		$url = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
     	}
+    	//remove double slash(//) inside url
+    	$url_part = explode('http://',$url);
+    	$url = 'http://'.str_replace('//','/',$url_part[1]);
+    	
     	if(!$return) echo $url;  
     	else return $url;
     }
