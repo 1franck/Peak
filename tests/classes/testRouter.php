@@ -9,12 +9,11 @@ class TestOfRouter extends UnitTestCase
     
     function testOfInitRouter()
     {
-        
+        define('SVR_URL','http://127.0.0.1');
     	global $curpath;
     	$server = $_SERVER['DOCUMENT_ROOT'];
-    	$path = str_replace($server,'',$curpath);
-        $router = new Peak_Router($path);
-        
+    	$path = str_replace(SVR_URL,'',$curpath);
+        $router = new Peak_Router('/peakframework/tests/router');       
         
         $this->assertTrue(is_a($router,'Peak_Router') ,'$router is not an object of router class');
         
