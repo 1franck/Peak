@@ -77,12 +77,16 @@ class Peak_Router
      * @param string $base_uri
      */
     public function setBaseUri($base_uri)
-    {
-    	//fix '/' missing at left and right of $base_uri
-        if(substr($base_uri, 0, 1) !== '/') $base_uri = '/'.$base_uri;
-        if(substr($base_uri, -1, 1) !== '/') $base_uri = $base_uri.'/';
-        
-        $this->base_uri = $base_uri;   
+    {               
+        if(empty($base_uri)) {
+        	$this->base_uri = SVR_URL.$base_uri;
+        }
+        else {
+        	//fix '/' missing at left and right of $base_uri
+        	if(substr($base_uri, 0, 1) !== '/') $base_uri = '/'.$base_uri;
+        	if(substr($base_uri, -1, 1) !== '/') $base_uri = $base_uri.'/';
+        	$this->base_uri = $base_uri;
+        }
     }
 
         

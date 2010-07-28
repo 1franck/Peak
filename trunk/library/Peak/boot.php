@@ -12,14 +12,14 @@
  */
 
 // include Peak_Core and set system and application path if not already done
-if(!defined('_VERSION_')) {
-    include(realpath(dirname(__FILE__)).'\Core.php');
-    
+if(!defined('_VERSION_')) { 
     define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
     define('ROOT_ABSPATH',SVR_ABSPATH.'/'.ROOT);
     define('LIBRARY_ABSPATH',SVR_ABSPATH.'/'.LIBRARY_ROOT);
     define('APPLICATION_ABSPATH',SVR_ABSPATH.'/'.APPLICATION_ROOT);
     if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
+    
+    include(LIBRARY_ABSPATH.'/Peak/Core.php');
     
     Peak_Core::setPath(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
 }
