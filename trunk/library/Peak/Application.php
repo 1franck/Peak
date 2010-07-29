@@ -39,10 +39,7 @@ class Peak_Application
                                
         // register core
         $core = $reg->set('core', Peak_Core::getInstance());
-        
-        // register lang translator 
-        //$reg->set('lang', new Peak_Lang(APP_LANG) );
-        
+                
         // register template + setting wyn modules var
         $reg->set('view', new Peak_View('default.ini') );
         
