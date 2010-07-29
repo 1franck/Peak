@@ -83,7 +83,6 @@ class Peak_Core_Codegen
     	$original_data = array('PROJECT_NAME'     => 'MyApp',
     	                       'PROJECT_DESCR'    => '',
     	                       'DEV_MODE'         => 'false',
-    	                       'APP_LANG'         => 'en',
     	                       'APP_THEME'        => 'default',
     	                       'APP_DEFAULT_CTRL' => 'indexController',
     	                       'SVR_URL'          => 'http://127.0.0.1',

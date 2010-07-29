@@ -1,4 +1,6 @@
-#VERSION 0.7.95#
+#VERSION 0.7.96#
+
+*  deprecated constants APP_LANG, and Peak_Lang class is no more loaded each time in Peak_Application
 
 *  Peak_Router > fixed method setBaseUri() to use constant SVR_URL as base when $base_uri is empty
 
@@ -9,6 +11,10 @@
 *  Peak_View_Render > fixed baseUrl(). remove unwanted double slash // in url
 
 *  fixed Peak_View_Helper_Download problem with file name.
+
+
+#VERSION 0.7.95#
+
 
 *  added Zend_Mail and Zend_Mime, updated files to zend version 1.10.6
 

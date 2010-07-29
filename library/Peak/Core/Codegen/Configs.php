@@ -11,9 +11,6 @@ define('PROJECT_DESCR', '".$data['PROJECT_DESCR']."');
 
 # --- APP SETTINGS --- #
 
-// language preferences
-define('APP_LANG','".$data['APP_LANG']."');
-
 // interface theme folder name (based in /application/appname/views/themes/)                                     
 define('APP_THEME','".$data['APP_THEME']."');
 
