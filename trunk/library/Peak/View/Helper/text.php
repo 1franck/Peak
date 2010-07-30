@@ -16,7 +16,7 @@ class Peak_View_Helper_Text extends Peak_View_Helper
      * @param string $text
      * @return integer
      */
-    public function count_words($text)
+    public function countWords($text)
     {
         // split text by ' ',\r,\n,\f,\t
         $split_array = preg_split('/\s+/',$text);
@@ -32,7 +32,7 @@ class Peak_View_Helper_Text extends Peak_View_Helper
      * @param string $text
      * @return integer
      */
-    public function count_paragraphs($text)
+    public function countParagraphs($text)
     {
         // count \r or \n characters
         return count(preg_split('/[\r\n]+/', $text));
@@ -45,7 +45,7 @@ class Peak_View_Helper_Text extends Peak_View_Helper
      * @param boolean $include_spaces
      * @return string
      */
-    public function count_characters($text, $include_spaces = false)
+    public function countChars($text, $include_spaces = false)
     {
         if($include_spaces) return(strlen($text));
 
