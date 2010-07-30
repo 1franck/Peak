@@ -9,13 +9,14 @@
 class Peak_View_Helper_Icons extends Peak_View_Helper
 {   
     
-    public $icons_path;
-    public $icons_path_url;
+    public $path;
+    public $path_url;
+    public $ext = 'png';
 
     public function __construct()
     {
-        $this->icons_path = ROOT_ABSPATH.'/img/icons';
-        $this->icons_url  = ROOT_URL.'/img/icons';              
+        $this->path = ROOT_ABSPATH.'/img/icons';
+        $this->path_url  = ROOT_URL.'/img/icons';              
     }
     
     public function display($name,$attrs = '')
@@ -29,14 +30,14 @@ class Peak_View_Helper_Icons extends Peak_View_Helper
     
     public function getUrl($name)
     {
-        return $this->icons_url.'/'.$name.'.png';
+        return $this->path_url.'/'.$name.'.'.$this->ext;
     }
     
         
     protected function isIcons($name)
     {
-        $icon_file = $name.'.png';
-        $icon_path = $this->icons_path.'/'.$icon_file;
+        $icon_file = $name.'.'.$this->ext;
+        $icon_path = $this->path.'/'.$icon_file;
         
         if(file_exists($icon_path)) return true;
         return false;

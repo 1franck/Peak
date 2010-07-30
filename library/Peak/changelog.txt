@@ -1,5 +1,7 @@
 #VERSION 0.7.96#
 
+*  added Peak_View_Helper_Redirect > manage url and controller http header + status code redirection
+
 *  deprecated constants APP_LANG, and Peak_Lang class is no more loaded each time in Peak_Application
 
 *  Peak_Router > fixed method setBaseUri() to use constant SVR_URL as base when $base_uri is empty
