@@ -9,8 +9,6 @@
 class Peak_View_Helper_Redirect
 {
 	
-	public  $status = 302;
-	
 	private $_status_codes = array('300' => 'Multiple Choices',
 	                               '301' => 'Moved Permanently',
 	                               '302' => 'Found',
