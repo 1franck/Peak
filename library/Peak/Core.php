@@ -43,10 +43,9 @@ class Peak_Core
     
     private function __construct()
     {        
-        /* check DEV_MODE */
+        // check DEV_MODE
         if((defined('DEV_MODE')) && (DEV_MODE === true)) {
             ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
-            //error_reporting(E_ALL | E_STRICT);
         }
     }
     
@@ -58,7 +57,7 @@ class Peak_Core
     final public static function setPath($app_path, $lib_path)
     {
 
-        /* current app paths */
+        // current app paths
         self::$paths['application']         = $app_path;
         self::$paths['controllers']         = $app_path.'/controllers';
         self::$paths['controllers_helpers'] = self::$paths['controllers'].'/helpers';
@@ -76,7 +75,6 @@ class Peak_Core
         self::$paths['theme_partials'] = self::$paths['theme'].'/partials';
         self::$paths['theme_layouts']  = self::$paths['theme'].'/layouts';
         self::$paths['theme_cache']    = self::$paths['theme'].'/cache';
-
         
         /* current libray paths */
         self::$paths['library']     = $lib_path;       
@@ -101,8 +99,7 @@ class Peak_Core
         		define('THEME_URL', ROOT_URL.'/themes/'.basename(THEME_ROOT));
         		define('THEME_PUBLIC_ABSPATH', ROOT_ABSPATH.'/themes/'.basename(THEME_ROOT));
         	}
-        }
-        
+        }       
     }
     
     /**

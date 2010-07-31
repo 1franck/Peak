@@ -51,17 +51,14 @@ abstract class Peak_Controller
 
     /**
      * Initialize controller $name, $title, $path, $url_path and $type
-     *
-     * @param string $ctrl_type 'module' or 'controller'
+     * 
      */
     final private function initController()
     {       
         $this->view = Peak_Registry::obj()->view;
                                
-        $this->name = get_class($this);       
-        
-        $this->title = $this->name;
-        
+        $this->name = get_class($this);              
+        $this->title = $this->name;      
         $this->type = Peak_Registry::obj()->router->controller_type;
         
         $core = Peak_Registry::obj()->core;
@@ -83,12 +80,11 @@ abstract class Peak_Controller
     }
     
     /**
-     * Create a list of "actions"(methods) from child ctlr class beginning with a specified prefix
-     * that can be called by get_ctlr
-     *
-     * @param string $prefix
+     * Create a list of "actions"(methods) 
+     * Support methods with _ suffix(_dashboard)  and method like zend (dashboardAction)
+     * 
      */
-    public function listActions($prefix = '_')
+    public function listActions()
     {
         $c_methods = get_class_methods($this->name);
      
@@ -191,7 +187,6 @@ abstract class Peak_Controller
     {
         return $this->action;
     }
-
            
     /**
      * Call view render with controller $file and $path
@@ -204,29 +199,19 @@ abstract class Peak_Controller
         $this->postRender();
     }
     
-
     /**
      * Action before controller requested action
      */
-    public function preAction()
-    { 
-        // Nothing by default    
-    }
+    public function preAction() { }
     
     /**
      * Action after controller requested action
      */
-    public function postAction()
-    {
-        // Nothing by default
-    }
+    public function postAction() { }
     
     /**
      * Action after view rendering
      */
-    public function postRender()
-    {
-        // Nothing by default
-    }
+    public function postRender() { }
     
 }
