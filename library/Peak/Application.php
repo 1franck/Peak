@@ -34,52 +34,16 @@ class Peak_Application
         // start registry     
         $reg = Peak_Registry::getInstance();                
         
-        // register application instance
-        Peak_Registry::set('app', $this);
-                               
-        // register core
-        $core = $reg->set('core', Peak_Core::getInstance());
-                
-        // register template + setting wyn modules var
-        $reg->set('view', new Peak_View('default.ini') );
-        
-        // register router
+        // register application/core/view/router instance
+        $reg->set('app', $this);
+        $reg->set('core', Peak_Core::getInstance());
+        $reg->set('view', new Peak_View('default.ini'));
         $reg->set('router', new Peak_Router(ROOT));
         
         // execute app bootstrap
         if(class_exists('bootstrap',false)) new bootstrap();       
     }
-          
-    
-	/**
-	 * Internal login
-	 *
-	 * @return bool
-	 */
-	public function validSession() 
-	{
-	    $r = false;
-	    
-	    if(isset($_POST['lognow'])) {
-            $_SESSION['wName'] = sha1(_clean($_POST['wname']));
-            $_SESSION['wPass'] = sha1(_clean($_POST['wpass']));
-        }
-	    
-	    if(!isset($_SESSION['wName'])) $_SESSION['wName'] = '';
-	    if(!isset($_SESSION['wPass'])) $_SESSION['wPass'] = '';   
-	    	    
-	    if(defined('APP_LOGIN_NAME')) {
-	        if(((sha1(APP_LOGIN_NAME) === $_SESSION['wName']))) {
-	            $r = true;
-	            if((defined('APP_LOGIN_PASS')) && (sha1(APP_LOGIN_PASS) !== $_SESSION['wPass'])) $r = false;            
-	        }
-	        else $r = false;
-	    }
-	    else $r = true; //if no W_LOGIN, skip login validation
-	    
-	    return $r;	    
-	}
-	   
+   	   
 
     /**
      * Run application controller from router object
@@ -138,6 +102,7 @@ class Peak_Application
                 }
                 else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND',$default_ctrl);
             }
+            //module controller
             else
             {
                 if(isset($router->controller))
@@ -158,6 +123,35 @@ class Peak_Application
         $this->controller->handleAction();     
         
     }
+    
+    	/**
+	 * Internal login
+	 *
+	 * @return bool
+	 */
+	public function validSession() 
+	{
+	    $r = false;
+	    
+	    if(isset($_POST['lognow'])) {
+            $_SESSION['wName'] = sha1(_clean($_POST['wname']));
+            $_SESSION['wPass'] = sha1(_clean($_POST['wpass']));
+        }
+	    
+	    if(!isset($_SESSION['wName'])) $_SESSION['wName'] = '';
+	    if(!isset($_SESSION['wPass'])) $_SESSION['wPass'] = '';   
+	    	    
+	    if(defined('APP_LOGIN_NAME')) {
+	        if(((sha1(APP_LOGIN_NAME) === $_SESSION['wName']))) {
+	            $r = true;
+	            if((defined('APP_LOGIN_PASS')) && (sha1(APP_LOGIN_PASS) !== $_SESSION['wPass'])) $r = false;            
+	        }
+	        else $r = false;
+	    }
+	    else $r = true; //if no W_LOGIN, skip login validation
+	    
+	    return $r;	    
+	}
         	         
 }
 
