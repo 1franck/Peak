@@ -16,6 +16,7 @@ class Peak_Exception extends Exception
 	const ERR_APP_MOD_NOT_SPECIFIED         = 'Application: module not specified.';
 	const ERR_APP_CTRL_NOT_FOUND            = 'Application: controller %1$s not found.';
 	const ERR_APP_LOGIN_CTRL_NOT_FOUND      = 'Application: controller loginController not found.';
+	const ERR_ROUTER_URI_NOT_FOUND          = 'Router: request uri not found';
 	const ERR_CORE_NO_CTRL_FOUND            = 'Core: application controllers not found.';
 	const ERR_CORE_EXTENSION_NOT_FOUND      = 'Core: extension %1$s not found.';
 	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found.';

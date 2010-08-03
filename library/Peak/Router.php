@@ -92,33 +92,33 @@ class Peak_Router
         
     /** 
 	 * Retreive request param(s) from url and save them to $request 
-	 * Work with rewrited url
+	 * Work with/without rewrited url
 	 */
 	public function getRequestURI()
 	{  
 	    $this->request_uri = str_replace($this->base_uri,'',$_SERVER['REQUEST_URI']);
-	        
+	    
 	    // if url is like index.php?key=val&key2... we use $_GET var instead
 	    if(preg_match('#\.php\??#',$this->request_uri)) {
-	        foreach($_GET as $k => $v) {
-	            $this->request[] = $k;
-	            if(strlen($v) != 0) $this->request[] = $v;
-	        }
-	        $this->resolveCtrlType();
-	        $this->resolveRequest();
-	        return;
+	    	
+	    	// fix app default controller called if you use url rewriting
+	    	// with fake url ending by .php extension witch is not good.
+	    	if(strpos($this->request_uri, '/') !== false)	throw new Peak_Exception('ERR_ROUTER_URI_NOT_FOUND');
+	    	else {
+	    		foreach($_GET as $k => $v) {
+	    			$this->request[] = $k;
+	    			if(strlen($v) != 0) $this->request[] = $v;
+	    		}
+	    	}
 	    }
+	    else {
+	    	$this->request = explode('/',$this->request_uri);
+	    	foreach($this->request as $key => $value) {
+	    		if (strlen($value) == 0) unset($this->request[$key]);
+	    	}
 
-	    $this->request = explode('/',$this->request_uri);
-	    
-	    //print_r($this->request);
-	    	    
-	    $this->resolveCtrlType();	
-    
-	    foreach($this->request as $key => $value) {
-	        if (strlen($value) == 0) unset($this->request[$key]);
-	    }	    
-    
+	    }
+	    $this->resolveCtrlType();
 	    $this->resolveRequest();
 	}
 	

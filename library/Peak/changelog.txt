@@ -1,5 +1,13 @@
 #VERSION 0.7.96#
 
+*  Peak_Application > fix method run() to set router variables instead of using getRequestUri() 
+                      when using $flush_request
+
+*  Peak_Router > fix getRequestUri() > app default controller was called when using fake rewrited url
+                 ending by .php extension witch is not good. Now it throw exception ERR_ROUTER_URI_NOT_FOUND
+
+*  Peak_Exception > added constant ERR_ROUTER_URI_NOT_FOUND
+
 *  added Peak_View_Helper_Redirect > manage url and controller http header + status code redirection
 
 *  deprecated constants APP_LANG, and Peak_Lang class is no more loaded each time in Peak_Application
