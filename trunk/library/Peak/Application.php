@@ -55,12 +55,14 @@ class Peak_Application
     {
         $is_valid_session = $this->validSession();
         
-        $router = Peak_Registry::obj()->router;
-        $router->getRequestURI();
-        
+        $router = Peak_Registry::obj()->router;       
         $core = Peak_Registry::obj()->core;
                 
-        if($flush_request) $router->controller = $default_ctrl;
+        if($flush_request) {
+        	$router->controller = $default_ctrl;
+        	$router->controller_type = 'controller';
+        }
+        else $router->getRequestURI();
         
         if(($router->controller_type === 'module') && (!$is_valid_session)) {
             if($core->isModule($router->controller)) {
