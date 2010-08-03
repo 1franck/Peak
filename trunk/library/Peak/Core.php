@@ -140,8 +140,18 @@ class Peak_Core
     	if(empty($this->controllers)) {
     		return (file_exists(self::getPath('controllers').'/'.$name.'.php')) ? true : false;
     	}
-        return (in_array($name,$this->controllers)) ? true : false;
-        
+        return (in_array($name,$this->controllers)) ? true : false;        
+    }
+    
+    /**
+     * Check if internal Peak Controller exists
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isInternalController($name)
+    {
+    	return (file_exists(self::getPath('library').'/Peak/Controller/Internal/'.$name.'.php')) ? true : false;
     }
     
     /**

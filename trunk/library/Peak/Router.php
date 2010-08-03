@@ -50,7 +50,7 @@ class Peak_Router
     public $params_assoc = array();    //actions param(s) associative array
     
     /**
-     * Reserved first param keyword for designating the king of controllers we request
+     * Reserved first param keyword for designating the kind of controllers we request.
      * leaving empty keyword will make the controller type default
      *
      * @var array
@@ -101,9 +101,9 @@ class Peak_Router
 	    // if url is like index.php?key=val&key2... we use $_GET var instead
 	    if(preg_match('#\.php\??#',$this->request_uri)) {
 	    	
-	    	// fix app default controller called if you use url rewriting
-	    	// with fake url ending by .php extension witch is not good.
-	    	if(strpos($this->request_uri, '/') !== false)	throw new Peak_Exception('ERR_ROUTER_URI_NOT_FOUND');
+	    	// fixed: app default controller was called on url rewrited
+	    	// with fake path and url ending by .php extension witch is not good.
+	    	if(strpos($this->request_uri, '/') !== false) throw new Peak_Exception('ERR_ROUTER_URI_NOT_FOUND');
 	    	else {
 	    		foreach($_GET as $k => $v) {
 	    			$this->request[] = $k;

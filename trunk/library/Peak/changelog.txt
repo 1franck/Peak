@@ -1,9 +1,11 @@
 #VERSION 0.7.96#
 
-*  Peak_Application > fix method run() to set router variables instead of using getRequestUri() 
-                      when using $flush_request
+*  Peak_Core > added method isInternalController, updated run() method from Peak_Application to use this. 
 
-*  Peak_Router > fix getRequestUri() > app default controller was called when using fake rewrited url
+*  Peak_Application > fix method run() to set router variables instead of using getRequestUri() 
+                      when using $flush_request. 
+
+*  Peak_Router > fix method getRequestUri() > app default controller was called when using fake rewrited url
                  ending by .php extension witch is not good. Now it throw exception ERR_ROUTER_URI_NOT_FOUND
 
 *  Peak_Exception > added constant ERR_ROUTER_URI_NOT_FOUND
