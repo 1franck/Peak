@@ -81,19 +81,16 @@ class Peak_Application
                 if(isset($router->controller))
                 {
                 	$ctrl_name = $router->controller.'Controller';
-                	
-                    if((defined('ENABLE_PEAK_CONTROLLERS')) && (ENABLE_PEAK_CONTROLLERS)) {
-                        $int_ctrl = LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$router->controller.'.php';
-                    }
                     
-                    //check is controller is not found in current core controllers
+                    //check if controller is not found in current core controllers
                     if(!$core->isController($ctrl_name))
                     {
-                        //check for peak internal controller
-                        if((isset($int_ctrl)) && (file_exists($int_ctrl))) {
-                            $ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
-                            $this->controller = new $ctrl_name();             
-                        }
+                    	//check for peak internal controller
+                    	if((defined('ENABLE_PEAK_CONTROLLERS')) && (ENABLE_PEAK_CONTROLLERS) && 
+                    	   ($core->isInternalController($router->controller))) {
+                    	   	$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
+                    	   	$this->controller = new $ctrl_name();
+                    	}
                         else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
                     }
                     else $this->controller = new $ctrl_name();                    
@@ -126,7 +123,7 @@ class Peak_Application
         
     }
     
-    	/**
+    /**
 	 * Internal login
 	 *
 	 * @return bool
