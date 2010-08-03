@@ -1,6 +1,6 @@
 #VERSION 0.7.96#
 
-*  Peak_Core > added method isInternalController, updated run() method from Peak_Application to use this. 
+*  Peak_Core > added method isInternalController(), updated run() method from Peak_Application to use this. 
 
 *  Peak_Application > fix method run() to set router variables instead of using getRequestUri() 
                       when using $flush_request. 
