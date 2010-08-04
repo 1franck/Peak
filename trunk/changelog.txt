@@ -1,5 +1,7 @@
 #VERSION 0.7.97#
 
+*  Peak_Router > minor fix to method getRequestURI()
+
 *  Peak_View_Helper deleted, no more usefull since Peak_View_Helpers accomplish the same.
    Important change: View Helpers don't have to extends anymore this class.
 
