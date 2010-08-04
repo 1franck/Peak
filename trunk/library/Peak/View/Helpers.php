@@ -19,20 +19,11 @@ class Peak_View_Helpers extends Peak_Helpers
     	$this->_exception = 'ERR_VIEW_HELPER_NOT_FOUND';
     }
     
-    /**
-	 * Check if helper file exists
-	 *
-	 * @param  string $helper_name
-	 * @return bool
-	 */
-	public function exists($helper_name)
-	{
-		$helper_file = VIEWS_HELPERS_ABSPATH.'/'.$helper_name.'.php';
-		if(!file_exists($helper_file)) {
-			$helper_file = LIBRARY_ABSPATH.'/Peak/View/Helper/'.$helper_name.'.php';
-			return (file_exists($helper_file)) ? true : false;
-		}
-		else return true;
-	}
+    public function __get($name)
+    {
+    	$helper = parent::__get($name);
+    	$helper->view = Peak_Registry::obj()->view;
+    	return $helper;
+    }
     
 }

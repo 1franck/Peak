@@ -6,7 +6,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class View_Helper_Calendar extends Peak_View_Helper
+class View_Helper_Calendar
 {   
             
     public function thisMonth()

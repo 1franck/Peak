@@ -6,7 +6,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class View_Helper_Icons extends Peak_View_Helper
+class View_Helper_Icons
 {   
     
     public $path;

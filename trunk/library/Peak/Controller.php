@@ -41,7 +41,7 @@ abstract class Peak_Controller
      */
     public function __call($helper, $args = null)
     {
-    	if(isset($this->helper()->$helper)) {
+    	if((isset($this->helper()->$helper)) || ($this->helper()->exists($helper))) {
         	return $this->helper()->$helper;
         }
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
