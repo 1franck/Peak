@@ -6,7 +6,7 @@
  * @authors  Francois Lajoie
  * @version  $Id$
  */
-class Peak_View_Helper_Redirect
+class View_Helper_Redirect
 {
 	
 	private $_status_codes = array('300' => 'Multiple Choices',

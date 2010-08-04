@@ -1,10 +1,9 @@
 <?php
 
 /**
- * Wyn utils class
+ * Peak utils class @depracated
  * 
  * @desc     Content all sort of usefull functions found here and there
- * @author   Francois Lajoie
  * @version  $Id$
  */
 class Peak_Utils
