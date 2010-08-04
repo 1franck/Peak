@@ -1,5 +1,7 @@
 #VERSION 0.7.97#
 
+*  added Zend/Loader.php since Zend/Reflection/Docblock classes require this file
+
 *  View helpers new class name prefix: 'View_Helper_'
    Controller helpers new class name prefix: 'Controller_Helper_'
    Those changes standardize class name for application and library helpers.
