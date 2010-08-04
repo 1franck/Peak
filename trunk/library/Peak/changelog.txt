@@ -1,3 +1,13 @@
+#VERSION 0.7.97#
+
+*  Peak_Controller_Helpers now support native peak library controller helper folder too.
+
+*  Peak_Exception > added constant ERR_HELPER_NOT_FOUND
+
+*  added Peak_Helpers abstract class > Peak_View_Helpers and Peak_Controller_Helpers now extends this class of instead
+                                       duplicating the code for almost the same behavior. You can extends this class
+                                       to create your own helpers objects container with multiple paths.
+
 #VERSION 0.7.96#
 
 *  Peak_Core > added method isInternalController(), updated run() method from Peak_Application to use this. 
