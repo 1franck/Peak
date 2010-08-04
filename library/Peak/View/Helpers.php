@@ -9,6 +9,9 @@
 class Peak_View_Helpers extends Peak_Helpers
 {
     
+	/**
+	 * Overload helpers properties
+	 */
     public function __construct()
     {
     	$this->_prefix    = 'View_Helper_';
@@ -19,10 +22,18 @@ class Peak_View_Helpers extends Peak_Helpers
     	$this->_exception = 'ERR_VIEW_HELPER_NOT_FOUND';
     }
     
+    /**
+     * Add view object to helper objects
+     *
+     * @param  string $name
+     * @return object
+     */
     public function __get($name)
     {
     	$helper = parent::__get($name);
-    	$helper->view = Peak_Registry::obj()->view;
+    	if(!isset($helper->view)) {
+    		$helper->view =& Peak_Registry::obj()->view;
+    	}
     	return $helper;
     }
     

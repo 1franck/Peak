@@ -103,7 +103,9 @@ class Peak_Router
 	    	
 	    	// fixed: app default controller was called on url rewrited
 	    	// with fake path and url ending by .php extension witch is not good.
-	    	if(strpos($this->request_uri, '/') !== false) throw new Peak_Exception('ERR_ROUTER_URI_NOT_FOUND');
+	    	$request_uri = explode('?',$this->request_uri);
+	    	$request_uri = $request_uri[0];
+	    	if(strpos($request_uri, '/') !== false) throw new Peak_Exception('ERR_ROUTER_URI_NOT_FOUND');
 	    	else {
 	    		foreach($_GET as $k => $v) {
 	    			$this->request[] = $k;
