@@ -1,5 +1,14 @@
 #VERSION 0.7.97#
 
+*  Peak_View_Helper deleted, no more usefull since Peak_View_Helpers accomplish the same.
+   Important change: View Helpers don't have to extends anymore this class.
+
+*  Peak_Controller_Helpers have access to others helpers
+
+*  Peak_Controller > no more need to init a controller helper before using it.
+
+*  Peak_Helpers > added method exists()
+
 *  added Zend/Loader.php since Zend/Reflection/Docblock classes require this file.
 
 *  View helpers new class name prefix: 'View_Helper_'

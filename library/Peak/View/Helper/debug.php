@@ -6,14 +6,9 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class View_Helper_Debug extends Peak_View_Helper
+class View_Helper_Debug
 {   
-    
-    public function __construct()
-    {
-        $this->getViewVars();
-    }
-        
+            
     public function display($array = null)
     {
         if(!isset($array)) {

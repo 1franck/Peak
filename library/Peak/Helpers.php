@@ -69,4 +69,23 @@ abstract class Peak_Helpers
 		if(array_key_exists($name,$this->_objects)) unset($this->_objects[$name]);
 	}
 	
+	/**
+	 * Check recursively if helper file exists
+	 *
+	 * @param  string $helper_name
+	 * @return bool
+	 */
+	public function exists($name)
+	{
+		$file_found = false;
+		foreach($this->_paths as $k => $v)
+		{
+			if(file_exists($v.'/'.$name.'.php')) {
+				$file_found = true;	
+				break;
+			}
+		}
+		return ($file_found) ? true : false; 
+	}
+	
 }
