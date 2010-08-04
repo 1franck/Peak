@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Force a file download
+ * Force http header file download
  * 
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Download 
+class View_Helper_Download 
 {
 	
 	private $_file;
