@@ -22,7 +22,8 @@ abstract class Peak_Application_Modules
         $this->_module_name = str_ireplace('controller','',get_class($this));
 
         //overdrive application path to modules folder
-        Peak_Core::initModule($this->_module_name);
+        //Peak_Core::initModule($this->_module_name);
+        Peak_Registry::obj()->core->modules()->init($this->_module_name);
               
         //initialize module bootstrap
         if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
@@ -50,6 +51,8 @@ abstract class Peak_Application_Modules
         $router->base_uri = $router->base_uri.$this->_module_name;
         
         $router->getRequestURI();
+        
+        echo $router->controller;
         
     	if(isset($router->controller))
     	{

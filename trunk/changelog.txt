@@ -1,4 +1,12 @@
+#VERSION 0.7.98#
+
+*  Peak_Core > lighten the file by moving/deling methods getModules(), getModule(), getCachedModules()
+               and property $_modules
+
+
 #VERSION 0.7.97#
+
+*  Peak_Core > method initModule() moved to a new extension file(Peak_Core_Extension_Modules) and renamed init()
 
 *  added Peak_Core_Extensions derived from Peak_Helpers, ext() method simplified in Peak_Core 
    and moved extensions in Peak/core/Extension
@@ -32,7 +40,7 @@
    Controller helpers new class name prefix: 'Controller_Helper_'
    Those changes standardize class name for application and library helpers.
 
-*  depracated Peak_Utils class 
+*  deprecated Peak_Utils class 
 
 *  Peak_Controller_Helpers now support native peak library controller helper folder too.
 
