@@ -7,22 +7,19 @@
  * @version  $Id$ 
  */
 
-define('_VERSION_','0.7.97');
+define('_VERSION_','0.7.98');
 define('_NAME_','PEAK');
 define('_DESCR_','Php wEb Application Kernel');
 
 class Peak_Core
 {
    
-   
-    // Modules
-    protected $_modules = array();
     
     // Controllers
     protected $_controllers = array();
    
     // core extentension objects
-    protected $_extensions = array();
+    protected $_extensions;
 
     //object itself
     private static $_instance = null; 
@@ -47,6 +44,32 @@ class Peak_Core
         if((defined('DEV_MODE')) && (DEV_MODE === true)) {
             ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
         }
+    }
+    
+    /**
+     * Try to return a helper object based the method name.
+     *
+     * @param  string $helper
+     * @param  null   $args not used
+     * @return object
+     */
+    public function __call($extension, $args = null)
+    {
+    	if((isset($this->ext()->$extension)) || ($this->ext()->exists($extension))) {
+        	return $this->ext()->$extension;
+        }
+        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
+            trigger_error('DEV_MODE: Core/Extension method '.$extension.'() doesn\'t exists');
+        }
+    }
+    
+    /**
+     * Load/return Core extension objects
+     */
+    public function ext()
+    {        
+        if(!is_object($this->_extensions)) $this->_extensions = new Peak_Core_Extensions();
+    	return $this->_extensions;
     }
     
     /**
@@ -102,46 +125,7 @@ class Peak_Core
         $config->library     = $lib_path;       
         $config->libs        = $lib_path.'/Peak/libs';  
     }
-    
-    /**
-     * Overdrive initial paths config to a module path application
-     * Allow the possiblity to create an 'modules' application inside application
-     *
-     * @param string $module
-     */
-    public static function initModule($module)
-    {
-    	$config = Peak_Registry::obj()->core_config;
-    	
-    	$module_path = $config->modules.'/'.$module;
-    	
-    	if(is_dir($module_path)) {
-    		$config->module_name = $module;
-    		
-    		// current app paths
-    		$config->application         = $module_path;
-    		$config->cache               = $module_path.'/cache';
-    		$config->controllers         = $module_path.'/controllers';
-    		$config->controllers_helpers = $config->controllers .'/helpers';
-    		$config->modules             = $module_path.'/modules';
-    		$config->lang                = $module_path.'/lang';
-
-    		$config->views          = $module_path.'/views';
-    		$config->views_ini      = $config->views.'/ini';
-    		$config->views_helpers  = $config->views.'/helpers';
-    		$config->views_themes   = $config->views.'/themes';
-
-    		$config->theme          = $config->views_themes.'/'.APP_THEME;
-    		$config->theme_scripts  = $config->theme.'/scripts';
-    		$config->theme_partials = $config->theme.'/partials';
-    		$config->theme_layouts  = $config->theme.'/layouts';
-    		$config->theme_cache    = $config->theme.'/cache';
-    		
-    		//echo '<pre>';
-    		//print_r($config);
-    	}
-    }
-    
+       
        
     /**
      * Get application different paths from Peak_Configs
@@ -212,115 +196,7 @@ class Peak_Core
     	}
         return (array_key_exists($name, $this->modules)) ? true : false;
     }
-    
-    /**
-     * Get module infos @deprecated
-     *
-     * @param string $name
-     * @param string $opt
-     * @return string/array
-     */
-    public function getModule($name,$opt = null)
-    {
-        if($this->isModule($name)) {
-            if(!isset($opt)) return $this->modules[$name];
-            return (isset($this->modules[$name][$opt])) ? $this->modules[$name][$opt] : null;
-        }
-        else return null;
-    }
-       
-    /**
-     * Load wyn modules @deprecated
-     *
-     * @return array
-     */
-    public function getModules()
-    {
-        $cached = $this->getCachedModules();
-        
-        //use session cache if $cached !== false;
-        if($cached) { 
-            $this->modules = $cached;
-            return $cached; 
-        }
-        
-        //list modules directory with their additionnal info if exists
-        try
-        {
-
-            $it = new DirectoryIterator(self::getPath('modules'));
-
-            while($it->valid())
-            {
-                if(($it->isDir()) && (!in_array($it->getFilename(),array('.','..'))))
-                {
-                    $mod = $it->getFilename();
-                    $plugin_file = self::getPath('modules').'/'.$mod.'/'.$mod.'.php';
-                    
-                    if(file_exists($plugin_file))
-                    {
-                        $this->modules[$mod] = array('name' => $mod);
-                        
-                        $plugin_js = self::getPath('modules').'/'.$mod.'/'.$mod.'.js';
-                        if(file_exists($plugin_js)) $info['js'] = $mod;                     
-                                            
-                        $plugin_info = self::getPath('modules').'/'.$mod.'/'.$mod.'.ini';
-                        if(file_exists($plugin_info))
-                        {
-                            $info = parse_ini_file($plugin_info); 
-                            
-                            if(!isset($info['title'])) $info['title'] = $mod;
-                            
-                            if(!isset($info['login'])) $info['login'] = true;
-                            
-                            if((isset($info['devmode_only'])) && ($info['devmode_only']) && (!DEV_MODE)) {
-                                unset($this->modules[$mod]);
-                            }                          
-                            elseif((isset($info['hidden'])) && ($info['hidden'])) {
-                                unset($this->modules[$mod]);
-                            }
-                            else $this->modules[$mod] = array_merge($this->modules[$mod],$info);
-                        }
-                        else {
-                            $this->modules[$mod]['login'] = true;
-                            $this->modules[$mod]['title'] = $mod;
-                        }
-                         
-                    }
-                    
-                }
-              
-                $it->next();
-            }
-            
-            $this->cacheModules();
-            
-            //echo '<pre>'; print_r($this->modules);
-            return $this->modules;
-        }
-        catch(Exception $e) { $this->w_errors[] = $e->getMessage(); return false; }
-
-    }
-        
-    /**
-     * Cache modules list into session
-     */
-    public function cacheModules()
-    {
-        $_SESSION['Peak_Modules'] = $this->modules;
-    }
-    
-    /**
-     * Get modules session cache or false
-     *
-     * @return array/bool
-     */
-    public function getCachedModules()
-    {
-        if(isset($_SESSION['Peak_Modules'])) return $_SESSION['Peak_Modules'];
-        else return false;
-    }
-        
+               
     
     /**
      * Get wyn controllers - wsystem/controllers
@@ -380,14 +256,6 @@ class Peak_Core
         if(isset($_SESSION['Peak_Controllers'])) return $_SESSION['Peak_Controllers'];
         else return false;
     }
-    
-    /**
-     * Load/return Core extension objects
-     */
-    public function ext()
-    {        
-        if(!is_object($this->_extensions)) $this->_extensions = new Peak_Core_Extensions();
-    	return $this->_extensions;
-    }        
+            
     
 }
