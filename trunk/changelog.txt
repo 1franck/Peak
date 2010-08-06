@@ -1,5 +1,7 @@
 #VERSION 0.7.97#
 
+*  added Peak_Core_Extensions derived from Peak_Helpers, ext() method simplified in Peak_Core 
+   and moved extensions in Peak/core/Extension
 
 *  Peak_Core > Peak_Configs is stored in Peak_Registry under the name of 'core_config'
 

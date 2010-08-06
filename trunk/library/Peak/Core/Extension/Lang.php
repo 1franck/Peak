@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Peak_Core_Lang object extension 
+ * Peak_Core_Extension_Lang
  *
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_Core_Lang
+class Peak_Core_Extension_Lang
 {
     
     /**

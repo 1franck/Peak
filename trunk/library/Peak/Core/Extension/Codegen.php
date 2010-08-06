@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Peak_Core_Codegen object extension 
+ * Peak_Core_Extension_Codegen
  *
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_Core_Codegen
+class Peak_Core_Extension_Codegen
 {
 	
 	//path where code sample file are

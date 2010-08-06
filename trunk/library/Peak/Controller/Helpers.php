@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Peak Controller Helpers Object containers
+ * Peak Controller Helpers Objects container
  *  
  * @author   Francois Lajoie 
  * @version  $Id$ 

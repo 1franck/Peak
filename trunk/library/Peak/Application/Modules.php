@@ -59,7 +59,7 @@ abstract class Peak_Application_Modules
     	}
     	elseif((isset($default_ctrl)))
     	{
-    		$ctrl_name = $default_ctrl;
+    		$ctrl_name = $default_ctrl.'Controller';
     		//if(!$core->isController($ctrl_name)) throw new Peak_Exception('ERR_APP_MOD_NOT_FOUND', $ctrl_name);
     		$app->controller = new $ctrl_name();
     	}
