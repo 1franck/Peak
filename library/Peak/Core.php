@@ -383,27 +383,11 @@ class Peak_Core
     
     /**
      * Load/return Core extension objects
-     * 
-     * @param string $name core extension name
      */
-    public function ext($name)
-    {
-        $ext_name_prefix = 'Peak_Core_';
-
-        $ext_name = trim(stripslashes(strip_tags($name)));
-        $ext_file = LIBRARY_ABSPATH.'/Peak/Core/'.$name.'.php';
-
-        $ext_class_name = $ext_name_prefix.$ext_name;
-
-        if(!isset($this->extensions[$ext_name])) {
-            if(file_exists($ext_file)) {
-                include($ext_file);
-                $this->extensions[$ext_name] = new $ext_class_name();
-            }
-            else throw new Peak_Exception('ERR_CORE_EXTENSION_NOT_FOUND', $ext_name);
-        }
-
-        return $this->extensions[$ext_name];
+    public function ext()
+    {        
+        if(!is_object($this->_extensions)) $this->_extensions = new Peak_Core_Extensions();
+    	return $this->_extensions;
     }        
     
 }

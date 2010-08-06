@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Peak_Core_Configs object extension 
+ * Peak_Core_Extension_Configs
  * 
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_Core_Configs
+class Peak_Core_Extension_Configs
 {
     
     /**

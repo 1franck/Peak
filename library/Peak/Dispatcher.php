@@ -16,19 +16,40 @@
 abstract class Peak_Dispatcher
 {
 	
-    public $resource;                                              //always reflect current resource of a called action
+	/**
+	 * always reflect current resource of a called action
+	 */
+    public $resource;
     
-    public $response = array();                                    //container for response
-       
-    private $_accepted_globals = array('_GET','_POST','_SESSION'); //global variable allow
+    /**
+     * container for response
+     */
+    public $response = array();
+    
+    /**
+     * global variable allow
+     */
+    private $_accepted_globals = array('_GET','_POST','_SESSION');
+    
+    /**
+     * actions method list depending on $_accepted_globals
+     */
+    private $_actions = array();
+    
+    /**
+     * allow multiple actions calls. if isset to false, its first in first out
+     */
+    private $_recursivity  = false;
         
-    private $_actions = array();                                   //actions method list depending on $_accepted_globals
-    
-    private $_recursivity  = false;                                //allow multiple actions calls
-    
-    private $_recursivity_depth = 3;                               //define the maximum of actions that can be called in the hole process
-    
-    private $_actions_triggered = 0;                               //number of actions called
+    /**
+     * define the maximum of actions that can be called in the hole process
+     */
+    private $_recursivity_depth = 3;
+                                                                            
+    /**
+     * number of actions called
+     */
+    private $_actions_triggered = 0;
     
     
     /**
