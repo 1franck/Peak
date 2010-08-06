@@ -1,29 +1,37 @@
 <?php
 
+/**
+ * Peak Config variables registry
+ * 
+ * @author  Francois Lajoie
+ * @version $Id$
+ * @uses    IteratorAggregate, Countable
+ *
+ */
 class Peak_Config implements IteratorAggregate, Countable
 {
 	
-	private $config = array();
+	private $_vars = array();
     
     public function __set($name,$val)
     {
-    	$this->config[$name] = $val;
+    	$this->_vars[$name] = $val;
     }
     
     public function __get($name)
     {
-    	if(isset($this->config[$name])) return $this->config[$name];
+    	if(isset($this->_vars[$name])) return $this->_vars[$name];
     	else return null;
     }
     
     public function __isset($name)
     {
-    	return (isset($this->config[$name])) ? true : false;
+    	return (isset($this->_vars[$name])) ? true : false;
     }
     
     public function __unset($name)
     {
-    	if(isset($this->config[$name])) unset($this->config[$name]);
+    	if(isset($this->_vars[$name])) unset($this->_vars[$name]);
     }
     
     /**
@@ -33,7 +41,7 @@ class Peak_Config implements IteratorAggregate, Countable
 	 */
 	public function getIterator()
     {
-        return new ArrayIterator($this->config);
+        return new ArrayIterator($this->_vars);
     }
     
     /**
@@ -43,10 +51,7 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function count()
     {
-    	return count($this->config);
+    	return count($this->_vars);
     }
-
-	
-	
 	
 }
