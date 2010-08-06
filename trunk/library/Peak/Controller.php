@@ -45,7 +45,7 @@ abstract class Peak_Controller
         	return $this->helper()->$helper;
         }
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('DEV_MODE: Controller method '.$method.'() doesn\'t exists');
+            trigger_error('DEV_MODE: Controller method '.$helper.'() doesn\'t exists');
         }
     }
 

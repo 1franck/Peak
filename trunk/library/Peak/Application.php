@@ -1,10 +1,12 @@
 <?php 
 
 /**
- * Peak Application launcher
+ * Peak Application
  * 
- * @author   Francois Lajoie
- * @version  $Id$
+ * @desc      Load the framework objects, application bootstrap and a valid controller/module form router request.
+ * @author    Francois Lajoie
+ * @version   $Id$
+ * @exception Peak_Exception
  */
 class Peak_Application
 {
@@ -49,7 +51,7 @@ class Peak_Application
      * Run application controller from router object
      *
      * @param string $default_ctrl Controller called by default when no request
-     * @param bool $flush_request Flush all router request and try to execute controller $default_ctrl
+     * @param bool   $flush_request Flush all router request and try to execute controller $default_ctrl
      */
     public function run($default_ctrl = null, $flush_request = false)
     {
@@ -118,11 +120,13 @@ class Peak_Application
         	$this->controller = new LoginController();  
         }
         
+        //class method run if exists, usefull for loading a modules app via a controller
+        if($this->controller instanceof Peak_Application_Modules) $this->controller->run();
+
         // execute controller action
-        $this->controller->handleAction();     
-        
+        if(method_exists($this->controller,'handleAction')) $this->controller->handleAction();        
     }
-    
+        
     /**
 	 * Internal login
 	 *

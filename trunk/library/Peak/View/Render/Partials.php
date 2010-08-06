@@ -73,8 +73,8 @@ class Peak_View_Render_Partials extends Peak_View_Render
         $this->_scripts_path = $path;
         
         if(!isset($path)) {
-        	$this->_scripts_path = THEME_PARTIALS_ABSPATH;
-        	$path = THEME_PARTIALS_ABSPATH;
+        	$this->_scripts_path = Peak_Core::getPath('theme_partials');
+        	$path = Peak_Core::getPath('theme_partials');
         	$no_cache = true;
         }
         
@@ -93,7 +93,9 @@ class Peak_View_Render_Partials extends Peak_View_Render
             foreach($this->_group as $theme_partial) {
                 if($theme_partial !== '[CONTENT]') {
                     if(basename($theme_partial) === $theme_partial) {
-                        if(file_exists(THEME_PARTIALS_ABSPATH.'/'.$theme_partial)) $group_filespath[] = THEME_PARTIALS_ABSPATH.'/'.$theme_partial;
+                        if(file_exists(Peak_Core::getPath('theme_partials').'/'.$theme_partial)) {
+                        	$group_filespath[] = Peak_Core::getPath('theme_partials').'/'.$theme_partial;
+                        }
                     }
                     elseif(file_exists($theme_partial)) $group_filespath[] = $theme_partial;
                 }

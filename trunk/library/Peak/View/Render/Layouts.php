@@ -10,17 +10,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
 {
         
     protected $_layout_file;   //current layout filename       
-    protected $_layouts_path;  //application layouts path   
-    
-    /**
-     * Load Layouts engine 
-     *
-     * @param array $path
-     */
-    public function __construct($path)
-    {
-        $this->_layouts_path = $path;   
-    }
+
        
     /**
      * Set layout filename to render
@@ -40,7 +30,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function isLayout($name)
     {
-    	return (file_exists($this->_layouts_path.'/'.$name.'.php')) ? true : false;
+    	return (file_exists(Peak_Core::getPath('theme_layouts').'/'.$name.'.php')) ? true : false;
     }
 
     /**
@@ -63,7 +53,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     {
         if(!isset($path)) {
         	//$this->_scripts_path = THEME_LAYOUTS_ABSPATH;
-        	$path = THEME_LAYOUTS_ABSPATH;
+        	$path = Peak_Core::getPath('theme_layouts');
         	$no_cache = true;
         }
         
@@ -77,13 +67,14 @@ class Peak_View_Render_Layouts extends Peak_View_Render
                      
         //LAYOUT FILES VIEW IF EXISTS
         if(isset($this->_layout_file)) {
-            $filepath = $this->_layouts_path.'/'.$this->_layout_file;
+            $filepath = Peak_Core::getPath('theme_layouts').'/'.$this->_layout_file;
             $this->_scripts_file = $file;
             $this->_scripts_path = $path;
         }
 
         if(isset($no_cache)) $this->output($filepath);
-        else $this->preOutput($filepath);        
+        else $this->preOutput($filepath);
+ 
     }
     
      

@@ -16,7 +16,7 @@ class Peak_Controller_Helpers extends Peak_Helpers
     {
     	$this->_prefix    = 'Controller_Helper_';
     	
-    	$this->_paths     = array(CONTROLLERS_HELPERS_ABSPATH,
+    	$this->_paths     = array(Peak_Core::getPath('controllers_helpers'),
     			                  LIBRARY_ABSPATH.'/Peak/Controller/Helper');
     			                  
     	$this->_exception = 'ERR_CTRL_HELPER_NOT_FOUND';

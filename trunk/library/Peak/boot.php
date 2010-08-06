@@ -20,12 +20,17 @@ if(!defined('_VERSION_'))
     define('APPLICATION_ABSPATH',SVR_ABSPATH.'/'.APPLICATION_ROOT);
     if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
     
+    include(LIBRARY_ABSPATH.'/Peak/Registry.php');
+    include(LIBRARY_ABSPATH.'/Peak/Config.php');
     include(LIBRARY_ABSPATH.'/Peak/Core.php');   
-    Peak_Core::setPath(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
+    
+    Peak_Core::init();
+    Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
+    //Peak_Core::setPath(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
 }
 
 //add LIBS_ABSPATH to include path
-set_include_path(implode(PATH_SEPARATOR, array(LIBS_ABSPATH, get_include_path())));
+set_include_path(implode(PATH_SEPARATOR, array(Peak_Core::getPath('libs'), get_include_path())));
 
 //if ZEND_LIB_ABSPATH is specified, we add it to include path
 if(defined('ZEND_LIB_ABSPATH')) {   
@@ -35,7 +40,6 @@ if(defined('ZEND_LIB_ABSPATH')) {
 //*optionnal
 //just load immediately files that anyway will be loaded at each execution of an application
 //by doing this we save some autoload magic function calls and reduce lightly execution time 
-include(LIBRARY_ABSPATH.'/Peak/Registry.php');
 include(LIBRARY_ABSPATH.'/Peak/Router.php');
 include(LIBRARY_ABSPATH.'/Peak/Application.php');
 include(LIBRARY_ABSPATH.'/Peak/Controller.php');
@@ -43,7 +47,7 @@ include(LIBRARY_ABSPATH.'/Peak/View.php');
 include(LIBRARY_ABSPATH.'/Peak/Lang.php');
 include(LIBRARY_ABSPATH.'/Peak/Chrono.php');
 
-//load wyn autoloader
+//load peak autoloader
 include(LIBRARY_ABSPATH.'/Peak/autoload.php');
 
 //include application bootstrap if exists
