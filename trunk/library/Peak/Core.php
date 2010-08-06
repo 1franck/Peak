@@ -18,17 +18,14 @@ class Peak_Core
     // Modules
     protected $_modules = array();
     
-    //Controllers
+    // Controllers
     protected $_controllers = array();
    
     // core extentension objects
     protected $_extensions = array();
 
-    
-    //@deprecated
-    public $w_errors = array(); 
-    
-    private static $_instance = null; //object itself
+    //object itself
+    private static $_instance = null; 
         
     /**
      * Singleton peak core
