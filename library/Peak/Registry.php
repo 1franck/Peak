@@ -15,8 +15,7 @@ class Peak_Registry
                           
     private final function __clone() { trigger_error('Can\'t clone registry', E_USER_ERROR); }
     private final function __construct() { }
-
-    
+        
     /**
      * set/get registry instance
      *

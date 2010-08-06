@@ -16,7 +16,7 @@ class Peak_View_Helpers extends Peak_Helpers
     {
     	$this->_prefix    = 'View_Helper_';
     	
-    	$this->_paths     = array(VIEWS_HELPERS_ABSPATH,
+    	$this->_paths     = array(Peak_Core::getPath('views_helpers'),
     			                  LIBRARY_ABSPATH.'/Peak/View/Helper');
     			                  
     	$this->_exception = 'ERR_VIEW_HELPER_NOT_FOUND';

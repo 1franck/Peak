@@ -130,11 +130,6 @@ class Peak_View
                 $groups = (is_array($groups)) ? $groups : array();  
                 $options = $groups;
                 break;
-            
-            case 'layouts':       
-            case 'Layouts':
-                $options = THEME_ABSPATH.'/layouts';
-                break;
                 
             default :
             	if(!class_exists('Peak_View_Render_'.$engine)) {
@@ -208,7 +203,7 @@ class Peak_View
      */
     public function iniVar($file)
     {
-        $filepath = VIEWS_INI_ABSPATH.'/'.$file;
+        $filepath = Peak_Core::getPath('views_ini').'/'.$file;
         if(file_exists($filepath)) {
             $ini_vars = parse_ini_file($filepath);
             

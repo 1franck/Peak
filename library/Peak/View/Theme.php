@@ -41,7 +41,7 @@ class Peak_View_Theme
      */
     public function setOptions()
     {
-        $filepath = THEME_ABSPATH.'/theme.ini';
+        $filepath = Peak_Core::getPath('theme').'/theme.ini';
         if(file_exists($filepath)) {
             $this->_options = parse_ini_file($filepath,true);
         }    
@@ -54,7 +54,7 @@ class Peak_View_Theme
      */
     public function getFunctionsFile()
     {
-        $file = THEME_ABSPATH.'/functions.php';
+        $file = Peak_Core::getPath('theme').'/functions.php';
         return (file_exists($file)) ? $file : false;
     }
 

@@ -1,5 +1,18 @@
 #VERSION 0.7.97#
 
+
+*  Peak_Core > Peak_Configs is stored in Peak_Registry under the name of 'core_config'
+
+*  added Peak_Application_Modules > allow to create/use complet modules application inside application
+                                    
+*  Peak_Core > added methods init(), initApp() and initModules(). Removed methods setPath() and getPaths().
+               modified getPath() to point to new Peak_Config object.
+               A lot of files was affected by this change because we replace a lot of php constants by
+               Peak_Core::getPath() static method (boot, autoload, Controller, Controller Helpers, 
+               View, View Helpers, View Render Partials/Layouts and View theme)
+
+*  added Peak_Config > this new class allow core paths configuration to be overdriven and get rid of all paths constants
+
 *  Peak_Router > minor fix to method getRequestURI()
 
 *  Peak_View_Helper deleted, no more usefull since Peak_View_Helpers accomplish the same.
