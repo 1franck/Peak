@@ -13,6 +13,14 @@ spl_autoload_register(null, false);
 //specify extensions that may be loaded
 spl_autoload_extensions('.php');
 
+//register spl functions
+spl_autoload_register('_autoloadPeak');
+spl_autoload_register('_autoloadAppCtrl');
+spl_autoload_register('_autoloadAppMod');
+spl_autoload_register('_autoloadAppModules');
+spl_autoload_register('_autoloadAppCustom');
+spl_autoload_register('_autoloadZendInternal');
+if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
 
 function _autoloadPeak($cn)
 { 
@@ -84,10 +92,3 @@ function _autoloadAppCustom($cn)
     include($file);
 }
 
-spl_autoload_register('_autoloadPeak');
-spl_autoload_register('_autoloadAppCtrl');
-spl_autoload_register('_autoloadAppMod');
-spl_autoload_register('_autoloadAppModules');
-spl_autoload_register('_autoloadAppCustom');
-spl_autoload_register('_autoloadZendInternal');
-if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');

@@ -45,37 +45,5 @@ class Peak_Core_Extension_Configs
             }
         }
         return $configs_vars;
-    }
-    
-            
-    /**
-     * Check different config @todo move to a core extension
-     *
-     * @return array
-     */
-    public function check()
-    {
-        $warnings = array();
-        
-        /* check DEV_MODE */
-        if((defined('DEV_MODE')) && (DEV_MODE === true)) { 
-            $warnings[] = 'DEV_MODE is enabled!';
-        }
-        
-        //@deprecated
-        /* check W_LOGIN and W_PASS */
-        /*
-        if(!defined('W_LOGIN')) $warnings[] = 'W_LOGIN config doesn\'t exists!';
-        elseif(W_LOGIN === '') $warnings[] = 'W_LOGIN config found but empty';
-        else {
-            if(!defined('W_PASS')) $warnings[] = 'W_PASS config doesn\'t exists!';
-            elseif(W_PASS === '') $warnings[] = 'W_PASS config found but empty';
-        }
-        
-        if(empty($warnings)) $warnings = null;
-        */
-        return $warnings;
-    }
-    
-    
+    }    
 }

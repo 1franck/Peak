@@ -4,8 +4,8 @@
  * Application boot preparations
  * Next file to include after your application configs.php 
  * 
- * @desc This file will add importants constants, load Peak_Core and call setPath(), call set_include_path 
- *       and finally include autoload.php
+ * @desc This file will add importants constants, load Peak_Core, call init() and initApp(), call set_include_path() 
+ *       and finally include some important files and autoload.php
  * 
  * @author   Francois Lajoie
  * @version  $Id$

@@ -34,11 +34,11 @@ class Peak_View_Theme
 
     	if(is_dir($config->views_themes.'/'.$name))
     	{
-    		$config->theme          = $config->views_themes.'/'.$name;
-    		$config->theme_scripts  = $config->theme.'/scripts';
-    		$config->theme_partials = $config->theme.'/partials';
-    		$config->theme_layouts  = $config->theme.'/layouts';
-    		$config->theme_cache    = $config->theme.'/cache';
+    		$config->theme_path          = $config->views_themes_path.'/'.$name;
+    		$config->theme_scripts_path  = $config->theme_path.'/scripts';
+    		$config->theme_partials_path = $config->theme_path.'/partials';
+    		$config->theme_layouts_path  = $config->theme_path.'/layouts';
+    		$config->theme_cache_path    = $config->theme_path.'/cache';
     		
     		$this->setOptions();
     		$this->_theme_folder = $name;
