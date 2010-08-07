@@ -101,54 +101,56 @@ class Peak_Core
     public static function initApp($app_path, $lib_path)
     {
     	$config = Peak_Registry::o()->core_config;
+    	
+    	// current libray paths
+        $config->library_path     = $lib_path;       
+        $config->libs_path        = $lib_path.'/Peak/libs';  
     	   	
     	// current app paths
-        $config->application         = $app_path;
-        $config->cache               = $app_path.'/cache';
-        $config->controllers         = $app_path.'/controllers';
-        $config->controllers_helpers = $config->controllers .'/helpers';       
-        $config->modules             = $app_path.'/modules';
-        $config->lang                = $app_path.'/lang';
+        $config->application_path         = $app_path;
+        $config->cache_path               = $app_path.'/cache';
+        $config->controllers_path         = $app_path.'/controllers';
+        $config->controllers_helpers_path = $config->controllers_path .'/helpers';       
+        $config->modules_path             = $app_path.'/modules';
+        $config->lang_path                = $app_path.'/lang';
         
-        $config->views          = $app_path.'/views';       
-        $config->views_ini      = $config->views.'/ini';
-        $config->views_helpers  = $config->views.'/helpers';
-        $config->views_themes   = $config->views.'/themes';              
+        $config->views_path          = $app_path.'/views';       
+        $config->views_ini_path      = $config->views_path.'/ini';
+        $config->views_helpers_path  = $config->views_path.'/helpers';
+        $config->views_themes_path   = $config->views_path.'/themes';              
         
-        $config->theme          = $config->views_themes.'/'.APP_THEME;
-        $config->theme_scripts  = $config->theme.'/scripts';
-        $config->theme_partials = $config->theme.'/partials';
-        $config->theme_layouts  = $config->theme.'/layouts';
-        $config->theme_cache    = $config->theme.'/cache';
-        
-        /* current libray paths */
-        $config->library     = $lib_path;       
-        $config->libs        = $lib_path.'/Peak/libs';  
+        $config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
+        $config->theme_scripts_path  = $config->theme_path.'/scripts';
+        $config->theme_partials_path = $config->theme_path.'/partials';
+        $config->theme_layouts_path  = $config->theme_path.'/layouts';
+        $config->theme_cache_path    = $config->theme_path.'/cache';
     }
        
        
     /**
-     * Get application different paths from Peak_Configs
+     * Get application different vars from Peak_Configs ending by '_path'
      *
+     * @example getPath('application') = Peak_Registry::o()->core_config->application_path
+     * 
      * @param  string $path
      * @return string
      */
     public static function getPath($path = 'application', $absolute_path = true) 
     {
-        //$pathvar = $path;
-        if(isset(Peak_Registry::o()->core_config->$path)) {
-            if($absolute_path) return Peak_Registry::o()->core_config->$path;
-            else return str_replace(SVR_ABSPATH,'', Peak_Registry::o()->core_config->$path);
+        $pathvar = $path.'_path';
+        if(isset(Peak_Registry::o()->core_config->$pathvar)) {
+            if($absolute_path) return Peak_Registry::o()->core_config->$pathvar;
+            else return str_replace(SVR_ABSPATH,'', Peak_Registry::o()->core_config->$pathvar);
         }
         else return null;
     }
     
     /**
-     * Get Core configs
+     * Get/Set core configurations
      *
-     * @param unknown_type $k
-     * @param unknown_type $v
-     * @return unknown
+     * @param  string $k configuration keyname
+     * @param  misc   $v configuration keyname value
+     * @return misc   return null if no config found or setting a new config value
      */
     public static function config($k,$v = null)
     {
@@ -157,7 +159,7 @@ class Peak_Core
     	else return null;
     }
        
-    
+       
     /**
      * Check if controller name exists
      *
@@ -199,9 +201,9 @@ class Peak_Core
                
     
     /**
-     * Get wyn controllers - wsystem/controllers
+     * Get  controllers @deprecated
      * 
-     * return array()
+     * @return array()
      *
      */
     public function getControllers()
@@ -239,7 +241,7 @@ class Peak_Core
     }
     
     /**
-     * Cache controllers list into session
+     * Cache controllers list into session @deprecated
      */
     public function cacheControllers()
     {
@@ -247,7 +249,7 @@ class Peak_Core
     }
     
     /**
-     * Get controllers session cache or false
+     * Get controllers session cache or false @deprecated
      *
      * @return array/bool
      */

@@ -1,5 +1,10 @@
 #VERSION 0.7.98#
 
+*  Peak_Core > added '_path' suffix to core path configurations. fixed getPath() to add this suffix and by way ensured
+               that no change is needed outside and separate path configs from other core configs.
+ 
+*  Peak_Core > added static method config(). get/set core configs            
+
 *  Peak_View_Theme > added method folder(). It set the theme folder name to use. 
                      Tweaked Peak_View::theme() to use this new functionnality
 

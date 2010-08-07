@@ -15,34 +15,35 @@ class Peak_Core_Extension_Modules
 	 * Overdrive core application paths configs to a module application paths.
 	 *
 	 * @param string $module  folder name of the module to load
+	 * @param string 
 	 */
-	public function init($module)
+	public function init($module, $path = null)
 	{
-		$config = Peak_Registry::obj()->core_config;
-    	
-    	$module_path = $config->modules.'/'.$module;
+		$config = Peak_Registry::o()->core_config;
+	
+    	$module_path = (isset($path)) ? $path : $config->modules_path.'/'.$module;
     	
     	if(is_dir($module_path)) {
     		$config->module_name = $module;
     		
     		// current app paths
-    		$config->application         = $module_path;
-    		$config->cache               = $module_path.'/cache';
-    		$config->controllers         = $module_path.'/controllers';
-    		$config->controllers_helpers = $config->controllers .'/helpers';
-    		$config->modules             = $module_path.'/modules';
-    		$config->lang                = $module_path.'/lang';
+    		$config->application_path         = $module_path;
+    		$config->cache_path               = $module_path.'/cache';
+    		$config->controllers_path         = $module_path.'/controllers';
+    		$config->controllers_helpers_path = $config->controllers_path .'/helpers';
+    		$config->modules_path             = $module_path.'/modules';
+    		$config->lang_path                = $module_path.'/lang';
 
-    		$config->views          = $module_path.'/views';
-    		$config->views_ini      = $config->views.'/ini';
-    		$config->views_helpers  = $config->views.'/helpers';
-    		$config->views_themes   = $config->views.'/themes';
+    		$config->views_path          = $module_path.'/views';
+    		$config->views_ini_path      = $config->views_path.'/ini';
+    		$config->views_helpers_path  = $config->views_path.'/helpers';
+    		$config->views_themes_path   = $config->views_path.'/themes';
 
-    		$config->theme          = $config->views_themes.'/'.APP_THEME;
-    		$config->theme_scripts  = $config->theme.'/scripts';
-    		$config->theme_partials = $config->theme.'/partials';
-    		$config->theme_layouts  = $config->theme.'/layouts';
-    		$config->theme_cache    = $config->theme.'/cache';
+    		$config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
+    		$config->theme_scripts_path  = $config->theme_path.'/scripts';
+    		$config->theme_partials_path = $config->theme_path.'/partials';
+    		$config->theme_layouts_path  = $config->theme_path.'/layouts';
+    		$config->theme_cache_path    = $config->theme_path.'/cache';
     		
     		//echo '<pre>';
     		//print_r($config);
