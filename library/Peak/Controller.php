@@ -55,13 +55,13 @@ abstract class Peak_Controller
      */
     final private function initController()
     {       
-        $this->view = Peak_Registry::obj()->view;
+        $this->view = Peak_Registry::o()->view;
                                
         $this->name = get_class($this);              
         $this->title = $this->name;      
-        $this->type = Peak_Registry::obj()->router->controller_type;
+        $this->type = Peak_Registry::o()->router->controller_type;
         
-        $core = Peak_Registry::obj()->core;
+        $core = Peak_Registry::o()->core;
         
         if($this->type === 'module') {
             $this->path = $core->getPath('modules').'/'.$this->name;
@@ -75,8 +75,8 @@ abstract class Peak_Controller
         }
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
-        $this->params = Peak_Registry::obj()->router->params;
-        $this->params_assoc = Peak_Registry::obj()->router->params_assoc;
+        $this->params = Peak_Registry::o()->router->params;
+        $this->params_assoc = Peak_Registry::o()->router->params_assoc;
     }
     
     /**
@@ -142,7 +142,7 @@ abstract class Peak_Controller
     {
         $this->preAction();
         
-        $action = Peak_Registry::obj()->router->action;
+        $action = Peak_Registry::o()->router->action;
         
         if((isset($action)) && ($this->isAction($action))) $this->action = $action;
         elseif((isset($action)) && ($this->isZendAction($action))) 

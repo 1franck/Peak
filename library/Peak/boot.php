@@ -26,7 +26,6 @@ if(!defined('_VERSION_'))
     
     Peak_Core::init();
     Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
-    //Peak_Core::setPath(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
 }
 
 //add LIBS_ABSPATH to include path

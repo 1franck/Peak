@@ -47,7 +47,7 @@ class Peak_Router
     
     public $params = array();           //action param(s) array
     
-    public $params_assoc = array();    //actions param(s) associative array
+    public $params_assoc = array();     //actions param(s) associative array
     
     /**
      * Reserved first param keyword for designating the kind of controllers we request.
@@ -96,7 +96,11 @@ class Peak_Router
 	 */
 	public function getRequestURI()
 	{  
-	    $this->request_uri = str_replace($this->base_uri,'',$_SERVER['REQUEST_URI']);
+		//ensure that the router vars are empty
+		$this->reset();
+		
+		//get server REQUEST_URI
+	    $this->request_uri = str_ireplace($this->base_uri,'',$_SERVER['REQUEST_URI']);
 	    
 	    // if url is like index.php?key=val&key2... we use $_GET var instead
 	    if(preg_match('#\.php\??#',$this->request_uri)) {
@@ -128,7 +132,7 @@ class Peak_Router
 	protected function resolveRequest()
 	{
 	    // extract data from request
-	    if (count($this->request)) 
+	    if (!empty($this->request)) 
 	    {	        
 	        //preserve unparsed request
 	        $request = $this->request;
@@ -145,6 +149,10 @@ class Peak_Router
 	    }
 	}
 	
+	/**
+	 * @deprecated
+	 *
+	 */
 	protected function resolveCtrlType()
 	{
 	    if((!empty($this->request[0])) && ($this->request[0] === $this->ctrls_type_base['modules'])) {  
@@ -152,6 +160,19 @@ class Peak_Router
 	        array_shift($this->request);
 	    }
 	    else $this->controller_type = 'controller';
-	}	
+	}
+
+	/**
+	 * Reset router vars
+	 */
+	public function reset()
+	{
+		$this->request = null;
+		$this->controller = null;
+		$this->controller_type = null;
+		$this->action = null;
+		$this->params = array();
+		$this->params_assoc = array();
+	}
 	
 }

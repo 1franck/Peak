@@ -9,7 +9,8 @@
 abstract class Peak_Application_Modules
 {
 	   
-    protected $_module_name;
+    protected $_module_name = '';
+    private   $_ctrl_name = '';
          
     /**
      * Get the name of child class and use it as the module name
@@ -18,12 +19,15 @@ abstract class Peak_Application_Modules
      */
     public function __construct()
     {   
-        //name of child class
-        $this->_module_name = str_ireplace('controller','',get_class($this));
+    	//ctrl name
+    	$this->_ctrl_name = str_ireplace('controller','',get_class($this));     	  	
+        //module name
+        if(empty($this->_module_name)) $this->_module_name = $this->_ctrl_name;
+        
+        if(!(Peak_Registry::o()->core->isModule($this->_module_name))) die('Application modules '.$this->_module_name.' not found');
 
-        //overdrive application path to modules folder
-        //Peak_Core::initModule($this->_module_name);
-        Peak_Registry::obj()->core->modules()->init($this->_module_name);
+        //overdrive application paths to modules folder with Peak_Core_Extension_Modules
+        Peak_Registry::o()->core->modules()->init($this->_module_name);
               
         //initialize module bootstrap
         if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
@@ -38,36 +42,17 @@ abstract class Peak_Application_Modules
       
     
     /**
-     * Run modules requested controller. Will overdrive Peak_Application controller object property
+     * Run modules requested controller.
      *
      * @param string $default_ctrl
      */
-    public function run($default_ctrl = 'index')
-    {
-    	$app = Peak_Registry::obj()->app;
-    	$router = Peak_Registry::obj()->router;       
-        $core = Peak_Registry::obj()->core;
-             
-        $router->base_uri = $router->base_uri.$this->_module_name;
-        
-        $router->getRequestURI();
-        
-        echo $router->controller;
-        
-    	if(isset($router->controller))
-    	{
-    		$ctrl_name = $router->controller.'Controller';
-    		if(!$core->isController($ctrl_name)) throw new Peak_Exception('ERR_APP_MOD_NOT_FOUND', $ctrl_name);
-    		$app->controller = new $ctrl_name();
-    	}
-    	elseif((isset($default_ctrl)))
-    	{
-    		$ctrl_name = $default_ctrl.'Controller';
-    		//if(!$core->isController($ctrl_name)) throw new Peak_Exception('ERR_APP_MOD_NOT_FOUND', $ctrl_name);
-    		$app->controller = new $ctrl_name();
-    	}
-    	else throw new Peak_Exception('ERR_APP_MOD_NOT_SPECIFIED');
-    	    
+    public function run($default_ctrl = 'indexController')
+    {      	
+        //add module name to the end Peak_Router $base_uri
+        Peak_Registry::o()->router->base_uri = Peak_Registry::obj()->router->base_uri.$this->_module_name;   
+
+        //re-call Peak_Application run() for handling the new routing
+        Peak_Registry::o()->app->run($default_ctrl);
     }
 
         
