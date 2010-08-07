@@ -3,7 +3,7 @@
 *  Peak_View_Theme > added method folder(). It set the theme folder name to use. 
                      Tweaked Peak_View::theme() to use this new functionnality
 
-*  Peak_Registry > deprecated method obj() in favoir of method shorcut o()
+*  Peak_Registry > deprecated method obj() in favor of method shorcut o()
 
 *  Peak_Application_Modules > simplified method run(). It now call Peak_Application run method instead of 
                               trying to emulate his job
@@ -19,7 +19,7 @@
 *  Peak_Core > method initModule() moved to a new extension file(Peak_Core_Extension_Modules) and renamed init()
 
 *  added Peak_Core_Extensions derived from Peak_Helpers, ext() method simplified in Peak_Core 
-   and moved extensions in Peak/core/Extension
+   and moved extensions in Peak/Core/Extension
 
 *  Peak_Core > Peak_Configs is stored in Peak_Registry under the name of 'core_config'
 
