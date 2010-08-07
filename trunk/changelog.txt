@@ -1,5 +1,15 @@
 #VERSION 0.7.98#
 
+*  Peak_View_Theme > added method folder(). It set the theme folder name to use. 
+                     Tweaked Peak_View::theme() to use this new functionnality
+
+*  Peak_Registry > deprecated method obj() in favoir of method shorcut o()
+
+*  Peak_Application_Modules > simplified method run(). It now call Peak_Application run method instead of 
+                              trying to emulate his job
+
+*  Peak_Router > added method reset(). Ensure that the router vars are clean before using getResquestUri()
+
 *  Peak_Core > lighten the file by moving/deling methods getModules(), getModule(), getCachedModules()
                and property $_modules
 
@@ -28,7 +38,7 @@
 *  Peak_View_Helper deleted, no more usefull since Peak_View_Helpers accomplish the same.
    Important change: View Helpers don't have to extends anymore this class.
 
-*  Peak_Controller_Helpers have access to others helpers
+*  Peak_Controller_Helpers have access to others helpers and current controller method
 
 *  Peak_Controller > no more need to init a controller helper before using it.
 

@@ -178,9 +178,10 @@ class Peak_View
      *
      * @return object
      */
-    public function theme()
+    public function theme($folder = null)
     {
-        if(!($this->theme instanceof Peak_View_Theme)) $this->theme = new Peak_View_Theme();
+        if(!($this->theme instanceof Peak_View_Theme)) $this->theme = new Peak_View_Theme($folder);
+        elseif(isset($folder)) $this->theme->folder($folder); 
         return $this->theme;
     }
     

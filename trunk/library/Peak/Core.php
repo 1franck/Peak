@@ -100,7 +100,7 @@ class Peak_Core
      */
     public static function initApp($app_path, $lib_path)
     {
-    	$config = Peak_Registry::obj()->core_config;
+    	$config = Peak_Registry::o()->core_config;
     	   	
     	// current app paths
         $config->application         = $app_path;
@@ -136,9 +136,9 @@ class Peak_Core
     public static function getPath($path = 'application', $absolute_path = true) 
     {
         //$pathvar = $path;
-        if(isset(Peak_Registry::obj()->core_config->$path)) {
-            if($absolute_path) return Peak_Registry::obj()->core_config->$path;
-            else return str_replace(SVR_ABSPATH,'', Peak_Registry::obj()->core_config->$path);
+        if(isset(Peak_Registry::o()->core_config->$path)) {
+            if($absolute_path) return Peak_Registry::o()->core_config->$path;
+            else return str_replace(SVR_ABSPATH,'', Peak_Registry::o()->core_config->$path);
         }
         else return null;
     }
@@ -192,7 +192,7 @@ class Peak_Core
     public function isModule($name)
     {
     	if(empty($this->modules)) {
-    		return (file_exists(Peak_Core::getPath('modules').'/'.$name.'/'.$name.'.php')) ? true : false;
+    		return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
     	}
         return (array_key_exists($name, $this->modules)) ? true : false;
     }

@@ -118,7 +118,7 @@ class Peak_View_Render_Partials extends Peak_View_Render
         $this->noGroup();  
         
         // include theme functions.php    
-        if(Peak_Registry::obj()->view->theme()->getFunctionsFile()) include_once(Peak_Registry::obj()->view->theme()->getFunctionsFile());
+        if(Peak_Registry::o()->view->theme()->getFunctionsFile()) include_once(Peak_Registry::o()->view->theme()->getFunctionsFile());
         
         // include controller action view with or without partials groups
         if(is_array($viewfiles)) foreach($viewfiles as $file) include($file);

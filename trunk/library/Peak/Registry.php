@@ -28,13 +28,23 @@ class Peak_Registry
 	}
 	
 	/**
-	 * Shortcut of method getInstance()
+	 * Shortcut of method getInstance() @deprecated in favoir of o()
 	 *
 	 * @return object $_instance
 	 */
 	public static function obj()
 	{
 	    return self::getInstance();
+	}
+	
+	/**
+	 * Shortcut of method getInstance()
+	 *
+	 * @return object $_instance
+	 */
+	public static function o()
+	{
+		return self::getInstance();
 	}
 	
 	/**

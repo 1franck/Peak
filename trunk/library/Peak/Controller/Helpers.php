@@ -32,8 +32,7 @@ class Peak_Controller_Helpers extends Peak_Helpers
      */
     public function  __call($method, $args = null)
     {
-    	$app = Peak_Registry::obj()->app;
-        return call_user_func_array(array($app->controller, $method), $args);
+        return call_user_func_array(array(Peak_Registry::o()->app->controller, $method), $args);
     }
 
     

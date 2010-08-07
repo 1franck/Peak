@@ -57,8 +57,8 @@ class Peak_Application
     {
         $is_valid_session = $this->validSession();
         
-        $router = Peak_Registry::obj()->router;       
-        $core = Peak_Registry::obj()->core;
+        $router = Peak_Registry::o()->router;       
+        $core = Peak_Registry::o()->core;
                 
         if($flush_request) {
         	$router->controller = $default_ctrl;
@@ -122,9 +122,8 @@ class Peak_Application
         
         //class method run if exists, usefull for loading a modules app via a controller
         if($this->controller instanceof Peak_Application_Modules) $this->controller->run();
-
         // execute controller action
-        if(method_exists($this->controller,'handleAction')) $this->controller->handleAction();        
+        elseif(method_exists($this->controller,'handleAction')) $this->controller->handleAction();        
     }
         
     /**
