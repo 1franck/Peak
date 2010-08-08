@@ -119,7 +119,7 @@ class Peak_Utils
     } 
     
     /**
-     * Get file size
+     * Get file size @deprecated: have been moved to Peak_Spl_Fileinfo
      *
      * @param string $handler (file + realpath)
      * @return string
