@@ -23,21 +23,8 @@ abstract class Peak_Application_Modules
      * init module bootstrap if exists
      */
     public function __construct()
-    {   
-    	/*//ctrl name
-    	$this->_ctrl_name = str_ireplace('controller','',get_class($this));     
-    		  	
-        //module name
-        if(empty($this->_module_name)) $this->_module_name = $this->_ctrl_name;
-        
-        //module path
-        if(empty($this->_module_path)) $this->_module_path = Peak_Core::getPath('modules');
-        
-        if(!(Peak_Registry::o()->core->isModule($this->_module_name))) die('Application modules '.$this->_module_name.' not found');
-
-        //overdrive application paths to modules folder with Peak_Core_Extension_Modules
-        Peak_Registry::o()->core->modules()->init($this->_module_name);*/
-    	
+    {      	
+    	//prepare module
     	$this->prepare();
               
         //initialize module bootstrap
@@ -51,6 +38,9 @@ abstract class Peak_Application_Modules
         }
     }
     
+    /**
+     * Prepare modules app and init Modules core extension
+     */
     protected function prepare()
     {
     	if(!($this->_internal))
@@ -66,8 +56,6 @@ abstract class Peak_Application_Modules
     	}
     	//module name
     	if(empty($this->_module_name)) $this->_module_name = $this->_ctrl_name;
-
-    	//if(!(Peak_Registry::o()->core->isModule($this->_module_name))) die('Application modules '.$this->_module_name.' not found');
 
     	//overdrive application paths to modules folder with Peak_Core_Extension_Modules
     	Peak_Registry::o()->core->modules()->init($this->_module_name,$this->_module_path);
