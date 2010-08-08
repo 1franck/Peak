@@ -1,5 +1,9 @@
 #VERSION 0.7.98#
 
+*  added class Peak_Spl_FileInfo
+
+*  added new folder for extending spl classes.
+
 *  Peak_Core > added '_path' suffix to core path configurations. fixed getPath() to add this suffix and by way ensured
                that no change is needed outside and separate path configs from other core configs.
  

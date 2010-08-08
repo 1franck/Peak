@@ -113,7 +113,8 @@ class TestOfView extends UnitTestCase
     	//include($this->peak().'/View/Helper.php');
     	//include($this->peak().'/View/Helpers.php');
     	$object = $this->view->helper()->icons;
-    	$this->assertTrue(is_a($object,'Peak_View_Helper_Icons'),'Peak_View_Helper_Icons should be set when calling helper()->icons');
+    	//print_r($object);
+    	$this->assertTrue($object instanceof View_Helper_Icons,'View_Helper_Icons should be set when calling helper()->icons');
     	
     	try {   		
     		$test = @$this->view->helper()->ic767ons;
@@ -134,7 +135,7 @@ class TestOfView extends UnitTestCase
     	$this->assertTrue(isset($exception), $exception);
 
     	$object = $this->view->text();
-    	$this->assertTrue(is_a($object,'Peak_View_Helper_Text'),'Peak_View_Helper_Text should be set when calling text()');
+    	$this->assertTrue($object instanceof View_Helper_Text,'View_Helper_Text should be set when calling text()');
    	
     }
     
