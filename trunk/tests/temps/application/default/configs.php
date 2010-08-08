@@ -10,9 +10,6 @@ define('PROJECT_DESCR', 'tests application');
 
 # --- APP SETTINGS --- #
 
-// language preferences
-define('APP_LANG','en');
-
 // interface theme folder name (based in /application/appname/views/themes/)                                     
 define('APP_THEME','default');
 
