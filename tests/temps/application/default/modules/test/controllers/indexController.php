@@ -1,6 +1,6 @@
 <?php
 
-class testController extends Peak_Controller
+class indexController extends Peak_Controller
 {
 
 	/**

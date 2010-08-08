@@ -154,8 +154,9 @@ class Peak_Core
      */
     public static function config($k,$v = null)
     {
-    	if(isset($v)) self::$_config->$k = $v;
-    	elseif(isset(self::$_config->$k)) return self::$_config->$k;
+    	$c = Peak_Registry::o()->core_config;
+    	if(isset($v)) $c->$k = $v;
+    	elseif(isset($c->$k)) return $c->$k;
     	else return null;
     }
        
