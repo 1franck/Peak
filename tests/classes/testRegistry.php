@@ -27,9 +27,9 @@ class TestOfRegistry extends UnitTestCase
         // = $reg->test;
         
         $this->assertTrue(is_a($reg->teststatic,'RegisteredClass'),'$reg->teststatic is not an object of class "RegisteredClass"');
-        $this->assertTrue(is_a(Peak_Registry::obj()->teststatic,'RegisteredClass'),'$reg->teststatic is not an object of class "RegisteredClass"'); 
+        $this->assertTrue(is_a(Peak_Registry::o()->teststatic,'RegisteredClass'),'$reg->teststatic is not an object of class "RegisteredClass"'); 
         
-        //Peak_Registry::obj()->teststatic->foo();       
+        //Peak_Registry::o()->teststatic->foo();       
                
         $this->assertTrue(is_a($reg->test,'RegisteredClass'),'$reg->test is not an object of class "RegisteredClass"');        
         $this->assertTrue(is_a($loadedclass,'RegisteredClass'),'$loadedclass is not an object of class "RegisteredClass"');
@@ -66,7 +66,7 @@ class TestOfRegistry extends UnitTestCase
         
         
         if(Peak_Registry::isRegistered('test')) {
-            Peak_Registry::obj()->test->foo();
+            Peak_Registry::o()->test->foo();
         }
 
         
