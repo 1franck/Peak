@@ -66,6 +66,7 @@ class Peak_Application
         }
         else $router->getRequestURI();
         
+        //@deprecated
         if(($router->controller_type === 'module') && (!$is_valid_session)) {
             if($core->isModule($router->controller)) {
                 if(!$core->getModule($router->controller,'login')) {
@@ -127,7 +128,7 @@ class Peak_Application
     }
         
     /**
-	 * Internal login
+	 * Internal login @deprecated
 	 *
 	 * @return bool
 	 */

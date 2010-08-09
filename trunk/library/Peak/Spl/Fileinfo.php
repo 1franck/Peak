@@ -39,10 +39,11 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 	 * Change the current file used
 	 *
 	 * @param string $filepath
+	 * @param array  $format
 	 */
-	public function setFile($filepath)
+	public function setFile($filepath, $formats = null)
 	{
-		$this->__construct($filepath);
+		$this->__construct($filepath,$formats);
 	}
 	
 	/**
