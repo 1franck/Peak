@@ -13,11 +13,7 @@ define('_DESCR_','Php wEb Application Kernel');
 
 class Peak_Core
 {
-   
-    
-    // Controllers
-    protected $_controllers = array();
-   
+      
     // core extentension objects
     protected $_extensions;
 
@@ -84,10 +80,10 @@ class Peak_Core
     	// Url constants
         if(defined('SVR_URL')) {
         	define('ROOT_URL', SVR_URL.'/'.ROOT);
-        	if(file_exists(ROOT_ABSPATH.'/themes/'.APP_THEME)) {
+        	/*if(file_exists(ROOT_ABSPATH.'/themes/'.APP_THEME)) {
         		define('THEME_URL', ROOT_URL.'/themes/'.APP_THEME);
         		define('THEME_PUBLIC_ABSPATH', ROOT_ABSPATH.'/themes/'.APP_THEME);
-        	}
+        	}*/
         }              
     }
     
@@ -117,9 +113,17 @@ class Peak_Core
         $config->views_path          = $app_path.'/views';       
         $config->views_ini_path      = $config->views_path.'/ini';
         $config->views_helpers_path  = $config->views_path.'/helpers';
-        $config->views_themes_path   = $config->views_path.'/themes';              
+                    
         
-        $config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
+        if(defined('APP_THEME')) {
+            $config->views_themes_path   = $config->views_path.'/themes';  
+        	$config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
+        }
+        else {
+        	$config->views_themes_path   = $config->views_path;  
+        	$config->theme_path          = $config->views_themes_path;
+        }
+        
         $config->theme_scripts_path  = $config->theme_path.'/scripts';
         $config->theme_partials_path = $config->theme_path.'/partials';
         $config->theme_layouts_path  = $config->theme_path.'/layouts';
@@ -208,16 +212,7 @@ class Peak_Core
      *
      */
     public function getControllers()
-    {
-        $cached = $this->getCachedControllers();
-        
-        //use session cache if $cached !== false;
-        
-        if($cached) {            
-            $this->controllers = $cached;
-            return $cached; 
-        }
-        
+    {      
         //list controllers directory
         try {
             $it = new DirectoryIterator(self::getPath('controllers'));
@@ -231,34 +226,21 @@ class Peak_Core
                 $it->next();
             }
         }
-        catch(Exception $e) { $this->w_errors[] = $e->getMessage(); return false; }
+        catch(Exception $e) { return $e->getMessage(); }
  
         //no controllers
-        if(empty($this->controllers)) throw new wyn_exception('ERR_CORE_NO_CTRL_FOUND');
-            
-        $this->cacheControllers();
-            
+        //if(empty($this->controllers)) throw new wyn_exception('ERR_CORE_NO_CTRL_FOUND');            
         return $this->controllers;        
-    }
-    
-    /**
-     * Cache controllers list into session @deprecated
-     */
-    public function cacheControllers()
-    {
-        $_SESSION['Peak_Controllers'] = $this->controllers;
-    }
-    
-    /**
-     * Get controllers session cache or false @deprecated
-     *
-     * @return array/bool
-     */
-    public function getCachedControllers()
-    {
-        if(isset($_SESSION['Peak_Controllers'])) return $_SESSION['Peak_Controllers'];
-        else return false;
-    }
-            
-    
+    }        
+}
+
+
+function _clean($str) {
+    $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
+    return $str;
+}
+function _cleans($strs,$keys_to_clean = null) {
+    if(isset($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
+    else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }
+    return $strs;
 }

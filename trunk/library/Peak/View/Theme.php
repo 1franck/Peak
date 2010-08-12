@@ -3,6 +3,10 @@
 /**
  * Manage Application Views Themes
  * 
+ * @desc     Theme /layout, /partials, /scripts, /cache, /theme.ini, /functions.php
+ *           By default they are in your application /views folder.
+ *           If you set theme name with method folder(), application /views/themes/[name] will be used
+ * 
  * @author   Francois Lajoie
  * @version  $Id$
  */
@@ -14,7 +18,7 @@ class Peak_View_Theme
      * @var array
      */
     private $_options = array();
-    private $_theme_folder = 'default';
+    private $_theme_folder = null;
       
     
     public function __construct()
@@ -23,27 +27,40 @@ class Peak_View_Theme
     }
     
     /**
-     * Change the default app view theme folder
-     * Folder must exists, otherwise $_theme_folder won't change
+     * Use views themes folder ( views/themes/[$name]/ ).
+     * If $name is null, application /views/ folder will be used as views themes folder
      *
-     * @param string $name
+     * @param string/null $name
      */
     public function folder($name)
     {
     	$config = Peak_Registry::o()->core_config;
-
-    	if(is_dir($config->views_themes.'/'.$name))
+    	
+    	if(is_null($name))
     	{
-    		$config->theme_path          = $config->views_themes_path.'/'.$name;
+    		$config->views_themes_path   = $config->views_path;
+    		$config->theme_path          = $config->views_themes_path;
     		$config->theme_scripts_path  = $config->theme_path.'/scripts';
     		$config->theme_partials_path = $config->theme_path.'/partials';
     		$config->theme_layouts_path  = $config->theme_path.'/layouts';
     		$config->theme_cache_path    = $config->theme_path.'/cache';
-    		
-    		$this->setOptions();
-    		$this->_theme_folder = $name;
+
     	}
+    	else {
+
+    		$config->views_themes_path   = $config->views_path.'/themes';
+    		$config->theme_path          = $config->views_themes_path.'/'.$name;
+
+    		$config->theme_scripts_path  = $config->theme_path.'/scripts';
+    		$config->theme_partials_path = $config->theme_path.'/partials';
+    		$config->theme_layouts_path  = $config->theme_path.'/layouts';
+    		$config->theme_cache_path    = $config->theme_path.'/cache';
+    	}
+
+    	$this->setOptions();
+    	$this->_theme_folder = $name;
     }
+    
     
     /**
      * Get template options array

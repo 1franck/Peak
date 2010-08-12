@@ -1,5 +1,15 @@
 #VERSION 0.7.98#
 
+*  fixed Peak_Core > if constant APP_THEME exists, it will set application theme folder, otherwise it will use /views/ 
+
+*  Peak_View_Theme > application /views folder is used as theme folder by default. 
+                     method folder() accept null as argument for (re)setting this default behavior. 
+                     Otherwise method folder() will change views theme folder to /views/themes/[themename]/
+
+*  Peak_Core > removed deprecated $_controllers, cacheControllers(), getCachedControllers()
+
+*  Peak_Application > moved function _clean() and _cleans() to Peak_Core
+
 *  added class Peak_Spl_FileInfo
 
 *  added new folder for extending spl classes.

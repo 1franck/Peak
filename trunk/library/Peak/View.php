@@ -14,7 +14,7 @@ class Peak_View
 	
     protected $vars = array();            //view vars
     
-    private $helpers;                     //view helpers object 
+    private $_helpers;                     //view helpers object 
     
     private $theme;                       //view theme object
     
@@ -193,8 +193,8 @@ class Peak_View
      */
     public function helper()
     {
-    	if(!is_object($this->helpers)) $this->helpers = new Peak_View_Helpers();
-    	return $this->helpers;
+    	if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
+    	return $this->_helpers;
     }
     
     /**

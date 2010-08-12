@@ -51,7 +51,7 @@ class Peak_Router
     
     /**
      * Reserved first param keyword for designating the kind of controllers we request.
-     * leaving empty keyword will make the controller type default
+     * leaving empty keyword will make the controller type default @deprecated
      *
      * @var array
      */
