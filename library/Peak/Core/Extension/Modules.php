@@ -37,9 +37,11 @@ class Peak_Core_Extension_Modules
     		$config->views_path          = $module_path.'/views';
     		$config->views_ini_path      = $config->views_path.'/ini';
     		$config->views_helpers_path  = $config->views_path.'/helpers';
-    		$config->views_themes_path   = $config->views_path.'/themes';
-
-    		$config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
+    		
+    		//no theme folder by default for modules. theme reside inside views folder
+    		//use view->theme()->setFolder('themename') to themes folder
+    		$config->views_themes_path   = $config->views_path;   		
+    		$config->theme_path          = $config->views_themes_path;
     		$config->theme_scripts_path  = $config->theme_path.'/scripts';
     		$config->theme_partials_path = $config->theme_path.'/partials';
     		$config->theme_layouts_path  = $config->theme_path.'/layouts';
@@ -48,6 +50,37 @@ class Peak_Core_Extension_Modules
     		//echo '<pre>';
     		//print_r($config);
     	}
+	}
+	
+	
+	/**
+	 * List modules directories
+	 *
+	 * @path   string/null    Specified a different path. List the current application modules if null
+	 * @return array/string   Return an array in case of success or return DirectoryIterator exception string message
+	 */
+	public function getList($path = null)
+	{
+        try
+        {      	
+        	$result = array();
+        	$path = (!isset($path)) ? Peak_Core::getPath('modules') : $path;
+            $it = new DirectoryIterator($path);
+
+            while($it->valid())
+            {
+                if(($it->isDir()) && (!$it->isDot()))
+                {
+                    $mod = $it->getFilename();                 
+                    $result[$mod] = $it->getPath().'/'.$mod;                   
+                }             
+                $it->next();
+            }
+            return $result;
+        }
+        catch(Exception $e) { 
+        	return $e->getMessage();
+        }		
 	}
 	
 	/**

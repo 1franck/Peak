@@ -3,7 +3,7 @@
 /**
  * Peak Application
  * 
- * @desc      Load the framework objects, application bootstrap and a valid controller/module form router request.
+ * @desc      Load the framework objects, application bootstrap and a valid controller/module from router request.
  * @author    Francois Lajoie
  * @version   $Id$
  * @exception Peak_Exception
@@ -62,7 +62,7 @@ class Peak_Application
                 
         if($flush_request) {
         	$router->controller = $default_ctrl;
-        	$router->controller_type = 'controller';
+        	//$router->controller_type = 'controller';
         }
         else $router->getRequestURI();
         
@@ -79,8 +79,8 @@ class Peak_Application
         if($is_valid_session)
         {
             //normal controller + peak internal controller
-            if($router->controller_type === 'controller')
-            {
+           // if($router->controller_type === 'controller')
+           // {
                 if(isset($router->controller))
                 {
                 	$ctrl_name = $router->controller.'Controller';
@@ -105,7 +105,7 @@ class Peak_Application
                 else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND',$default_ctrl);
             }
             //module controller
-            else
+            /*else
             {
                 if(isset($router->controller))
                 {
@@ -115,7 +115,7 @@ class Peak_Application
                 }
                 else throw new Peak_Exception('ERR_APP_MOD_NOT_SPECIFIED');
             }
-        }
+        }*/
         else {
         	if(!$core->isController('loginController')) throw new Peak_Exception('ERR_APP_LOGIN_CTRL_NOT_FOUND');
         	$this->controller = new LoginController();  
@@ -156,16 +156,4 @@ class Peak_Application
 	    return $r;	    
 	}
         	         
-}
-
-
-
-function _clean($str) {
-    $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
-    return $str;
-}
-function _cleans($strs,$keys_to_clean = null) {
-    if(isset($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
-    else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }
-    return $strs;
 }

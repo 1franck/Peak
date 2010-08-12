@@ -76,7 +76,4 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	return count($this->_vars);
     }
-    
-    
-	
 }
