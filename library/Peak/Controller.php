@@ -177,6 +177,17 @@ abstract class Peak_Controller
     	return $this->helpers;
     }
     
+    
+    /**
+     * Point to view object. Usefull for controller helpers
+     *
+     * @return object
+     */
+    public function view()
+    {
+    	return $this->view;
+    }
+    
         
     /**
      * Get current action method name

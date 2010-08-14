@@ -1,5 +1,9 @@
 #VERSION 0.7.98#
 
+*  Peak_Controller > added method view()
+
+*  Peak_Core_Extension_Modules > remove method deprecated get(). use getList() instead.
+
 *  fixed Peak_Core > if constant APP_THEME exists, it will set application theme folder, otherwise it will use /views/ 
 
 *  Peak_View_Theme > application /views folder is used as theme folder by default. 
