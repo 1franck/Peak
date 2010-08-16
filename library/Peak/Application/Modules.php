@@ -32,9 +32,17 @@ abstract class Peak_Application_Modules
         	include Peak_Core::getPath('application').'/bootstrap.php';
         }
         $bootstrap_class = $this->_module_name.'_Bootstrap';
-        if(class_exists($bootstrap_class)) 
-        {
-        	$this->bootstrap = new $bootstrap_class();
+        if(class_exists($bootstrap_class)) {
+        	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();
+        }
+        
+        //initialize module front
+        if(file_exists(Peak_Core::getPath('application').'/front.php')) {
+        	include Peak_Core::getPath('application').'/front.php';
+        }
+        $front_class = $this->_module_name.'_Front';
+        if(class_exists($front_class)) {
+        	Peak_Registry::o()->app->front = new $front_class();
         }
     }
     
@@ -67,7 +75,7 @@ abstract class Peak_Application_Modules
      *
      * @param string $default_ctrl
      */
-    public function run($default_ctrl = 'indexController')
+    public function run($default_ctrl = 'index')
     {      	
         //add module name to the end Peak_Router $base_uri
         Peak_Registry::o()->router->base_uri = Peak_Registry::obj()->router->base_uri.$this->_module_name;   

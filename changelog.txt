@@ -1,3 +1,24 @@
+#VERSION 0.7.99#
+
+*  Peak_Controller become Peak_Controller_Action
+
+*  Peak_Controller > removed zendAction() and isZendAction(). fixed handleAction() and 
+                     listActions() accordly to that change
+
+*  Peak_Application > property $controller replaced by $front that point to Peak_Controller_Front.
+                      This object don't access anymore to Peak_Router object
+                      Removed deprecated method validSession().
+                      Now, Peak_Application do what it suppose to do: start mvc, bootstrap and delegate 
+                      controller dispatching process to Peak_Controller_Front.
+                      
+
+*  added Peak_Controller_Front > moved dispatching logic of Peak_Application in this new object
+
+*  Peak_View_Render > added magic method that point to Peak_View __isset()
+
+*  Peak_View > added magic method __isset()
+
+
 #VERSION 0.7.98#
 
 *  Peak_Controller > added method view()
