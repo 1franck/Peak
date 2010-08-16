@@ -26,7 +26,18 @@ abstract class Peak_View_Render
      */
     public function __get($name)
     {
-        return Peak_Registry::obj()->view->$name;
+        return Peak_Registry::o()->view->$name;
+    }
+    
+    /**
+     * Point to Peak_View __isset method
+     *
+     * @param  string $name represent view var name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        return isset(Peak_Registry::o()->view->$name);
     }
     
     /**
@@ -38,7 +49,7 @@ abstract class Peak_View_Render
      */
     public function  __call($method, $args)
     {
-    	$view =& Peak_Registry::obj()->view;
+    	$view =& Peak_Registry::o()->view;
     	return call_user_func_array(array($view, $method), $args);
     }
 
@@ -129,7 +140,7 @@ abstract class Peak_View_Render
         //when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
         if(!isset($this->_cache_id)) {
             if(!isset($id)) {
-                $this->genCacheId(Peak_Registry::obj()->app->controller->path, Peak_Registry::obj()->app->controller->file);
+                $this->genCacheId(Peak_Registry::obj()->app->front->controller->path, Peak_Registry::obj()->app->front->controller->file);
             }
             else $this->genCacheId('', $id);
         }

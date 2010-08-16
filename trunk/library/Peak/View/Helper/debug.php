@@ -14,8 +14,10 @@ class View_Helper_Debug
         if(!isset($array)) {
             $array = array('VIEW' => null);
             $array = array_merge($array,$this->view->getVars());
-            $array['SESSION'] = null;
-            $array = array_merge($array,$_SESSION);
+            if(session_id()) {
+            	$array['SESSION'] = null;
+            	$array = array_merge($array,$_SESSION);
+            }
             $array['PHP'] = null;
             $included_files = get_included_files();
             sort($included_files);

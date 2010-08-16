@@ -1,19 +1,18 @@
 <?php
 
 /**
- * Peak abstract controller
+ * Peak abstract action controller
  * 
  * @author   Francois Lajoie
  * @version  $Id$
  */
-abstract class Peak_Controller
+abstract class Peak_Controller_Action
 {
     public $name;                 //child class name
     public $title;                //controller("module") title from wyncore
 
-    public $file = null;          //view script file to render
+    public $file;                 //view script file to render
     public $path;                 //absolute view scripts controller path
-    public $type;                 //'controller' or a 'module' controller
        
     public $actions = array();    //actions methods list
 
@@ -59,20 +58,10 @@ abstract class Peak_Controller
                                
         $this->name = get_class($this);              
         $this->title = $this->name;      
-        $this->type = Peak_Registry::o()->router->controller_type;
         
-        $core = Peak_Registry::o()->core;
-        
-        if($this->type === 'module') {
-            $this->path = $core->getPath('modules').'/'.$this->name;
-            $this->title = $core->getModule($this->name,'title');
-            if(is_null($this->title)) $this->title = str_ireplace('controller', '', $this->name);
-        }
-        else {
-        	$script_folder = str_ireplace('controller', '', $this->name);
-        	$this->title = $script_folder;
-            $this->path = $core->getPath('theme_scripts').'/'.$script_folder;
-        }
+        $script_folder = str_ireplace('controller', '', $this->name);
+        //$this->title = $script_folder;
+        $this->path = Peak_Core::getPath('theme_scripts').'/'.$script_folder;
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
         $this->params = Peak_Registry::o()->router->params;
@@ -89,12 +78,9 @@ abstract class Peak_Controller
         $c_methods = get_class_methods($this->name);
      
         $regexp = '/^([_]{1}[a-zA-Z]{1})/';
-        $regexp2 = '/^([a-zA-Z]*)Action$/';
-        $methods_ignored = array('preAction','postAction','isAction','handleAction','isZendAction','zendAction','getAction');
               
         foreach($c_methods as $method) {            
             if(preg_match($regexp,$method)) $this->actions[] = $method;
-            elseif((preg_match($regexp2,$method)) && (!in_array($method,$methods_ignored))) $this->actions[] = $method;
         }
     }
     
@@ -108,31 +94,7 @@ abstract class Peak_Controller
     {
     	return (method_exists($this->name,$name)) ? true : false;
     }
-    
-    /**
-     * Check if zend action exists.
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isZendAction($name)
-    {
-    	$name = $this->zendAction($name);
-    	if(method_exists($this->name,$name)) {
-    		return true;
-    	}
-    }
-    
-    /**
-     * Format peak action to zend action syntax
-     *
-     * @param string $action
-     */
-    public function zendAction($name)
-    {
-    	return str_replace('_','',$name).'Action';
-    }
-       
+           
     /**
      * Analyse router and lauch associated action method
      *
@@ -145,11 +107,6 @@ abstract class Peak_Controller
         $action = Peak_Registry::o()->router->action;
         
         if((isset($action)) && ($this->isAction($action))) $this->action = $action;
-        elseif((isset($action)) && ($this->isZendAction($action))) 
-        {
-        	$this->action = $action;
-        	$action = $this->zendAction($action);
-        }
         elseif((isset($action_by_default)) && ($this->isAction($action_by_default)))
         {
             $action = $action_by_default;
@@ -158,7 +115,7 @@ abstract class Peak_Controller
         else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
         //set action filename
-        $this->file = ($this->type === 'controller') ? substr($this->action,1).'.php' : 'view.'.substr($this->action,1).'.php';
+        $this->file = substr($this->action,1).'.php';
         
         //call requested action
         $this->$action();    
@@ -208,6 +165,15 @@ abstract class Peak_Controller
     {                
         $this->view->render($this->file,$this->path);     
         $this->postRender();
+    }
+    
+    
+    public function redirect($ctrl, $action, $params = null)
+    {
+    	if($ctrl === $this->name) {
+    		$this->action = $action;
+    		$this->handleAction();
+    	}
     }
     
     /**

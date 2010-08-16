@@ -46,16 +46,6 @@ class Peak_View
     }
     
     /**
-     * Unset $vars namekey
-     *
-     * @param string $name
-     */
-    public function __unset($name)
-    {
-    	if(array_key_exists($name,$this->vars)) unset($this->vars[$name]);
-    }
-    
-    /**
      * Get view variable
      *
      * @param  string $name
@@ -65,6 +55,29 @@ class Peak_View
     {        
         return array_key_exists($name,$this->vars) ? $this->vars[$name] : null;
     }
+    
+    /**
+     * Isset $vars keyname
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+    	return array_key_exists($name,$this->vars) ? true : false;
+    }
+    
+    /**
+     * Unset $vars keyname
+     *
+     * @param string $name
+     */
+    public function __unset($name)
+    {
+    	if(array_key_exists($name,$this->vars)) unset($this->vars[$name]);
+    }
+    
+  
     
     /**
      * We try to call View Render Engine object method.
