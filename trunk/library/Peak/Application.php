@@ -64,5 +64,11 @@ class Peak_Application
     	
     	$this->front->dispatch($default_ctrl, $flush_request);   	
     }
+    
+    
+    public function render()
+    {
+    	$this->front->controller->render();
+    }
                 	         
 }

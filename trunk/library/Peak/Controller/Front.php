@@ -12,14 +12,13 @@ class Peak_Controller_Front
 {
 	
 	
-	public $controller;         //action controller
+	public $controller;         //controller object
 	
 	public $default_controller; //defaut controller
 	
 	
 	/**
 	 * Initialize router uri request
-	 *
 	 */
 	public function preDispatch()
 	{
@@ -38,7 +37,9 @@ class Peak_Controller_Front
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
         
-        if($flush_request) { $router->reset();  }
+        if($flush_request) { //$router->reset();
+        	unset($router->controller);
+        }
                 
         if(isset($router->controller))
         {
@@ -69,10 +70,21 @@ class Peak_Controller_Front
                 
         // execute controller action
         elseif(method_exists($this->controller,'handleAction')) {
-        	$this->controller->handleAction();        
+        	$this->controller->handleAction();
+        	$this->postDispatch();        
         }
+               
                    
 	}
+	
+	/**
+	 * Called after controller action dispatching
+	 *
+	 */
+    public function postDispatch()
+    {
+    	//nothing by default
+    }
 	
 	
 }
