@@ -41,24 +41,13 @@ class Peak_Router
     
     public $controller;                 //controller name
     
-    public $controller_type;            //controller type
-    
     public $action;                     //requested action
     
     public $params = array();           //action param(s) array
     
     public $params_assoc = array();     //actions param(s) associative array
     
-    /**
-     * Reserved first param keyword for designating the kind of controllers we request.
-     * leaving empty keyword will make the controller type default @deprecated
-     *
-     * @var array
-     */
-    public $ctrls_type_base = array('controller' => '',
-                                    'modules'    => 'mod');
-    
-    
+   
     /**
      * Set base url of your application index.php
      * 
@@ -124,7 +113,6 @@ class Peak_Router
 	    	}
 
 	    }
-	    $this->resolveCtrlType();
 	    $this->resolveRequest();
 	}
 	
@@ -150,26 +138,12 @@ class Peak_Router
 	}
 	
 	/**
-	 * @deprecated
-	 *
-	 */
-	protected function resolveCtrlType()
-	{
-	    if((!empty($this->request[0])) && ($this->request[0] === $this->ctrls_type_base['modules'])) {  
-	        $this->controller_type = 'module';
-	        array_shift($this->request);
-	    }
-	    else $this->controller_type = 'controller';
-	}
-
-	/**
 	 * Reset router vars
 	 */
 	public function reset()
 	{
 		$this->request = null;
 		$this->controller = null;
-		$this->controller_type = null;
 		$this->action = null;
 		$this->params = array();
 		$this->params_assoc = array();

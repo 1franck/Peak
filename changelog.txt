@@ -1,5 +1,10 @@
 #VERSION 0.7.99#
 
+*  Peak_Application > added method render(). this method point to front->controller->render(). This simplify the application
+                      index so we can do $app->render(); after $app->run(); instead of $app->front->controller->render();
+
+*  Peak_Controller_Front > added method postDispatch()
+
 *  Peak_Controller become Peak_Controller_Action
 
 *  Peak_Controller > removed zendAction() and isZendAction(). fixed handleAction() and 
