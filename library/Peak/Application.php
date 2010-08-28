@@ -46,7 +46,7 @@ class Peak_Application
         if(class_exists('bootstrap',false)) new bootstrap();   
         
         // load front controller
-        if(class_exists('Front',false)) {
+        if(class_exists('front',false)) {
         	$this->front = new front();
         } else $this->front = new Peak_Controller_Front();
     }
@@ -65,7 +65,9 @@ class Peak_Application
     	$this->front->dispatch($default_ctrl, $flush_request);   	
     }
     
-    
+    /**
+     * Call front controller render() method
+     */
     public function render()
     {
     	$this->front->controller->render();
