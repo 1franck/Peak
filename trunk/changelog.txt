@@ -1,5 +1,7 @@
 #VERSION 0.7.99#
 
+*  Peak_Controller_Action > deprecated method view()
+
 *  Peak_Application > added method render(). this method point to front->controller->render(). This simplify the application
                       index so we can do $app->render(); after $app->run(); instead of $app->front->controller->render();
 

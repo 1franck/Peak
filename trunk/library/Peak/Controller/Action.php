@@ -68,7 +68,7 @@ abstract class Peak_Controller_Action
     
     /**
      * Create a list of "actions"(methods) 
-     * Support methods with _ suffix(_dashboard)  and method like zend (dashboardAction)
+     * Support methods with underscore(_) suffix (ex: _dashboard() )
      * 
      */
     public function listActions()
@@ -134,9 +134,9 @@ abstract class Peak_Controller_Action
     
     
     /**
-     * Point to view object. Usefull for controller helpers
+     * @deprecated Point to view object. Usefull for controller helpers
      *
-     * @return object
+     * @return object 
      */
     public function view()
     {
