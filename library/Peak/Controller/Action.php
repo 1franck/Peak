@@ -9,7 +9,7 @@
 abstract class Peak_Controller_Action
 {
     public $name;                 //child class name
-    public $title;                //controller("module") title from wyncore
+    public $title;                //child controller title
 
     public $file;                 //view script file to render
     public $path;                 //absolute view scripts controller path
@@ -57,11 +57,9 @@ abstract class Peak_Controller_Action
         $this->view = Peak_Registry::o()->view;
                                
         $this->name = get_class($this);              
-        $this->title = $this->name;      
-        
-        $script_folder = str_ireplace('controller', '', $this->name);
-        //$this->title = $script_folder;
-        $this->path = Peak_Core::getPath('theme_scripts').'/'.$script_folder;
+        $this->title = str_ireplace('controller', '', $this->name);      
+  
+        $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->title;
 
         //retreive requests param from router and remove 'mod' request witch it's used only by router
         $this->params = Peak_Registry::o()->router->params;
