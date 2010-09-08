@@ -1,5 +1,12 @@
 #VERSION 0.7.99#
 
+*  Peak_Controller_Action > added method redirect() that point to Peak_Controller_Front method. 
+
+*  Peak_Controller_Front > added method redirect() we can now redirect to an other controller and/or action 
+                           inside application controllers.
+
+*  Peak_Router > added method setRequest(), usefull for setting manually a routing request array
+
 *  Peak_Controller_Action > deprecated method view()
 
 *  Peak_Application > added method render(). this method point to front->controller->render(). This simplify the application

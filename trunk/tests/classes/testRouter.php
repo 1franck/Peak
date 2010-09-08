@@ -23,8 +23,7 @@ class TestOfRouter extends UnitTestCase
         
         echo 'Base uri: '.$router->base_uri.'<br />
               Request uri: '.$router->request_uri.'<br />
-              Original Request: '.print_r($router->request,true).'<br />
-              Type: '.$router->controller_type.'<br /><br />
+              Original Request: '.print_r($router->request,true).'<br /><br />
               Controller: '.$router->controller.'<br />
               Action: '.$router->action.'<br />
               Params: '.print_r($router->params,true).'<br />

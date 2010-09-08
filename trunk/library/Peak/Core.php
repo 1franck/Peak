@@ -239,8 +239,9 @@ function _clean($str) {
     $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
     return $str;
 }
-function _cleans($strs,$keys_to_clean = null) {
-    if(isset($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
+function _cleans($strs,$keys_to_clean = null, $remove_keys = null) {
+	if(is_array($remove_keys)) { foreach($remove_keys as $k) { unset($strs[$key]); } }
+    if(is_array($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
     else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }
     return $strs;
 }
