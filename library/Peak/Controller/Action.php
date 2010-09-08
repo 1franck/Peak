@@ -13,7 +13,9 @@ abstract class Peak_Controller_Action
 
     public $file;                 //view script file to render
     public $path;                 //absolute view scripts controller path
-       
+    
+    
+    public $action;              //action called by handleRequest()   
     public $actions = array();    //actions methods list
 
     protected $view;              //instance of view
@@ -22,7 +24,7 @@ abstract class Peak_Controller_Action
     
     protected $params;            //request params array
     protected $params_assoc;      //request params associative array
-    protected $action;            //action called by handleRequest()
+   
     
         
     public function __construct()
@@ -165,13 +167,16 @@ abstract class Peak_Controller_Action
         $this->postRender();
     }
     
-    
+    /**
+     * Call front controller redirect() method
+     *
+     * @param string     $ctrl
+     * @param string     $action
+     * @param array/null $params
+     */
     public function redirect($ctrl, $action, $params = null)
     {
-    	if($ctrl === $this->name) {
-    		$this->action = $action;
-    		$this->handleAction();
-    	}
+    	Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
     }
     
     /**

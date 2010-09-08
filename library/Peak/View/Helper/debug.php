@@ -8,6 +8,7 @@
  */
 class View_Helper_Debug
 {   
+	
             
     public function display($array = null)
     {

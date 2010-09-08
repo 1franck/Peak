@@ -74,10 +74,24 @@ class Peak_Controller_Front
         	$this->postDispatch();        
         }
                
-                   
+        //$this->redirect('index','index',null);            
 	}
 	
-	/**
+	
+    /**
+     * Set a new request and redispath the controller
+     *
+     * @param string     $ctrl
+     * @param string     $action
+     * @param array/null $params
+     */
+    public function redirect($ctrl, $action, $params = null)
+    {
+    	Peak_Registry::o()->router->setRequest( array($ctrl, $action, $params) );
+    	$this->dispatch();
+    }
+	
+    /**
 	 * Called after controller action dispatching
 	 *
 	 */
@@ -85,6 +99,4 @@ class Peak_Controller_Front
     {
     	//nothing by default
     }
-	
-	
 }

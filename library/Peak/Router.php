@@ -149,4 +149,15 @@ class Peak_Router
 		$this->params_assoc = array();
 	}
 	
+	/**
+	 * Set manually a request and resolve it
+	 *
+	 * @param array $request
+	 */
+	public function setRequest($request)
+	{
+	    $this->request = $request;
+	    $this->resolveRequest();
+	}
+	
 }
