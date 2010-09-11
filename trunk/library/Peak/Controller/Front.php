@@ -85,7 +85,7 @@ class Peak_Controller_Front
      * @param string     $action
      * @param array/null $params
      */
-    public function redirect($ctrl, $action, $params = null)
+    public function redirect($ctrl, $action = 'index', $params = null)
     {
     	Peak_Registry::o()->router->setRequest( array($ctrl, $action, $params) );
     	$this->dispatch();
