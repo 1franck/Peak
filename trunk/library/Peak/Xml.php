@@ -49,6 +49,8 @@ class Peak_Xml
      * @param string $filepath
      * @param string $tempfile
      * @param array  $replaces (see _load_and_parse())
+     * 
+     * @TODO remove call to Peak_Core and let the user specify the path of temp file
      */
     public static function curl_get_content($filepath,$tempfile,$replaces = null)
     {      
@@ -56,7 +58,7 @@ class Peak_Xml
         
         $data = $data[0];
         
-        $tempfile = CACHE_ABSPATH.'/'.$tempfile;
+        $tempfile = Peak_Core::getPath('cache').'/'.$tempfile;
         
         $fp = fopen($tempfile, "w");
         if($data === false) fwrite($fp,'fail to get '.$filepath);

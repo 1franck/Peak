@@ -8,6 +8,8 @@
  * 
  * @desc     template variables registry, helpers object, theme object
  * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
+ * 
+ * @todo     rename 
  */
 class Peak_View
 {
