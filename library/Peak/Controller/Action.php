@@ -15,7 +15,7 @@ abstract class Peak_Controller_Action
     public $path;                 //absolute view scripts controller path
     
     
-    public $action;              //action called by handleRequest()   
+    public $action;               //action called by handleRequest()   
     public $actions = array();    //actions methods list
 
     protected $view;              //instance of view

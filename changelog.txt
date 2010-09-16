@@ -1,5 +1,7 @@
 #VERSION 0.7.99#
 
+*  Peak_Xml > fix issue with curl_get_content() method
+
 *  Peak_Controller_Action > added method redirect() that point to Peak_Controller_Front method. 
 
 *  Peak_Controller_Front > added method redirect() we can now redirect to an other controller and/or action 
