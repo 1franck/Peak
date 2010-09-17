@@ -1,5 +1,8 @@
 #VERSION 0.7.99#
 
+*  Peak_View > rename properties $vars to $_vars, $theme to $_theme and $view_engine to $_engine. 
+               'Layouts' is now the default rendering engine
+
 *  Peak_Xml > fix issue with curl_get_content() method
 
 *  Peak_Controller_Action > added method redirect() that point to Peak_Controller_Front method. 

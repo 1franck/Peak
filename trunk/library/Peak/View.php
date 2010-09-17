@@ -6,21 +6,20 @@
  * @author   Francois Lajoie
  * @version  $Id$
  * 
- * @desc     template variables registry, helpers object, theme object
+ * @desc     template variables registry, helpers object, theme object, rendering object
  * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
  * 
- * @todo     rename 
  */
 class Peak_View
 {
 	
-    protected $vars = array();            //view vars
+    protected $_vars = array();            //view vars
     
     private $_helpers;                     //view helpers object 
     
-    private $theme;                       //view theme object
+    private $_theme;                       //view theme object
     
-    private $view_engine = 'partials';    //view rendering object * partials by default       
+    private $_engine = 'layouts';          //view rendering object * layouts by default       
   
     /**
      * Start template - set an array as template variable(optionnal)
@@ -30,7 +29,7 @@ class Peak_View
     public function __construct($vars = null)
     {
         if(isset($vars)) {
-            if(is_array($vars)) $this->vars = $vars;
+            if(is_array($vars)) $this->_vars = $vars;
             else $this->iniVar($vars);
         }
     }
@@ -44,7 +43,7 @@ class Peak_View
      */
     public function __set($name,$value = null)
     {
-        $this->vars[$name] = $value;
+        $this->_vars[$name] = $value;
     }
     
     /**
@@ -55,7 +54,7 @@ class Peak_View
      */
     public function __get($name)
     {        
-        return array_key_exists($name,$this->vars) ? $this->vars[$name] : null;
+        return array_key_exists($name,$this->_vars) ? $this->_vars[$name] : null;
     }
     
     /**
@@ -66,7 +65,7 @@ class Peak_View
      */
     public function __isset($name)
     {
-    	return array_key_exists($name,$this->vars) ? true : false;
+    	return array_key_exists($name,$this->_vars) ? true : false;
     }
     
     /**
@@ -76,7 +75,7 @@ class Peak_View
      */
     public function __unset($name)
     {
-    	if(array_key_exists($name,$this->vars)) unset($this->vars[$name]);
+    	if(array_key_exists($name,$this->_vars)) unset($this->_vars[$name]);
     }
     
   
@@ -118,7 +117,7 @@ class Peak_View
      */
     public function &getVars()
     {
-        return $this->vars;
+        return $this->_vars;
     }
     
     /**
@@ -126,16 +125,16 @@ class Peak_View
      */
     public function resetVars()
     {
-        $this->vars = array();
+        $this->_vars = array();
     }
         
     /**
      * Set view rendering engine
-     * 'Partials' by default : This represent the default behavior of displaying directly controller view or group it with partials files.
+     * 'Layouts' by default
      * 
      * @param string $engine [Partials|Layouts|Xml|Json] ( /Peak/View/Render/ )
      */
-    public function setRenderEngine($engine = 'Partials')
+    public function setRenderEngine($engine = 'Layouts')
     {
         switch($engine)
         {
@@ -147,8 +146,9 @@ class Peak_View
                 break;
                 
             default :
+            	//if its unknow render engine, set layouts as default
             	if(!class_exists('Peak_View_Render_'.$engine)) {
-            		$this->setRenderEngine('Partials');
+            		$this->setRenderEngine('Layouts');
             		return;
             	}
                 break;
@@ -156,7 +156,7 @@ class Peak_View
         
         $engine_class = 'Peak_View_Render_'.$engine;
         
-        $this->view_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
+        $this->_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
 
         return $this;       
     }
@@ -168,7 +168,7 @@ class Peak_View
      */
     public function engine()
     {
-        return $this->view_engine;
+        return $this->_engine;
     }
         
     /**
@@ -181,7 +181,7 @@ class Peak_View
      */
     public function render($file,$path)
     {
-        if(is_object($this->view_engine)) {
+        if(is_object($this->_engine)) {
             $this->engine()->render($file,$path);
         }
         else throw new Peak_Exception('ERR_VIEW_ENGINE_NOT_SET');
@@ -195,9 +195,9 @@ class Peak_View
      */
     public function theme($folder = null)
     {
-        if(!($this->theme instanceof Peak_View_Theme)) $this->theme = new Peak_View_Theme($folder);
-        elseif(isset($folder)) $this->theme->folder($folder); 
-        return $this->theme;
+        if(!($this->_theme instanceof Peak_View_Theme)) $this->_theme = new Peak_View_Theme($folder);
+        elseif(isset($folder)) $this->_theme->folder($folder); 
+        return $this->_theme;
     }
     
     
@@ -237,7 +237,7 @@ class Peak_View
                     }
                 }
             }
-            $this->vars = array_merge($this->vars,$ini_vars);
+            $this->_vars = array_merge($this->_vars,$ini_vars);
         }
     }
     
