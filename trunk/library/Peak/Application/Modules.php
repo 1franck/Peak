@@ -78,7 +78,7 @@ abstract class Peak_Application_Modules
     public function run($default_ctrl = 'index', $flush_request = false)
     {      	
         //add module name to the end Peak_Router $base_uri
-        Peak_Registry::o()->router->base_uri = Peak_Registry::obj()->router->base_uri.$this->_module_name;   
+        Peak_Registry::o()->router->base_uri = Peak_Registry::o()->router->base_uri.$this->_module_name;   
 
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run($default_ctrl, $flush_request);

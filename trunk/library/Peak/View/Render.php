@@ -140,7 +140,7 @@ abstract class Peak_View_Render
         //when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
         if(!isset($this->_cache_id)) {
             if(!isset($id)) {
-                $this->genCacheId(Peak_Registry::obj()->app->front->controller->path, Peak_Registry::obj()->app->front->controller->file);
+                $this->genCacheId(Peak_Registry::o()->app->front->controller->path, Peak_Registry::o()->app->front->controller->file);
             }
             else $this->genCacheId('', $id);
         }

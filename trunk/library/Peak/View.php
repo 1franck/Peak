@@ -21,6 +21,7 @@ class Peak_View
     
     private $_engine = 'layouts';          //view rendering object * layouts by default       
   
+    
     /**
      * Start template - set an array as template variable(optionnal)
      *
@@ -32,8 +33,7 @@ class Peak_View
             if(is_array($vars)) $this->_vars = $vars;
             else $this->iniVar($vars);
         }
-    }
-    
+    }   
     
     /**
      * Set/overwrite template variable
@@ -115,7 +115,7 @@ class Peak_View
      *
      * @return array
      */
-    public function &getVars()
+    public function getVars()
     {
         return $this->_vars;
     }
@@ -129,8 +129,7 @@ class Peak_View
     }
         
     /**
-     * Set view rendering engine
-     * 'Layouts' by default
+     * Set view rendering engine. 'Layouts' by default
      * 
      * @param string $engine [Partials|Layouts|Xml|Json] ( /Peak/View/Render/ )
      */
@@ -239,6 +238,18 @@ class Peak_View
             }
             $this->_vars = array_merge($this->_vars,$ini_vars);
         }
+    }
+    
+    
+    /**
+     * Include themes functions.php if exists 
+     *
+     * @return included file or false
+     */
+    public function getFunctionsFile()
+    {
+        $file = Peak_Core::getPath('theme').'/functions.php';
+        return (file_exists($file)) ? $file : false;
     }
     
 }

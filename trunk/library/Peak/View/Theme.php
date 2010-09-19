@@ -3,7 +3,7 @@
 /**
  * Manage Application Views Themes
  * 
- * @desc     Theme /layout, /partials, /scripts, /cache, /theme.ini, /functions.php
+ * @desc     Theme /layout, /partials, /scripts, /cache, /theme.ini
  *           By default they are in your application /views folder.
  *           If you set theme name with method folder(), application /views/themes/[name] will be used
  * 
@@ -88,15 +88,6 @@ class Peak_View_Theme
         }    
     }
     
-    /**
-     * Include themes functions.php if exists 
-     *
-     * @return included file or false
-     */
-    public function getFunctionsFile()
-    {
-        $file = Peak_Core::getPath('theme').'/functions.php';
-        return (file_exists($file)) ? $file : false;
-    }
+
 
 }

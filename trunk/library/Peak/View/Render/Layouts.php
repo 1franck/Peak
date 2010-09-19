@@ -90,7 +90,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         $this->noLayout();      
         
         // include theme functions.php    
-        if(Peak_Registry::obj()->view->theme()->getFunctionsFile()) include_once(Peak_Registry::obj()->view->theme()->getFunctionsFile());
+        if(Peak_Registry::o()->view->getFunctionsFile()) include_once(Peak_Registry::o()->view->getFunctionsFile());
 
         // include controller action view with or without partials groups
         include($layout);     
