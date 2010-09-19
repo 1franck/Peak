@@ -1,5 +1,8 @@
 #VERSION 0.7.99#
 
+*  Peak_View_Theme > moved method getFunctionsFile() to Peak_View. Fixed Peak_View_Render_Partials 
+                     and Peak_View_Render_Layouts accordly.
+
 *  Peak_View > rename properties $vars to $_vars, $theme to $_theme and $view_engine to $_engine. 
                'Layouts' is now the default rendering engine
 
@@ -33,12 +36,12 @@
 
 *  added Peak_Controller_Front > moved dispatching logic of Peak_Application in this new object
 
+
+#VERSION 0.7.98#
+
 *  Peak_View_Render > added magic method that point to Peak_View __isset()
 
 *  Peak_View > added magic method __isset()
-
-
-#VERSION 0.7.98#
 
 *  Peak_Controller > added method view()
 
