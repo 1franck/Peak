@@ -7,7 +7,7 @@
  *          if Peak is somewhere else, edit $pk_path to point to Peak library folder.
  *          ! This file SHOULD BE DELETED/NOT USED in PRODUCTION environment.
  * 
- * @uses    Peak_Core, Peak_Dispatcher, Jquery (http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js)
+ * @uses    Peak_Core, Peak_Dispatcher
  *          
  * @author  Francois Lajoie
  * @version $Id$
