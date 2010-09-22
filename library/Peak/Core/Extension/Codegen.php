@@ -83,15 +83,12 @@ class Peak_Core_Extension_Codegen
     	$original_data = array('PROJECT_NAME'     => 'MyApp',
     	                       'PROJECT_DESCR'    => '',
     	                       'DEV_MODE'         => 'false',
-    	                       'APP_THEME'        => 'default',
     	                       'APP_DEFAULT_CTRL' => 'indexController',
     	                       'SVR_URL'          => 'http://127.0.0.1',
     	                       'ROOT'             => '',
     	                       'LIBRARY_ROOT'     => '',
     	                       'APPLICATION_ROOT' => '',
     	                       'ZEND_LIB_ROOT'    => '',
-    	                       'APP_LOGIN_NAME'   => '',
-    	                       'APP_LOGIN_PASS'   => '',
     	                       'ENABLE_PEAK_CONTROLLERS' => 'false');
     	                       
         $data = array_merge((array)$original_data, (array)$data);
