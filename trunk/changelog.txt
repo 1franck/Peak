@@ -1,5 +1,7 @@
 #VERSION 0.7.99#
 
+*  Peak_Config > added method getVars()
+
 *  Peak_View_Theme > moved method getFunctionsFile() to Peak_View. Fixed Peak_View_Render_Partials 
                      and Peak_View_Render_Layouts accordly.
 

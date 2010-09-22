@@ -11,9 +11,6 @@ define('PROJECT_DESCR', '".$data['PROJECT_DESCR']."');
 
 # --- APP SETTINGS --- #
 
-// interface theme folder name (based in /application/appname/views/themes/)                                     
-define('APP_THEME','".$data['APP_THEME']."');
-
 // controller by default
 define('APP_DEFAULT_CTRL','".$data['APP_DEFAULT_CTRL']."');
 

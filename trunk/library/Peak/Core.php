@@ -106,7 +106,8 @@ class Peak_Core
         $config->application_path         = $app_path;
         $config->cache_path               = $app_path.'/cache';
         $config->controllers_path         = $app_path.'/controllers';
-        $config->controllers_helpers_path = $config->controllers_path .'/helpers';       
+        $config->controllers_helpers_path = $config->controllers_path .'/helpers';
+        $config->models_path              = $app_path.'/models';       
         $config->modules_path             = $app_path.'/modules';
         $config->lang_path                = $app_path.'/lang';
         
