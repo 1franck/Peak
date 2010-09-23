@@ -95,7 +95,7 @@ class TestOfView extends UnitTestCase
     	
     	$this->view->setRenderEngine('unknow');
     	$engine = $this->view->engine();
-    	$this->assertTrue(is_a($engine,'Peak_View_Render_Partials'),'Peak_View_Render_Partials should be set when calling setRenderEngine() with unknown engine.');    	
+    	$this->assertTrue(is_a($engine,'Peak_View_Render_Layouts'),'Peak_View_Render_Layouts should be set when calling setRenderEngine() with unknown engine.');    	
     	
     	$this->view->setRenderEngine('Layouts');
     	$engine = $this->view->engine();
