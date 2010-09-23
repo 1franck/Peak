@@ -37,6 +37,7 @@ class Peak_Controller_Front
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
         
+        //this need to be better to avoid 2 block of try/catch in index.php
         if($flush_request) { //$router->reset();
         	unset($router->controller);
         }
