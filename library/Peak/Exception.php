@@ -66,7 +66,12 @@ class Peak_Exception extends Exception
 
 		return $r."\n";
 	}
-		
+
+	/**
+	 * Get debug trace of current exception
+	 *
+	 * @return string
+	 */
 	public function getDebugTrace()
 	{
 		$trace = debug_backtrace();
