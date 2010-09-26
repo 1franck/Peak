@@ -11,11 +11,26 @@
 class Peak_Application
 {
     
-    public $bootstrap;                //app bootstrap object if exists
+	/**
+	 * app bootstrap object if exists
+	 *
+	 * @var object
+	 */
+    public $bootstrap;
      
-    public $front;                    //app object front controller
-        
-    private static $_instance = null; //app object itself
+    /**
+     * app object front controller
+     *
+     * @var object
+     */
+    public $front;
+
+    /**
+     * app object itself
+     *
+     * @var object
+     */
+    private static $_instance = null;
     
     /**
      * Singleton application

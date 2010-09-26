@@ -136,8 +136,9 @@ abstract class Peak_Controller_Action
     
     
     /**
-     * @deprecated Point to view object. Usefull for controller helpers
-     *
+     * Point to view object. Usefull for controller helpers
+     * 
+     * @deprecated
      * @return object 
      */
     public function view()
