@@ -3,7 +3,7 @@
 /**
  * Peak Application
  * 
- * @desc      Load the framework objects, application bootstrap and a valid controller/module from router request.
+ * @desc      Load the framework objects, application bootstrap and front controller.
  * @author    Francois Lajoie
  * @version   $Id$
  * @exception Peak_Exception
