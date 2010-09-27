@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Peak Config variables registry
+ * Variables registry for configs stuff
  * 
  * @author  Francois Lajoie
  * @version $Id$
@@ -10,7 +10,10 @@
  */
 class Peak_Config implements IteratorAggregate, Countable
 {
-	
+	/**
+	 * Contains all variables
+	 * @var array
+	 */
 	private $_vars = array();
     
 	/**

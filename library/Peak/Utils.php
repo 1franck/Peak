@@ -3,8 +3,8 @@
 /**
  * Peak utils class @depracated
  * 
- * @desc     Content all sort of usefull functions found here and there
- * @version  $Id$
+ * @desc       Content all sort of usefull functions found here and there
+ * @version    $Id$
  */
 class Peak_Utils
 {

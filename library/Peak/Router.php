@@ -1,34 +1,16 @@
 <?php
 
 /**
- * Simple router URL php rewriting
- * Support 2 type of controllers folders
- * Support url like :  http://example.com/[application php file]?[controller]=[action]&[param1]=[param2]&[...]
- *                     http://example.com/index.php?server=php&view=ver  
- *                     AND
- *                     http://example.com/[controller]/[action]/[param1]/[param2]/[...]
- *                     http://example.com/server/php/view/ver
- *
+ * Simple router URL php rewriting.
+ * 
+ * @desc     Support url like :  http://example.com/[application php file]?[controller]=[action]&[param1]=[param2]&[...]
+ *                               http://example.com/index.php?server=php&view=ver  
+ *                               AND
+ *                               http://example.com/[controller]/[action]/[param1]/[param2]/[...]
+ *                               http://example.com/server/php/view/ver 
  * @author   Francois Lajoie
- * @version  $Id$
- * 
- * @todo filter variables
- * 
- * @uses .htaccess file example:
- * 
- * -------------------------------------
- * RewriteEngine On
- *
- * ## never rewrite for existing files, directories and links
- *
- * RewriteCond %{REQUEST_FILENAME} !-f
- * RewriteCond %{REQUEST_FILENAME} !-d
- * RewriteCond %{REQUEST_FILENAME} !-l
- *
- * ## rewrite everything else to index.php
- *
- * RewriteRule !\.(js|ico|gif|jpg|png|css)$ index.php
- * -------------------------------------            
+ * @version  $Id$ 
+ * @todo     filter variables      
  */
 class Peak_Router
 {

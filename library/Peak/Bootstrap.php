@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Application Bootstrap base
- * 
+ * Application Bootstrapper base
+ *   
  * @author   Francois Lajoie
  * @version  $Id$
  */

@@ -14,10 +14,16 @@ define('_DESCR_','Php wEb Application Kernel');
 class Peak_Core
 {
       
-    // core extentension objects
+    /**
+     * core extentensions object
+     * @var object
+     */
     protected $_extensions;
 
-    //object itself
+    /**
+     * object itself
+     * @var object
+     */
     private static $_instance = null; 
         
     /**
@@ -32,7 +38,7 @@ class Peak_Core
 	}
     
 	/**
-	 * Activative error_reporting on DEV_MODE
+	 * Activate error_reporting on DEV_MODE
 	 */
     private function __construct()
     {            	
@@ -43,7 +49,7 @@ class Peak_Core
     }
     
     /**
-     * Try to return a helper object based the method name.
+     * Try to return a extension object based the method name.
      *
      * @param  string $helper
      * @param  null   $args not used
@@ -69,9 +75,10 @@ class Peak_Core
     }
     
     /**
-     * @final Init Peak_Config object, set into registry and define usefull constants
+     * Init Peak_Config object, set into registry and define usefull constants.
      * Called inside boot.php
      * 
+     * @final
      */
     final public static function init()   
     {
@@ -88,7 +95,7 @@ class Peak_Core
     }
     
     /**
-     * Prepare paths and store it inside Peak_Config
+     * Prepare paths and store it inside Peak_Config.
      * Called inside boot.php
      *
      * @param string $app_path
@@ -135,10 +142,10 @@ class Peak_Core
     /**
      * Get application different vars from Peak_Configs ending by '_path'
      *
-     * @example getPath('application') = Peak_Registry::o()->core_config->application_path
+     * @param   string $path
+     * @return  string
      * 
-     * @param  string $path
-     * @return string
+     * @example getPath('application') = Peak_Registry::o()->core_config->application_path
      */
     public static function getPath($path = 'application', $absolute_path = true) 
     {
@@ -194,7 +201,7 @@ class Peak_Core
     /**
      * Check if modules name exists
      *
-     * @param string $name
+     * @param  string $name
      * @return bool
      */
     public function isModule($name)
@@ -207,10 +214,9 @@ class Peak_Core
                
     
     /**
-     * Get  controllers @deprecated
+     * Get controllers @deprecated
      * 
      * @return array()
-     *
      */
     public function getControllers()
     {      
