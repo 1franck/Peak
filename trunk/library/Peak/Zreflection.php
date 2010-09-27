@@ -3,7 +3,9 @@
 /**
  * Zend reflection class wrapper
  * 
- * @uses     Zend_Reflection classes !important
+ * @descr    This will help you to resolve some complex treatments needed to gather informations about php classes from Zend_Reflection components.
+ * 
+ * @uses     Zend_Reflection classes + Zend_Loader !important
  * @author   Francois Lajoie
  * @version  $Id$
  */
@@ -16,6 +18,8 @@ class Peak_Zreflection
     /**
      * Load Zend_Reflection_Class
      *
+     * @uses  Zend_Reflection_Class
+     * 
      * @param string $class
      * @param bool   $autoload
      */
@@ -24,12 +28,6 @@ class Peak_Zreflection
         if(class_exists($class,$autoload))
         {
             $this->class = new Zend_Reflection_Class($class);
-
-            /*$methods = $this->class->getMethods();
-            $properties = $this->class->getProperties();
-            $constants = $this->class->getConstants();
-            
-            $class_properties = getClassDeclaration();  */
         }
     }
     
@@ -54,6 +52,8 @@ class Peak_Zreflection
     /**
      * Retreive class description tags
      *
+     * @uses   Zend_Reflection_Docblock
+     * 
      * @return array
      */
     public function getClassDocTags()
@@ -131,6 +131,49 @@ class Peak_Zreflection
     }
     
     /**
+     * Get a method description from current class
+     *
+     * @uses   Zend_Reflection_Method
+     * 
+     * @param  string $method
+     * @param  string $type (short or long)    
+     * 
+     * @return string
+     */
+    public function getMethodDoc($method, $type = 'short')
+    {
+    	//Method description
+    	try {
+    		$oMethod = new Zend_Reflection_Method($this->class->getName() ,$method);
+    		$shortdescr = $oMethod->getDocblock()->getShortDescription();
+    		$longdescr = $oMethod->getDocblock()->getShortDescription();
+
+    		if($shortdescr === $longdescr) $longdescr = null;
+    		elseif((empty($shortdescr)) && (!empty($longdescr))) {
+    			$shortdescr = $longdescr;
+    			$longdescr = null;
+    		}
+
+    	}
+    	catch(Exception $e) { $shortdescr = null; $longdescr = null; }
+    	
+    	if($type === 'short') return $shortdescr;
+    	else return $longdescr;
+    }
+    
+    public function getMethodDocTags($method)
+    {
+    	try {
+			$oDocBlock = new Zend_Reflection_Docblock($this->class->getMethod($method)->getDocblock()->getContents());
+			//$comment_tags = $oMethod->getDocblock()->getTags();
+			$comment_tags = $oDocBlock->getTags();
+		}
+		catch(Exception $e) { $comment_tags = ''; }
+		
+		return $comment_tags;
+    }
+    
+    /**
      * Get class declaring class name of a property 
      *
      * @param  string $name
@@ -160,12 +203,47 @@ class Peak_Zreflection
         return implode(' ',$v);
     }
     
+    /**
+     * Get property description from the current class
+     *
+     * @use    ReflectionProperty, Zend_Reflection_Docblock
+     * 
+     * @param  string $property
+     * @param  string $type
+     * 
+     * @return string
+     */
+    public function getPropertyDoc($property, $type = 'short')
+    {
+    	try {
+
+    		$oProperty = new ReflectionProperty($this->class->getName(), $property);
+    		$oDocblock = new Zend_Reflection_Docblock($oProperty->getDocComment());
+    		$shortdescr = $oDocblock->getShortDescription();
+    		$longdescr = $oDocblock->getLongDescription();
+
+    		if($shortdescr === $longdescr) $longdescr = null;
+    		elseif((empty($shortdescr)) && (!empty($longdescr))) {
+    			$shortdescr = $longdescr;
+    			$longdescr = '';
+    		}
+
+    	}
+    	catch(Exception $e) { $shortdescr = ''; $longdescr = ''; }
+    	
+    	if($type === 'short') return $shortdescr;
+    	else return $longdescr;
+    }
+    
     
     /**
      * Get params object as list
      *
-     * @uses  Zend_Reflection_Parameter
-     * @param object $params
+     * @uses   Zend_Reflection_Parameter
+     * 
+     * @param  object $params
+     * 
+     * @return string
      */
     function paramsAsList($paramsObject,$router)
     {
@@ -196,7 +274,7 @@ class Peak_Zreflection
     function paramsToArray($method)
     {
         global $doc;
-        $params = $doc->getMethod($method)->getParameters();
+        $params = $doc->class->getMethod($method)->getParameters();
         $paramsArray = array();
         foreach($params as $param) {
             $paramsArray[] = $param->name;
