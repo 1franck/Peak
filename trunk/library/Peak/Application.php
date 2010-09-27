@@ -1,9 +1,8 @@
 <?php 
 
 /**
- * Peak Application
- * 
- * @desc      Load the framework objects, application bootstrap and front controller.
+ * Load the framework objects, application bootstrap and front controller.
+ *   
  * @author    Francois Lajoie
  * @version   $Id$
  * @exception Peak_Exception
@@ -13,21 +12,18 @@ class Peak_Application
     
 	/**
 	 * app bootstrap object if exists
-	 *
 	 * @var object
 	 */
     public $bootstrap;
      
     /**
      * app object front controller
-     *
      * @var object
      */
     public $front;
 
     /**
      * app object itself
-     *
      * @var object
      */
     private static $_instance = null;

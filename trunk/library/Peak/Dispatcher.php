@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Peak_Dispatcher
+ * Peak Dispatcher
  * 
- * @desc This is an standalone component and should no be used inside framework MVC!
- *       This class looks for actions keys names in global variable like $_GET, $_POST, $_SESSION and 
- *       dispatch them to action(s) depending on $_recursive_depth properties. 
- *       Usefull for standalone page or to regroup logic behind ajax request
- *       IMPORTANT. The data of action value and $resource are not filtered so be sure to sanitize/valid action 
- *       datas and resource before doing anything 
+ * This is an standalone component and should no be used inside framework MVC!
+ * This class looks for actions keys names in global variable like $_GET, $_POST, $_SESSION and 
+ * dispatch them to action(s) depending on $_recursive_depth properties. 
+ * Usefull for standalone page or to regroup logic behind ajax request
+ * IMPORTANT. The data of action value and $resource are not filtered so be sure to sanitize/valid action 
+ * datas and resource before doing anything 
  *  
  * @author  Francois Lajoie
  * @version $Id$

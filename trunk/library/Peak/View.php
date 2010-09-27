@@ -1,25 +1,38 @@
 <?php
 
 /**
- * Peak View
+ * Template variables registry, helpers object, theme object, rendering object
  * 
  * @author   Francois Lajoie
- * @version  $Id$
- * 
- * @desc     template variables registry, helpers object, theme object, rendering object
+ * @version  $Id$  
  * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
  * 
  */
 class Peak_View
 {
-	
-    protected $_vars = array();            //view vars
+	/**
+	 * view vars
+	 * @var array
+	 */
+    protected $_vars = array();
     
-    private $_helpers;                     //view helpers object 
+    /**
+     * view helpers object
+     * @var object
+     */
+    private $_helpers;
     
-    private $_theme;                       //view theme object
+    /**
+     * view theme object
+     * @var object
+     */
+    private $_theme;
     
-    private $_engine = 'layouts';          //view rendering object * layouts by default       
+    /**
+     * view rendering object
+     * @var object
+     */
+    private $_engine;
   
     
     /**
