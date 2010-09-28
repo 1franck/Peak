@@ -27,7 +27,7 @@ class Peak_Registry
     /**
      * set/get registry instance
      *
-     * @return  object $_instance
+     * @return object $_instance
      */
     public static function getInstance()
 	{
@@ -92,7 +92,7 @@ class Peak_Registry
 	/**
 	 * Check if an object var name is registered
 	 *
-	 * @param  string $name
+	 * @param string $name
 	 * @return bool
 	 */
 	public static function isRegistered($name)
