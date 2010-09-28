@@ -9,9 +9,17 @@
 class Peak_Registry
 {
 
-    protected static $_registered_objects = array();  //array of regitered objects
+	/**
+	 * Array of regitered objects
+	 * @var array
+	 */
+    protected static $_registered_objects = array();
     
-    protected static $_instance = null; //instance of registry                                
+    /**
+     * Instance of registry
+     * @var object
+     */
+    protected static $_instance = null;                               
                           
     private final function __clone() { trigger_error('Can\'t clone registry', E_USER_ERROR); }
     private final function __construct() { }
