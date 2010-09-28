@@ -1,22 +1,26 @@
 <?php
-
-
 /**
  * Peak_Controller_Front
  * 
  * @author  Francois Lajoie
  * @version $Id$
- *
  */
 class Peak_Controller_Front
 {
-	
-	
-	public $controller;         //controller object
-	
-	public $default_controller; //defaut controller
-	
-	
+
+	/**
+	 * Controller object
+	 * @var object
+	 */
+	public $controller;
+
+	/**
+	 * Default controller name
+	 * @var string
+	 */
+	public $default_controller;
+
+
 	/**
 	 * Initialize router uri request
 	 */
@@ -24,11 +28,12 @@ class Peak_Controller_Front
 	{
 		Peak_Registry::o()->router->getRequestURI();
 	}
-	
-	
+
 	/**
-	 * Start dispatching to controller with the help of router 
-	 *
+	 * Start dispatching to controller with the help of router
+	 * 
+	 * @param string $default_ctrl Controller called by default when no request
+     * @param bool   $flush_request Flush all router request and try to execute controller $default_ctrl
 	 */
 	public function dispatch($default_ctrl = null, $flush_request = false)
 	{
@@ -73,12 +78,9 @@ class Peak_Controller_Front
         elseif(method_exists($this->controller,'handleAction')) {
         	$this->controller->handleAction();
         	$this->postDispatch();        
-        }
-               
-        //$this->redirect('index','index',null);            
+        }       
 	}
-	
-	
+
     /**
      * Set a new request and redispath the controller
      *
@@ -91,13 +93,9 @@ class Peak_Controller_Front
     	Peak_Registry::o()->router->setRequest( array($ctrl, $action, $params) );
     	$this->dispatch();
     }
-	
+
     /**
 	 * Called after controller action dispatching
-	 *
 	 */
-    public function postDispatch()
-    {
-    	//nothing by default
-    }
+    public function postDispatch() { /*nothing by default*/ }
 }

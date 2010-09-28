@@ -9,9 +9,28 @@
 abstract class Peak_Helpers
 {
     
-	protected $_prefix    = '';
-	protected $_paths     = array();
-    protected $_objects   = array();
+	/**
+	 * Class name prefix
+	 * @var string
+	 */
+	protected $_prefix = '';
+	
+	/**
+	 * Helpers file path(s)
+	 * @var string
+	 */
+	protected $_paths = array();
+	
+	/**
+	 * Helpers objects
+	 * @var array
+	 */
+    protected $_objects = array();
+    
+    /**
+     * Exception constant
+     * @var string
+     */
     protected $_exception = 'ERR_DEFAULT';
 
     /**

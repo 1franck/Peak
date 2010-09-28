@@ -9,7 +9,16 @@
 class Peak_Exception extends Exception
 {
 	
-    private $_trace;	
+	/**
+	 * Error file/line/code trace
+	 * @var array
+	 */
+    private $_trace;
+    
+    /**
+     * Error constant name
+     * @var string
+     */
 	private $_errkey;
     
 	//const ERR_APP_MOD_NOT_FOUND             = 'Application: module %1$s not found.'; //@deprecated

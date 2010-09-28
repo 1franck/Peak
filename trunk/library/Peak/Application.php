@@ -1,5 +1,4 @@
-<?php 
-
+<?php
 /**
  * Load the framework objects, application bootstrap and front controller.
  *   
@@ -9,13 +8,13 @@
  */
 class Peak_Application
 {
-    
+
 	/**
 	 * app bootstrap object if exists
 	 * @var object
 	 */
     public $bootstrap;
-     
+
     /**
      * app object front controller
      * @var object
@@ -27,7 +26,7 @@ class Peak_Application
      * @var object
      */
     private static $_instance = null;
-    
+
     /**
      * Singleton application
      *
@@ -61,13 +60,10 @@ class Peak_Application
         	$this->front = new front();
         } else $this->front = new Peak_Controller_Front();
     }
-   	   
-    
+
     /**
      * Load front controller and start dispatching
-     *
-     * @param string $default_ctrl Controller called by default when no request
-     * @param bool   $flush_request Flush all router request and try to execute controller $default_ctrl
+     * @see Peak_Controller_Front::dispatch() for param
      */
     public function run($default_ctrl = 'index', $flush_request = false)
     {	    	
@@ -75,7 +71,7 @@ class Peak_Application
     	
     	$this->front->dispatch($default_ctrl, $flush_request);   	
     }
-    
+
     /**
      * Call front controller render() method
      */
@@ -83,5 +79,5 @@ class Peak_Application
     {
     	$this->front->controller->render();
     }
-                	         
+
 }
