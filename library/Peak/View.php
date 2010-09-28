@@ -1,12 +1,10 @@
 <?php
-
 /**
  * Template variables registry, helpers object, theme object, rendering object
  * 
  * @author   Francois Lajoie
  * @version  $Id$  
  * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
- * 
  */
 class Peak_View
 {
@@ -15,26 +13,26 @@ class Peak_View
 	 * @var array
 	 */
     protected $_vars = array();
-    
+
     /**
      * view helpers object
      * @var object
      */
     private $_helpers;
-    
+
     /**
      * view theme object
      * @var object
      */
     private $_theme;
-    
+
     /**
      * view rendering object
      * @var object
      */
     private $_engine;
-  
-    
+
+
     /**
      * Start template - set an array as template variable(optionnal)
      *
@@ -47,7 +45,7 @@ class Peak_View
             else $this->iniVar($vars);
         }
     }   
-    
+
     /**
      * Set/overwrite template variable
      *
@@ -58,7 +56,7 @@ class Peak_View
     {
         $this->_vars[$name] = $value;
     }
-    
+
     /**
      * Get view variable
      *
@@ -69,7 +67,7 @@ class Peak_View
     {        
         return array_key_exists($name,$this->_vars) ? $this->_vars[$name] : null;
     }
-    
+
     /**
      * Isset $vars keyname
      *
@@ -80,7 +78,7 @@ class Peak_View
     {
     	return array_key_exists($name,$this->_vars) ? true : false;
     }
-    
+
     /**
      * Unset $vars keyname
      *
@@ -90,9 +88,7 @@ class Peak_View
     {
     	if(array_key_exists($name,$this->_vars)) unset($this->_vars[$name]);
     }
-    
-  
-    
+
     /**
      * We try to call View Render Engine object method.
      * If not, we try to return a helper object based on $method name.
@@ -112,7 +108,7 @@ class Peak_View
             trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
         }
     }
-       
+
     /**
      * Count template variables
      *
@@ -122,7 +118,7 @@ class Peak_View
     {
         return count($this->getVars());
     }
-    
+
     /**
      * Get template variables
      *
@@ -132,7 +128,7 @@ class Peak_View
     {
         return $this->_vars;
     }
-    
+
     /**
      * Clean all variable in $vars
      */
@@ -140,7 +136,7 @@ class Peak_View
     {
         $this->_vars = array();
     }
-        
+
     /**
      * Set view rendering engine. 'Layouts' by default
      * 
@@ -172,7 +168,7 @@ class Peak_View
 
         return $this;       
     }
-    
+
     /**
      * Return current view rendering engine object
      *
@@ -182,7 +178,7 @@ class Peak_View
     {
         return $this->_engine;
     }
-        
+
     /**
      * Render Controller Action View file with the current rendering engine
      * 
@@ -198,8 +194,7 @@ class Peak_View
         }
         else throw new Peak_Exception('ERR_VIEW_ENGINE_NOT_SET');
     }
-      
-    
+
     /**
      * Create/return view object
      *
@@ -211,8 +206,7 @@ class Peak_View
         elseif(isset($folder)) $this->_theme->folder($folder); 
         return $this->_theme;
     }
-    
-    
+
     /**
      * Load helpers objects method and return helper obj
      *
@@ -223,7 +217,7 @@ class Peak_View
     	if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
     	return $this->_helpers;
     }
-    
+
     /**
      * Load ini file into view vars
      *
@@ -252,8 +246,7 @@ class Peak_View
             $this->_vars = array_merge($this->_vars,$ini_vars);
         }
     }
-    
-    
+
     /**
      * Include themes functions.php if exists 
      *
@@ -264,5 +257,4 @@ class Peak_View
         $file = Peak_Core::getPath('theme').'/functions.php';
         return (file_exists($file)) ? $file : false;
     }
-    
 }

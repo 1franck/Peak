@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Variables registry for configs stuff
  * 
@@ -15,7 +14,7 @@ class Peak_Config implements IteratorAggregate, Countable
 	 * @var array
 	 */
 	private $_vars = array();
-    
+
 	/**
 	 * Set a new variable
 	 *
@@ -26,19 +25,19 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	$this->_vars[$name] = $val;
     }
-    
+
     /**
      * Get a variable
      *
-     * @param string $name
-     * @return  misc Will return null if variable keyname is not found
+     * @param  string $name
+     * @return misc   Will return null if variable keyname is not found
      */
     public function __get($name)
     {
     	if(isset($this->_vars[$name])) return $this->_vars[$name];
     	else return null;
     }
-    
+
     /**
      * Isset varaible
      *
@@ -49,7 +48,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	return (isset($this->_vars[$name])) ? true : false;
     }
-    
+
     /**
      * Unset variable
      *
@@ -59,7 +58,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	if(isset($this->_vars[$name])) unset($this->_vars[$name]);
     }
-    
+
     /**
 	 * Create iterator for $config
 	 *
@@ -69,7 +68,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
         return new ArrayIterator($this->_vars);
     }
-    
+
     /**
      * Implement Countable func
      *
@@ -79,7 +78,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	return count($this->_vars);
     }
-    
+
     /**
      * Get all variables
      *

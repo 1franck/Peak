@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak abstract action controller
  * 
@@ -8,25 +7,67 @@
  */
 abstract class Peak_Controller_Action
 {
-    public $name;                 //child class name
-    public $title;                //child controller title
+	/**
+	 * child class name
+	 * @var string
+	 */
+    public $name;
 
-    public $file;                 //view script file to render
-    public $path;                 //absolute view scripts controller path
-    
-    
-    public $action;               //action called by handleRequest()   
-    public $actions = array();    //actions methods list
+    /**
+     * child controller title
+     * @var string
+     */
+    public $title;
 
-    protected $view;              //instance of view
-    
-    protected $helpers;           //controller helpers objects
-    
-    protected $params;            //request params array
-    protected $params_assoc;      //request params associative array
-   
-    
-        
+    /**
+     * view script file to render
+     * @var string
+     */
+    public $file;
+
+    /**
+     * view scripts controller absolute path
+     * @var string
+     */
+    public $path;
+
+    /**
+     * action called by handleRequest()
+     * @var string
+     */
+    public $action;
+
+    /**
+     * actions methods list
+     * @var array
+     */
+    public $actions = array();
+
+    /**
+     * instance of view
+     * @var object
+     */
+    protected $view;
+
+    /**
+     * controller helpers objects
+     * @var object
+     */
+    protected $helpers;
+
+    /**
+     * request params array
+     * @var array
+     */
+    protected $params;
+
+    /**
+     * request params associative array
+     * @var array
+     */
+    protected $params_assoc;
+
+
     public function __construct()
     {   
         //initialize ctrl
@@ -52,7 +93,7 @@ abstract class Peak_Controller_Action
 
     /**
      * Initialize controller $name, $title, $path, $url_path and $type
-     * 
+     * @final
      */
     final private function initController()
     {       
@@ -67,11 +108,10 @@ abstract class Peak_Controller_Action
         $this->params = Peak_Registry::o()->router->params;
         $this->params_assoc = Peak_Registry::o()->router->params_assoc;
     }
-    
+
     /**
-     * Create a list of "actions"(methods) 
-     * Support methods with underscore(_) suffix (ex: _dashboard() )
-     * 
+     * Create a list of "actions"(methods)
+     * Support methods with underscore(_) suffix
      */
     public function listActions()
     {
@@ -83,7 +123,7 @@ abstract class Peak_Controller_Action
             if(preg_match($regexp,$method)) $this->actions[] = $method;
         }
     }
-    
+
     /**
      * Check if action exists. Support zend controller action method name
      *
@@ -94,7 +134,7 @@ abstract class Peak_Controller_Action
     {
     	return (method_exists($this->name,$name)) ? true : false;
     }
-           
+
     /**
      * Analyse router and lauch associated action method
      *
@@ -122,7 +162,7 @@ abstract class Peak_Controller_Action
         
         $this->postAction();
     }
-    
+
     /**
      * Load/access to controllers helpers objects
      * 
@@ -133,20 +173,7 @@ abstract class Peak_Controller_Action
         if(!is_object($this->helpers)) $this->helpers = new Peak_Controller_Helpers();
     	return $this->helpers;
     }
-    
-    
-    /**
-     * Point to view object. Usefull for controller helpers
-     * 
-     * @deprecated
-     * @return object 
-     */
-    public function view()
-    {
-    	return $this->view;
-    }
-    
-        
+
     /**
      * Get current action method name
      *
@@ -156,7 +183,7 @@ abstract class Peak_Controller_Action
     {
         return $this->action;
     }
-           
+
     /**
      * Call view render with controller $file and $path
      *
@@ -167,7 +194,7 @@ abstract class Peak_Controller_Action
         $this->view->render($this->file,$this->path);     
         $this->postRender();
     }
-    
+
     /**
      * Call front controller redirect() method
      *
@@ -179,20 +206,19 @@ abstract class Peak_Controller_Action
     {
     	Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
     }
-    
+
     /**
      * Action before controller requested action
      */
     public function preAction() { }
-    
+
     /**
      * Action after controller requested action
      */
     public function postAction() { }
-    
+
     /**
      * Action after view rendering
      */
     public function postRender() { }
-    
 }

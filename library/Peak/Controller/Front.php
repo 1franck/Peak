@@ -97,5 +97,5 @@ class Peak_Controller_Front
     /**
 	 * Called after controller action dispatching
 	 */
-    public function postDispatch() { /*nothing by default*/ }
+    public function postDispatch() { }
 }

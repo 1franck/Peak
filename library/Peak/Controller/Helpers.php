@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak Controller Helpers Objects container
  *  
@@ -21,7 +20,7 @@ class Peak_Controller_Helpers extends Peak_Helpers
     			                  
     	$this->_exception = 'ERR_CTRL_HELPER_NOT_FOUND';
     }
-    
+
     /**
      * Unkown method in Controller Helper will try to call current controller __call() method.
      * So you can load another controllers helpers inside helper
@@ -34,6 +33,4 @@ class Peak_Controller_Helpers extends Peak_Helpers
     {
         return call_user_func_array(array(Peak_Registry::o()->app->controller, $method), $args);
     }
-
-    
 }

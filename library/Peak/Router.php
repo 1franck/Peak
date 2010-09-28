@@ -60,7 +60,6 @@ class Peak_Router
         }
     }
 
-        
     /** 
 	 * Retreive request param(s) from url and save them to $request 
 	 * Work with/without rewrited url
@@ -141,5 +140,4 @@ class Peak_Router
 	    $this->request = $request;
 	    $this->resolveRequest();
 	}
-	
 }
