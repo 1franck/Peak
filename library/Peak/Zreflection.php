@@ -12,7 +12,10 @@
 class Peak_Zreflection
 {
     
-    
+    /**
+     * Zend_Reflection_Class object
+     * @var object
+     */
     public $class;
     
     /**
@@ -137,7 +140,6 @@ class Peak_Zreflection
      * 
      * @param  string $method
      * @param  string $type (short or long)    
-     * 
      * @return string
      */
     public function getMethodDoc($method, $type = 'short')
@@ -161,11 +163,16 @@ class Peak_Zreflection
     	else return $longdescr;
     }
     
+    /**
+     * Get method comment tags
+     *
+     * @param  string $method
+     * @return object
+     */
     public function getMethodDocTags($method)
     {
     	try {
 			$oDocBlock = new Zend_Reflection_Docblock($this->class->getMethod($method)->getDocblock()->getContents());
-			//$comment_tags = $oMethod->getDocblock()->getTags();
 			$comment_tags = $oDocBlock->getTags();
 		}
 		catch(Exception $e) { $comment_tags = ''; }
@@ -235,6 +242,24 @@ class Peak_Zreflection
     	else return $longdescr;
     }
     
+    /**
+     * Get property comment tags
+     *
+     * @param  string $property
+     * @return array
+     */
+    public function getPropertyDocTags($property)
+    {
+    	try {
+    		$oProperty = new ReflectionProperty($this->class->getName(), $property);
+    		$oDocblock = new Zend_Reflection_Docblock($oProperty->getDocComment());
+			$comment_tags = $oDocblock->getTags();
+		}
+		catch(Exception $e) { $comment_tags = ''; }
+		
+		return $comment_tags;
+    }
+    
     
     /**
      * Get params object as list
@@ -245,7 +270,7 @@ class Peak_Zreflection
      * 
      * @return string
      */
-    function paramsAsList($paramsObject,$router)
+    public function paramsAsList($paramsObject,$router)
     {
         $params_list = array();
 
@@ -271,7 +296,7 @@ class Peak_Zreflection
      * @param  string $method
      * @return array
      */
-    function paramsToArray($method)
+    public function paramsToArray($method)
     {
         global $doc;
         $params = $doc->class->getMethod($method)->getParameters();
@@ -281,7 +306,23 @@ class Peak_Zreflection
         }
         return $paramsArray;
     }
-
     
+    /**
+     * Get tags object as array
+     *
+     * @param  object $tag
+     * @return array
+     */
+    public function docTagsToArray($tag)
+    {
+    	$result = array('name' => '','type' => '', 'variableName' => '', 'description' => '');
+    	
+    	if(method_exists($tag,'getName')) $result['name'] = $tag->getName();
+    	if(method_exists($tag,'getType')) $result['type'] = $tag->getType();
+    	if(method_exists($tag,'getVariableName')) $result['variableName'] = $tag->getVariableName();
+    	if(method_exists($tag,'getDescription')) $result['description'] = $tag->getDescription();
+    	
+    	return $result;
+    }
     
 }
