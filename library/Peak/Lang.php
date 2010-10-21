@@ -7,8 +7,22 @@
  */
 class Peak_Lang
 {	  
+	/**
+	 * Language abbreviation
+	 * @var string
+	 */
     private $_lang;
+    
+    /**
+     * File translation
+     * @var string
+     */
     private $_file;  
+    
+    /**
+     * Array of translation
+     * @var array
+     */
     public  $translations = array();
 
 

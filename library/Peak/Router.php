@@ -15,21 +15,49 @@
 class Peak_Router
 {
         
-    public $base_uri;                   //default url relative root set with __construct()
+	/**
+	 * default url relative root set with __construct()
+	 * @var string
+	 */
+    public $base_uri;
     
-    public $request_uri;                //$_SERVER['REQUEST_URI'] without base_uri.
+    /**
+     * $_SERVER['REQUEST_URI'] without base_uri.
+     * @var string
+     */
+    public $request_uri;
     
-    public $request;                    //original unparsed request array
+    /**
+     * Original unparsed request array
+     * @var array
+     */
+    public $request;
     
-    public $controller;                 //controller name
+    /**
+     * Controller name
+     * @var string
+     */
+    public $controller;
     
-    public $action;                     //requested action
-    
-    public $params = array();           //action param(s) array
-    
-    public $params_assoc = array();     //actions param(s) associative array
-    
-   
+    /**
+     * Requested action
+     * @var string
+     */
+    public $action;
+
+    /**
+     * action param(s) array
+     * @var array
+     */
+    public $params = array();
+
+    /**
+     * Actions param(s) associative array
+     * @var array
+     */
+    public $params_assoc = array();
+
+
     /**
      * Set base url of your application index.php
      * 
