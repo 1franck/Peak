@@ -19,6 +19,14 @@ abstract class Peak_View_Render
     protected $_cache_strip = false;   //will strip all repeating space caracters
     
     /**
+     * Set cache folder
+     */
+    public function __construct()
+    {
+    	$this->_cache_path = Peak_Core::getPath('theme_cache');
+    }
+    
+    /**
      * Point to Peak_View __get method
      *
      * @param  string $name represent view var name
@@ -86,7 +94,8 @@ abstract class Peak_View_Render
         if(is_integer($time)) {
             $this->_use_cache = true;
             $this->_cache_expire = $time;
-            $this->_cache_path = Peak_Core::getPath('theme_cache');
+            //$this->_cache_path = Peak_Core::getPath('theme_cache'); //called in __construct now
+            
         }
     }
     
@@ -163,13 +172,14 @@ abstract class Peak_View_Render
      * @param string $path
      * @param string $file
      */
-    protected function genCacheId($path = null,$file = null)
+    protected function genCacheId($path = null,$file = null, $return = false)
     {
         //use current $this->_script_file and _script_path if no path/file scpecified
         if(!isset($path))  $key = $this->_scripts_path.$this->_scripts_file;
         else $key = $this->_cache_id = $path.$file;
 
-        $this->_cache_id = hash('md5', $key);
+        if(!$return) $this->_cache_id = hash('md5', $key);
+        else return hash('md5', $key);
     }
     
     /**
@@ -205,7 +215,7 @@ abstract class Peak_View_Render
         $this->enableCache($expiration);
         if($this->isCached($id)) return true;
         else {
-            ob_start();
+        	ob_start();
             return false;
         }
     }
@@ -225,6 +235,20 @@ abstract class Peak_View_Render
     protected function getCacheBlock()
     {
         include($this->getCacheFile());
+    }
+    
+    /**
+     * Delete current cache file or custom cache file id
+     *
+     * @param string $id
+     */
+    public function deleteCache($id = null)
+    {
+    	if(!isset($id)) $this->genCacheId();
+    	else $this->genCacheId('', $id);
+    	
+    	$file = $this->getCacheFile();
+    	if(file_exists($file)) unlink($file);
     }
         
 }

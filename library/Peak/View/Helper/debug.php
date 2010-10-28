@@ -9,7 +9,11 @@
 class View_Helper_Debug
 {   
 	
-            
+    /**
+     * Print view and session vars + list of loaded php files * Resursive
+     *
+     * @param array $array
+     */
     public function display($array = null)
     {
         if(!isset($array)) {
@@ -47,6 +51,9 @@ class View_Helper_Debug
         
     }
     
+    /**
+     * Print registry object list
+     */
     public function registry()
     {
     	$object_list = Peak_Registry::getObjectList();
@@ -57,5 +64,40 @@ class View_Helper_Debug
     	}
     	echo '</pre>';
     }
+    
+    /**
+     * Get current controller content
+     *
+     * @return string/false
+     */
+    public function getControllerSource()
+	{
+		$app = Peak_Registry::o()->app;
+		$cfile_name = $app->front->controller->name;
+		$cfile = Peak_Core::getPath('controllers').'/'.$cfile_name.'.php';
+		if(file_exists($cfile)) {
+			$cfile_content = file_get_contents($cfile);
+			return $cfile_content;
+		}
+		else return false;
+	}
+	
+	/**
+	 * Get current script view content
+	 *
+	 * @return string/false
+	 */
+	public function getScriptSource()
+	{
+		$app = Peak_Registry::o()->app;
+		$sfile_name = $app->front->controller->file;
+		$sfile = $app->front->controller->path.'/'.$sfile_name;
+		
+		if(file_exists($sfile)) {
+			$sfile_content = file_get_contents($sfile);
+			return $sfile_content;
+		}
+		else return false;
+	}
     
 }

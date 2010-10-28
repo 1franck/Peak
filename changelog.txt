@@ -1,5 +1,9 @@
 #VERSION 0.7.99#
 
+*  Peak_View_Render > added methods deleteCache()
+
+*  View_Helper_Debug > added methods getControllerSource() and getScriptSource()
+
 *  Peak_Controller_Action > remove deprecated method view()
 
 *  Peak_Zreflection > added, fixed and tweaked some methods. 
