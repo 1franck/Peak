@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak_View_Render Engine base
  * 
@@ -9,23 +8,11 @@
 abstract class Peak_View_Render
 {
     
-    protected $_scripts_file;          //controller action script view path used 
-    protected $_scripts_path;          //controller action script view file name used
-    
-    protected $_use_cache = false;     //use scripts view cache, false by default
-    protected $_cache_expire;          //script cache expiration time
-    protected $_cache_path;            //scripts view cache path. generate by enableCache()
-    protected $_cache_id;              //current script view md5 key. generate by preOutput() 
-    protected $_cache_strip = false;   //will strip all repeating space caracters
-    
-    /**
-     * Set cache folder
-     */
-    public function __construct()
-    {
-    	$this->_cache_path = Peak_Core::getPath('theme_cache');
-    }
-    
+    public $_scripts_file;          //controller action script view path used 
+    public $_scripts_path;          //controller action script view file name used
+       
+    protected $_cache;              //view cache object
+           
     /**
      * Point to Peak_View __get method
      *
@@ -82,54 +69,29 @@ abstract class Peak_View_Render
     	else return $url;
     }
     
-    
     /**
-     * Enable output caching. 
-     * Avoid using in controllers actions that depends on $_GET, $_POST or any dynamic value for setting the view
-     *
-     * @param integer $time set cache expiration time(in seconds)
-     */
-    public function enableCache($time)
-    {
-        if(is_integer($time)) {
-            $this->_use_cache = true;
-            $this->_cache_expire = $time;
-            //$this->_cache_path = Peak_Core::getPath('theme_cache'); //called in __construct now
-            
-        }
-    }
-    
-    /**
-     * Desactivate output cache
-     */
-    public function disableCache()
-    {
-        $this->_use_cache = false;
-    }
-    
-    /**
-     * Call child output method and cache it if $_use_cache is true;
+     * Call child output method and cache it if cache activated;
      * Can be overloaded by engines to customize how the cache data
      *
      * @param misc $data
      */
     protected function preOutput($data)
     {
-        if(!$this->_use_cache) $this->output($data);
+        if(!$this->isCacheActivated()) $this->output($data);
         else {         
             //generate script view cache id
-            $this->genCacheId();
+            $this->cache()->genCacheId();
             
             //use cache instead outputing and evaluating view script
-            if($this->isCached()) include($this->getCacheFile());
+            if($this->cache()->isCached()) include($this->cache()->getCacheFile());
             else {
                 //cache and output current view script
                 ob_start();
                 $this->output($data);
                 //if(is_writable($cache_file)) { //fail if file cache doesn't already 
                     $content = ob_get_contents();
-                    if($this->_cache_strip) $content = preg_replace('!\s+!', ' ', $content);
-                    file_put_contents($this->getCacheFile(), $content);
+                    //if($this->_cache_strip) $content = preg_replace('!\s+!', ' ', $content);
+                    file_put_contents($this->cache()->getCacheFile(), $content);
                 //}
                 ob_get_flush();
             }           
@@ -137,118 +99,78 @@ abstract class Peak_View_Render
     }
     
     /**
-     * Check if current view script file is cached/expired
-     * Note: if $this->_cache_id is not set, this will generate a new id from $id params if set or from the current controller file - path
+     * Access to cache object
+     *
+     * @return object Peak_View_Cache
+     */
+    public function cache()
+    {
+    	if(!is_object($this->_cache)) $this->_cache = new Peak_View_Cache();
+    	return $this->_cache;
+    }
+    
+    /**
+     * Check if cache object is loaded and cache enable
      *
      * @return bool
+     */
+    public function isCacheActivated()
+    {
+    	if(!is_object($this->_cache)) return false;
+    	else return $this->cache()->isEnabled();
+    }
+    
+    /**
+     * Shorcut of $this->cache()->enable()
+     *
+     * @see Peak_View_Cache::enable()
+     */
+    public function enableCache($time)
+    {
+    	$this->cache()->enable($time);
+    }
+    
+    /**
+     * Shorcut of $this->cache()->disable()
+     */
+    public function disableCache()
+    {
+    	$this->cache()->disable();	
+    }
+    
+    /**
+     * Shorcut of $this->cache()->isCached()
+     *
+     * @see Peak_View_Cache::isCached()
      */
     public function isCached($id = null)
     {
-        if(!$this->_use_cache) return false;   
-        
-        //when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
-        if(!isset($this->_cache_id)) {
-            if(!isset($id)) {
-                $this->genCacheId(Peak_Registry::o()->app->front->controller->path, Peak_Registry::o()->app->front->controller->file);
-            }
-            else $this->genCacheId('', $id);
-        }
-        
-        $filepath = $this->getCacheFile();
-            
-        if(file_exists($this->getCacheFile())) {
-            $file_date = filemtime($this->getCacheFile());
-            $now = time();
-            $delay = $now - $file_date;
-            return ($delay >= $this->_cache_expire) ? false : true;
-        }
-        else return false;
+    	return $this->cache()->isCached($id);
     }
-    
-    /**
-     * Generate md5 cache id from script view filename and path by default
-     * Set a $path and $file to generate a new custom id.
-     *
-     * @param string $path
-     * @param string $file
-     */
-    protected function genCacheId($path = null,$file = null, $return = false)
-    {
-        //use current $this->_script_file and _script_path if no path/file scpecified
-        if(!isset($path))  $key = $this->_scripts_path.$this->_scripts_file;
-        else $key = $this->_cache_id = $path.$file;
 
-        if(!$return) $this->_cache_id = hash('md5', $key);
-        else return hash('md5', $key);
-    }
-    
     /**
-     * Get current cached view script complete filepath
+     * Shorcut of $this->cache()->isCachedBlock()
      *
-     * @return string
+     * @see Peak_View_Cache::isCachedBlock()
      */
-    protected function getCacheFile()
+    public function isCachedBlock($id, $expiration)
     {
-        return $this->_cache_path.'/'.$this->_cache_id.'.php';
+    	return $this->cache()->isCachedBlock($id, $expiration);
     }
-    
+
     /**
-     * Enable/disable cache compression
-     *
-     * @param bool $status
+     * Shorcut of $this->cache()->cacheBlockEnd()
      */
-    public function enableCacheStrip($status)
+    public function cacheBlockEnd()
     {
-    	if(is_bool($status)) $this->_cache_strip = $status;
+    	$this->cache()->cacheBlockEnd();
     }
-    
+
     /**
-     * Allow caching block inside views
-     * Check if a custom cache block is expired
-     *
-     * @param  string $id
-     * @param  integer $expiration
-     * @return bool
+     * Shorcut of $this->cache()->getCacheBlock()
      */
-    protected function isCachedBlock($id, $expiration)
+    public function getCacheBlock()
     {
-        $this->enableCache($expiration);
-        if($this->isCached($id)) return true;
-        else {
-        	ob_start();
-            return false;
-        }
-    }
-    
-    /**
-     * Close buffer of a cache block previously started by isCachedBlock()
-     */
-    protected function cacheBlockEnd()
-    {
-        file_put_contents($this->getCacheFile(), preg_replace('!\s+!', ' ', ob_get_contents()));
-        ob_get_flush();
-    }
-    
-    /**
-     * Get a custom cache block
-     */
-    protected function getCacheBlock()
-    {
-        include($this->getCacheFile());
-    }
-    
-    /**
-     * Delete current cache file or custom cache file id
-     *
-     * @param string $id
-     */
-    public function deleteCache($id = null)
-    {
-    	if(!isset($id)) $this->genCacheId();
-    	else $this->genCacheId('', $id);
-    	
-    	$file = $this->getCacheFile();
-    	if(file_exists($file)) unlink($file);
-    }
-        
+    	$this->cache()->getCacheBlock();
+    }      
 }
