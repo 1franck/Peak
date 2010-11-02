@@ -73,7 +73,7 @@ class Peak_View_Render_Partials extends Peak_View_Render
         $this->_scripts_path = $path;
         
         if(!isset($path)) {
-        	$this->_scripts_path = Peak_Core::getPath('theme_partials');
+        	$this->scripts_path = Peak_Core::getPath('theme_partials');
         	$path = Peak_Core::getPath('theme_partials');
         	$no_cache = true;
         }

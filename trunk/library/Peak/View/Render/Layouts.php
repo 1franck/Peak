@@ -68,8 +68,8 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         //LAYOUT FILES VIEW IF EXISTS
         if(isset($this->_layout_file)) {
             $filepath = Peak_Core::getPath('theme_layouts').'/'.$this->_layout_file;
-            $this->_scripts_file = $file;
-            $this->_scripts_path = $path;
+            $this->scripts_file = $file;
+            $this->scripts_path = $path;
         }
 
         if(isset($no_cache)) $this->output($filepath);
@@ -103,7 +103,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function layoutContent()
     {
-        include($this->_scripts_path.'/'.$this->_scripts_file);
+        include($this->scripts_path.'/'.$this->scripts_file);
     }
         
 }

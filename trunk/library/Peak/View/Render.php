@@ -8,8 +8,8 @@
 abstract class Peak_View_Render
 {
     
-    public $_scripts_file;          //controller action script view path used 
-    public $_scripts_path;          //controller action script view file name used
+    public $scripts_file;          //controller action script view path used 
+    public $scripts_path;          //controller action script view file name used
        
     protected $_cache;              //view cache object
            
