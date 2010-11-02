@@ -58,8 +58,8 @@ class Peak_View_Render_Virtual extends Peak_View_Render
     public function render($file,$path)
     {       
         //CONTROLLER FILE VIEW       
-        $this->_scripts_file = $file;
-        $this->_scripts_path = $path;
+        $this->scripts_file = $file;
+        $this->scripts_path = $path;
 
         $output = '';
         foreach($this->_virtual as $group => $content) $output .= $content;

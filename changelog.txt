@@ -1,5 +1,7 @@
 #VERSION 0.7.99#
 
+*  Peak_View_Render > properties $_script_file and $_Script_path renamed and visibility passed to public
+
 *  added class Peak_View_Cache > all cache logic inside Peak_View_Render have been moved there. There is no change
                                  in how we use view cache but it lightweight Peak_View_Render 
                                  when we do not use cache functionnality

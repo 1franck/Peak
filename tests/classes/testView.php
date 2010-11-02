@@ -31,7 +31,7 @@ class TestOfView extends UnitTestCase
     	$engine = $this->view->engine();
     	$this->assertTrue(is_array($vars),'$vars is not a valid array');
     	$this->assertTrue(empty($vars),'$vars is not empty');
-    	$this->assertTrue(is_string($engine),'engine should be not set');
+    	$this->assertTrue(is_null($engine),'engine should be null at this stage');
     }
     
     function testOfViewVars()
