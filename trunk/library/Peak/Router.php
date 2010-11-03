@@ -3,14 +3,16 @@
 /**
  * Simple router URL php rewriting.
  * 
- * @desc     Support url like :  http://example.com/[application php file]?[controller]=[action]&[param1]=[param2]&[...]
- *                               http://example.com/index.php?server=php&view=ver  
- *                               AND
- *                               http://example.com/[controller]/[action]/[param1]/[param2]/[...]
- *                               http://example.com/server/php/view/ver 
+ * @desc     Support regular expression and url like : 
+ *            http://example.com/[application php file]?[controller]=[action]&[param1]=[param2]&[...]
+ *            http://example.com/index.php?server=php&view=ver  
+ *            AND
+ *            http://example.com/[controller]/[action]/[param1]/[param2]/[...]
+ *            http://example.com/server/php/view/version
+ *           
+ * 
  * @author   Francois Lajoie
- * @version  $Id$ 
- * @todo     filter variables      
+ * @version  $Id$     
  */
 class Peak_Router
 {
@@ -57,13 +59,19 @@ class Peak_Router
      */
     public $params_assoc = array();
 
+    /**
+	 * Regex route
+	 * @var array
+	 */
+	protected $_regex = array();
+
 
     /**
      * Set base url of your application index.php
      * 
      * @example your application script page url is http://example.com/myapp/index.php
      *          so $base_uri would be : '/myapp/'
-     * @param   string $base_uri - We recommened that you use constant 'ROOT' when instantiate this object
+     * @param   string $base_uri - Its recommeneded that you use constant 'ROOT' when instantiate this object
      */
     public function __construct($base_uri)
     {
@@ -115,7 +123,11 @@ class Peak_Router
 	    		}
 	    	}
 	    }
+	    //if its rewrited url
 	    else {
+	    	//check for regex
+	    	if($this->matchRegex()) return;
+	    	
 	    	$this->request = explode('/',$this->request_uri);
 	    	foreach($this->request as $key => $value) {
 	    		if (strlen($value) == 0) unset($this->request[$key]);
@@ -125,7 +137,9 @@ class Peak_Router
 	    $this->resolveRequest();
 	}
 	
-	
+	/**
+	 * Resolve $request
+	 */
 	protected function resolveRequest()
 	{
 	    // extract data from request
@@ -138,11 +152,7 @@ class Peak_Router
 	        $this->action = array_shift($request);
 	        $this->action = (empty($this->action)) ? '_index' : '_'.$this->action;
 	        $this->params = $request;
-	        $i = 0;
-	        foreach($this->params as $k => $v) {
-	        	if($i == 0) { $key = $v; ++$i; }
-	        	else { $this->params_assoc[$key] = $v; $i = 0; }
-	        }
+	        $this->paramsToAssoc();
 	    }
 	}
 	
@@ -167,5 +177,63 @@ class Peak_Router
 	{
 	    $this->request = $request;
 	    $this->resolveRequest();
+	}
+	
+	/**
+	 * Transform params array to params associate array
+	 * To work, we need a pair number of params to transform it to key/val array
+	 */
+	protected function paramsToAssoc()
+	{
+		$i = 0;
+		foreach($this->params as $k => $v) {
+			if($i == 0) { $key = $v; ++$i; }
+			else { $this->params_assoc[$key] = $v; $i = 0; }
+		}
+	}
+	
+	/**
+	 * Add a regex route
+	 *
+	 * @param string $regex
+	 * @param array  $route
+	 */
+	public function addRegex($regex, $route)
+	{
+		$this->_regex[$regex] = $route;
+	}
+	
+	
+	/**
+	 * Try to match request uri to a regex
+	 *
+	 * @return bool
+	 */
+	public function matchRegex()
+	{
+		//we got regex
+		if(!empty($this->_regex)) {
+			
+			//check all regex for a match. First in, first out here
+			foreach($this->_regex as $regex => $route) {
+
+				$result = preg_match('#'.$regex.'#', $this->request_uri, $matches);
+
+				//we got a positive preg_match
+				if($result) {
+					//if url match a regexp but end with additionnal data, the url should be not valid otherwise 
+					//we will have url that can end with anything and still be valid to the application and google witch is bad
+					if($this->request_uri === $matches[0]) {
+						$this->controller = $route['controller'];
+						$this->action = $route['action'];
+						$this->params = array_slice($matches,1);
+						$this->paramsToAssoc();
+						return true;
+						break;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

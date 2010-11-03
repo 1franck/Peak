@@ -2,10 +2,24 @@
 
 $file_to_test = realpath('./../../library/Peak/Router.php');
 include($file_to_test);
+include(realpath('./../../library/Peak/Exception.php'));
 echo 'Tested file: '.$file_to_test.'<br />';
 
 class TestOfRouter extends UnitTestCase
 {
+    
+	    
+    function print_router()
+    {
+    	 echo '<br />Base uri: '.$this->router->base_uri.'<br />
+               Request uri: '.$this->router->request_uri.'<br />
+               Original Request: '.print_r($this->router->request,true).'<br /><br />
+               Controller: '.$this->router->controller.'<br />
+               Action: '.$this->router->action.'<br />
+               Params: '.print_r($this->router->params,true).'<br />
+               Params assoc: '.print_r($this->router->params_assoc,true).'<hr />';
+    }
+    
     
     function testOfInitRouter()
     {
@@ -13,21 +27,15 @@ class TestOfRouter extends UnitTestCase
     	global $curpath;
     	$server = $_SERVER['DOCUMENT_ROOT'];
     	$path = str_replace(SVR_URL,'',$curpath);
-        $router = new Peak_Router('/peakframework/tests/router');       
+        $this->router = new Peak_Router('/peakframework/tests/router');       
         
-        $this->assertTrue(is_a($router,'Peak_Router') ,'$router is not an object of router class');
+        $this->assertTrue(is_a($this->router,'Peak_Router') ,'$router is not an object of router class');
         
-        $router->getRequestURI();
+        $this->router->getRequestURI();
         
-        $this->assertTrue(isset($router->request_uri),'getRequestUri() fail to set $this->request_uri');
+        $this->assertTrue(isset($this->router->request_uri),'getRequestUri() fail to set $this->request_uri');
         
-        echo 'Base uri: '.$router->base_uri.'<br />
-              Request uri: '.$router->request_uri.'<br />
-              Original Request: '.print_r($router->request,true).'<br /><br />
-              Controller: '.$router->controller.'<br />
-              Action: '.$router->action.'<br />
-              Params: '.print_r($router->params,true).'<br />
-              Params assoc: '.print_r($router->params_assoc,true).'<br />';
+       
         
         //print_r($router->request);
         
@@ -42,9 +50,22 @@ class TestOfRouter extends UnitTestCase
         echo $router->getController();*/
         
      
-        
+        $this->print_router();
         
     }
+    
+    function testOfRegexRoute()
+    {    	
+    	$this->router->addRegex('teams/(\w+)/(\d+)', array('controller' => 'myteam', 'action' => '_index'));
+    	
+    	$this->router->addRegex('news/(\d+)', array('controller' => 'news', 'action' => '_index'));
+    	
+    	$this->router->getRequestURI();
+    	                
+    	echo 'after REGEX if apply<br >';   
+        $this->print_router();    
+    }
+
     
     
 
