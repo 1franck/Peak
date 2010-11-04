@@ -221,8 +221,8 @@ class Peak_Router
 
 				//we got a positive preg_match
 				if($result) {
-					//if url match a regexp but end with additionnal data, the url should be not valid otherwise 
-					//we will have url that can end with anything and still be valid to the application and google witch is bad
+					//if url match a regexp but end up with additionnal data, the url should be not valid otherwise 
+					//we will have url that can ends with anything and still be valid for the application and google, wich its bad
 					if($this->request_uri === $matches[0]) {
 						$this->controller = $route['controller'];
 						$this->action = $route['action'];
