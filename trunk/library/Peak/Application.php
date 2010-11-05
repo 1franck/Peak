@@ -65,11 +65,11 @@ class Peak_Application
      * Load front controller and start dispatching
      * @see Peak_Controller_Front::dispatch() for param
      */
-    public function run($default_ctrl = 'index', $flush_request = false)
+    public function run($default_ctrl = 'index')
     {	    	
     	$this->front->preDispatch();
     	
-    	$this->front->dispatch($default_ctrl, $flush_request);   	
+    	$this->front->dispatch($default_ctrl);   	
     }
 
     /**

@@ -75,13 +75,13 @@ abstract class Peak_Application_Modules
      *
      * @param string $default_ctrl
      */
-    public function run($default_ctrl = 'index', $flush_request = false)
+    public function run($default_ctrl = 'index')
     {      	
         //add module name to the end Peak_Router $base_uri
         Peak_Registry::o()->router->base_uri = Peak_Registry::o()->router->base_uri.$this->_module_name;   
 
         //re-call Peak_Application run() for handling the new routing
-        Peak_Registry::o()->app->run($default_ctrl, $flush_request);
+        Peak_Registry::o()->app->run($default_ctrl);
     }
 
         

@@ -1,4 +1,10 @@
-#VERSION 0.7.99#
+
+#VERSION 0.8.0#
+
+ - Peak_Exception > added constant ERR_CTRL_ACTION_NOT_FOUND. Fixed Peak_Controller_Action:handleAction().
+                    This fix url problem with valid controller and unknow action.
+                    
+ - Peak_Controller_Front > Added method forceDispatch() and remove param $flush_request of method dispatch()
 
  - Peak_Router > added property $_regex, methods public addRegex() and protected matchRegex(). 
                  Tweaked getRequestUri() to support matchRegex().
@@ -11,6 +17,9 @@
                                  when we do not use cache functionnality
 
  - Peak_View_Render > added methods deleteCache()
+
+
+#VERSION 0.7.99#
 
  - View_Helper_Debug > added methods getControllerSource() and getScriptSource()
 

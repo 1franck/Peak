@@ -29,6 +29,7 @@ class Peak_Exception extends Exception
 	//const ERR_CORE_NO_CTRL_FOUND            = 'Core: application controllers not found.'; //@deprecated
 	const ERR_CORE_EXTENSION_NOT_FOUND      = 'Core: extension %1$s not found.';
 	//const ERR_HELPER_NOT_FOUND              = 'Helper: file %1$s not found.';  //@deprecated
+	const ERR_CTRL_ACTION_NOT_FOUND         = 'Controller: action \'%1$s\' not found in %2$s';
 	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found.';
 	const ERR_CTRL_HELPER_NOT_FOUND         = 'Controller: helper \'%1$s\' not found.';
 	const ERR_VIEW_ENGINE_NOT_SET           = 'View rendering engine not set. Use setRenderEngine() from Peak_View before trying to render application controller.';
@@ -69,7 +70,7 @@ class Peak_Exception extends Exception
 	    else $r = self::ERR_DEFAULT;
 	    
 	    if(isset($infos)) {
-	        if(is_array($infos)) $r = vsprintf($r,trim($infos));
+	        if(is_array($infos)) $r = vsprintf($r,$infos);
 	        else $r = sprintf($r,trim($infos));	        
 	    }
 
