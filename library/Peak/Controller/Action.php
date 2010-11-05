@@ -145,12 +145,11 @@ abstract class Peak_Controller_Action
         $this->preAction();
         
         $action = Peak_Registry::o()->router->action;
+        if(empty($action)) $action = $action_by_default;
         
-        if((isset($action)) && ($this->isAction($action))) $this->action = $action;
-        elseif((isset($action_by_default)) && ($this->isAction($action_by_default)))
-        {
-            $action = $action_by_default;
-            $this->action = $action_by_default;
+        if(($this->isAction($action))) $this->action = $action;
+        elseif(($action !== $action_by_default) && (!($this->isAction($action)))) {
+        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->name));
         }
         else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 

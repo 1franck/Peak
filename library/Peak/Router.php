@@ -150,7 +150,8 @@ class Peak_Router
 	        
 	        $this->controller = array_shift($request);
 	        $this->action = array_shift($request);
-	        $this->action = (empty($this->action)) ? '_index' : '_'.$this->action;
+	        //echo $this->action;
+	        $this->action = (empty($this->action)) ? '' : '_'.$this->action;
 	        $this->params = $request;
 	        $this->paramsToAssoc();
 	    }

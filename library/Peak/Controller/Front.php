@@ -33,24 +33,18 @@ class Peak_Controller_Front
 	 * Start dispatching to controller with the help of router
 	 * 
 	 * @param string $default_ctrl Controller called by default when no request
-     * @param bool   $flush_request Flush all router request and try to execute controller $default_ctrl
 	 */
-	public function dispatch($default_ctrl = null, $flush_request = false)
+	public function dispatch($default_ctrl = null)
 	{
 		$router = Peak_Registry::o()->router;       
         $core   = Peak_Registry::o()->core;
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
-        
-        //this need to be better to avoid 2 block of try/catch in index.php
-        if($flush_request) { //$router->reset();
-        	unset($router->controller);
-        }
-                
+                        
         if(isset($router->controller))
         {
         	$ctrl_name = $router->controller.'Controller';
-
+     
         	//check if controller is not found in current core controllers
         	if(!$core->isController($ctrl_name))
         	{
@@ -77,8 +71,22 @@ class Peak_Controller_Front
         // execute controller action
         elseif(method_exists($this->controller,'handleAction')) {
         	$this->controller->handleAction();
-        	$this->postDispatch();        
+        	$this->postDispatch();  
         }       
+	}
+	
+	/**
+	 * Force dispatching to a specific controller/action
+	 *
+	 * @param string $ctrl
+	 * @param string $action
+	 */
+	public function forceDispatch($controller, $action = '_index')
+	{
+		$router = Peak_Registry::o()->router;
+		$router->controller = $controller;
+		$router->action = $action;
+		$this->dispatch();
 	}
 
     /**
