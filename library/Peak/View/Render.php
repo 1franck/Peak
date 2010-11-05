@@ -79,8 +79,6 @@ abstract class Peak_View_Render
     {
         if(!$this->isCacheActivated()) $this->output($data);
         else {         
-            //generate script view cache id
-            $this->cache()->genCacheId();
             
             //use cache instead outputing and evaluating view script
             if($this->cache()->isCached()) include($this->cache()->getCacheFile());

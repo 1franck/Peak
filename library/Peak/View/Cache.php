@@ -12,7 +12,7 @@ class Peak_View_Cache
 	protected $_use_cache = false;     //use scripts view cache, false by default
 	protected $_cache_expire;          //script cache expiration time
 	protected $_cache_path;            //scripts view cache path. generate by enableCache()
-	protected $_cache_id;              //current script view md5 key. generate by preOutput()
+	public $_cache_id;              //current script view md5 key. generate by preOutput()
 	protected $_cache_strip = false;   //will strip all repeating space caracters
 
 
@@ -85,15 +85,13 @@ class Peak_View_Cache
      */
 	public function isCached($id = null)
 	{
-		if(!$this->_use_cache) return false;
+		if($this->_use_cache === false) return false;
 
 		//when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
-		if(!isset($this->_cache_id)) {
-			if(!isset($id)) {
-				$this->genCacheId(Peak_Registry::o()->app->front->controller->path, Peak_Registry::o()->app->front->controller->file);
-			}
-			else $this->genCacheId('', $id);
+		if(!isset($id)) {
+			$this->genCacheId(Peak_Registry::o()->app->front->controller->name, Peak_Registry::o()->app->front->controller->action);
 		}
+		else $this->genCacheId('', $id);
 
 		$filepath = $this->getCacheFile();
 
@@ -116,8 +114,8 @@ class Peak_View_Cache
 	public function genCacheId($path = null,$file = null, $return = false)
 	{
 		//use current $this->_script_file and _script_path if no path/file scpecified
-		if(!isset($path))  $key = $this->getScriptPath().$this->getScriptFile();
-		else $key = $this->_cache_id = $path.$file;
+		if(!isset($path)) $key = $this->getScriptPath().$this->getScriptFile();
+		else $key = $path.$file;
 
 		if(!$return) $this->_cache_id = hash('md5', $key);
 		else return hash('md5', $key);
