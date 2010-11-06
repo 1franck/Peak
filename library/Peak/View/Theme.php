@@ -46,6 +46,10 @@ class Peak_View_Theme
     		$config->theme_cache_path    = $config->theme_path.'/cache';
 
     	}
+    	elseif(!file_exists($config->views_path.'/themes/'.$name)) { 
+    		//temporary fix
+    		die('theme "'.$name.'" folder don\'t exists');
+    	}
     	else {
 
     		$config->views_themes_path   = $config->views_path.'/themes';
