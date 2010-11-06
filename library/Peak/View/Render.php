@@ -78,8 +78,7 @@ abstract class Peak_View_Render
     protected function preOutput($data)
     {
         if(!$this->isCacheActivated()) $this->output($data);
-        else {         
-            
+        else {            
             //use cache instead outputing and evaluating view script
             if($this->cache()->isCached()) include($this->cache()->getCacheFile());
             else {

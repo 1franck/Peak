@@ -12,7 +12,7 @@ class Peak_View_Cache
 	protected $_use_cache = false;     //use scripts view cache, false by default
 	protected $_cache_expire;          //script cache expiration time
 	protected $_cache_path;            //scripts view cache path. generate by enableCache()
-	public $_cache_id;              //current script view md5 key. generate by preOutput()
+	protected $_cache_id;              //current script view md5 key. generate by preOutput()
 	protected $_cache_strip = false;   //will strip all repeating space caracters
 
 
