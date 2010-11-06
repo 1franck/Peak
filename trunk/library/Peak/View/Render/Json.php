@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak View Render Engine: Json
  * 
@@ -14,8 +13,8 @@ class Peak_View_Render_Json extends Peak_View_Render
     /**
      * Render view(s)
      *
-     * @param string $file
-     * @param string $path
+     * @param  string $file
+     * @param  string $path
      * @return array/string
      */
     public function render($file,$path)
@@ -36,7 +35,7 @@ class Peak_View_Render_Json extends Peak_View_Render
      *
      * @param string $json
      */
-    private function output($json)
+    protected function output($json)
     {
         echo $json;    
     }

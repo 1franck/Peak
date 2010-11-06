@@ -11,7 +11,7 @@ abstract class Peak_View_Render
     public $scripts_file;          //controller action script view path used 
     public $scripts_path;          //controller action script view file name used
        
-    protected $_cache;              //view cache object
+    protected $_cache;             //view cache object
            
     /**
      * Point to Peak_View __get method

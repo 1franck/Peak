@@ -1,5 +1,7 @@
 #VERSION 0.8.0#
 
+ - fixed method output() visibility in Peak_View_Render_Json
+
  - fixed minor bug with views cache in Peak_View_Render::preOutput() and Peak_View_Cache::isCached()
 
  - Peak_Exception > added constant ERR_CTRL_ACTION_NOT_FOUND. Fixed Peak_Controller_Action:handleAction().
