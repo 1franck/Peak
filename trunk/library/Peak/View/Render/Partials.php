@@ -81,8 +81,8 @@ class Peak_View_Render_Partials extends Peak_View_Render
         $filepath = $path.'/'.$file;
 
         if(!file_exists($filepath)) {
-            $filepath = str_replace(SVR_ABSPATH,'',$filepath);
-            throw new Peak_Exception('ERR_VIEW_TPL_NOT_FOUND', $filepath); //echo $filepath.' view not found'; //           
+            $filepath = Peak_Registry::o()->app->front->controller->title .'/'. basename($filepath);
+            throw new Peak_Exception('ERR_VIEW_SCRIPT_NOT_FOUND', $filepath);        
         }
         
         //Partials group FILES VIEW IF EXISTS
