@@ -1,5 +1,11 @@
 #VERSION 0.8.0#
 
+ - Peak_Exception > deprecated method getDebugtrace()
+
+ - Peak_Exception > removed property $_trace. never used and we can achieved the same effect with parent class methods
+
+ - Peak_Core > added set_exception_handler('pkexception') to handle all uncaught exceptions (try/catch block missing)
+
  - fixed method output() visibility in Peak_View_Render_Json
 
  - fixed minor bug with views cache in Peak_View_Render::preOutput() and Peak_View_Cache::isCached()
