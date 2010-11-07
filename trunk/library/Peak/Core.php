@@ -11,6 +11,9 @@ define('_VERSION_','0.8.0');
 define('_NAME_','PEAK');
 define('_DESCR_','Php wEb Application Kernel');
 
+//handle all uncaught exceptions (try/catch block missing)
+set_exception_handler('pkexception');
+
 class Peak_Core
 {
       
@@ -251,4 +254,7 @@ function _cleans($strs,$keys_to_clean = null, $remove_keys = null) {
     if(is_array($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
     else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }
     return $strs;
+}
+function pkexception($e) {
+	die('<b>Uncaught Exception</b>: '. $e->getMessage());
 }
