@@ -1,5 +1,11 @@
 #VERSION 0.8.0#
 
+ - fixed Peak_View_Theme to throw new exception ERR_VIEW_THEME_NOT_FOUND when loading a theme folder that doesn't exists.
+
+ - fixed rendering engines to throw exception with only filename instead of absolute path.
+
+ - Peak_Exception > renamed ERR_VIEW_TPL_NOT_FOUND to ERR_VIEW_SCRIPT_NOT_FOUND and updated rendering engines.
+                    
  - Peak_Exception > deprecated method getDebugtrace()
 
  - Peak_Exception > removed property $_trace. never used and we can achieved the same effect with parent class methods

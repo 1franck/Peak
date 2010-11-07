@@ -47,8 +47,7 @@ class Peak_View_Theme
 
     	}
     	elseif(!file_exists($config->views_path.'/themes/'.$name)) { 
-    		//temporary fix
-    		die('theme "'.$name.'" folder don\'t exists');
+    		throw new Peak_Exception('ERR_VIEW_THEME_NOT_FOUND', $name);
     	}
     	else {
 
