@@ -19,11 +19,11 @@ class Peak_Exception extends Exception
 	 * Errors messages
 	 */
 	const ERR_APP_CTRL_NOT_FOUND            = 'Application: controller %1$s not found.';
-	const ERR_ROUTER_URI_NOT_FOUND          = 'Router: request uri not found.';
 	const ERR_CORE_EXTENSION_NOT_FOUND      = 'Core: extension %1$s not found.';
 	const ERR_CTRL_ACTION_NOT_FOUND         = 'Controller: action \'%1$s\' not found in %2$s.';
 	const ERR_CTRL_DEFAULT_ACTION_NOT_FOUND = 'Controller: no _index() method found.';
 	const ERR_CTRL_HELPER_NOT_FOUND         = 'Controller: helper \'%1$s\' not found.';
+	const ERR_ROUTER_URI_NOT_FOUND          = 'Router: request uri not found.';
 	const ERR_VIEW_ENGINE_NOT_SET           = 'View rendering engine not set. Use setRenderEngine() from Peak_View before trying to render application controller.';
 	const ERR_VIEW_HELPER_NOT_FOUND         = 'View: helper \'%1$s\' not found.';
 	const ERR_VIEW_SCRIPT_NOT_FOUND         = 'View: script file %1$s not found.';
