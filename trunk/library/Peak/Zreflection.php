@@ -28,8 +28,7 @@ class Peak_Zreflection
      */
     public function loadClass($class,$autoload = true)
     {
-        if(class_exists($class,$autoload))
-        {
+        if(class_exists($class,$autoload)) {
             $this->class = new Zend_Reflection_Class($class);
         }
     }
@@ -101,6 +100,28 @@ class Peak_Zreflection
         $declaration['interfaces'] = $interfaces;
 
         return $declaration;
+    }
+    
+    /**
+     * Get methods separated by inheritance
+     *
+     * @return array
+     */
+    public function getMethodsByInheritance()
+    {
+    	$result = array('child' => array(), 'parent' => array());
+    	
+    	$mets = $this->class->getMethods();
+    	if($mets) {
+    		foreach ($mets as $met) {
+    			if(strtolower($this->getMethodClassname($met->name)) !== strtolower($this->class->getName())) {
+    				$result['parent'][] = $met;
+    			}
+    			else $result['child'][] = $met;
+    		}
+    	}
+    	
+    	return $result;
     }
     
     /**
@@ -178,6 +199,28 @@ class Peak_Zreflection
 		catch(Exception $e) { $comment_tags = ''; }
 		
 		return $comment_tags;
+    }
+    
+    /**
+     * Get properties separated by inheritance
+     *
+     * @return array
+     */
+    public function getPropertiesByInheritance()
+    {
+    	$result = array('child' => array(), 'parent' => array());
+    	
+    	$props = $this->class->getProperties();
+    	if($props) {
+    		foreach ($props as $prop) {
+    			if(strtolower($this->getPropertyClassname($prop->name)) !== strtolower($this->class->getName())) {
+    				$result['parent'][] = $prop;
+    			}
+    			else $result['child'][] = $prop;
+    		}
+    	}
+    	
+    	return $result;
     }
     
     /**
