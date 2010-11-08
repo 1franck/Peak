@@ -1,5 +1,7 @@
 #VERSION 0.8.0#
 
+ - Peak_Zreflection > added methods getMethodsByInheritance() and getPropertiesByInheritance()
+
  - fixed Peak_View_Theme to throw new exception ERR_VIEW_THEME_NOT_FOUND when loading a theme folder that doesn't exists.
 
  - fixed rendering engines to throw exception with only filename instead of absolute path.
