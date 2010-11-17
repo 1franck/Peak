@@ -5,7 +5,6 @@
  * @author  Francois Lajoie
  * @version $Id$
  * @uses    IteratorAggregate, Countable
- *
  */
 class Peak_Config implements IteratorAggregate, Countable
 {

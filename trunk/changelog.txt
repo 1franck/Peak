@@ -4,9 +4,9 @@
 
  - visibility of $_vars from Peak_Config has been changed to protected to have the ability of extending the class
 
- - added constant ERR_CUSTOM to Peak_Exception
-
 #VERSION 0.8.0#
+
+ - added constant ERR_CUSTOM to Peak_Exception
 
  - autoload.php > remove deprecated function _autoloadAppMod()
 
