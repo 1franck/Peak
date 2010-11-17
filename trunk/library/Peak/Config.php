@@ -13,7 +13,7 @@ class Peak_Config implements IteratorAggregate, Countable
 	 * Contains all variables
 	 * @var array
 	 */
-	private $_vars = array();
+	protected $_vars = array();
 
 	/**
 	 * Set a new variable

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak SPL autoload
  * 
@@ -16,10 +15,10 @@ spl_autoload_extensions('.php');
 //register spl functions
 spl_autoload_register('_autoloadPeak');
 spl_autoload_register('_autoloadAppCtrl');
-spl_autoload_register('_autoloadAppMod');
+spl_autoload_register('_autoloadZendInternal');
 spl_autoload_register('_autoloadAppModules');
 spl_autoload_register('_autoloadAppCustom');
-spl_autoload_register('_autoloadZendInternal');
+
 if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
 
 function _autoloadPeak($cn)
@@ -60,13 +59,6 @@ function _autoloadAppCtrl($cn)
 	include($file);
 }
 
-function _autoloadAppMod($cn)
-{
-     $file = Peak_Core::getPath('modules') .'/'.$cn.'/'.$cn.'.php';     
-     if (!file_exists($file)) return false;
-     include($file);
-}
-
 function _autoloadAppModules($cn)
 {
 	$strtopath = str_replace('_','/',$cn).'.php';
@@ -91,4 +83,3 @@ function _autoloadAppCustom($cn)
     if(!file_exists($file)) return false;
     include($file);
 }
-

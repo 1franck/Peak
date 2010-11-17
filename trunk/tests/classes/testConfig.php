@@ -52,6 +52,18 @@ class TestOfConfig extends UnitTestCase
     	$this->assertTrue($iterator instanceof ArrayIterator ,'getIterator() must be an instance of ArrayIterator');
     	
     	$this->assertTrue((count($iterator) == 2),'count($iterator) should return 2');
+    	
+    	//try to loop directly without getIterator
+    	$i = 0;
+    	foreach($this->config as $k => $v) {
+    		++$i;
+    	}
+    	
+    	$this->assertTrue(($i == 2),'foreach $this->config should count 2 item');
+    	
+    	$this->config->test = 'test';
+    	$this->assertTrue((count($this->config) == 3),'count($this->config) should return 3');
+    	
     }
       
   
