@@ -24,7 +24,6 @@ class Peak_Config_Ini extends Peak_Config
 	{
 		if(!file_exists($filename)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.' has tried to load non-existent ini file');
 		else {
-			//$data = file_get_contents($filename);
 			$ini = parse_ini_file($filename, $process_sections);
 			return $this->_load($ini, $process_sections, $section_name);
 		}
@@ -83,7 +82,6 @@ class Peak_Config_Ini extends Peak_Config
 				// return the specified section contents if it exists
 				if (isset($this->_vars[$section_name])) return $this->_vars[$section_name];
 				else {
-					//throw new Exception('Section ' . $section_name . ' not found in the ini file');
 					throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': Section ' . $section_name . ' not found in the ini file');
 				}
 			}
