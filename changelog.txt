@@ -1,4 +1,14 @@
+#VESRION 0.8.1#
+
+ - added classes Peak_Config_Ini and Peak_Config_Json
+
+ - visibility of $_vars from Peak_Config has been changed to protected to have the ability of extending the class
+
+ - added constant ERR_CUSTOM to Peak_Exception
+
 #VERSION 0.8.0#
+
+ - autoload.php > remove deprecated function _autoloadAppMod()
 
  - Peak_Zreflection > added methods getMethodsByInheritance() and getPropertiesByInheritance()
 

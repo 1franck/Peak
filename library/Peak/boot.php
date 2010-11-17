@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Application boot preparations
  * Next file to include after your application configs.php 
@@ -15,9 +14,9 @@
 if(!defined('_VERSION_'))
 { 
     define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
-    define('ROOT_ABSPATH',SVR_ABSPATH.'/'.ROOT);
-    define('LIBRARY_ABSPATH',SVR_ABSPATH.'/'.LIBRARY_ROOT);
-    define('APPLICATION_ABSPATH',SVR_ABSPATH.'/'.APPLICATION_ROOT);
+    define('ROOT_ABSPATH', SVR_ABSPATH.'/'.ROOT);
+    define('LIBRARY_ABSPATH', SVR_ABSPATH.'/'.LIBRARY_ROOT);
+    define('APPLICATION_ABSPATH', SVR_ABSPATH.'/'.APPLICATION_ROOT);
     if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
     
     include LIBRARY_ABSPATH.'/Peak/Registry.php';
@@ -29,7 +28,7 @@ if(!defined('_VERSION_'))
 }
 
 //add LIBS_ABSPATH to include path
-set_include_path(implode(PATH_SEPARATOR, array(Peak_Core::getPath('libs'), get_include_path())));
+set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, Peak_Core::getPath('libs'), get_include_path())));
 
 //if ZEND_LIB_ABSPATH is specified, we add it to include path
 if(defined('ZEND_LIB_ABSPATH')) {   
@@ -45,7 +44,7 @@ include LIBRARY_ABSPATH.'/Peak/Controller/Front.php';
 include LIBRARY_ABSPATH.'/Peak/Controller/Action.php';
 include LIBRARY_ABSPATH.'/Peak/View.php';
 //include(LIBRARY_ABSPATH.'/Peak/Lang.php');
-include LIBRARY_ABSPATH.'/Peak/Chrono.php';
+//include LIBRARY_ABSPATH.'/Peak/Chrono.php';
 
 //load peak autoloader
 include LIBRARY_ABSPATH.'/Peak/autoload.php';

@@ -29,6 +29,7 @@ class Peak_Exception extends Exception
 	const ERR_VIEW_SCRIPT_NOT_FOUND         = 'View: script file %1$s not found.';
 	const ERR_VIEW_THEME_NOT_FOUND          = 'View: theme \'%1$s\' folder not found.';
 	const ERR_DEFAULT                       = 'Request failed';
+	const ERR_CUSTOM                        = '%1$s';
 		
 	
     /**
