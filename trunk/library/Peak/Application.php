@@ -20,12 +20,19 @@ class Peak_Application
      * @var object
      */
     public $front;
+    
+    /**
+     * Module app controller
+     * @var object|null
+     */
+    public $module = null;
 
     /**
      * app object itself
      * @var object
      */
     private static $_instance = null;
+    
 
     /**
      * Singleton application
