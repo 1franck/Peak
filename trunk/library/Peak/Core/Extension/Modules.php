@@ -56,8 +56,9 @@ class Peak_Core_Extension_Modules
 	/**
 	 * List modules directories
 	 *
-	 * @path   string/null    Specified a different path. List the current application modules if null
-	 * @return array/string   Return an array in case of success or return DirectoryIterator exception string message
+	 * @deprecated
+	 * @param  string/null $path Specified a different path. List the current application modules if null
+	 * @return array/string      Return an array in case of success or return DirectoryIterator exception string message
 	 */
 	public function getList($path = null)
 	{
