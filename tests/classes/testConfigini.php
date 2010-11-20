@@ -23,11 +23,11 @@ class TestOfConfig extends UnitTestCase
     	   	
     	//echo '<pre>'.print_r($data,true);
     	
-    	$data = $this->config->loadFile('./temps/configs.ini', true);   	
+    	$data = $this->config->loadFile('./temps/configs.ini', true, 'production');   	
     	$this->assertTrue(is_array($data) ,'loadFile(\'./temps/configs.ini\') fail to return an array');
     	$this->assertTrue(count($this->config) == 4, 'count configs with sections should return 4');
     	
-    	//echo '<pre>'.print_r($data,true);
+    	echo '<pre>'.print_r($data,true);
     	
     	//should throw an exception
     	//$data2 = $this->config->loadFile('./temps/unknowconfigs.ini');

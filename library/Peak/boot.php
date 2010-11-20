@@ -55,7 +55,7 @@ if(file_exists(APPLICATION_ABSPATH.'/bootstrap.php')) {
     include APPLICATION_ABSPATH.'/bootstrap.php';
 }
 
-//include application front if exists
+//include application front extension if exists
 if(file_exists(APPLICATION_ABSPATH.'/front.php')) {
 	include APPLICATION_ABSPATH.'/front.php';
 }

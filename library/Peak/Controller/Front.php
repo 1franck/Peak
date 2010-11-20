@@ -40,7 +40,8 @@ class Peak_Controller_Front
         $core   = Peak_Registry::o()->core;
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
-                        
+
+        //try to load controller from router if exists       
         if(isset($router->controller))
         {
         	$ctrl_name = $router->controller.'Controller';
@@ -58,6 +59,7 @@ class Peak_Controller_Front
         	}
         	else $this->controller = new $ctrl_name();
         }
+        //if no router controller, try to load default controller
         elseif((isset($this->default_controller)) && ($core->isController($this->default_controller)))
         {
         	$default_ctrl = $this->default_controller;
@@ -65,10 +67,13 @@ class Peak_Controller_Front
         }
         else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND',$default_ctrl);
         
-        //class method run if exists, usefull for loading a modules app via a controller
-        if($this->controller instanceof Peak_Application_Modules) $this->controller->run();
-                
-        // execute controller action
+        //if class if is an instance of Peak_Application_Modules, load a module app via a controller
+        if($this->controller instanceof Peak_Application_Modules) 
+        {
+        	Peak_Registry::o()->app->module = $this->controller;
+        	$this->controller->run();
+        }               
+        // execute a normal controller action
         elseif(method_exists($this->controller,'handleAction')) {
         	$this->controller->handleAction();
         	$this->postDispatch();  

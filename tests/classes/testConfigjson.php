@@ -25,15 +25,6 @@ class TestOfConfig extends UnitTestCase
     	$this->assertTrue(is_array($data) ,'loadFile(\'./temps/json.txt\') fail to return an array');
     	//$this->assertTrue(count($this->config) == 11, 'count configs without sections should return 11');
     	   	
-    	echo '<pre>'.print_r($data,true);
-    	    	
-    	//echo '<pre>'.print_r($data,true);
-    	
-    	//should throw an exception
-    	//$data2 = $this->config->loadFile('./temps/unknowconfigs.ini');
-    	
-    	//should throw an exception
-    	//$data2 = $this->config->loadFile('./temps/configs.ini', true, 'unknowsection');
     	
     }
   

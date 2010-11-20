@@ -16,15 +16,25 @@ class Peak_Config_Ini extends Peak_Config
 {
 
 	/**
+	 * Load file on class construct
+	 *
+	 * @see loadFile()
+	 */
+	public function __construct($file = null, $process_sections = false, $section_name = null)
+	{
+		if(isset($file)) $this->loadFile($file, $process_sections, $section_name);
+	}
+	
+	/**
 	 * Parse ini from file
 	 *
 	 * @see _load()
 	 */
-	public function loadFile($filename, $process_sections = false, $section_name = null)
+	public function loadFile($file, $process_sections = false, $section_name = null)
 	{
-		if(!file_exists($filename)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.' has tried to load non-existent ini file');
+		if(!file_exists($file)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.' has tried to load non-existent ini file');
 		else {
-			$ini = parse_ini_file($filename, $process_sections);
+			$ini = parse_ini_file($file, $process_sections);
 			return $this->_load($ini, $process_sections, $section_name);
 		}
 	}

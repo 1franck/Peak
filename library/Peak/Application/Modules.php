@@ -77,11 +77,21 @@ abstract class Peak_Application_Modules
      */
     public function run($default_ctrl = 'index')
     {      	
-        //add module name to the end Peak_Router $base_uri      
-        Peak_Registry::o()->router->base_uri = Peak_Registry::o()->router->base_uri.$this->_module_name;   
+        //add module name to the end Peak_Router $base_uri        
+        Peak_Registry::o()->router->base_uri = Peak_Registry::o()->router->base_uri.$this->_module_name;
 
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run($default_ctrl);
+    }
+    
+    /**
+     * Return the module name
+     * 
+     * @return string
+     */
+    public function getName()
+    {
+    	return $this->_module_name;
     }
 
         
