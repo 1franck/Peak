@@ -1,5 +1,7 @@
 #VESRION 0.8.1#
 
+ - renamed $_module_name and $_module_path, added methods getPath() and isInternal() in Peak_Application_Modules
+
  - Peak_Application_Modules instance is now stored in Peak_Application::$module
 
  - added method getName() to Peak_Application_Modules
