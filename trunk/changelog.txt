@@ -1,5 +1,9 @@
 #VESRION 0.8.1#
 
+ - Peak_Application_Modules instance is now stored in Peak_Application::$module
+
+ - added method getName() to Peak_Application_Modules
+
  - added classes Peak_Config_Ini and Peak_Config_Json
 
  - visibility of $_vars from Peak_Config has been changed to protected to have the ability of extending the class
