@@ -43,16 +43,19 @@ abstract class Peak_Application_Modules
     	//prepare module
     	$this->prepare();
               
-        //initialize module bootstrap
+        //initialize module bootstrap if exists
         if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
         	include Peak_Core::getPath('application').'/bootstrap.php';
         }
         $bootstrap_class = $this->_name.'_Bootstrap';
         if(class_exists($bootstrap_class)) {
-        	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();
+        	//delete router regex for the module
+        	Peak_Registry::o()->router->deleteRegex();  
+        	//load module bootstrapper
+        	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	
         }
         
-        //initialize module front
+        //initialize module front if exists
         if(file_exists(Peak_Core::getPath('application').'/front.php')) {
         	include Peak_Core::getPath('application').'/front.php';
         }
@@ -92,9 +95,11 @@ abstract class Peak_Application_Modules
      */
     public function run($default_ctrl = 'index')
     {      	
-        //add module name to the end Peak_Router $base_uri        
-        Peak_Registry::o()->router->base_uri = Peak_Registry::o()->router->base_uri.$this->_name;
-
+        $router = Peak_Registry::o()->router; 
+        
+        //add module name to the end Peak_Router $base_uri      
+        $router->base_uri .= $this->_name.'/';
+ 
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run($default_ctrl);
     }
