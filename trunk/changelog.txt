@@ -1,5 +1,12 @@
 #VESRION 0.8.1#
 
+ - application custom classes name prefix changed in autoload.php. 
+   Old class name prefix : Application_..., New class name prefix : App_... 
+
+ - fix a potential security threat in Peak_Exception constants messages.
+
+ - fix a problem of uniformisation of $_SERVER['REQUEST_URI'] and $request_uri variables in Peak_Router::getRequestURI(). 
+
  - fix a problem with regex in Peak_Application_Modules. With this fix, modules can specifing theirs own regex.
 
  - added method deleteRegex() in Peak_Router.
@@ -13,6 +20,7 @@
  - added classes Peak_Config_Ini and Peak_Config_Json.
 
  - visibility of $_vars from Peak_Config has been changed to protected to have the ability of extending the class.
+
 
 #VERSION 0.8.0#
 

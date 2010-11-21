@@ -49,7 +49,7 @@ abstract class Peak_Application_Modules
         }
         $bootstrap_class = $this->_name.'_Bootstrap';
         if(class_exists($bootstrap_class)) {
-        	//delete router regex for the module
+        	//delete previously added router regex for the module
         	Peak_Registry::o()->router->deleteRegex();  
         	//load module bootstrapper
         	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	

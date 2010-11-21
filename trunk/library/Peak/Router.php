@@ -105,8 +105,18 @@ class Peak_Router
 		//ensure that the router vars are empty
 		$this->reset();
 		
+		//fix $_SERVER['REQUEST_URI']
+		$server_uri = $_SERVER['REQUEST_URI'];
+	    if(substr($server_uri, 0, 1) !== '/') $server_uri = '/'.$server_uri;
+        if(substr($server_uri, -1, 1) !== '/') $server_uri = $server_uri.'/';
+		
 		//get server REQUEST_URI
-	    $this->request_uri = str_ireplace($this->base_uri,'',$_SERVER['REQUEST_URI']);
+	    $this->request_uri = str_ireplace($this->base_uri,'', $server_uri);
+	    
+	    //fix request_uri to not begin/end with a slash
+	    if(substr($this->request_uri, 0, 1) === '/') $this->request_uri = substr($this->request_uri, 1);
+	    if(substr($this->request_uri, -1, 1) === '/') $this->request_uri = substr($this->request_uri, 0, -1);
+
 	    
 	    // if url is like index.php?key=val&key2... we use $_GET var instead
 	    if(preg_match('#\.php\??#',$this->request_uri)) {
