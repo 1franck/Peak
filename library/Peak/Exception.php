@@ -65,7 +65,7 @@ class Peak_Exception extends Exception
 	        else $r = sprintf($r,trim($infos));	        
 	    }
 
-		return $r."\n";
+		return htmlentities(strip_tags($r))."\n";
 	}
 
 	/**

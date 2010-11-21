@@ -77,7 +77,7 @@ function _autoloadAppModules($cn)
 function _autoloadAppCustom($cn)
 {
 	$strtopath = str_replace('_','/',$cn).'.php';
-	$strtopath = str_ireplace('application/','',$strtopath);
+	$strtopath = str_ireplace('app/','',$strtopath);
     $file = Peak_Core::getPath('application').'/'.$strtopath;
 
     if(!file_exists($file)) return false;
