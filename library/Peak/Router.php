@@ -236,4 +236,15 @@ class Peak_Router
 		}
 		return false;
 	}
+
+	/**
+	 * Delete a specific regex or all regex
+	 *
+	 * @param string $regex
+	 */
+	public function deleteRegex($regex = null)
+	{
+		if(isset($regex)) unset($this->_regex[$regex]);
+		else $this->_regex = array();
+	}
 }
