@@ -23,7 +23,7 @@ if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
 
 function _autoloadPeak($cn)
 { 
-    $file = LIBRARY_ABSPATH.'/'._autoloadFile2Class($cn);
+    $file = LIBRARY_ABSPATH.'/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
 }
@@ -31,7 +31,7 @@ function _autoloadPeak($cn)
 //check external zend lib path
 function _autoloadZend($cn)
 {
-    $file = ZEND_LIB_ABSPATH.'/'._autoloadFile2Class($cn);
+    $file = ZEND_LIB_ABSPATH.'/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
 }
@@ -40,7 +40,7 @@ function _autoloadZend($cn)
 //check internal zend lib (they have priority over external ZEND_LIB_ABSPATH)
 function _autoloadZendInternal($cn)
 {
-    $file = Peak_Core::getPath('libs').'/'._autoloadFile2Class($cn);
+    $file = Peak_Core::getPath('libs').'/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
 }
@@ -54,7 +54,7 @@ function _autoloadAppCtrl($cn)
 
 function _autoloadAppModules($cn)
 {
-	$file = Peak_Core::getPath('modules') .'/'._autoloadFile2Class($cn);
+	$file = Peak_Core::getPath('modules') .'/'._autoloadClass2File($cn);
 	
 	if (!file_exists($file)) {
 		$temp = explode('_',$cn);
@@ -68,14 +68,14 @@ function _autoloadAppModules($cn)
 
 function _autoloadAppCustom($cn)
 {
-	$strtopath = str_ireplace('app/','',_autoloadFile2Class($cn));
+	$strtopath = str_ireplace('app/','',_autoloadClass2File($cn));
     $file = Peak_Core::getPath('application').'/'.$strtopath;
 
     if(!file_exists($file)) return false;
     include $file;
 }
 
-function _autoloadFile2Class($cn)
+function _autoloadClass2File($cn)
 {
 	return str_replace('_','/',$cn).'.php';
 }
