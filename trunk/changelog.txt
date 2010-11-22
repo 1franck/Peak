@@ -1,5 +1,7 @@
 #VESRION 0.8.1#
 
+ - added function _autoloadFile2Class() to autoload.php
+
  - fix methods isModule() and isController() from Peak_Core and removed the deprecated method getControllers()
 
  - application custom classes name prefix changed in autoload.php. 

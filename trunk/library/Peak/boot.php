@@ -43,8 +43,6 @@ include LIBRARY_ABSPATH.'/Peak/Application.php';
 include LIBRARY_ABSPATH.'/Peak/Controller/Front.php';
 include LIBRARY_ABSPATH.'/Peak/Controller/Action.php';
 include LIBRARY_ABSPATH.'/Peak/View.php';
-//include(LIBRARY_ABSPATH.'/Peak/Lang.php');
-//include LIBRARY_ABSPATH.'/Peak/Chrono.php';
 
 //load peak autoloader
 include LIBRARY_ABSPATH.'/Peak/autoload.php';
@@ -56,6 +54,4 @@ if(file_exists(APPLICATION_ABSPATH.'/bootstrap.php')) {
 }
 
 //include application front extension if exists
-if(file_exists(APPLICATION_ABSPATH.'/front.php')) {
-	include APPLICATION_ABSPATH.'/front.php';
-}
+if(file_exists(APPLICATION_ABSPATH.'/front.php')) include APPLICATION_ABSPATH.'/front.php';
