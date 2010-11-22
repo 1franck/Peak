@@ -42,6 +42,12 @@ abstract class Peak_Controller_Action
      * @var array
      */
     public $actions = array();
+    
+    /**
+     * Action method prefix
+     * @var string
+     */
+    protected $action_prefix = '_';
 
     /**
      * instance of view
@@ -140,12 +146,12 @@ abstract class Peak_Controller_Action
      *
      * @param string $action_by_default   default method name if no request match to module actions
      */   
-    public function handleAction($action_by_default = '_index')
+    public function handleAction($action_by_default = 'index')
     {
         $this->preAction();
         
-        $action = Peak_Registry::o()->router->action;
-        if(empty($action)) $action = $action_by_default;
+        $action = $this->action_prefix . Peak_Registry::o()->router->action;
+        if($action === $this->action_prefix) $action = $this->action_prefix . $action_by_default;
         
         if(($this->isAction($action))) $this->action = $action;
         elseif(($action !== $action_by_default) && (!($this->isAction($action)))) {
@@ -154,7 +160,8 @@ abstract class Peak_Controller_Action
         else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
         //set action filename
-        $this->file = substr($this->action,1).'.php';
+        if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
+        else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
         
         //call requested action
         $this->$action();    

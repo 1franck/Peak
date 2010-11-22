@@ -1,5 +1,13 @@
 #VESRION 0.8.1#
 
+ - Added another syntax support for regex route in Peak_Router.
+   Standard syntax : addRegex([my regex], array('controller' => 'cltrname', 'action' => 'actionname'));
+   New other way: addRegex([my regex], 'cltrname.actionname');
+
+ - Controllers actions prefix name are now managed by Peak_Controller_Action only. It make thing cleaner outside of controllers.
+   This change has been fixed in Peak_Controller_Front, Peak_Router.
+   By doing this we can customize action prefix name in controllers even if it's not recommended for consistency reasons.
+
  - added function _autoloadClass2File() to autoload.php
 
  - fix methods isModule() and isController() from Peak_Core and removed the deprecated method getControllers()
