@@ -22,25 +22,25 @@ class Peak_Router
 	 * @var string
 	 */
     public $base_uri;
-    
+
     /**
      * $_SERVER['REQUEST_URI'] without base_uri.
      * @var string
      */
     public $request_uri;
-    
+
     /**
      * Original unparsed request array
      * @var array
      */
     public $request;
-    
+
     /**
      * Controller name
      * @var string
      */
     public $controller;
-    
+
     /**
      * Requested action
      * @var string
@@ -77,7 +77,7 @@ class Peak_Router
     {
     	$this->setBaseUri($base_uri);   
     }
-    
+
     /**
      * Set the base of url request
      *
@@ -145,7 +145,7 @@ class Peak_Router
 	    }
 	    $this->resolveRequest();
 	}
-	
+
 	/**
 	 * Resolve $request
 	 */
@@ -164,7 +164,7 @@ class Peak_Router
 	        $this->paramsToAssoc();
 	    }
 	}
-	
+
 	/**
 	 * Reset router vars
 	 */
@@ -176,7 +176,7 @@ class Peak_Router
 		$this->params = array();
 		$this->params_assoc = array();
 	}
-	
+
 	/**
 	 * Set manually a request and resolve it
 	 *
@@ -187,7 +187,7 @@ class Peak_Router
 	    $this->request = $request;
 	    $this->resolveRequest();
 	}
-	
+
 	/**
 	 * Transform params array to params associate array
 	 * To work, we need a pair number of params to transform it to key/val array
@@ -200,7 +200,7 @@ class Peak_Router
 			else { $this->params_assoc[$key] = $v; $i = 0; }
 		}
 	}
-	
+
 	/**
 	 * Add a regex route
 	 *
@@ -211,8 +211,7 @@ class Peak_Router
 	{
 		$this->_regex[$regex] = $route;
 	}
-	
-	
+
 	/**
 	 * Try to match request uri to a regex
 	 *

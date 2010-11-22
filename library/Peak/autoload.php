@@ -23,46 +23,38 @@ if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
 
 function _autoloadPeak($cn)
 { 
-    $strtopath = str_replace('_','/',$cn).'.php';
-
-    $file = LIBRARY_ABSPATH.'/'.$strtopath;
+    $file = LIBRARY_ABSPATH.'/'._autoloadFile2Class($cn);
     if(!file_exists($file)) return false;
-    include ($file);
+    include $file;
 }
 
+//check external zend lib path
 function _autoloadZend($cn)
 {
-    $strtopath = str_replace('_','/',$cn).'.php';
-    
-    //check external zend lib path
-    if(file_exists(ZEND_LIB_ABSPATH.'/'.$strtopath)) {
-        include(ZEND_LIB_ABSPATH.'/'.$strtopath);
-    }
-    else return false;
+    $file = ZEND_LIB_ABSPATH.'/'._autoloadFile2Class($cn);
+    if(!file_exists($file)) return false;
+    include $file;
 }
 
+    
+//check internal zend lib (they have priority over external ZEND_LIB_ABSPATH)
 function _autoloadZendInternal($cn)
 {
-    $strtopath = str_replace('_','/',$cn).'.php';
-
-    $file = Peak_Core::getPath('libs').'/'.$strtopath;
-    
-    //check internal zend lib (they have priority over external ZEND_LIB_ABSPATH)
+    $file = Peak_Core::getPath('libs').'/'._autoloadFile2Class($cn);
     if(!file_exists($file)) return false;
-    include($file);
+    include $file;
 }
 
 function _autoloadAppCtrl($cn)
 {
 	$file = Peak_Core::getPath('controllers') .'/'.$cn.'.php';	
-	if (!file_exists($file)) { return false; }
-	include($file);
+	if(!file_exists($file)) return false;
+	include $file;
 }
 
 function _autoloadAppModules($cn)
 {
-	$strtopath = str_replace('_','/',$cn).'.php';
-	$file = Peak_Core::getPath('modules') .'/'.$strtopath;
+	$file = Peak_Core::getPath('modules') .'/'._autoloadFile2Class($cn);
 	
 	if (!file_exists($file)) {
 		$temp = explode('_',$cn);
@@ -71,15 +63,19 @@ function _autoloadAppModules($cn)
 		$file = Peak_Core::getPath('modules') .'/'.$name.'/controllers/'.$strtopath.'.php';
 		if (!file_exists($file)) return false;
 	}
-	include($file);
+	include $file;
 }
 
 function _autoloadAppCustom($cn)
 {
-	$strtopath = str_replace('_','/',$cn).'.php';
-	$strtopath = str_ireplace('app/','',$strtopath);
+	$strtopath = str_ireplace('app/','',_autoloadFile2Class($cn));
     $file = Peak_Core::getPath('application').'/'.$strtopath;
 
     if(!file_exists($file)) return false;
-    include($file);
+    include $file;
+}
+
+function _autoloadFile2Class($cn)
+{
+	return str_replace('_','/',$cn).'.php';
 }

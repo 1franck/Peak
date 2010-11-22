@@ -15,7 +15,7 @@ set_exception_handler('pkexception');
 
 class Peak_Core
 {
-      
+
     /**
      * core extentensions object
      * @var object
@@ -27,7 +27,7 @@ class Peak_Core
      * @var object
      */
     private static $_instance = null; 
-        
+
     /**
      * Singleton peak core
      *
@@ -38,7 +38,7 @@ class Peak_Core
 		if (is_null(self::$_instance)) self::$_instance = new self();
 		return self::$_instance;
 	}
-    
+
 	/**
 	 * Activate error_reporting on DEV_MODE
 	 */
@@ -49,7 +49,7 @@ class Peak_Core
             ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
         }
     }
-    
+
     /**
      * Try to return a extension object based the method name.
      *
@@ -66,7 +66,7 @@ class Peak_Core
             trigger_error('DEV_MODE: Core/Extension method '.$extension.'() doesn\'t exists');
         }
     }
-    
+
     /**
      * Load/return Core extension objects
      */
@@ -75,7 +75,7 @@ class Peak_Core
         if(!is_object($this->_extensions)) $this->_extensions = new Peak_Core_Extensions();
     	return $this->_extensions;
     }
-    
+
     /**
      * Init Peak_Config object, set into registry and define usefull constants.
      * Called inside boot.php
@@ -89,7 +89,7 @@ class Peak_Core
     	// Url constants
         if(defined('SVR_URL')) define('ROOT_URL', SVR_URL.'/'.ROOT);           
     }
-    
+
     /**
      * Prepare paths and store it inside Peak_Config.
      * Called inside boot.php
@@ -133,8 +133,7 @@ class Peak_Core
         $config->theme_layouts_path  = $config->theme_path.'/layouts';
         $config->theme_cache_path    = $config->theme_path.'/cache';
     }
-       
-       
+
     /**
      * Get application different vars from Peak_Configs ending by '_path'
      *
@@ -152,7 +151,7 @@ class Peak_Core
         }
         else return null;
     }
-    
+
     /**
      * Get/Set core configurations
      *
@@ -167,8 +166,7 @@ class Peak_Core
     	elseif(isset($c->$k)) return $c->$k;
     	else return null;
     }
-       
-       
+
     /**
      * Check if controller name exists
      *
@@ -179,7 +177,7 @@ class Peak_Core
     {
     	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
     }
-    
+
     /**
      * Check if internal Peak Controller exists
      *
@@ -190,7 +188,7 @@ class Peak_Core
     {
     	return (file_exists(LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$name.'.php')) ? true : false;
     }
-    
+
     /**
      * Check if modules name exists
      *
@@ -201,10 +199,12 @@ class Peak_Core
     {
     	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
     }
-  
+
 }
 
-
+/**
+ * MISC USEFULL FUNCS
+ */
 function _clean($str) {
     $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
     return $str;

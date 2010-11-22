@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Application Bootstrapper base
  *   
@@ -8,7 +7,7 @@
  */
 abstract class Peak_Bootstrap
 {
-    
+
     /**
      * init bootstrap
      */
@@ -16,7 +15,7 @@ abstract class Peak_Bootstrap
     {
         $this->boot();
     }
-    
+
     /**
      * Call all bootstrap methods prefixed by _
      *
@@ -30,7 +29,7 @@ abstract class Peak_Bootstrap
             if(preg_match($regexp,$method)) $this->$method();
         }
     }
-    
+
     /**
      * Get environment in .htaccess
      *
@@ -40,5 +39,4 @@ abstract class Peak_Bootstrap
     {
     	return getenv('APPLICATION_ENV'); 	
     }
-
 }
