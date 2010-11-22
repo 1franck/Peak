@@ -159,7 +159,7 @@ class Peak_Router
 	        
 	        $this->controller = array_shift($request);
 	        $this->action = array_shift($request);
-	        $this->action = (empty($this->action)) ? '' : '_'.$this->action;
+	        $this->action = (empty($this->action)) ? '' : $this->action;
 	        $this->params = $request;
 	        $this->paramsToAssoc();
 	    }
@@ -232,8 +232,15 @@ class Peak_Router
 					//if url match a regexp but end up with additionnal data, the url should be not valid otherwise 
 					//we will have url that can ends with anything and still be valid for the application and google, wich its bad
 					if($this->request_uri === $matches[0]) {
-						$this->controller = $route['controller'];
-						$this->action = $route['action'];
+						if(is_array($route)) {
+							$this->controller = $route['controller'];
+							$this->action = $route['action'];
+						}
+						else {
+							$route = explode('.', $route);
+							$this->controller = $route[0];
+							$this->action = $route[1];
+						}
 						$this->params = array_slice($matches,1);
 						$this->paramsToAssoc();
 						return true;

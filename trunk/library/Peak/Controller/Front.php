@@ -86,7 +86,7 @@ class Peak_Controller_Front
 	 * @param string $ctrl
 	 * @param string $action
 	 */
-	public function forceDispatch($controller, $action = '_index')
+	public function forceDispatch($controller, $action = 'index')
 	{
 		$router = Peak_Registry::o()->router;
 		$router->controller = $controller;

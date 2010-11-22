@@ -56,13 +56,16 @@ class TestOfRouter extends UnitTestCase
     
     function testOfRegexRoute()
     {    	
-    	$this->router->addRegex('teams/(\w+)/(\d+)', array('controller' => 'myteam', 'action' => '_index'));
+    	$this->router->addRegex('teams/(\w+)/(\d+)', array('controller' => 'myteam', 'action' => 'index'));
     	
-    	$this->router->addRegex('news/(\d+)', array('controller' => 'news', 'action' => '_index'));
+    	$this->router->addRegex('news/(\d+)', array('controller' => 'news', 'action' => 'index'));
     	
     	$this->router->getRequestURI();
     	                
-    	echo 'after REGEX if apply<br >';   
+    	echo 'after REGEX if apply<br />
+    	      2 regex available: <br />
+    	      First: teams/(\w+)/(\d+)<br />
+    	      Second: news/(\d+)<br /><br />';   
         $this->print_router();    
     }
 
