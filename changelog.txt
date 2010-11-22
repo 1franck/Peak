@@ -1,5 +1,7 @@
 #VESRION 0.8.1#
 
+ - fix methods isModule() and isController() from Peak_Core and removed the deprecated method getControllers()
+
  - application custom classes name prefix changed in autoload.php. 
    Old class name prefix : Application_..., New class name prefix : App_... 
 

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak Core
  * 
@@ -88,13 +87,7 @@ class Peak_Core
     	$config = Peak_Registry::set('core_config',new Peak_Config());
     	
     	// Url constants
-        if(defined('SVR_URL')) {
-        	define('ROOT_URL', SVR_URL.'/'.ROOT);
-        	/*if(file_exists(ROOT_ABSPATH.'/themes/'.APP_THEME)) {
-        		define('THEME_URL', ROOT_URL.'/themes/'.APP_THEME);
-        		define('THEME_PUBLIC_ABSPATH', ROOT_ABSPATH.'/themes/'.APP_THEME);
-        	}*/
-        }              
+        if(defined('SVR_URL')) define('ROOT_URL', SVR_URL.'/'.ROOT);           
     }
     
     /**
@@ -184,10 +177,7 @@ class Peak_Core
      */
     public function isController($name)
     {
-    	if(empty($this->controllers)) {
-    		return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false;
-    	}
-        return (in_array($name,$this->controllers)) ? true : false;        
+    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
     }
     
     /**
@@ -209,39 +199,9 @@ class Peak_Core
      */
     public function isModule($name)
     {
-    	if(empty($this->modules)) {
-    		return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
-    	}
-        return (array_key_exists($name, $this->modules)) ? true : false;
+    	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
     }
-               
-    
-    /**
-     * Get controllers @deprecated
-     * 
-     * @return array()
-     */
-    public function getControllers()
-    {      
-        //list controllers directory
-        try {
-            $it = new DirectoryIterator(self::getPath('controllers'));
-
-            while($it->valid()) {
-                if((!$it->isDir()) && (!in_array($it->getFilename(),array('.','..'))) && (pathinfo($it->getFilename(),PATHINFO_EXTENSION) === 'php'))
-                {
-                    $ctrl = str_replace('.'.pathinfo($it->getFilename(),PATHINFO_EXTENSION),'',$it->getFilename());
-                    $this->controllers[] = $ctrl;                   
-                }
-                $it->next();
-            }
-        }
-        catch(Exception $e) { return $e->getMessage(); }
- 
-        //no controllers
-        //if(empty($this->controllers)) throw new wyn_exception('ERR_CORE_NO_CTRL_FOUND');            
-        return $this->controllers;        
-    }        
+  
 }
 
 

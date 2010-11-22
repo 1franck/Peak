@@ -1,6 +1,6 @@
 <?php
 
-class Peak_Controller_Internal_Pkedit extends Peak_Controller
+class Peak_Controller_Internal_Pktest extends Peak_Controller_Action
 {
     
     public function preAction()

@@ -51,37 +51,5 @@ class Peak_Core_Extension_Modules
     		//print_r($config);
     	}
 	}
-	
-	
-	/**
-	 * List modules directories
-	 *
-	 * @deprecated
-	 * @param  string/null $path Specified a different path. List the current application modules if null
-	 * @return array/string      Return an array in case of success or return DirectoryIterator exception string message
-	 */
-	public function getList($path = null)
-	{
-        try
-        {      	
-        	$result = array();
-        	$path = (!isset($path)) ? Peak_Core::getPath('modules') : $path;
-            $it = new DirectoryIterator($path);
-
-            while($it->valid())
-            {
-                if(($it->isDir()) && (!$it->isDot()))
-                {
-                    $mod = $it->getFilename();                 
-                    $result[$mod] = $it->getPath().'/'.$mod;                   
-                }             
-                $it->next();
-            }
-            return $result;
-        }
-        catch(Exception $e) { 
-        	return $e->getMessage();
-        }		
-	}
 		
 }

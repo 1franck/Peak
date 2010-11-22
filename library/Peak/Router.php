@@ -116,7 +116,6 @@ class Peak_Router
 	    //fix request_uri to not begin/end with a slash
 	    if(substr($this->request_uri, 0, 1) === '/') $this->request_uri = substr($this->request_uri, 1);
 	    if(substr($this->request_uri, -1, 1) === '/') $this->request_uri = substr($this->request_uri, 0, -1);
-
 	    
 	    // if url is like index.php?key=val&key2... we use $_GET var instead
 	    if(preg_match('#\.php\??#',$this->request_uri)) {
