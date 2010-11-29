@@ -52,7 +52,6 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     public function render($file,$path = null)
     {
         if(!isset($path)) {
-        	//$this->_scripts_path = THEME_LAYOUTS_ABSPATH;
         	$path = Peak_Core::getPath('theme_layouts');
         	$no_cache = true;
         }
