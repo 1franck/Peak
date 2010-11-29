@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Peak_Core_Extension_Codegen
+ * Peak_Core_Extension_Codegen 
+ * 
+ * @depracted in favor of Peak_Codegen
  *
  * @author  Francois Lajoie
  * @version $Id$
@@ -105,8 +107,13 @@ class Peak_Core_Extension_Codegen
      */
     public function controllerSample($data)
     {
-    	$original_data = array('ctrl_name' => 'index');
+    	$original_data = array('ctrl_name'      => 'index',
+    	                       'add_preaction'  => false,
+    	                       'add_postaction' => false,
+    	                       'add_postrender' => false);
+    	                       
     	$data = array_merge((array)$original_data, (array)$data);        
+    	
         return $data;
     }
     
