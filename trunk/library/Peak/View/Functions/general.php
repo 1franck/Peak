@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * @deprecated 
  * View basic html functions
  * 
  * @author   Francois Lajoie
