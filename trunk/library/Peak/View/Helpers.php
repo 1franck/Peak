@@ -32,7 +32,7 @@ class Peak_View_Helpers extends Peak_Helpers
     {
     	$helper = parent::__get($name);
     	if(!isset($helper->view)) {
-    		$helper->view =& Peak_Registry::obj()->view;
+    		$helper->view =& Peak_Registry::o()->view;
     	}
     	return $helper;
     }
