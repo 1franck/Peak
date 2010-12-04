@@ -1,10 +1,12 @@
 #VESRION 0.8.1#
 
- - Added class Peak_Spl_Dirinfo
-  
- - Deprecated Peak_Core_Extension_Codegen in favor of new Peak_Codegen abstract class 
+ - added method getExtension() to Peak_Spl_FileInfo
 
- - Added another syntax support for regex route in Peak_Router.
+ - added class Peak_Spl_Dirinfo
+  
+ - deprecated Peak_Core_Extension_Codegen in favor of new Peak_Codegen abstract class 
+
+ - added another syntax support for regex route in Peak_Router.
    Standard syntax : addRegex([my regex], array('controller' => 'cltrname', 'action' => 'actionname'));
    New other way: addRegex([my regex], 'cltrname.actionname');
 

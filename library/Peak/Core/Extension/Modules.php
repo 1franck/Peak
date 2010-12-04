@@ -24,6 +24,10 @@ class Peak_Core_Extension_Modules
     	$module_path = (isset($path)) ? $path : $config->modules_path.'/'.$module;
     	
     	if(is_dir($module_path)) {
+    		
+    		//backup previous application configs before overloading core configurations
+    		Peak_Registry::set('app_core_config', clone $config);
+    		
     		$config->module_name = $module;
     		
     		// current app paths

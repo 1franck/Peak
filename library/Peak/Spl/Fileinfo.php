@@ -148,4 +148,14 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		}
 		return $return;
 	}
+	
+	/**
+	 * Get file extension
+	 *
+	 * @return string
+	 */
+	public function getExtension()
+	{
+		return pathinfo($this->getFilename(), PATHINFO_EXTENSION);
+	}
 }
