@@ -1,5 +1,10 @@
 #VESRION 0.8.1#
 
+ - modified Peak_Helpers to support array of class name prefixes, library view helpers classes prefix renamed to 
+   Peak_View_Helper_. Peak Helper can be extended by application now.
+
+ - added method set() to Peak_View.
+
  - deprecated views/functions/ folder and files, moved general.php functions to new view helper html.php
 
  - added method getExtension() to Peak_Spl_FileInfo

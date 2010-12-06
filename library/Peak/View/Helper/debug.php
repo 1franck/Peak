@@ -6,7 +6,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class View_Helper_Debug
+class Peak_View_Helper_Debug
 {   
 	
     /**
@@ -98,6 +98,18 @@ class View_Helper_Debug
 			return $sfile_content;
 		}
 		else return false;
+	}
+	
+	/**
+	 * Get Memory usage
+	 *
+	 * @return string
+	 */
+	public function getMemoryUsage()
+	{
+		$size = memory_get_peak_usage(true);
+		$unit = array('b','kb','mb','gb','tb','pb');
+		return @round($size/pow(1024,($i=floor(log($size,1024)))),4).' '.$unit[$i];
 	}
     
 }

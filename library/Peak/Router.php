@@ -210,6 +210,7 @@ class Peak_Router
 	public function addRegex($regex, $route)
 	{
 		$this->_regex[$regex] = $route;
+		return $this;
 	}
 
 	/**

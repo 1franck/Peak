@@ -14,7 +14,7 @@ class Peak_View_Helpers extends Peak_Helpers
 	 */
     public function __construct()
     {
-    	$this->_prefix    = 'View_Helper_';
+    	$this->_prefix    = array('View_Helper_','Peak_View_Helper_');
     	
     	$this->_paths     = array(Peak_Core::getPath('views_helpers'),
     			                  LIBRARY_ABSPATH.'/Peak/View/Helper');

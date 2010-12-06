@@ -47,7 +47,7 @@ class Peak_View
     }   
 
     /**
-     * Set/overwrite template variable
+     * Set/overwrite view variable
      *
      * @param string $name
      * @param anything $value
@@ -107,6 +107,18 @@ class Peak_View
         elseif((defined('DEV_MODE')) && (DEV_MODE)) {
             trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
         }
+    }
+
+    /**
+     * Set/overwrite view variable
+     * 
+     * @see    __set()
+     * @return Peak_View
+     */
+    public function set($name,$value = null)
+    {
+    	$this->__set($name,$value);
+    	return $this;    	
     }
 
     /**
