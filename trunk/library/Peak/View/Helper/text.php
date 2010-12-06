@@ -6,7 +6,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class View_Helper_Text
+class Peak_View_Helper_Text
 {
     
     
