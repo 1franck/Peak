@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Debug array display
  *
@@ -98,6 +97,28 @@ class Peak_View_Helper_Debug
 			return $sfile_content;
 		}
 		else return false;
+	}
+	
+	/**
+	 * Get include files separated by category with additionnal info
+	 *
+	 * @return array
+	 */
+	public function getFiles()
+	{
+		$temp = get_included_files();
+		$files = array();
+		$total_size = 0;
+		$library_path = str_replace('\\','/',LIBRARY_ABSPATH);
+		foreach($temp as $file) {
+			$total_size += filesize($file);
+			$file = str_replace('\\','/',$file);
+			if(strstr($file, LIBRARY_ABSPATH) !== false) $files['peak'][] = $file;
+			else $files['app'][] = $file;
+		}
+		$files['total_size'] = $total_size;
+		
+		return $files;
 	}
 	
 	/**
