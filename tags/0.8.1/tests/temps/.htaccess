@@ -1,0 +1,5 @@
+Options +FollowSymlinks
+RewriteEngine on
+
+RewriteEngine on
+RewriteRule !\.(js|ico|txt|gif|jpg|png|css)$ router.php
