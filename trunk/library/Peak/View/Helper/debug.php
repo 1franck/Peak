@@ -9,6 +9,7 @@ class Peak_View_Helper_Debug
 {   
 	
     /**
+     * @DEPRECATED
      * Print view and session vars + list of loaded php files * Resursive
      *
      * @param array $array

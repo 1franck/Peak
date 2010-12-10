@@ -17,10 +17,16 @@ class Peak_Core
 {
 
     /**
-     * core extentensions object
+     * core extensions object
      * @var object
      */
     protected $_extensions;
+    
+    /**
+     * plugins extensions @experimental
+     * @var array
+     */
+    protected static $_plugins = array();
 
     /**
      * object itself
@@ -166,6 +172,34 @@ class Peak_Core
     	elseif(isset($c->$k)) return $c->$k;
     	else return null;
     }
+    
+    /**
+     * Register a plugins object @experimental
+     *
+     * @param object $object
+     */
+    public static function registerPlugin($object)
+    {
+    	self::$_plugins[] = $object;
+    }
+    
+    /**
+     * Dispatch event to plugins object(s) @experimental
+     *
+     * @param string $event
+     */
+    public static function dispatchPlugin($event)
+	{		
+		if(!empty(self::$_plugins)) {
+			$event = str_ireplace(array('Peak_','::'),array('','_'),$event);
+
+			echo $event;
+			foreach(self::$_plugins as $obj) {
+				if(!method_exists($obj,$event)) continue;
+				$obj->$event();
+			}
+		}
+	}	
 
     /**
      * Check if controller name exists
