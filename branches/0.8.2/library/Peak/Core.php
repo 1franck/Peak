@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('_VERSION_','0.8.1');
+define('_VERSION_','0.8.2');
 define('_NAME_','PEAK');
 define('_DESCR_','Php wEb Application Kernel');
 
@@ -29,11 +29,19 @@ class Peak_Core
     protected static $_plugins = array();
 
     /**
+     * Current Environment
+     * @final
+     * @var string
+     */
+    private static $_env;
+    
+    /**
      * object itself
      * @var object
      */
     private static $_instance = null; 
-
+    
+    
     /**
      * Singleton peak core
      *
@@ -83,6 +91,7 @@ class Peak_Core
     }
 
     /**
+     * @deprecated
      * Init Peak_Config object, set into registry and define usefull constants.
      * Called inside boot.php
      * 
@@ -101,19 +110,53 @@ class Peak_Core
      *
      * @param string $file
      */
-    public static function initConfig($file)
+    final public static function initConfig($file)
     {
     	$filetype = pathinfo($file,PATHINFO_EXTENSION);
+    	$env = self::getEnv();
     	
+    	//we load configuration object according to the file extension
     	switch($filetype) {
     		case 'ini' : 
     		    include LIBRARY_ABSPATH.'/Peak/Config/Ini.php';
-    		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true, 'development');
+    		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true);
     		    break;
     	}
-    	//echo '<pre>';
-    	//print_r($conf);
-    	//echo '</pre>';
+    	
+    	//check if we got the configuration for current environment mode or at least section 'all'
+    	if(!isset($conf->$env)) {
+    		if(!isset($conf->all)) {
+    			//die('no configurations for '.$env.' mode');
+    			die('no general configurations and/or '.$env.' configurations');
+    		}
+    	}
+    	
+
+    	//get config array
+    	$loaded_config = $conf->getVars();
+
+    	//try to merge array section if exists
+    	if(isset($loaded_config['all']) && isset($loaded_config[$env])) {
+
+    		//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
+    		function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
+    		$final_config = array_extend($loaded_config['all'],$loaded_config[$env]);
+    	}
+    	elseif(isset($loaded_config[$env])) {
+    		$final_config = $loaded_config[$env];
+    	}
+    	else {
+    		$final_config = $loaded_config['all'];
+    	}
+
+    	$conf->setVars($final_config);
+    	
+    	//}
+    	echo '<pre>';
+    	print_r($conf);
+    	echo '</pre>';
+    	
+    	//push merged config object to Peak_Registry
     	Peak_Registry::set('core_config', $conf);
     	
     	if(isset($conf->svr_url)) { 
@@ -136,9 +179,7 @@ class Peak_Core
     {
     	$config = Peak_Registry::o()->core_config;
     	
-    	echo '<pre>';
-    	print_r($config);
-    	echo '</pre>';
+    	//echo '<pre>'; 	print_r($config);  	echo '</pre>';
     	
     	// current libray paths
         $config->library_path     = $lib_path;       
@@ -172,6 +213,24 @@ class Peak_Core
         $config->theme_layouts_path  = $config->theme_path.'/layouts';
         $config->theme_cache_path    = $config->theme_path.'/cache';
     }
+    
+    /**
+     * Get environment in .htaccess and store it to $_env
+     * If environment if already stored in $_env, we return it instead
+     * 
+     * @return string
+     */
+    public static function getEnv()
+    {
+    	if(!isset(self::$_env)) {
+    		$env = getenv('APPLICATION_ENV');
+    		if(!in_array($env,array('development', 'testing', 'staging', 'production'))) {
+    			self::$_env = 'production';
+    		}
+    		else self::$_env = $env;
+    	}
+    	return self::$_env;	
+    }
 
     /**
      * Get application different vars from Peak_Configs ending by '_path'
@@ -190,7 +249,7 @@ class Peak_Core
         }
         else return null;
     }
-
+    
     /**
      * Get/Set core configurations
      *

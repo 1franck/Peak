@@ -1,4 +1,10 @@
 #VERSION 0.8.2#
+ 
+ - added method initConfig() in Peak_Core and deprecated method init()
+
+ - added method setVars() to Peak_Config
+
+ - added static method getEnv() and static private property $_env in Peak_Core, fixed Peak_Bootstrap accordingly
 
  - deprecated constants PROJECT_NAME, PROJECT_DESCR, APP_DEFAULT_CTRL, DEV_MODE
 
