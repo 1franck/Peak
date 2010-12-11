@@ -90,7 +90,7 @@ class Peak_Config_Ini extends Peak_Config
 		if ($process_sections === true) {
 			if ($section_name !== null) {
 				// return the specified section contents if it exists
-				if (isset($this->_vars[$section_name])) return $this->_vars[$section_name];
+				if (isset($this->_vars[$section_name])) $this->_vars = $this->_vars[$section_name];
 				else {
 					throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': Section ' . $section_name . ' not found in the ini file');
 				}

@@ -1,3 +1,15 @@
+#VERSION 0.8.2#
+
+ - deprecated constants PROJECT_NAME, PROJECT_DESCR, APP_DEFAULT_CTRL, DEV_MODE
+
+ - renamed constant ROOT to PUBLIC_ROOT, ,ROOT_ABSPATH become PUBLIC_ABSPATH and ROOT_URL become PUBLIC_URL.
+   Fixed method baseUrl() in Peak_View_Render accordingly
+
+ - minor fix of method baseUrl() in Peak_View_Render
+
+ - minor fix of method _load in Peak_Config_Ini
+
+
 #VESRION 0.8.1#
  
  - modified Peak_View_Helper_Debug and added Peak_View_Helper_Debugbar.  

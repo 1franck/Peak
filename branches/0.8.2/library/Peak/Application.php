@@ -57,7 +57,7 @@ class Peak_Application
         $reg->set('app', $this);
         $reg->set('core', Peak_Core::getInstance());
         $reg->set('view', new Peak_View('default.ini'));
-        $reg->set('router', new Peak_Router(ROOT));
+        $reg->set('router', new Peak_Router(PUBLIC_ROOT));
         
         // execute app bootstrap
         if(class_exists('bootstrap',false)) new bootstrap();   

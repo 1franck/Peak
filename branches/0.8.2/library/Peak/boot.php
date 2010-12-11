@@ -14,7 +14,7 @@
 if(!defined('_VERSION_'))
 { 
     define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
-    define('ROOT_ABSPATH', SVR_ABSPATH.'/'.ROOT);
+    define('PUBLIC_ABSPATH', SVR_ABSPATH.'/'.PUBLIC_ROOT);
     define('LIBRARY_ABSPATH', SVR_ABSPATH.'/'.LIBRARY_ROOT);
     define('APPLICATION_ABSPATH', SVR_ABSPATH.'/'.APPLICATION_ROOT);
     if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
@@ -23,8 +23,15 @@ if(!defined('_VERSION_'))
     include LIBRARY_ABSPATH.'/Peak/Config.php';
     include LIBRARY_ABSPATH.'/Peak/Core.php';   
     
-    Peak_Core::init();
-    Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
+    if(defined('CONFIG_FILENAME')) {
+    	Peak_Core::init();
+    	Peak_Core::initConfig(CONFIG_FILENAME);
+    	Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
+    }
+    else {
+    	die('No configuration have been specified!');
+    }
+    
 }
 
 //add LIBS_ABSPATH to include path

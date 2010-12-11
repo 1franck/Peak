@@ -95,6 +95,35 @@ class Peak_Core
     	// Url constants
         if(defined('SVR_URL')) define('ROOT_URL', SVR_URL.'/'.ROOT);           
     }
+    
+    /**
+     * Init application config
+     *
+     * @param string $file
+     */
+    public static function initConfig($file)
+    {
+    	$filetype = pathinfo($file,PATHINFO_EXTENSION);
+    	
+    	switch($filetype) {
+    		case 'ini' : 
+    		    include LIBRARY_ABSPATH.'/Peak/Config/Ini.php';
+    		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true, 'development');
+    		    break;
+    	}
+    	//echo '<pre>';
+    	//print_r($conf);
+    	//echo '</pre>';
+    	Peak_Registry::set('core_config', $conf);
+    	
+    	if(isset($conf->svr_url)) { 
+    		define('SVR_URL', $conf->svr_url);
+    		define('PUBLIC_URL', $conf->svr_url.'/'.PUBLIC_ROOT); 
+    	}
+    		
+
+    	
+    }
 
     /**
      * Prepare paths and store it inside Peak_Config.
@@ -106,6 +135,10 @@ class Peak_Core
     public static function initApp($app_path, $lib_path)
     {
     	$config = Peak_Registry::o()->core_config;
+    	
+    	echo '<pre>';
+    	print_r($config);
+    	echo '</pre>';
     	
     	// current libray paths
         $config->library_path     = $lib_path;       
