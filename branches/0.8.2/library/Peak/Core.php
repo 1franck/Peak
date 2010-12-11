@@ -118,7 +118,6 @@ class Peak_Core
     	//we load configuration object according to the file extension
     	switch($filetype) {
     		case 'ini' : 
-    		    include LIBRARY_ABSPATH.'/Peak/Config/Ini.php';
     		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true);
     		    break;
     	}
@@ -126,12 +125,10 @@ class Peak_Core
     	//check if we got the configuration for current environment mode or at least section 'all'
     	if(!isset($conf->$env)) {
     		if(!isset($conf->all)) {
-    			//die('no configurations for '.$env.' mode');
     			die('no general configurations and/or '.$env.' configurations');
     		}
     	}
     	
-
     	//get config array
     	$loaded_config = $conf->getVars();
 

@@ -10,31 +10,24 @@
  * @version  $Id$
  */
 
-// include Peak_Core and set system and application path if not already done
-if(!defined('_VERSION_'))
-{ 
-    define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
-    define('PUBLIC_ABSPATH', SVR_ABSPATH.'/'.PUBLIC_ROOT);
-    define('LIBRARY_ABSPATH', SVR_ABSPATH.'/'.LIBRARY_ROOT);
-    define('APPLICATION_ABSPATH', SVR_ABSPATH.'/'.APPLICATION_ROOT);
-    if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
-    
-    include LIBRARY_ABSPATH.'/Peak/Registry.php';
-    include LIBRARY_ABSPATH.'/Peak/Config.php';
-    include LIBRARY_ABSPATH.'/Peak/Core.php';   
-    
-    if(defined('CONFIG_FILENAME')) {
-    	Peak_Core::init();
-    	Peak_Core::initConfig(CONFIG_FILENAME);
-    	Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
-    }
-    else {
-    	die('No configuration have been specified!');
-    }
-    
-}
+//define major asbpath constant from root constant
+define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
+define('PUBLIC_ABSPATH', SVR_ABSPATH.'/'.PUBLIC_ROOT);
+define('LIBRARY_ABSPATH', SVR_ABSPATH.'/'.LIBRARY_ROOT);
+define('APPLICATION_ABSPATH', SVR_ABSPATH.'/'.APPLICATION_ROOT);
+if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
 
-//add LIBS_ABSPATH to include path
+//load peak autoloader
+include LIBRARY_ABSPATH.'/Peak/autoload.php';
+
+//init app&core configurations
+if(defined('CONFIG_FILENAME')) {
+	Peak_Core::initConfig(CONFIG_FILENAME);
+	Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
+}
+else die('No configuration have been specified!');
+
+//add LIBRARY_ABSPATH to include path
 set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, Peak_Core::getPath('libs'), get_include_path())));
 
 //if ZEND_LIB_ABSPATH is specified, we add it to include path
@@ -44,15 +37,12 @@ if(defined('ZEND_LIB_ABSPATH')) {
 
 //*optionnal
 //just load immediately files that anyway will be loaded at each execution of an application
-//by doing this we save some autoload magic function calls and reduce lightly execution time 
+//by doing this we save some autoload functions calls and reduce lightly execution time 
 include LIBRARY_ABSPATH.'/Peak/Router.php';
 include LIBRARY_ABSPATH.'/Peak/Application.php';
 include LIBRARY_ABSPATH.'/Peak/Controller/Front.php';
 include LIBRARY_ABSPATH.'/Peak/Controller/Action.php';
 include LIBRARY_ABSPATH.'/Peak/View.php';
-
-//load peak autoloader
-include LIBRARY_ABSPATH.'/Peak/autoload.php';
 
 //include application bootstrap if exists
 if(file_exists(APPLICATION_ABSPATH.'/bootstrap.php')) {

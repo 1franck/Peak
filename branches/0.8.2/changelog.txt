@@ -1,5 +1,7 @@
 #VERSION 0.8.2#
  
+ - modified boot.php to include autoload.php before launching Peak_Core
+
  - added method initConfig() in Peak_Core and deprecated method init()
 
  - added method setVars() to Peak_Config
