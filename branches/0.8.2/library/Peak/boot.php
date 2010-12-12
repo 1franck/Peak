@@ -20,13 +20,11 @@ include LIBRARY_ABSPATH.'/Peak/autoload.php';
 //init app&core configurations
 if(defined('CONFIG_FILENAME')) {
 	Peak_Core::initConfig(CONFIG_FILENAME);
-	Peak_Core::initApp(APPLICATION_ABSPATH, LIBRARY_ABSPATH);
 }
 else throw new Peak_Exception('ERR_CUSTOM', 'No configuration have been specified!');
-//die('No configuration have been specified!');
 
 //add LIBRARY_ABSPATH to include path
-set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, Peak_Core::getPath('libs'), get_include_path())));
+set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, LIBRARY_ABSPATH.'/Peak/Libs', get_include_path())));
 
 //if ZEND_LIB_ABSPATH is specified, we add it to include path
 if(defined('ZEND_LIB_ABSPATH')) {   

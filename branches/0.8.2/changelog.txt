@@ -1,4 +1,14 @@
 #VERSION 0.8.2#
+
+ - updated methods Peak_Core::getPath() and Peak_Core_Extension_Modules::init() to use Peak_Core::getDefaultAppPaths().
+
+ - method initApp() modified and renamed getDefaultAppPaths() in Peak_Core. The utility of this method is now to generate 
+   array of default paths of a application.
+   
+ - Peak_Core::initConfig() now called inside initApp() and modified boot.php accordingly. This change bring the possibility
+   to a modify the folders structure of an application inside its own configuration files.
+
+ - added method getClassName(), removed obj() and renamed $_registered_objects to $_objects in Peak_Registry
  
  - modified boot.php to include autoload.php before launching Peak_Core
 
