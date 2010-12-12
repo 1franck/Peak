@@ -128,7 +128,7 @@ class Peak_Core
     			die('no general configurations and/or '.$env.' configurations');
     		}
     	}
-    	
+
     	//get config array
     	$loaded_config = $conf->getVars();
 
@@ -148,10 +148,8 @@ class Peak_Core
 
     	$conf->setVars($final_config);
     	
-    	//}
-    	echo '<pre>';
-    	print_r($conf);
-    	echo '</pre>';
+
+    	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
     	
     	//push merged config object to Peak_Registry
     	Peak_Registry::set('core_config', $conf);
@@ -176,7 +174,7 @@ class Peak_Core
     {
     	$config = Peak_Registry::o()->core_config;
     	
-    	//echo '<pre>'; 	print_r($config);  	echo '</pre>';
+    	
     	
     	// current libray paths
         $config->library_path     = $lib_path;       
@@ -209,6 +207,8 @@ class Peak_Core
         $config->theme_partials_path = $config->theme_path.'/partials';
         $config->theme_layouts_path  = $config->theme_path.'/layouts';
         $config->theme_cache_path    = $config->theme_path.'/cache';
+        
+        //echo '<pre>'; 	print_r($config);  	echo '</pre>';
     }
     
     /**
