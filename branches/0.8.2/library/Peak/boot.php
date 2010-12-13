@@ -18,8 +18,8 @@ include LIBRARY_ABSPATH.'/Peak/Core.php';
 include LIBRARY_ABSPATH.'/Peak/autoload.php';
 
 //init app&core configurations
-if(defined('CONFIG_FILENAME')) {
-	Peak_Core::initConfig(CONFIG_FILENAME);
+if(defined('APPLICATION_CONFIG')) {
+	Peak_Core::initConfig(APPLICATION_CONFIG);
 }
 else throw new Peak_Exception('ERR_CUSTOM', 'No configuration have been specified!');
 

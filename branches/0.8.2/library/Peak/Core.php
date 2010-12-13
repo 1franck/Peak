@@ -23,12 +23,6 @@ class Peak_Core
     protected $_extensions;
     
     /**
-     * plugins extensions @experimental
-     * @var array
-     */
-    protected static $_plugins = array();
-
-    /**
      * Current Environment
      * @final
      * @var string
@@ -123,6 +117,18 @@ class Peak_Core
     	//get config array and merge according to the environment
     	$loaded_config = $conf->getVars();
     	
+    	//add APPLICATION_ABSPATH to path config array if exists
+    	if(isset($loaded_config['all']['path'])) {
+    		foreach($loaded_config['all']['path'] as $pathname => $path) {
+    			$loaded_config['all']['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    		}
+    	}
+    	if(isset($loaded_config[$env]['path'])) {
+    		foreach($loaded_config[$env]['path'] as $pathname => $path) {
+    			$loaded_config[$env]['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    		}
+    	}
+    	
     	//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
     	function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
     	
@@ -145,7 +151,7 @@ class Peak_Core
     	Peak_Registry::set('core_config', $conf);
 
     	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
-    	
+    	   	
 
     	//set some php ini settings
     	if(isset($conf->php)) {
@@ -156,12 +162,7 @@ class Peak_Core
     			}    			
     		}
     	}
-    	
-    	//deprecated
-    	if(isset($conf->svr_url)) { 
-    		define('SVR_URL', $conf->svr_url);
-    		define('PUBLIC_URL', $conf->svr_url.'/'.PUBLIC_ROOT); 
-    	}
+
     }
 
     /**
@@ -170,52 +171,42 @@ class Peak_Core
      * @param string $app_path Current application absolute path
      */
     public static function getDefaultAppPaths($app_path)
-    {
-    	
-    	$paths = array('application'         => $app_path,
-    	               'cache'               => $app_path.'/cache',
-    	               'controllers'         => $app_path.'/controllers',
-    	               'controllers_helpers' => $app_path.'/controllers/helpers',
-    	               'models'              => $app_path.'/models',
-    	               'modules'             => $app_path.'/modules',
-    	               'lang'                => $app_path.'/lang',
-    	               'views'               => $app_path.'/views',
-    	               'views_ini'           => $app_path.'/views/ini',
-    	               'views_helpers'       => $app_path.'/views/helpers',
-    	               'views_themes'        => $app_path.'/views',
-    	               'theme'               => $app_path.'/views');
-    	               
-    	if(defined('APP_THEME')) {
-            $paths['views_themes']   = $paths['views'].'/themes';  
-        	$paths['theme']          = $$paths['views_themes'].'/'.APP_THEME;
-        }
-        else {
-        	$paths['views_themes']   = $paths['views'];  
-        	$paths['theme']          = $paths['views_themes'];
-        }
-        
-        $paths['theme_scripts']  = $paths['theme'].'/scripts';
-        $paths['theme_partials'] = $paths['theme'].'/partials';
-        $paths['theme_layouts']  = $paths['theme'].'/layouts';
-        $paths['theme_cache']    = $paths['theme'].'/cache';
-        
-        return $paths;
+    {  	
+    	return array('application'         => $app_path,
+    	             'cache'               => $app_path.'/cache',
+    	             'controllers'         => $app_path.'/controllers',
+    	             'controllers_helpers' => $app_path.'/controllers/helpers',
+    	             'models'              => $app_path.'/models',
+    	             'modules'             => $app_path.'/modules',
+    	             'lang'                => $app_path.'/lang',
+    	             'views'               => $app_path.'/views',
+    	             'views_ini'           => $app_path.'/views/ini',
+    	             'views_helpers'       => $app_path.'/views/helpers',
+    	             'views_themes'        => $app_path.'/views',
+    	             'theme'               => $app_path.'/views',
+    	             'theme_scripts'       => $app_path.'/views/scripts',
+    	             'theme_partials'      => $app_path.'/views/partials',
+                     'theme_layouts'       => $app_path.'/views/layouts',
+                     'theme_cache'         => $app_path.'/views/cache');
     }
     
     /**
-     * Get environment in .htaccess and store it to $_env
-     * If environment if already stored in $_env, we return it instead
+     * Get environment in .htaccess or from constant APPLICATION_DEV and store it to $_env
+     * If environment if already stored in $_env, we return it instead.
+     * Define APPLICATION_DEV if not already defined.
      * 
      * @return string
      */
     public static function getEnv()
     {
     	if(!isset(self::$_env)) {
-    		$env = getenv('APPLICATION_ENV');
+    		if(!defined('APPLICATION_ENV'))	$env = getenv('APPLICATION_ENV');
+    		else $env = APPLICATION_ENV;
     		if(!in_array($env,array('development', 'testing', 'staging', 'production'))) {
     			self::$_env = 'production';
     		}
-    		else self::$_env = $env;
+    		else self::$_env = $env;   		
+    		if(!defined('APPLICATION_ENV'))	define('APPLICATION_ENV', self::$_env);		
     	}
     	return self::$_env;	
     }
@@ -250,68 +241,6 @@ class Peak_Core
     	elseif(isset($c->$k)) return $c->$k;
     	else return null;
     }
-    
-    /**
-     * Register a plugins object @experimental
-     *
-     * @param object $object
-     */
-    public static function registerPlugin($object)
-    {
-    	self::$_plugins[] = $object;
-    }
-    
-    /**
-     * Dispatch event to plugins object(s) @experimental
-     *
-     * @param string $event
-     */
-    public static function dispatchPlugin($event)
-	{		
-		if(!empty(self::$_plugins)) {
-			$event = str_ireplace(array('Peak_','::'),array('','_'),$event);
-
-			echo $event;
-			foreach(self::$_plugins as $obj) {
-				if(!method_exists($obj,$event)) continue;
-				$obj->$event();
-			}
-		}
-	}	
-
-    /**
-     * Check if controller name exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isController($name)
-    {
-    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
-    }
-
-    /**
-     * Check if internal Peak Controller exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isInternalController($name)
-    {
-    	return (file_exists(LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$name.'.php')) ? true : false;
-    }
-
-    /**
-     * Check if modules name exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isModule($name)
-    {
-    	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
-    }
-
 }
 
 /**

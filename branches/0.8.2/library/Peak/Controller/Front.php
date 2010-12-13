@@ -37,7 +37,7 @@ class Peak_Controller_Front
 	public function dispatch($default_ctrl = null)
 	{
 		$router = Peak_Registry::o()->router;       
-        $core   = Peak_Registry::o()->core;
+        //$core   = Peak_Registry::o()->core;
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
 
@@ -47,11 +47,11 @@ class Peak_Controller_Front
         	$ctrl_name = $router->controller.'Controller';
      
         	//check if controller is not found in current core controllers
-        	if(!$core->isController($ctrl_name))
+        	if(!$this->isController($ctrl_name))
         	{
         		//check for peak internal controller
         		if((defined('ENABLE_PEAK_CONTROLLERS')) && (ENABLE_PEAK_CONTROLLERS) &&
-        		($core->isInternalController($router->controller))) {
+        		($this->isInternalController($router->controller))) {
         			$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
         			$this->controller = new $ctrl_name();
         		}
@@ -60,7 +60,7 @@ class Peak_Controller_Front
         	else $this->controller = new $ctrl_name();
         }
         //if no router controller, try to load default controller
-        elseif((isset($this->default_controller)) && ($core->isController($this->default_controller)))
+        elseif((isset($this->default_controller)) && ($this->isController($this->default_controller)))
         {
         	$default_ctrl = $this->default_controller;
         	$this->controller = new $default_ctrl();
@@ -111,4 +111,40 @@ class Peak_Controller_Front
 	 * Called after controller action dispatching
 	 */
     public function postDispatch() { }
+    
+    
+    /**
+     * Check if controller filename exists
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isController($name)
+    {
+    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
+    }
+
+    /**
+     * Check if internal Peak Controller filename exists
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isInternalController($name)
+    {
+    	return (file_exists(LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$name.'.php')) ? true : false;
+    }
+
+    /**
+     * Check if modules dirname exists
+     *
+     * @param  string $name
+     * @return bool
+     */
+    public function isModule($name)
+    {
+    	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
+    }
+    
+
 }
