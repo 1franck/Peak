@@ -1,5 +1,9 @@
 #VERSION 0.8.2#
 
+ - deleted deprecated method init() in Peak_Core
+ 
+ - added support of php ini_set inside application configuration file (Peak_Core::initConfig)
+
  - updated methods Peak_Core::getPath() and Peak_Core_Extension_Modules::init() to use Peak_Core::getDefaultAppPaths().
 
  - method initApp() modified and renamed getDefaultAppPaths() in Peak_Core. The utility of this method is now to generate 

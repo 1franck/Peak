@@ -90,18 +90,6 @@ class Peak_Core
     	return $this->_extensions;
     }
 
-    /**
-     * @deprecated
-     * 
-     * @final
-     */
-    final public static function init()   
-    {
-    	$config = Peak_Registry::set('core_config',new Peak_Config());
-    	
-    	// Url constants
-        if(defined('SVR_URL')) define('ROOT_URL', SVR_URL.'/'.ROOT);           
-    }
     
     /**
      * Init application config
@@ -109,29 +97,34 @@ class Peak_Core
      * @param string $file
      */
     final public static function initConfig($file)
-    {
-    	//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
-    	function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
-    		
+    {    		
     	$filetype = pathinfo($file,PATHINFO_EXTENSION);
     	$env = self::getEnv();
     	
-    	//we load configuration object according to the file extension
+    	//load configuration object according to the file extension
     	switch($filetype) {
+    		
     		case 'ini' : 
     		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true);
     		    break;
+    		    
+    		case 'php' :
+    			$array = include(APPLICATION_ABSPATH.'/'.$file);
+    			$conf = new Peak_Config();
+    			$conf->setVars($array);
+    			break;
     	}
     	
     	//check if we got the configuration for current environment mode or at least section 'all'
-    	if(!isset($conf->$env)) {
-    		if(!isset($conf->all)) {
-    			die('no general configurations and/or '.$env.' configurations');
-    		}
+    	if((!isset($conf->$env)) && (!isset($conf->all))) {
+    		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
     	}
 
-    	//get config array
+    	//get config array and merge according to the environment
     	$loaded_config = $conf->getVars();
+    	
+    	//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
+    	function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
     	
     	if(isset($loaded_config['all']['path'])) {
     	    $loaded_config['all']['path'] = array_extend(self::getDefaultAppPaths(APPLICATION_ABSPATH), $loaded_config['all']['path']);
@@ -139,35 +132,36 @@ class Peak_Core
     	else {
     		$loaded_config['all']['path'] = self::getDefaultAppPaths(APPLICATION_ABSPATH);
     	}
-    	
-    	
 
-    	//try to merge array section if exists
+    	//try to merge array section 'all' with current environment section if exists
     	if(isset($loaded_config['all']) && isset($loaded_config[$env])) {
     		$final_config = array_extend($loaded_config['all'],$loaded_config[$env]);
     	}
-    	elseif(isset($loaded_config[$env])) {
-    		$final_config = $loaded_config[$env];
-    	}
-    	else {
-    		$final_config = $loaded_config['all'];
-    	}
+    	elseif(isset($loaded_config[$env])) $final_config = $loaded_config[$env];
+    	else $final_config = $loaded_config['all'];
 
-
-    	//
+    	//save transformed config
     	$conf->setVars($final_config);
-    	
+    	Peak_Registry::set('core_config', $conf);
 
     	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
     	
-    	//push merged config object to Peak_Registry
-    	Peak_Registry::set('core_config', $conf);
+
+    	//set some php ini settings
+    	if(isset($conf->php)) {
+    		foreach($conf->php as $setting => $val) {
+    			if(!is_array($val)) ini_set($setting, $val);
+    			else {
+    				foreach($val as $k => $v) ini_set($setting.'.'.$k, $v);
+    			}    			
+    		}
+    	}
     	
+    	//deprecated
     	if(isset($conf->svr_url)) { 
     		define('SVR_URL', $conf->svr_url);
     		define('PUBLIC_URL', $conf->svr_url.'/'.PUBLIC_ROOT); 
     	}
-
     }
 
     /**
