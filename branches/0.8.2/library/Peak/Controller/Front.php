@@ -37,7 +37,6 @@ class Peak_Controller_Front
 	public function dispatch($default_ctrl = null)
 	{
 		$router = Peak_Registry::o()->router;       
-        //$core   = Peak_Registry::o()->core;
 
         if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
 
@@ -145,6 +144,4 @@ class Peak_Controller_Front
     {
     	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
     }
-    
-
 }

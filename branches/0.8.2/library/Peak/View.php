@@ -257,16 +257,5 @@ class Peak_View
             }
             $this->_vars = array_merge($this->_vars,$ini_vars);
         }
-    }
-
-    /**
-     * Include themes functions.php if exists 
-     *
-     * @return included file or false
-     */
-    public function getFunctionsFile()
-    {
-        $file = Peak_Core::getPath('theme').'/functions.php';
-        return (file_exists($file)) ? $file : false;
-    }
+    }    
 }

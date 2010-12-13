@@ -1,5 +1,10 @@
 #VERSION 0.8.2#
 
+ - removed getFunctionsFile() from Peak_View in favor of view helpers objects. 
+   App views file functions.php feature exists nor more.
+
+ - method run() of Peak_Application returns the object itself.
+
  - methods isController(), isInternalController() and isModule() moved from Peak_Core to Peak_Controller_Front.
    fixed Peak_Controller_Front accordingly.
  

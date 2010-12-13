@@ -77,6 +77,8 @@ class Peak_Application
     	$this->front->preDispatch();
     	
     	$this->front->dispatch($default_ctrl);   	
+    	
+    	return $this;
     }
 
     /**
