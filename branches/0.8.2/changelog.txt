@@ -1,7 +1,9 @@
 #VERSION 0.8.2#
 
- - removed getFunctionsFile() from Peak_View in favor of view helpers objects. 
-   App views file functions.php feature exists nor more.
+ - fixed minor error in Peak_Application::__construct(). bootstrap instance was not saved into Peak_Application $bootstrap
+   property. removed registration of Peak_Core in Peak_Registry since its a singleton.
+
+ - removed getFunctionsFile() from Peak_View. App views file functions.php feature removed in favor of view helpers objects.
 
  - method run() of Peak_Application returns the object itself.
 
@@ -600,7 +602,8 @@
  - added simple url rewriting router > class.router.php 
    added router object to the registry in class.wyn.php
    @test unit: tests/router.php
-   This new class allows us to use url like /controller/action/param1 and still permitS the use of    non-rewrited url like index.php?controller=action&param1
+   This new class allows us to use url like /controller/action/param1 and still permitS the use of 
+   non-rewrited url like index.php?controller=action&param1
    Requirements Rewriting url: 
       - apache mod_rewrite
       - valid .htaccess that points to application public page @see class.router.php
