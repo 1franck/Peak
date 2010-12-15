@@ -20,13 +20,20 @@ class Peak_Controller_Front
 	 */
 	public $default_controller;
 
+	/**
+	 * Initialize router uri request
+	 */
+	public function getRoute()
+	{
+		Peak_Registry::o()->router->getRequestURI();
+	}
 
 	/**
 	 * Initialize router uri request
 	 */
 	public function preDispatch()
 	{
-		Peak_Registry::o()->router->getRequestURI();
+		//Peak_Registry::o()->router->getRequestURI();
 	}
 
 	/**

@@ -1,5 +1,7 @@
 #VERSION 0.8.2#
 
+ - added method getRoute() in Peak_Controller_Front and moved code from preDispatch() there. 
+
  - fixed minor error in Peak_Application::__construct(). bootstrap instance was not saved into Peak_Application $bootstrap
    property. removed registration of Peak_Core in Peak_Registry since its a singleton.
 

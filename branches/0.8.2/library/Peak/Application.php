@@ -69,7 +69,9 @@ class Peak_Application
      * @see Peak_Controller_Front::dispatch() for param
      */
     public function run($default_ctrl = 'index')
-    {	    	
+    {
+    	$this->front->getRoute();
+    	
     	$this->front->preDispatch();
     	
     	$this->front->dispatch($default_ctrl);   	

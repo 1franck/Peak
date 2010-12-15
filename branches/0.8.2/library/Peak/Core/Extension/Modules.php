@@ -19,7 +19,7 @@ class Peak_Core_Extension_Modules
 	 */
 	public function init($module, $path = null)
 	{
-		$config = Peak_Registry::o()->core_config;
+		$config = Peak_Registry::o()->config;
 	
     	$module_path = (isset($path)) ? $path : $config->modules_path.'/'.$module;
     	

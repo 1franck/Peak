@@ -148,7 +148,7 @@ class Peak_Core
 
     	//save transformed config
     	$conf->setVars($final_config);
-    	Peak_Registry::set('core_config', $conf);
+    	Peak_Registry::set('config', $conf);
 
     	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
     	   	
@@ -221,9 +221,9 @@ class Peak_Core
      */
     public static function getPath($path = 'application') 
     {
-    	$core_config = Peak_Registry::o()->core_config;
+    	$c = Peak_Registry::o()->config;
     	
-    	if(isset($core_config->path[$path])) return $core_config->path[$path];
+    	if(isset($c->path[$path])) return $c->path[$path];
     	else return null;
     }
     
@@ -236,7 +236,7 @@ class Peak_Core
      */
     public static function config($k,$v = null)
     {
-    	$c = Peak_Registry::o()->core_config;
+    	$c = Peak_Registry::o()->config;
     	if(isset($v)) $c->$k = $v;
     	elseif(isset($c->$k)) return $c->$k;
     	else return null;

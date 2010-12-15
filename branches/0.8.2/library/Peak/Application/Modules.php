@@ -84,7 +84,7 @@ abstract class Peak_Application_Modules
     	if(empty($this->_name)) $this->_name = $this->_ctrl_name;
 
     	//overdrive application paths to modules folder with Peak_Core_Extension_Modules
-    	Peak_Registry::o()->core->modules()->init($this->_name, $this->_path);
+    	Peak_Core::getInstance()->modules()->init($this->_name, $this->_path);
     }
       
     

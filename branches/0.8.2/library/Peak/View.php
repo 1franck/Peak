@@ -104,8 +104,8 @@ class Peak_View
         	return call_user_func_array(array($this->engine(), $method), $args);        
         }
         elseif((isset($this->helper()->$method)) || ($this->helper()->exists($method))) return $this->helper()->$method;
-        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
-            trigger_error('DEV_MODE: View Render method '.$method.'() doesn\'t exists');
+        elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
+            trigger_error('View method/helper '.$method.'() doesn\'t exists');
         }
     }
 
