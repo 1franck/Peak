@@ -79,12 +79,12 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
         
         //registry
         echo '<div class="window" id="pkdb_registry_window">';
-        echo '<h2>'.count(Peak_Registry::getObjectList()).' registered objects</h2>';
-        foreach(Peak_Registry::getObjectList() as $name) {
+        echo '<h2>'.count(Peak_Registry::getObjectsList()).' registered objects</h2>';
+        foreach(Peak_Registry::getObjectsList() as $name) {
         	echo '<strong>'.$name.'</strong> ['.Peak_Registry::getClassName($name).']<br />';
         }
         
-        foreach(Peak_Registry::getObjectList() as $name) {
+        foreach(Peak_Registry::getObjectsList() as $name) {
         	echo '<h2>'.$name.'</h2><pre>'.print_r(Peak_Registry::get($name),true).'</pre>';
         }
         echo '</div>';

@@ -97,7 +97,7 @@ class Peak_Registry
 	 *
 	 * @return array
 	 */
-	public static function getObjectList()
+	public static function getObjectsList()
 	{
 	    return array_keys(self::$_objects);
 	}

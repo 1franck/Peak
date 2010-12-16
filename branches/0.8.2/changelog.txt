@@ -1,5 +1,9 @@
 #VERSION 0.8.2#
 
+ - method getObjectList() renamed to getObjectsList() in Peak_Registry
+
+ - cleaning tests folder and simpletest and switching to PHPUnit
+
  - added method getRoute() in Peak_Controller_Front and moved code from preDispatch() there. 
 
  - fixed minor error in Peak_Application::__construct(). bootstrap instance was not saved into Peak_Application $bootstrap

@@ -23,8 +23,8 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
 	public function testControllerNewInstance()
     {
         // getting instance initializes instance
-        $controller = new testController();
-        $this->assertType('Peak_Controller_Action', $controller);
+        //$controller = new testController();
+        //$this->assertType('Peak_Controller_Action', $controller);
     }
     
 }
