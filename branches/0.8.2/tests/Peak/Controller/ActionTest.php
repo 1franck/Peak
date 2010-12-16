@@ -2,7 +2,7 @@
 /**
  * Test Helper
  */
-require_once dirname(__FILE__).'/../TestHelper.php';
+require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
  * @see Peak_Controller_Action, Peak_Registry, Peak_Core
@@ -22,7 +22,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
 	
 	public function testControllerNewInstance()
     {
-        // getting instance initializes instance       
+        // getting instance initializes instance
         $controller = new testController();
         $this->assertType('Peak_Controller_Action', $controller);
     }
