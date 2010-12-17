@@ -63,7 +63,7 @@ abstract class Peak_View_Render
     	}
     	//remove double slash(//) inside url
     	$url_part = explode('http://', $url);
-    	$url = 'http://'.str_replace('//','/',$url_part[1]);
+    	$url = 'http://'.str_replace(array('///','//'),'/',$url_part[1]);
     	
     	if(!$return) echo $url;  
     	else return $url;

@@ -1,5 +1,7 @@
 #VERSION 0.8.2#
 
+ - fixed double slash in url of method Peak_Router::setBaseUri() and Peak_Render::baseUrl()
+
  - method getObjectList() renamed to getObjectsList() in Peak_Registry
 
  - cleaning tests folder and simpletest and switching to PHPUnit
