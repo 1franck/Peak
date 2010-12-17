@@ -57,12 +57,12 @@ abstract class Peak_View_Render
      */
     public function baseUrl($path = null, $return = false)
     {
-    	if(defined('ROOT_URL')) $url = ROOT_URL.'/'.$path;
-    	elseif(isset($_SERVER['DOCUMENT_ROOT'])) {
-    		$url = $_SERVER['DOCUMENT_ROOT'].'/'.$path;
+    	if(defined('PUBLIC_URL')) $url = PUBLIC_URL.'/'.$path;
+    	elseif(isset($_SERVER['SERVER_NAME'])) {
+    		$url = 'http://'.$_SERVER['SERVER_NAME'].'/'.PUBLIC_ROOT.'/'.$path;
     	}
     	//remove double slash(//) inside url
-    	$url_part = explode('http://',$url);
+    	$url_part = explode('http://', $url);
     	$url = 'http://'.str_replace('//','/',$url_part[1]);
     	
     	if(!$return) echo $url;  

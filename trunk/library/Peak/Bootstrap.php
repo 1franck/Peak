@@ -31,12 +31,12 @@ abstract class Peak_Bootstrap
     }
 
     /**
-     * Get environment in .htaccess
+     * Get environment form Peak_Core
      *
      * @return string
      */
-    public function getEnvironment()
+    public function getEnv()
     {
-    	return getenv('APPLICATION_ENV'); 	
+    	return Peak_Core::getEnv(); 	
     }
 }

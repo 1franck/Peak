@@ -10,10 +10,10 @@ class Peak_Registry
 {
 
 	/**
-	 * Array of regitered objects
+	 * Array of registered objects
 	 * @var array
 	 */
-    protected static $_registered_objects = array();
+    protected static $_objects = array();
     
     /**
      * Instance of registry
@@ -25,6 +25,17 @@ class Peak_Registry
     private final function __construct() { }
         
     /**
+	 * Return an registered object or null
+	 *
+	 * @param  string $name
+	 * @return object/null
+	 */
+	public function __get($name) 
+	{
+	    return isset(self::$_objects[$name]) ? self::$_objects[$name] : null;
+	}
+	
+    /**
      * set/get registry instance
      *
      * @return object $_instance
@@ -33,16 +44,6 @@ class Peak_Registry
 	{
 		if(is_null(self::$_instance)) self::$_instance = new self();
 		return self::$_instance;
-	}
-	
-	/**
-	 * Shortcut of method getInstance() @deprecated in favoir of o()
-	 *
-	 * @return object $_instance
-	 */
-	public static function obj()
-	{
-	    return self::getInstance();
 	}
 	
 	/**
@@ -64,8 +65,8 @@ class Peak_Registry
 	 */
 	public static function set($name,$obj)
 	{
-	    self::$_registered_objects[$name] = $obj;
-	    return self::$_registered_objects[$name];
+	    self::$_objects[$name] = $obj;
+	    return self::$_objects[$name];
 	}
 	
 	/**
@@ -76,7 +77,29 @@ class Peak_Registry
 	 */
 	public static function get($name)
 	{
-	    if(self::isRegistered($name)) return self::$_registered_objects[$name];
+	    if(self::isRegistered($name)) return self::$_objects[$name];
+	}
+	
+	/**
+	 * Get class name of a registered object
+	 *
+	 * @param  string $name
+	 * @return string|false
+	 */
+	public static function getClassName($name) 
+	{
+		if(self::isRegistered($name)) return get_class(self::$_objects[$name]);
+		else return false;
+	}
+	
+    /**
+	 * Return objects list
+	 *
+	 * @return array
+	 */
+	public static function getObjectsList()
+	{
+	    return array_keys(self::$_objects);
 	}
 	
 	/**
@@ -86,7 +109,7 @@ class Peak_Registry
 	 */
 	public static function unregister($name)
 	{
-	    if(self::isRegistered($name)) unset(self::$_registered_objects[$name]);
+	    if(self::isRegistered($name)) unset(self::$_objects[$name]);
 	}
 	
 	/**
@@ -97,7 +120,7 @@ class Peak_Registry
 	 */
 	public static function isRegistered($name)
 	{
-	    return array_key_exists($name,self::$_registered_objects) ? true : false;
+	    return isset(self::$_objects[$name]) ? true : false;
 	}
 	
 	/**
@@ -109,30 +132,9 @@ class Peak_Registry
 	public static function isInstanceOf($name, $class_name)
 	{
 	    if(self::isRegistered($name)) {
-	        return (self::$_registered_objects[$name] instanceof $class_name) ? true : false;
+	        return (self::$_objects[$name] instanceof $class_name) ? true : false;
 	    }
 	    return false;
-	}
-	    
-	/**
-	 * Return an registered object or null
-	 *
-	 * @param  string $name
-	 * @return object/null
-	 */
-	public function __get($name) 
-	{
-	    return array_key_exists($name,self::$_registered_objects) ? self::$_registered_objects[$name] : null;
-	}
-	
-	/**
-	 * Return objects list
-	 *
-	 * @return array
-	 */
-	public static function getObjectList()
-	{
-	    return array_keys(self::$_registered_objects);
 	}
 	      
 }

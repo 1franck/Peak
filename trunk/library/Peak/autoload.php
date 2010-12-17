@@ -40,7 +40,8 @@ function _autoloadZend($cn)
 //check internal zend lib (they have priority over external ZEND_LIB_ABSPATH)
 function _autoloadZendInternal($cn)
 {
-    $file = Peak_Core::getPath('libs').'/'._autoloadClass2File($cn);
+    //$file = Peak_Core::getPath('libs').'/'._autoloadClass2File($cn);
+    $file = LIBRARY_ABSPATH.'/Peak/Libs/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
 }
