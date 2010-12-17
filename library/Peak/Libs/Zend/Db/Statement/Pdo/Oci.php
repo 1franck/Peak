@@ -17,13 +17,13 @@
  * @subpackage Statement
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Oci.php 21105 2010-02-19 21:27:09Z mikaelkael $
+ * @version    $Id: Oci.php 21104 2010-02-19 21:26:36Z mikaelkael $
  */
 
 /**
  * @see Zend_Db_Statement_Pdo
  */
-require_once 'Zend/Db/Statement/Pdo.php';
+//require_once 'Zend/Db/Statement/Pdo.php';
 
 /**
  * Proxy class to wrap a PDOStatement object for IBM Databases.

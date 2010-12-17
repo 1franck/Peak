@@ -50,17 +50,13 @@ class Peak_Application
 	 */
     private function __construct()
     {                
-        // start registry     
-        $reg = Peak_Registry::getInstance();                
-        
-        // register application/core/view/router instance
-        $reg->set('app', $this);
-        $reg->set('core', Peak_Core::getInstance());
-        $reg->set('view', new Peak_View('default.ini'));
-        $reg->set('router', new Peak_Router(ROOT));
-        
+        // register application/view/router instance
+        Peak_Registry::set('app', $this);
+        Peak_Registry::set('view', new Peak_View('default.ini'));
+        Peak_Registry::set('router', new Peak_Router(PUBLIC_ROOT));
+             
         // execute app bootstrap
-        if(class_exists('bootstrap',false)) new bootstrap();   
+        if(class_exists('bootstrap',false)) $this->bootstrap = new bootstrap();   
         
         // load front controller
         if(class_exists('front',false)) {
@@ -73,10 +69,14 @@ class Peak_Application
      * @see Peak_Controller_Front::dispatch() for param
      */
     public function run($default_ctrl = 'index')
-    {	    	
+    {
+    	$this->front->getRoute();
+    	
     	$this->front->preDispatch();
     	
     	$this->front->dispatch($default_ctrl);   	
+    	
+    	return $this;
     }
 
     /**

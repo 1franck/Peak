@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('_VERSION_','0.8.1');
+define('_VERSION_','0.8.2');
 define('_NAME_','PEAK');
 define('_DESCR_','Php wEb Application Kernel');
 
@@ -23,17 +23,19 @@ class Peak_Core
     protected $_extensions;
     
     /**
-     * plugins extensions @experimental
-     * @var array
+     * Current Environment
+     * @final
+     * @var string
      */
-    protected static $_plugins = array();
-
+    private static $_env;
+    
     /**
      * object itself
      * @var object
      */
     private static $_instance = null; 
-
+    
+    
     /**
      * Singleton peak core
      *
@@ -82,82 +84,149 @@ class Peak_Core
     	return $this->_extensions;
     }
 
+    
     /**
-     * Init Peak_Config object, set into registry and define usefull constants.
-     * Called inside boot.php
-     * 
-     * @final
-     */
-    final public static function init()   
-    {
-    	$config = Peak_Registry::set('core_config',new Peak_Config());
-    	
-    	// Url constants
-        if(defined('SVR_URL')) define('ROOT_URL', SVR_URL.'/'.ROOT);           
-    }
-
-    /**
-     * Prepare paths and store it inside Peak_Config.
-     * Called inside boot.php
+     * Init application config
      *
-     * @param string $app_path
-     * @param string $lib_path
+     * @param string $file
      */
-    public static function initApp($app_path, $lib_path)
-    {
-    	$config = Peak_Registry::o()->core_config;
+    final public static function initConfig($file)
+    {    		
+    	$filetype = pathinfo($file,PATHINFO_EXTENSION);
+    	$env = self::getEnv();
     	
-    	// current libray paths
-        $config->library_path     = $lib_path;       
-        $config->libs_path        = $lib_path.'/Peak/libs';  
+    	//load configuration object according to the file extension
+    	switch($filetype) {
+    		
+    		case 'ini' : 
+    		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true);
+    		    break;
+    		    
+    		case 'php' :
+    			$array = include(APPLICATION_ABSPATH.'/'.$file);
+    			$conf = new Peak_Config();
+    			$conf->setVars($array);
+    			break;
+    	}
+    	
+    	//check if we got the configuration for current environment mode or at least section 'all'
+    	if((!isset($conf->$env)) && (!isset($conf->all))) {
+    		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
+    	}
+
+    	//get config array and merge according to the environment
+    	$loaded_config = $conf->getVars();
+    	
+    	//add APPLICATION_ABSPATH to path config array if exists
+    	if(isset($loaded_config['all']['path'])) {
+    		foreach($loaded_config['all']['path'] as $pathname => $path) {
+    			$loaded_config['all']['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    		}
+    	}
+    	if(isset($loaded_config[$env]['path'])) {
+    		foreach($loaded_config[$env]['path'] as $pathname => $path) {
+    			$loaded_config[$env]['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    		}
+    	}
+    	
+    	//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
+    	function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
+    	
+    	if(isset($loaded_config['all']['path'])) {
+    	    $loaded_config['all']['path'] = array_extend(self::getDefaultAppPaths(APPLICATION_ABSPATH), $loaded_config['all']['path']);
+    	}
+    	else {
+    		$loaded_config['all']['path'] = self::getDefaultAppPaths(APPLICATION_ABSPATH);
+    	}
+
+    	//try to merge array section 'all' with current environment section if exists
+    	if(isset($loaded_config['all']) && isset($loaded_config[$env])) {
+    		$final_config = array_extend($loaded_config['all'],$loaded_config[$env]);
+    	}
+    	elseif(isset($loaded_config[$env])) $final_config = $loaded_config[$env];
+    	else $final_config = $loaded_config['all'];
+
+    	//save transformed config
+    	$conf->setVars($final_config);
+    	Peak_Registry::set('config', $conf);
+
+    	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
     	   	
-    	// current app paths
-        $config->application_path         = $app_path;
-        $config->cache_path               = $app_path.'/cache';
-        $config->controllers_path         = $app_path.'/controllers';
-        $config->controllers_helpers_path = $config->controllers_path .'/helpers';
-        $config->models_path              = $app_path.'/models';       
-        $config->modules_path             = $app_path.'/modules';
-        $config->lang_path                = $app_path.'/lang';
-        
-        $config->views_path          = $app_path.'/views';       
-        $config->views_ini_path      = $config->views_path.'/ini';
-        $config->views_helpers_path  = $config->views_path.'/helpers';
-                    
-        
-        if(defined('APP_THEME')) {
-            $config->views_themes_path   = $config->views_path.'/themes';  
-        	$config->theme_path          = $config->views_themes_path.'/'.APP_THEME;
-        }
-        else {
-        	$config->views_themes_path   = $config->views_path;  
-        	$config->theme_path          = $config->views_themes_path;
-        }
-        
-        $config->theme_scripts_path  = $config->theme_path.'/scripts';
-        $config->theme_partials_path = $config->theme_path.'/partials';
-        $config->theme_layouts_path  = $config->theme_path.'/layouts';
-        $config->theme_cache_path    = $config->theme_path.'/cache';
+
+    	//set some php ini settings
+    	if(isset($conf->php)) {
+    		foreach($conf->php as $setting => $val) {
+    			if(!is_array($val)) ini_set($setting, $val);
+    			else {
+    				foreach($val as $k => $v) ini_set($setting.'.'.$k, $v);
+    			}    			
+    		}
+    	}
+
     }
 
     /**
-     * Get application different vars from Peak_Configs ending by '_path'
+     * Generate an array of paths that represent all application subfolders
+     *
+     * @param string $app_path Current application absolute path
+     */
+    public static function getDefaultAppPaths($app_path)
+    {  	
+    	return array('application'         => $app_path,
+    	             'cache'               => $app_path.'/cache',
+    	             'controllers'         => $app_path.'/controllers',
+    	             'controllers_helpers' => $app_path.'/controllers/helpers',
+    	             'models'              => $app_path.'/models',
+    	             'modules'             => $app_path.'/modules',
+    	             'lang'                => $app_path.'/lang',
+    	             'views'               => $app_path.'/views',
+    	             'views_ini'           => $app_path.'/views/ini',
+    	             'views_helpers'       => $app_path.'/views/helpers',
+    	             'views_themes'        => $app_path.'/views',
+    	             'theme'               => $app_path.'/views',
+    	             'theme_scripts'       => $app_path.'/views/scripts',
+    	             'theme_partials'      => $app_path.'/views/partials',
+                     'theme_layouts'       => $app_path.'/views/layouts',
+                     'theme_cache'         => $app_path.'/views/cache');
+    }
+    
+    /**
+     * Get environment in .htaccess or from constant APPLICATION_DEV and store it to $_env
+     * If environment if already stored in $_env, we return it instead.
+     * Define APPLICATION_DEV if not already defined.
+     * 
+     * @return string
+     */
+    public static function getEnv()
+    {
+    	if(!isset(self::$_env)) {
+    		if(!defined('APPLICATION_ENV'))	$env = getenv('APPLICATION_ENV');
+    		else $env = APPLICATION_ENV;
+    		if(!in_array($env,array('development', 'testing', 'staging', 'production'))) {
+    			self::$_env = 'production';
+    		}
+    		else self::$_env = $env;   		
+    		if(!defined('APPLICATION_ENV'))	define('APPLICATION_ENV', self::$_env);		
+    	}
+    	return self::$_env;	
+    }
+
+    /**
+     * Get application path vars from Peak_Registry::o()->core_config
      *
      * @param   string $path
-     * @return  string
+     * @return  string|null
      * 
-     * @example getPath('application') = Peak_Registry::o()->core_config->application_path
+     * @example getPath('application') = Peak_Registry::o()->core_config->path['application']
      */
-    public static function getPath($path = 'application', $absolute_path = true) 
+    public static function getPath($path = 'application') 
     {
-        $pathvar = $path.'_path';
-        if(isset(Peak_Registry::o()->core_config->$pathvar)) {
-            if($absolute_path) return Peak_Registry::o()->core_config->$pathvar;
-            else return str_replace(SVR_ABSPATH,'', Peak_Registry::o()->core_config->$pathvar);
-        }
-        else return null;
+    	$c = Peak_Registry::o()->config;
+    	
+    	if(isset($c->path[$path])) return $c->path[$path];
+    	else return null;
     }
-
+    
     /**
      * Get/Set core configurations
      *
@@ -167,73 +236,11 @@ class Peak_Core
      */
     public static function config($k,$v = null)
     {
-    	$c = Peak_Registry::o()->core_config;
+    	$c = Peak_Registry::o()->config;
     	if(isset($v)) $c->$k = $v;
     	elseif(isset($c->$k)) return $c->$k;
     	else return null;
     }
-    
-    /**
-     * Register a plugins object @experimental
-     *
-     * @param object $object
-     */
-    public static function registerPlugin($object)
-    {
-    	self::$_plugins[] = $object;
-    }
-    
-    /**
-     * Dispatch event to plugins object(s) @experimental
-     *
-     * @param string $event
-     */
-    public static function dispatchPlugin($event)
-	{		
-		if(!empty(self::$_plugins)) {
-			$event = str_ireplace(array('Peak_','::'),array('','_'),$event);
-
-			echo $event;
-			foreach(self::$_plugins as $obj) {
-				if(!method_exists($obj,$event)) continue;
-				$obj->$event();
-			}
-		}
-	}	
-
-    /**
-     * Check if controller name exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isController($name)
-    {
-    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
-    }
-
-    /**
-     * Check if internal Peak Controller exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isInternalController($name)
-    {
-    	return (file_exists(LIBRARY_ABSPATH.'/Peak/Controller/Internal/'.$name.'.php')) ? true : false;
-    }
-
-    /**
-     * Check if modules name exists
-     *
-     * @param  string $name
-     * @return bool
-     */
-    public function isModule($name)
-    {
-    	return (file_exists(Peak_Core::getPath('modules').'/'.$name)) ? true : false;
-    }
-
 }
 
 /**

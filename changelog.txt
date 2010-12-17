@@ -1,3 +1,57 @@
+#VERSION 0.8.2#
+
+ - method getObjectList() renamed to getObjectsList() in Peak_Registry
+
+ - cleaning tests folder and simpletest and switching to PHPUnit
+
+ - added method getRoute() in Peak_Controller_Front and moved code from preDispatch() there. 
+
+ - fixed minor error in Peak_Application::__construct(). bootstrap instance was not saved into Peak_Application $bootstrap
+   property. removed registration of Peak_Core in Peak_Registry since its a singleton.
+
+ - removed getFunctionsFile() from Peak_View. App views file functions.php feature removed in favor of view helpers objects.
+
+ - method run() of Peak_Application returns the object itself.
+
+ - methods isController(), isInternalController() and isModule() moved from Peak_Core to Peak_Controller_Front.
+   fixed Peak_Controller_Front accordingly.
+ 
+ - deprecated constant APP_THEME and modified Peak_Core::getDefaultAppPaths() accordingly
+
+ - removed experimental stuff about plugins in Peak_Core
+
+ - deleted deprecated method init() in Peak_Core
+ 
+ - added support of php ini_set inside application configuration file (Peak_Core::initConfig)
+
+ - updated methods Peak_Core::getPath() and Peak_Core_Extension_Modules::init() to use Peak_Core::getDefaultAppPaths().
+
+ - method initApp() modified and renamed getDefaultAppPaths() in Peak_Core. The utility of this method is now to generate 
+   array of default paths of a application.
+   
+ - Peak_Core::initConfig() now called inside initApp() and modified boot.php accordingly. This change bring the possibility
+   to a modify the folders structure of an application inside its own configuration files.
+
+ - added method getClassName(), removed obj() and renamed $_registered_objects to $_objects in Peak_Registry
+ 
+ - modified boot.php to include autoload.php before launching Peak_Core
+
+ - added method initConfig() in Peak_Core and deprecated method init()
+
+ - added method setVars() to Peak_Config
+
+ - added static method getEnv() and static private property $_env in Peak_Core, fixed Peak_Bootstrap accordingly
+
+ - deprecated constants PROJECT_NAME, PROJECT_DESCR, APP_DEFAULT_CTRL, DEV_MODE
+
+ - renamed constant ROOT to PUBLIC_ROOT, ,ROOT_ABSPATH become PUBLIC_ABSPATH and ROOT_URL become PUBLIC_URL.
+   Fixed method baseUrl() in Peak_View_Render accordingly
+
+ - minor fix of method baseUrl() in Peak_View_Render
+
+ - minor fix of method _load in Peak_Config_Ini
+
+
 #VESRION 0.8.1#
  
  - modified Peak_View_Helper_Debug and added Peak_View_Helper_Debugbar.  
@@ -554,7 +608,8 @@
  - added simple url rewriting router > class.router.php 
    added router object to the registry in class.wyn.php
    @test unit: tests/router.php
-   This new class allows us to use url like /controller/action/param1 and still permitS the use of    non-rewrited url like index.php?controller=action&param1
+   This new class allows us to use url like /controller/action/param1 and still permitS the use of 
+   non-rewrited url like index.php?controller=action&param1
    Requirements Rewriting url: 
       - apache mod_rewrite
       - valid .htaccess that points to application public page @see class.router.php

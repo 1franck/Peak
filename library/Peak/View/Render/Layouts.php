@@ -86,10 +86,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     {
         // remove layout
         // so we can use render() to include a partial file inside view scripts
-        $this->noLayout();      
-        
-        // include theme functions.php    
-        if(Peak_Registry::o()->view->getFunctionsFile()) include_once(Peak_Registry::o()->view->getFunctionsFile());
+        $this->noLayout();
 
         // include controller action view with or without partials groups
         include($layout);     
@@ -98,7 +95,6 @@ class Peak_View_Render_Layouts extends Peak_View_Render
     /**
      * Output Controller view content in layout
      * @example in your layout page, use $this->layoutContent() to display where controller action view should be displayed
-     *
      */
     public function layoutContent()
     {

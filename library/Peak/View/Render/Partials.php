@@ -117,9 +117,6 @@ class Peak_View_Render_Partials extends Peak_View_Render
         // so we can use render() to include a single partial file without group inside view scripts
         $this->noGroup();  
         
-        // include theme functions.php    
-        if(Peak_Registry::o()->view->getFunctionsFile()) include_once(Peak_Registry::o()->view->getFunctionsFile());
-        
         // include controller action view with or without partials groups
         if(is_array($viewfiles)) foreach($viewfiles as $file) include($file);
         else include($viewfiles);    

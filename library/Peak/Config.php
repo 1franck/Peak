@@ -87,4 +87,14 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	return $this->_vars;
     }
+    
+    /**
+     * Set an array into object
+     *
+     * @param array $array
+     */
+    public function setVars($array)
+    {
+    	$this->_vars = $array;
+    }
 }

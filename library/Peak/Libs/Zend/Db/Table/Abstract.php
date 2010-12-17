@@ -17,23 +17,23 @@
  * @subpackage Table
  * @copyright  Copyright (c) 2005-2010 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id: Abstract.php 21079 2010-02-18 18:15:49Z tech13 $
+ * @version    $Id: Abstract.php 21078 2010-02-18 18:07:16Z tech13 $
  */
 
 /**
  * @see Zend_Db_Adapter_Abstract
  */
-require_once 'Zend/Db/Adapter/Abstract.php';
+//require_once 'Zend/Db/Adapter/Abstract.php';
 
 /**
  * @see Zend_Db_Adapter_Abstract
  */
-require_once 'Zend/Db/Select.php';
+//require_once 'Zend/Db/Select.php';
 
 /**
  * @see Zend_Db
  */
-require_once 'Zend/Db.php';
+//require_once 'Zend/Db.php';
 
 /**
  * Class for SQL table interface.
