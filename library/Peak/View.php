@@ -197,7 +197,6 @@ class Peak_View
      * @param string $file
      * @param string $path
      * @return string or array   return array of view files when layout is used
-     *
      */
     public function render($file,$path)
     {

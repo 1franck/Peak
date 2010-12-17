@@ -76,6 +76,19 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_array($this->peakview->getVars()));
 	}
 	
+	function testResetVars()
+	{
+		//set a variable
+		$this->peakview->test = 'value';
+		
+		//reset vars
+		$this->peakview->resetVars();
+		
+		//check is vars array is empty
+		$vars = $this->peakview->getVars();
+		$this->assertTrue(empty($vars));
+	}
+	
 	/**
 	 * @expectedException Peak_Exception
 	 */
@@ -91,6 +104,5 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
  
         $this->fail('An expected exception has not been raised.');
 	}
-	
 	
 }
