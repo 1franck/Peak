@@ -5,9 +5,10 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
- * @see Peak_Router
+ * @see Peak_Router, Peak_Exception
  */
 require_once 'Peak/Router.php';
+require_once 'Peak/Exception.php';
 
 /**
  * @category   Peak
@@ -118,6 +119,35 @@ class Peak_RouterTest extends PHPUnit_Framework_TestCase
 		//request
 		$this->assertTrue(is_array($this->peakrouter->request));
 		$this->assertTrue(count($this->peakrouter->request) == 4);
+	}
+	
+	/**
+	 * @expectedException Peak_Exception
+	 */
+	function testGetRequestURIException()
+	{
+		try {
+			//fake $_SERVER['REQUEST_URI'];
+		    $_SERVER['REQUEST_URI'] = '/mycontroller/index.php';	    
+			$this->peakrouter->getRequestURI();
+		}
+		catch (InvalidArgumentException $expected) {
+            return;
+        }
+        $this->fail('An expected exception has not been raised.');
+        
+        
+        $this->peakrouter->reset();
+        
+        try {
+			//fake $_SERVER['REQUEST_URI'];
+		    $_SERVER['REQUEST_URI'] = '/index.php/mycontroller';	    
+			$this->peakrouter->getRequestURI();
+		}
+		catch (InvalidArgumentException $expected) {
+            return;
+        }
+        $this->fail('An expected exception has not been raised.');
 	}
 	    
     
