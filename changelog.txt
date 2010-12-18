@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - deleted deprecated folder views/functions
+
 #VERSION 0.8.2#
 
  - fixed getRequestURI() when $base_uri = '/' (it mean that app located at the base of server url ex: http://example.com)
