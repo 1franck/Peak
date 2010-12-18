@@ -117,13 +117,14 @@ abstract class Peak_Controller_Action
 
     /**
      * Create a list of "actions"(methods)
-     * Support methods with underscore(_) suffix
      */
     public function listActions()
     {
+    	$this->actions = array();
+    	
         $c_methods = get_class_methods($this->name);
-     
-        $regexp = '/^([_]{1}[a-zA-Z]{1})/';
+
+        $regexp = '/^(['.$this->action_prefix.']{'.strlen($this->action_prefix).'}[a-zA-Z]{1})/';
               
         foreach($c_methods as $method) {            
             if(preg_match($regexp,$method)) $this->actions[] = $method;
@@ -131,7 +132,7 @@ abstract class Peak_Controller_Action
     }
 
     /**
-     * Check if action exists. Support zend controller action method name
+     * Check if action method name exists
      *
      * @param  string $name
      * @return bool

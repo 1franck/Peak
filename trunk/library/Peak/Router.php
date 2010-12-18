@@ -64,7 +64,7 @@ class Peak_Router
      * @example your application script page url is http://example.com/myapp/index.php  so $base_uri would be : '/myapp/'
      * @param   string $base_uri - Its recommended to use constant 'PUBLIC_ROOT' when instantiate this object
      */
-    public function __construct($base_uri)
+    public function __construct($base_uri = '/')
     {
     	$this->setBaseUri($base_uri);   
     }

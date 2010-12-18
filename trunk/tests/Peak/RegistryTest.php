@@ -18,7 +18,23 @@ require_once 'Peak/Registry.php';
 class Peak_RegistryTest extends PHPUnit_Framework_TestCase
 {
 	
+	public static function setUpBeforeClass()
+	{		
+		Peak_RegistryTest::tearDownAfterClass();
+	}
+	
+	//clean object registered inside registry
+	public static function tearDownAfterClass()
+    {
+    	$list = Peak_Registry::getObjectsList();
 
+    	if(!empty($list)) {
+    		foreach($list as $obj_name) {
+    			Peak_Registry::unregister($obj_name);
+    		}
+    	}
+    }
+    
 	function testGetInstance()
 	{
 		$reg = Peak_Registry::getInstance();
@@ -86,8 +102,7 @@ class Peak_RegistryTest extends PHPUnit_Framework_TestCase
     	
     	$this->assertFalse(Peak_Registry::isRegistered('test_obj'),'test_obj should be unregistered');
     }
-    
-    
+  
 }
 
 // example class that will be registered by Peak_Registry
