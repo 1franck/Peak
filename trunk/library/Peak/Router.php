@@ -1,15 +1,7 @@
 <?php
-
 /**
- * Simple router URL php rewriting.
- * 
- * @desc     Support regular expression and url like : 
- *            http://example.com/[application php file]?[controller]=[action]&[param1]=[param2]&[...]
- *            http://example.com/index.php?server=php&view=ver  
- *            AND
- *            http://example.com/[controller]/[action]/[param1]/[param2]/[...]
- *            http://example.com/server/php/view/version
- *           
+ * Router URL parser. Supporting $_GET url, standard rewrited url and regex url
+ * For standard rewrited url and regex url, apache mod_rewrite is required          
  * 
  * @author   Francois Lajoie
  * @version  $Id$     
@@ -67,11 +59,10 @@ class Peak_Router
 
 
     /**
-     * Set base url of your application index.php
+     * Set base url of your application
      * 
-     * @example your application script page url is http://example.com/myapp/index.php
-     *          so $base_uri would be : '/myapp/'
-     * @param   string $base_uri - Its recommeneded that you use constant 'PUBLIC_ROOT' when instantiate this object
+     * @example your application script page url is http://example.com/myapp/index.php  so $base_uri would be : '/myapp/'
+     * @param   string $base_uri - Its recommended to use constant 'PUBLIC_ROOT' when instantiate this object
      */
     public function __construct($base_uri)
     {
@@ -205,7 +196,13 @@ class Peak_Router
 	 */
 	public function addRegex($regex, $route)
 	{
-		$this->_regex[$regex] = $route;
+		if(is_array($route)) {
+			$this->_regex[$regex] = $route;
+		}
+		else {
+			$route = explode('.', $route);
+			$this->_regex[$regex] = array('controller' => $route[0], 'action' => $route[1]);
+		}
 		return $this;
 	}
 
@@ -229,17 +226,12 @@ class Peak_Router
 					//if url match a regexp but end up with additionnal data, the url should be not valid otherwise 
 					//we will have url that can ends with anything and still be valid for the application and google, wich its bad
 					if($this->request_uri === $matches[0]) {
-						if(is_array($route)) {
-							$this->controller = $route['controller'];
-							$this->action = $route['action'];
-						}
-						else {
-							$route = explode('.', $route);
-							$this->controller = $route[0];
-							$this->action = $route[1];
-						}
+						
+						$this->controller = $route['controller'];
+						$this->action = $route['action'];					
 						$this->params = array_slice($matches,1);
 						$this->paramsToAssoc();
+						
 						return true;
 						break;
 					}
