@@ -1,6 +1,9 @@
 #VERSION 0.8.3#
 
+ - moved string to array conversion from matchRegex to addRegex in Peak_Router 
+
  - deleted deprecated folder views/functions
+
 
 #VERSION 0.8.2#
 
