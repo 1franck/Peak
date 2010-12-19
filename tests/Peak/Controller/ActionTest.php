@@ -91,9 +91,20 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
 	 */
     function testHandleActionException()
     {
-    	//try render a script file when no rendering engine have been set before
+    	//handle a default action that don't exists
 		try {
 			$this->peakcontroller->handleAction('test');
+		}
+		catch (InvalidArgumentException $expected) {
+            return;
+        }
+ 
+        $this->fail('An expected exception has not been raised.');
+        
+        //handle action from router that don't exists
+        Peak_Registry::o()->router->action = 'test';
+		try {
+			$this->peakcontroller->handleAction('index');
 		}
 		catch (InvalidArgumentException $expected) {
             return;
