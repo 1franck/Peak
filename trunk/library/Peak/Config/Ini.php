@@ -34,7 +34,11 @@ class Peak_Config_Ini extends Peak_Config
 	{
 		if(!file_exists($file)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.' has tried to load non-existent ini file');
 		else {
-			$ini = parse_ini_file($file, $process_sections);
+			$ini = @parse_ini_file($file, $process_sections);
+			//php 5.2.7
+			if((version_compare(PHP_VERSION, '5.2.7') >= 0) && ($ini == false)) {
+				throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': syntax error(s) in your configuration file');
+			}
 			return $this->_load($ini, $process_sections, $section_name);
 		}
 	}

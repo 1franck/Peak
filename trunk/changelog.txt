@@ -1,5 +1,11 @@
 #VERSION 0.8.3#
 
+ - added method _registryConfig() in Peak_View. We can now call methods for Peak_View inside an application 
+   configuration file like set(), setRenderEngine(), rendering engine methods, etc... Config use keyname 'view'
+   ex: view.set.myvar = "data", view.setRenderEngine = "Layouts", etc...
+
+ - fixed Peak_Config_Ini::loadFile() to throw a exception if ini file contains syntax error(s) (php 5.2.7+)
+
  - rewrited appcreate.php to support new important changes
  
  - fixed listActions to flush $actions before listing actions methods and added support of $action_prefix to regex.

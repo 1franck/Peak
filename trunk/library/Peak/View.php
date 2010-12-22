@@ -44,6 +44,7 @@ class Peak_View
             if(is_array($vars)) $this->_vars = $vars;
             else $this->iniVar($vars);
         }
+        $this->_registryConfig();
     }   
 
     /**
@@ -107,6 +108,21 @@ class Peak_View
         elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
             trigger_error('View method/helper '.$method.'() doesn\'t exists');
         }
+    }
+    
+    /**
+     * Get array 'view' from registered object 'config' if exists
+     */
+    private function _registryConfig()
+    {
+    	if(isset(Peak_Registry::o()->config->view)) {
+    		foreach(Peak_Registry::o()->config->view as $k => $v) { 			
+    			if(is_array($v)) {
+    				foreach($v as $p1 => $p2) $this->$k($p1,$p2);
+    			}
+    			else $this->$k($v);
+    		}
+    	}
     }
 
     /**
