@@ -90,10 +90,8 @@ abstract class Peak_Application_Modules
     
     /**
      * Run modules requested controller.
-     *
-     * @param string $default_ctrl
      */
-    public function run($default_ctrl = 'index')
+    public function run()
     {      	
         $router = Peak_Registry::o()->router; 
         
@@ -101,7 +99,7 @@ abstract class Peak_Application_Modules
         $router->base_uri .= $this->_name.'/';
  
         //re-call Peak_Application run() for handling the new routing
-        Peak_Registry::o()->app->run($default_ctrl);
+        Peak_Registry::o()->app->run();
     }
     
     /**
