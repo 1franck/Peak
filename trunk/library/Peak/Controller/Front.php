@@ -18,7 +18,32 @@ class Peak_Controller_Front
 	 * Default controller name
 	 * @var string
 	 */
-	public $default_controller;
+	public $default_controller = 'indexController';
+	
+	/**
+	 * Allow/Disallow the use of Peak library internal controllers
+	 * @var bool
+	 */
+	public $allow_internal_controller = false;
+	
+	
+	/**
+	 * class construct
+	 */
+	public function __construct()
+	{
+		$this->_registryConfig();
+	}
+	
+	/**
+     * Get array 'front' from registered object 'config' if exists
+     */
+    private function _registryConfig()
+    {
+    	if(isset(Peak_Registry::o()->config->front)) {
+    		foreach(Peak_Registry::o()->config->front as $k => $v) $this->$k = $v;
+    	}
+    }
 
 	/**
 	 * Initialize router uri request
@@ -41,11 +66,11 @@ class Peak_Controller_Front
 	 * 
 	 * @param string $default_ctrl Controller called by default when no request
 	 */
-	public function dispatch($default_ctrl = null)
+	public function dispatch()
 	{
 		$router = Peak_Registry::o()->router;       
 
-        if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
+        //if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
 
         //try to load controller from router if exists       
         if(isset($router->controller))
@@ -56,8 +81,7 @@ class Peak_Controller_Front
         	if(!$this->isController($ctrl_name))
         	{
         		//check for peak internal controller
-        		if((defined('ENABLE_PEAK_CONTROLLERS')) && (ENABLE_PEAK_CONTROLLERS) &&
-        		($this->isInternalController($router->controller))) {
+        		if(($this->allow_internal_controller === true) && ($this->isInternalController($router->controller))) {
         			$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
         			$this->controller = new $ctrl_name();
         		}

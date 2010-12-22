@@ -63,18 +63,18 @@ class Peak_Application
         	$this->front = new front();
         } else $this->front = new Peak_Controller_Front();
     }
-
+    
     /**
      * Load front controller and start dispatching
      * @see Peak_Controller_Front::dispatch() for param
      */
-    public function run($default_ctrl = 'index')
+    public function run()
     {
     	$this->front->getRoute();
     	
     	$this->front->preDispatch();
     	
-    	$this->front->dispatch($default_ctrl);   	
+    	$this->front->dispatch();   	
     	
     	return $this;
     }

@@ -1,5 +1,11 @@
 #VERSION 0.8.3#
 
+ - added method _registryConfig() in Peak_Controller_Front. Config use keyname 'front'. Modified method Peak_Application::run(),
+   Peak_Controller_Front::dispatch() and Peak_Application_Modules::run() accordingly.
+
+ - added property $allow_internal_controller to Peak_Controller_Front and deprecated 
+   the use of constant ENABLE_PEAK_CONTROLLERS
+
  - added method _registryConfig() in Peak_View. We can now call methods for Peak_View inside an application 
    configuration file like set(), setRenderEngine(), rendering engine methods, etc... Config use keyname 'view'
    ex: view.set.myvar = "data", view.setRenderEngine = "Layouts", etc...
