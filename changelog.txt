@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - rewrited appcreate.php to support new important changes
+ 
  - fixed listActions to flush $actions before listing actions methods and added support of $action_prefix to regex.
 
  - moved string to array conversion from matchRegex to addRegex in Peak_Router 
