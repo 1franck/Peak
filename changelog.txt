@@ -1,5 +1,8 @@
 #VERSION 0.8.3#
 
+ - fixed Peak_View::iniVar() to not use '#' in ini file (# deprecated in 5.3) and to support loading a 
+   ini file from a custom path. Variables used inside key value use syntax like $[myvar]. 
+
  - added method _registryConfig() in Peak_Controller_Front. Config use keyname 'front'. Modified method Peak_Application::run(),
    Peak_Controller_Front::dispatch() and Peak_Application_Modules::run() accordingly.
 

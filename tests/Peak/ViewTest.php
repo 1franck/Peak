@@ -5,10 +5,15 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
- * @see Peak_View, Peak_Exception
+ * @see Peak_View, Peak_View_Render, Peak_View_Render_Layouts, Peak_Exception, Peak_Registry, Peak_Config
  */
 require_once 'Peak/View.php';
+require_once 'Peak/View/Render.php';
+require_once 'Peak/View/Render/Layouts.php';
 require_once 'Peak/Exception.php';
+require_once 'Peak/Registry.php';
+require_once 'Peak/Config.php';
+
 
 /**
  * @category   Peak
@@ -103,6 +108,38 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
         }
  
         $this->fail('An expected exception has not been raised.');
+	}
+	
+	function testIniVar()
+	{
+		$this->peakview->iniVar('viewvar.ini', dirname(__FILE__).'/../tmp/');
+		
+		$this->assertTrue(isset($this->peakview->name));
+		$this->assertTrue($this->peakview->name === 'jack');
+		
+		$this->assertTrue(isset($this->peakview->hobby));
+		$this->assertTrue($this->peakview->hobby === 'jack love to play poker');
+				
+		$this->assertTrue(isset($this->peakview->city));
+		$this->assertTrue($this->peakview->city === 'jack live in montreal');
+	}
+	
+	function testRegistryConfig()
+	{
+		$config = new Peak_Config();
+		
+		$config->view = array('set' => array('test' => 'value',
+		                                     'test2' => 'value2'),
+		                      'setRenderEngine' => 'Layouts');
+		                                     
+	    Peak_Registry::set('config', $config);
+	    $view = new Peak_View();
+	    
+	    $this->assertTrue(isset($view->test));
+	    $this->assertTrue(isset($view->test2));
+	    $this->assertFalse(isset($view->test3));
+	    
+	    $this->assertType('Peak_View_Render_Layouts', $view->engine());
 	}
 	
 }
