@@ -249,24 +249,30 @@ class Peak_View
      * Load ini file into view vars
      *
      * @param string $file
+     * @param string $path leave empty if ini file is under yourapp/views/ini
      */
-    public function iniVar($file)
+    public function iniVar($file, $path = null)
     {
-        $filepath = Peak_Core::getPath('views_ini').'/'.$file;
+    	if(!isset($path)) $filepath = Peak_Core::getPath('views_ini').'/'.$file;
+    	else $filepath = $path.'/'.$file;
+    	
         if(file_exists($filepath)) {
             $ini_vars = parse_ini_file($filepath);
             
-            //check for constants ( ini constant syntax = #CONST_NAME# )
+            //check for variables inside variable ( ini var syntax = $[myvarname] )
             foreach($ini_vars as $k => $v)
             {
-                $pattern = '/#(?P<name>\w+)#/i';  //# in ini is deprecated in php 5.3.x, need to be fix or change
+                $pattern = '/\$\[(?P<name>\w+)\]/i';
                 preg_match_all($pattern, $v, $m);
-                                
+
                 if(isset($m['name'])) {
-                    foreach($m['name'] as $constant) {
-                        if(defined($constant)) {
-                            $ini_vars[$k] = str_replace('#'.$constant.'#',constant($constant),$ini_vars[$k]);
-                        }
+                    foreach($m['name'] as $var) {
+                        if(isset($this->$var)) $replacement = $this->$var;
+                        elseif(isset($ini_vars[$var])) $replacement = $ini_vars[$var]; 
+                        if(isset($replacement)) {
+                        	$ini_vars[$k] = str_replace('$['.$var.']', $replacement, $ini_vars[$k]);
+                        	unset($replacement);
+                        } 
                     }
                 }
             }
