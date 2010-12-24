@@ -123,17 +123,17 @@ class Peak_Core
     			$loaded_config['all']['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
     		}
     	}
+    	
+    	//add APPLICATION_ABSPATH to 'path' key value
     	if(isset($loaded_config[$env]['path'])) {
     		foreach($loaded_config[$env]['path'] as $pathname => $path) {
     			$loaded_config[$env]['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
     		}
     	}
     	
-    	//"Extend" recursively array $a with array $b values (no deletion in $a, just added and updated values) (from php.net)
-    	function array_extend($a, $b) {	foreach($b as $k=>$v) {	if( is_array($v) ) { if( !isset($a[$k]) ) {	$a[$k] = $v; } else { $a[$k] = array_extend($a[$k], $v); }} else { $a[$k] = $v;	}} return $a; }
-    	
+    	//merge app config paths with core app paths  	
     	if(isset($loaded_config['all']['path'])) {
-    	    $loaded_config['all']['path'] = array_extend(self::getDefaultAppPaths(APPLICATION_ABSPATH), $loaded_config['all']['path']);
+    	    $loaded_config['all']['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths(APPLICATION_ABSPATH), $loaded_config['all']['path']);
     	}
     	else {
     		$loaded_config['all']['path'] = self::getDefaultAppPaths(APPLICATION_ABSPATH);
@@ -141,7 +141,7 @@ class Peak_Core
 
     	//try to merge array section 'all' with current environment section if exists
     	if(isset($loaded_config['all']) && isset($loaded_config[$env])) {
-    		$final_config = array_extend($loaded_config['all'],$loaded_config[$env]);
+    		$final_config = $conf->arrayMergeRecursive($loaded_config['all'],$loaded_config[$env]);
     	}
     	elseif(isset($loaded_config[$env])) $final_config = $loaded_config[$env];
     	else $final_config = $loaded_config['all'];
