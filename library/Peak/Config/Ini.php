@@ -109,10 +109,9 @@ class Peak_Config_Ini extends Peak_Config
 	/**
 	 * Process contents of the specified section
 	 *
-	 * @param string $section Section name
-	 * @param array $contents Section contents
-	 * @throws Exception
-	 * @return void
+	 * @param  string $section Section name
+	 * @param  array $contents Section contents
+	 * @throws Peak_Exception
 	 */
 	private function _processSection($section, array $contents)
 	{
@@ -136,7 +135,7 @@ class Peak_Config_Ini extends Peak_Config
 			$this->_vars[$ext_target] = $this->_processSectionContents($contents);
 
 			// merge the new section with the existing section values
-			$this->_vars[$ext_target] = $this->_arrayMergeRecursive($this->_vars[$ext_source], $this->_vars[$ext_target]);
+			$this->_vars[$ext_target] = $this->arrayMergeRecursive($this->_vars[$ext_source], $this->_vars[$ext_target]);
 		}
 	}
 
@@ -144,7 +143,7 @@ class Peak_Config_Ini extends Peak_Config
 	/**
 	 * Process contents of a section
 	 *
-	 * @param array $contents Section contents
+	 * @param  array $contents Section contents
 	 * @return array
 	 */
 	private function _processSectionContents(array $contents)
@@ -156,7 +155,7 @@ class Peak_Config_Ini extends Peak_Config
 			// convert all a.b.c.d to multi-dimensional arrays
 			$process = $this->_processContentEntry($path, $value);
 			// merge the current line with all previous ones
-			$result = $this->_arrayMergeRecursive($result, $process);
+			$result = $this->arrayMergeRecursive($result, $process);
 		}
 		
 		return $result;
@@ -166,8 +165,8 @@ class Peak_Config_Ini extends Peak_Config
 	/**
 	 * Convert a.b.c.d paths to multi-dimensional arrays
 	 *
-	 * @param string $path Current ini file's line's key
-	 * @param mixed $value Current ini file's line's value
+	 * @param  string $path Current ini file's line's key
+	 * @param  mixed  $value Current ini file's line's value
 	 * @return array
 	 */
 	private function _processContentEntry($path, $value)
@@ -180,34 +179,6 @@ class Peak_Config_Ini extends Peak_Config
 		$path = substr($path, $pos + 1);
 
 		return array($key => $this->_processContentEntry($path, $value));
-	}
-
-
-	/**
-	 * Merge two arrays recursively overwriting the keys in the first array
-	 * if such key already exists
-	 *
-	 * @param mixed $a Left array to merge right array into
-	 * @param mixed $b Right array to merge over the left array
-	 * @return mixed
-	 */
-	private function _arrayMergeRecursive($a, $b)
-	{
-		// merge arrays if both variables are arrays
-		if (is_array($a) && is_array($b)) {
-			// loop through each right array's entry and merge it into $a
-			foreach ($b as $key => $value) {
-				if (isset($a[$key])) {
-					$a[$key] = $this->_arrayMergeRecursive($a[$key], $value);
-				} else {
-					if($key === 0) $a= array(0 => $this->_arrayMergeRecursive($a, $value));
-					else $a[$key] = $value;
-				}
-			}
-		} 
-		else $a = $b; // one of values is not an array
-
-		return $a;
 	}
 
 }

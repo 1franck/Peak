@@ -1,5 +1,8 @@
 #VERSION 0.8.3#
 
+ - moved method _arrayMergeRecursive() from Peak_COnfig_Ini to Peak_Config, rename to arrayMergeRecursive() and changed
+   visibility to public. fixed Peak_Core::initConfig() accordingly.
+
  - fixed Peak_View::iniVar() to not use '#' in ini file (# deprecated in 5.3) and to support loading a 
    ini file from a custom path. Variables used inside key value use syntax like $[myvar]. 
 
