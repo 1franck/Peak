@@ -29,6 +29,11 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->peakview = new Peak_View();
 	}
 	
+	function tearDown()
+	{
+		unset($this->peakview);
+	}
+	
 	function testCreateInstance()
 	{
 		$view = new Peak_View();		
@@ -112,8 +117,8 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	
 	function testIniVar()
 	{
-		$this->peakview->iniVar('viewvar.ini', dirname(__FILE__).'/../tmp/');
-		
+		$this->peakview->iniVar('viewvars.ini', dirname(__FILE__).'/../tmp/');
+				
 		$this->assertTrue(isset($this->peakview->name));
 		$this->assertTrue($this->peakview->name === 'jack');
 		
