@@ -37,69 +37,56 @@ class Peak_RegistryTest extends PHPUnit_Framework_TestCase
     
 	function testGetInstance()
 	{
-		$reg = Peak_Registry::getInstance();
-		
+		$reg = Peak_Registry::getInstance();		
 		$this->assertType('Peak_Registry', $reg); 
 	}
 	
 	function testIsRegistered()
 	{
-		$result = Peak_Registry::isRegistered('unregistered_object');
-		
+		$result = Peak_Registry::isRegistered('unregistered_object');		
 		$this->assertFalse($result);	
 	}
 	
 	function testRegisteringObject()
     {
-    	$obj = Peak_Registry::set('test_obj', new RegisteredClass());
-    	
+    	$obj = Peak_Registry::set('test_obj', new RegisteredClass());    	
     	$this->assertType('RegisteredClass',$obj);
-
         $this->assertTrue(Peak_Registry::isRegistered('test_obj'),'test_obj should be registered');    
     }
     
     function testGetObject()
     {
-    	$obj = Peak_Registry::get('test_obj');
-    	
+    	$obj = Peak_Registry::get('test_obj');   	
     	$this->assertType('RegisteredClass',$obj);
     	
-    	unset($obj);
-    	
-    	$obj = Peak_Registry::o()->test_obj;
-    	
+    	unset($obj);    	
+    	$obj = Peak_Registry::o()->test_obj;    	
     	$this->assertType('RegisteredClass',$obj);
     }
     
     function testGetObjectsList()
     {
-    	$list = Peak_Registry::getObjectsList();
-    	
-    	$this->assertTrue(is_array($list));
-    	               
+    	$list = Peak_Registry::getObjectsList();   	
+    	$this->assertTrue(is_array($list));   	               
         $this->assertTrue(count($list) == 1);     
     }
     
     function testGetObjectClassname()
     {
-    	$classname = Peak_Registry::getClassName('test_obj');
-    	
+    	$classname = Peak_Registry::getClassName('test_obj');   	
     	$this->assertTrue($classname === 'RegisteredClass');
     }
     
     function testIsInstanceOf()
     {
-    	$this->assertTrue(Peak_Registry::isInstanceOf('test_obj', 'RegisteredClass'));
-    	
-    	$this->assertFalse(Peak_Registry::isInstanceOf('test_obj', 'Unknowclass'));
-    	
+    	$this->assertTrue(Peak_Registry::isInstanceOf('test_obj', 'RegisteredClass'));   	
+    	$this->assertFalse(Peak_Registry::isInstanceOf('test_obj', 'Unknowclass')); 	
     	$this->assertFalse(Peak_Registry::isInstanceOf('test_obj2', 'RegisteredClass'));
     }
     
     function testUnregisteringObject()
     {
-    	Peak_Registry::unregister('test_obj');
-    	
+    	Peak_Registry::unregister('test_obj');	
     	$this->assertFalse(Peak_Registry::isRegistered('test_obj'),'test_obj should be unregistered');
     }
   
