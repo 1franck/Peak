@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - fixed bug in Peak_Helpers::__get() by changing include for include_once
+
  - moved method _arrayMergeRecursive() from Peak_COnfig_Ini to Peak_Config, rename to arrayMergeRecursive() and changed
    visibility to public. fixed Peak_Core::initConfig() accordingly.
 

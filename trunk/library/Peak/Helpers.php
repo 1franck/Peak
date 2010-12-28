@@ -45,7 +45,6 @@ abstract class Peak_Helpers
 		else
 		{		
 			$name = trim(stripslashes(strip_tags($name)));
-			//$helper_class_name = $this->_prefix.$name;
 
 			$file_found = false;
 			foreach($this->_paths as $k => $v)
@@ -58,22 +57,18 @@ abstract class Peak_Helpers
 			}
 
 			if($file_found) {
-				include($helper_file);
+				include_once $helper_file;
 				
-				if(!is_array($this->_prefix)) {
-					$helper_class_name = $this->_prefix.$name;
-					if(!class_exists($helper_class_name,false))	throw new Peak_Exception($this->_exception,$name);
-				}
-				else {
-					foreach($this->_prefix as $prefix) {
-						if(!class_exists($prefix.$name,false)) continue;
-						else { 
-							$helper_class_name = $prefix.$name;
-							break;
-						}
+				if(!is_array($this->_prefix)) $this->_prefix = array($this->_prefix);
+		
+				foreach($this->_prefix as $prefix) {
+					if(!class_exists($prefix.$name,false)) continue;
+					else {
+						$helper_class_name = $prefix.$name;
+						break;
 					}
-					if(!isset($helper_class_name)) throw new Peak_Exception($this->_exception,$name);
 				}
+				if(!isset($helper_class_name)) throw new Peak_Exception($this->_exception,$name);
 				
 				$this->_objects[$name] = new $helper_class_name();
 				return $this->_objects[$name];
