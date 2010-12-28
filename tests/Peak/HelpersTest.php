@@ -62,7 +62,7 @@ class Peak_HelpersTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException Peak_Exception
 	 */
-	function testRenderException()
+	function testException()
 	{
 		//try to load an unknow helpers
 		try {
