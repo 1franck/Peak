@@ -47,8 +47,7 @@ abstract class Peak_Helpers
 			$name = trim(stripslashes(strip_tags($name)));
 
 			$file_found = false;
-			foreach($this->_paths as $k => $v)
-			{
+			foreach($this->_paths as $k => $v) {
 				$helper_file = $v.'/'.$name.'.php';
 				if(file_exists($helper_file)) {
 					$file_found = true;
@@ -99,7 +98,7 @@ abstract class Peak_Helpers
 	}
 	
 	/**
-	 * Check recursively if helper file exists
+	 * Check recursively if helper file exists based on $_path
 	 *
 	 * @param  string $helper_name
 	 * @return bool
@@ -107,14 +106,13 @@ abstract class Peak_Helpers
 	public function exists($name)
 	{
 		$file_found = false;
-		foreach($this->_paths as $k => $v)
-		{
+		foreach($this->_paths as $k => $v) {
 			if(file_exists($v.'/'.$name.'.php')) {
 				$file_found = true;	
 				break;
 			}
 		}
-		return ($file_found) ? true : false; 
+		return $file_found; 
 	}
 	
 }

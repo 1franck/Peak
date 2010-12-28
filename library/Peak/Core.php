@@ -7,8 +7,8 @@
  */
 
 define('_VERSION_','0.8.3');
-define('_NAME_','PEAK');
-define('_DESCR_','Php wEb Application Kernel');
+define('_NAME_',   'PEAK');
+define('_DESCR_',  'Php wEb Application Kernel');
 
 //handle all uncaught exceptions (try/catch block missing)
 set_exception_handler('pkexception');
@@ -48,13 +48,12 @@ class Peak_Core
 	}
 
 	/**
-	 * Activate error_reporting on DEV_MODE
+	 * Activate error_reporting based on app env
 	 */
     private function __construct()
-    {            	
-        // check DEV_MODE
-        if((defined('DEV_MODE')) && (DEV_MODE === true)) {
-            ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL));
+    {
+        if(self::getEnv() === 'development') {
+        	ini_set('error_reporting', (version_compare(PHP_VERSION, '5.3.0', '<') ? E_ALL|E_STRICT : E_ALL|E_DEPRECATED));
         }
     }
 
@@ -70,7 +69,7 @@ class Peak_Core
     	if((isset($this->ext()->$extension)) || ($this->ext()->exists($extension))) {
         	return $this->ext()->$extension;
         }
-        elseif((defined('DEV_MODE')) && (DEV_MODE)) {
+        elseif(self::getEnv() === 'development') {
             trigger_error('DEV_MODE: Core/Extension method '.$extension.'() doesn\'t exists');
         }
     }
@@ -92,6 +91,8 @@ class Peak_Core
      */
     final public static function initConfig($file)
     {    		
+    	self::getInstance();
+    	
     	$filetype = pathinfo($file,PATHINFO_EXTENSION);
     	$env = self::getEnv();
     	
