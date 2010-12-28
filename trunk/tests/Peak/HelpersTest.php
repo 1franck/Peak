@@ -41,6 +41,24 @@ class Peak_HelpersTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($txt === 'Hello');
 	}
 	
+	function testHelpersIssetUnset()
+	{
+		$this->peakhelpers->test;
+		$this->assertTrue(isset($this->peakhelpers->test));
+		$this->assertFalse(isset($this->peakhelpers->misc));
+		
+		unset($this->peakhelpers->test);
+		$this->assertFalse(isset($this->peakhelpers->test)); 
+	}
+	
+	function testHelpersExists()
+	{
+		$result = $this->peakhelpers->exists('misc');
+		$this->assertTrue($result);
+		$result = $this->peakhelpers->exists('html');
+		$this->assertFalse($result);
+	}
+	
 	/**
 	 * @expectedException Peak_Exception
 	 */
