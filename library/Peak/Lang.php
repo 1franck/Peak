@@ -44,13 +44,13 @@ class Peak_Lang
 	public function load($lang = 'en')
 	{
 	    $this->_lang = trim(strtolower((string)$lang));	
-		$this->_file = LANG_ABSPATH.'/'.$this->_lang.'.php';
+		$this->_file = Peak_Core::getPath('lang').'/'.$this->_lang.'.php';
 		
 		if(file_exists($this->_file)) {
 		    $this->translations = include($this->_file);
 		}
-		elseif(file_exists(LANG_ABSPATH.'/en.php')) {
-		    $this->translations = include(LANG_ABSPATH.'/en.php');
+		elseif(file_exists(Peak_Core::getPath('lang').'/en.php')) {
+		    $this->translations = include(Peak_Core::getPath('lang').'/en.php');
 		}
 		
 		if(!is_array($this->translations)) $this->translations = array();

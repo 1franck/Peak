@@ -24,7 +24,7 @@ class Peak_Controller_Front
 	 * Allow/Disallow the use of Peak library internal controllers
 	 * @var bool
 	 */
-	public $allow_internal_controller = false;
+	public $allow_internal_controllers = false;
 	
 	
 	/**
@@ -41,7 +41,10 @@ class Peak_Controller_Front
     private function _registryConfig()
     {
     	if(isset(Peak_Registry::o()->config->front)) {
-    		foreach(Peak_Registry::o()->config->front as $k => $v) $this->$k = $v;
+    		foreach(Peak_Registry::o()->config->front as $k => $v) {
+    			if($k === 'allow_internal_controllers') $v = (bool)$v;
+    			$this->$k = $v;
+    		}
     	}
     }
 
@@ -54,12 +57,10 @@ class Peak_Controller_Front
 	}
 
 	/**
-	 * Initialize router uri request
+	 * Called before routing dispatching
+	 * Empty by default
 	 */
-	public function preDispatch()
-	{
-		//Peak_Registry::o()->router->getRequestURI();
-	}
+	public function preDispatch() {	}
 
 	/**
 	 * Start dispatching to controller with the help of router
@@ -70,9 +71,7 @@ class Peak_Controller_Front
 	{
 		$router = Peak_Registry::o()->router;       
 
-        //if(isset($default_ctrl)) $this->default_controller = $default_ctrl.'Controller';
-
-        //try to load controller from router if exists       
+        //try to load controller from router if exists
         if(isset($router->controller))
         {
         	$ctrl_name = $router->controller.'Controller';
@@ -81,7 +80,7 @@ class Peak_Controller_Front
         	if(!$this->isController($ctrl_name))
         	{
         		//check for peak internal controller
-        		if(($this->allow_internal_controller === true) && ($this->isInternalController($router->controller))) {
+        		if(($this->allow_internal_controllers === true) && ($this->isInternalController($router->controller))) {
         			$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
         			$this->controller = new $ctrl_name();
         		}
@@ -139,6 +138,7 @@ class Peak_Controller_Front
 
     /**
 	 * Called after controller action dispatching
+	 * Empty by default
 	 */
     public function postDispatch() { }
     
@@ -151,7 +151,7 @@ class Peak_Controller_Front
      */
     public function isController($name)
     {
-    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')) ? true : false; 
+    	return (file_exists(Peak_Core::getPath('controllers').'/'.$name.'.php')); 
     }
 
     /**
