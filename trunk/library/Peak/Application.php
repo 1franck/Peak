@@ -27,35 +27,17 @@ class Peak_Application
      */
     public $module = null;
 
-    /**
-     * app object itself
-     * @var object
-     */
-    private static $_instance = null;
-    
-
-    /**
-     * Singleton application
-     *
-     * @return  object instance
-     */
-    public static function getInstance()
-	{
-		if(is_null(self::$_instance)) self::$_instance = new self();
-		return self::$_instance;
-	}
-
 	/**
 	 * Start framework
 	 */
-    private function __construct()
+    public function __construct()
     {                
         // register application/view/router instance
         Peak_Registry::set('app', $this);
         Peak_Registry::set('view', new Peak_View('default.ini'));
         Peak_Registry::set('router', new Peak_Router(PUBLIC_ROOT));
              
-        // execute app bootstrap
+        // load app bootstrap
         if(class_exists('bootstrap',false)) $this->bootstrap = new bootstrap();   
         
         // load front controller

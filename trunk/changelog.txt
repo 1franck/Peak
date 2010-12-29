@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - fixed Peak_Application so that it is no longer a singleton and removing $_instance and getInstance()
+
  - renamed property $allow_internal_controller to plural in Peak_Controller_Front and fixed method _registryConfig() to force
    boolean conversion for this property. 
 
