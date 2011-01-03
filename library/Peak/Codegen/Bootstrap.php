@@ -1,6 +1,6 @@
 <?php
 /**
- * Generate bootstrap classe
+ * Generate bootstrap class
  * 
  * @author  Francois Lajoie
  * @version $Id$
@@ -8,41 +8,40 @@
 class Peak_Codegen_Bootstrap extends Peak_Codegen
 {
 	
-
-	public $name    = 'bootstrap';
-	public $actions = array('initEnv', 'initView');
+	/**
+	 * Peak_Codegen_Class instance
+	 * @var object
+	 */
+	public $class;
+	
+	/**
+	 * Create bootstrap base with Peak_Codegen_Class 
+	 */
+	public function __construct()
+	{
+		$this->class = new Peak_Codegen_Class();
+		
+		$this->class->setName('Bootstrap')
+		            ->setExtends('Peak_Bootstrap')
+		            ->docblock()->setTitle('App Bootstrapper');
+	}
+	
+	/**
+	 * Add bootstrap action shortcut
+	 *
+	 * @param string $action
+	 */
+	public function addAction($action)
+	{
+		$this->class->method($action)->docblock()->setTitle($action.'()');
+	}
     
     /**
-     * Generate controller code
+     * Generate class
      */
 	public function generate()
 	{
-		
-$data = 
-'<?php 
-/**
- * '.$this->name.'
- */
-class '.$this->name.' extends Peak_Bootstrap 
-{';
-
-//actions
-if(!empty($this->actions)) {
-	foreach($this->actions as $action) {
-$data .= 
-''."\n".'
-    /**
-     * '.$action.' action
-     */
-    public function _'.$action.'()
-    {
-    }';		
-	}
-}
-
-$data .= ''."\n".'}';
-
-			return $data;
+		return $this->class->generate();
 	}
 	
 }

@@ -10,7 +10,24 @@
 /**
  * PEAK FRAMEWORK PATH
  */
-define('PEAK_PATH', dirname(__FILE__).'/library/Peak');
+define('PEAK_PATH', dirname(__FILE__).'/library');
+
+/**
+ * Peak library autoload
+ */
+//nullify any existing autoloads
+spl_autoload_register(null, false);
+//specify extensions that may be loaded
+spl_autoload_extensions('.php');
+//register spl functions
+spl_autoload_register('_autoloadPeak');
+
+function _autoloadPeak($cn) { 
+	$cn = str_replace('_','/',$cn).'.php';
+    $file = PEAK_PATH.'/'.$cn;
+    if(!file_exists($file)) return false;
+    include $file;
+}
 
 
 /**
@@ -20,7 +37,7 @@ define('PEAK_PATH', dirname(__FILE__).'/library/Peak');
 error_reporting(E_ALL|E_STRICT);
 
 //Peak library
-if(file_exists(PEAK_PATH.'/Core.php')) $peak_library_found = true;
+if(file_exists(PEAK_PATH.'/Peak/Core.php')) $peak_library_found = true;
 else $peak_library_found = false;
 
 //php version
@@ -140,11 +157,6 @@ if(isset($_POST['create'])) {
 		$app_created = false;
 		$app_build_errors = array();
 		
-		include PEAK_PATH.'/Core.php';
-		include PEAK_PATH.'/Codegen.php';
-		include PEAK_PATH.'/Codegen/Bootstrap.php';
-		include PEAK_PATH.'/Codegen/Controller.php';	
-		
 		//app structure		
 		$app_folders = Peak_Core::getDefaultAppPaths($form['app_path']);
 		unset($app_folders['views_themes'], $app_folders['theme']);		
@@ -162,24 +174,32 @@ if(isset($_POST['create'])) {
 		//bootstrap
 		if($form['app_bootstrap'] === 'on') {
 			$codegen = new Peak_Codegen_Bootstrap();
+			$codegen->addAction('_initEnv');
 			$filepath = $form['app_path'].'/bootstrap.php';
-			if(!@file_put_contents($filepath, $codegen->preview())) {
+			if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
 				$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 			}
 		}
 		
 		//controllers
 		if(!empty($form['app_controllers'])) {
-			$codegen = new Peak_Codegen_Controller();
+			//$codegen = new Peak_Codegen_Controller();
 						
 			$ctrls = explode(',',$form['app_controllers']);
 			foreach($ctrls as $ctrl) {
-				$codegen->name = $ctrl;
+				$ctrl = trim($ctrl);
+				$codegen = new Peak_Codegen_Controller();
+				$codegen->setName($ctrl)
+				        ->addPreAction()
+				        ->addAction('index')
+				        ->addPostAction();
+				        
+				/*$codegen->name = $ctrl;
 				$codegen->add_postaction = true;
 				$codegen->add_preaction = true;
-				$codegen->actions = array('index');
+				$codegen->actions = array('index');*/
 				$filepath = $form['app_path'].'/Controllers/'.$ctrl.'Controller.php';
-				if(!@file_put_contents($filepath, $codegen->preview())) {
+				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
 					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
 			}

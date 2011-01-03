@@ -1,5 +1,12 @@
 #VERSION 0.8.3#
 
+ - rewrited Peak_Codegen_Controller class to use Peak_Codegen_Class
+
+ - rewrited Peak_Codegen_Bootstrap class to use Peak_Codegen_Class
+
+ - fixed minor problem with methods generate() in Peak_codegen_Class_Method, Peak_codegen_Class_Property and
+   Peak_codegen_Class_Param
+
  - added constants INDENTATION_SPACE and LINE_BREAK to Peak_Codegen
 
  - added classes Peak_Codegen_Class, Peak_codegen_Class_Constant, Peak_codegen_Class_Docblock, Peak_codegen_Class_Element, 

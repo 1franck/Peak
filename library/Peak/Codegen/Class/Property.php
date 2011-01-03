@@ -43,13 +43,18 @@ class Peak_Codegen_Class_Property extends Peak_Codegen_Class_Element
 	 * @return string
 	 */
 	public function generate()
-	{
-		if(is_int($this->_value)) $value = $this->_value;
-		else $value = '\''.$this->_value.'\'';
+	{	
+		if(isset($this->_value)) {
+			if((in_array($this->_value,array('array()','null','true','false'))) || (is_int($this->_value))) {
+				$value = ' = '.$this->_value;
+			}
+			else $value = ' = \''.$this->_value.'\'';
+		}
+		else $value = '';
 		
 		if($this->isStatic()) $static = 'static ';
 		else $static = '';
 		
-		return $this->getVisibility().' '.$static.'$'.$this->_name.' = '.$value.';'.Peak_Codegen::LINE_BREAK.''.Peak_Codegen::LINE_BREAK;
+		return $this->getVisibility().' '.$static.'$'.$this->_name . $value .';' .Peak_Codegen::LINE_BREAK . Peak_Codegen::LINE_BREAK;
 	}
 }
