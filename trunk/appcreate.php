@@ -183,7 +183,6 @@ if(isset($_POST['create'])) {
 		
 		//controllers
 		if(!empty($form['app_controllers'])) {
-			//$codegen = new Peak_Codegen_Controller();
 						
 			$ctrls = explode(',',$form['app_controllers']);
 			foreach($ctrls as $ctrl) {
@@ -193,11 +192,7 @@ if(isset($_POST['create'])) {
 				        ->addPreAction()
 				        ->addAction('index')
 				        ->addPostAction();
-				        
-				/*$codegen->name = $ctrl;
-				$codegen->add_postaction = true;
-				$codegen->add_preaction = true;
-				$codegen->actions = array('index');*/
+
 				$filepath = $form['app_path'].'/Controllers/'.$ctrl.'Controller.php';
 				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
 					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
