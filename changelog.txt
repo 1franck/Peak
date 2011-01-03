@@ -1,5 +1,10 @@
 #VERSION 0.8.3#
 
+ - added constants INDENTATION_SPACE and LINE_BREAK to Peak_Codegen
+
+ - added classes Peak_Codegen_Class, Peak_codegen_Class_Constant, Peak_codegen_Class_Docblock, Peak_codegen_Class_Element, 
+   Peak_codegen_Class_Method, Peak_codegen_Class_Param, Peak_codegen_Class_Property
+
  - fixed Peak_Application so that it is no longer a singleton and removing $_instance and getInstance()
 
  - renamed property $allow_internal_controller to plural in Peak_Controller_Front and fixed method _registryConfig() to force

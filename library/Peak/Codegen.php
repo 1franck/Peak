@@ -7,6 +7,16 @@
  */
 abstract class Peak_Codegen
 {
+	/**
+	 * Indentation space
+	 */
+	const INDENTATION_SPACE = 4;
+	
+	/**
+	 * Line break symbol
+	 */
+	const LINE_BREAK = "\n";
+	
 	
 	/**
 	 * Get preview of generated code
