@@ -30,7 +30,7 @@ abstract class Peak_Codegen
 	}
 	
 	/**
-	 * Save generated code
+	 * Save generated code * need to rewrited
 	 *
 	 * @param string $filepath
 	 */

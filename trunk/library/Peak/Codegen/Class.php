@@ -312,7 +312,7 @@ class Peak_Codegen_Class extends Peak_Codegen
 		// class interfaces
 		if(!empty($this->_interfaces)) $data .= ' implements '.implode(', ',$this->_interfaces);
 
-		$data .= self::LINE_BREAK.'{'.self::LINE_BREAK;
+		$data .= self::LINE_BREAK.'{'.self::LINE_BREAK.self::LINE_BREAK;
 
 		// class constants
 		if(!empty($this->_constants)) {
@@ -340,11 +340,11 @@ class Peak_Codegen_Class extends Peak_Codegen
 				if(!is_null($obj->getDocblock())) {
 					$data .= $obj->docblock()->generate($this->getIndent());
 				}
-				$data .= $obj->generate($this->getIndent());
+				$data .= $obj->generate($this->getIndent()).self::LINE_BREAK;
 			}
 		}
 
-		$data .= self::LINE_BREAK.'}'.self::LINE_BREAK;
+		$data .= self::LINE_BREAK.'}';
 
 		return $data;
 		

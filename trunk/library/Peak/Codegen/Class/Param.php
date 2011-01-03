@@ -102,7 +102,12 @@ class Peak_Codegen_Class_Param
 		if(isset($this->_type)) $type = $this->_type.' ';
 		else $type = '';
 		
-		if(isset($this->_value)) $value = ' = '.$this->_value;
+		if(isset($this->_value)) {
+			if((in_array($this->_value,array('array()','null','true','false'))) || (is_int($this->_value))) {
+				$value = ' = '.$this->_value;
+			}
+			else $value = ' = \''.$this->_value.'\'';
+		}
 		else $value = '';
 		
 		return $type . '$'.$this->_name . $value;

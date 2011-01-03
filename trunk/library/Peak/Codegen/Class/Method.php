@@ -111,7 +111,7 @@ class Peak_Codegen_Class_Method extends Peak_Codegen_Class_Element
 		
 		$data = '';
 		
-		$data .= $indent.$this->_visibility.' '.$static. $this->_name.'(';
+		$data .= $indent.$this->_visibility.' '.$static. 'function '.$this->_name.'(';
 		
 		if(isset($this->_params)) {
 			$params = array();
