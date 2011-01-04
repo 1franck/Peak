@@ -18,7 +18,13 @@ class Peak_Controller_Front
 	 * Default controller name
 	 * @var string
 	 */
-	public $default_controller = 'indexController';
+	public $default_controller = 'index';
+	
+	/**
+	 * Exception|error controller (used by errorDispatch())
+	 * @var string
+	 */
+	public $error_controller = 'error';
 	
 	/**
 	 * Allow/Disallow the use of Peak library internal controllers
@@ -69,33 +75,28 @@ class Peak_Controller_Front
 	 */
 	public function dispatch()
 	{
-		$router = Peak_Registry::o()->router;       
+		$router = Peak_Registry::o()->router;      
+		
+		//set default controller if router doesn't have one
+		if(!isset($router->controller)) {
+			$router->controller = $this->default_controller;
+		}
 
-        //try to load controller from router if exists
-        if(isset($router->controller))
-        {
-        	$ctrl_name = $router->controller.'Controller';
-     
-        	//check if controller is not found in current core controllers
-        	if(!$this->isController($ctrl_name))
-        	{
-        		//check for peak internal controller
-        		if(($this->allow_internal_controllers === true) && ($this->isInternalController($router->controller))) {
-        			$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
-        			$this->controller = new $ctrl_name();
-        		}
-        		else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
-        	}
-        	else $this->controller = new $ctrl_name();
-        }
-        //if no router controller, try to load default controller
-        elseif((isset($this->default_controller)) && ($this->isController($this->default_controller)))
-        {
-        	$default_ctrl = $this->default_controller;
-        	$this->controller = new $default_ctrl();
-        }
-        else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND',$default_ctrl);
-        
+		//set controller class name
+		$ctrl_name = $router->controller.'Controller';
+
+		//check if it's valid application controller
+		if(!$this->isController($ctrl_name))
+		{
+			//check for peak internal controller
+			if(($this->allow_internal_controllers === true) && ($this->isInternalController($router->controller))) {
+				$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
+				$this->controller = new $ctrl_name();
+			}
+			else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
+		}
+		else $this->controller = new $ctrl_name();
+ 
         //if class if is an instance of Peak_Application_Modules, load a module app via a controller
         if($this->controller instanceof Peak_Application_Modules) 
         {
@@ -103,10 +104,14 @@ class Peak_Controller_Front
         	$this->controller->run();
         }               
         // execute a normal controller action
-        elseif(method_exists($this->controller,'handleAction')) {
+        elseif($this->controller instanceof Peak_Controller_Action) {
         	$this->controller->handleAction();
         	$this->postDispatch();  
         }       
+        else {
+        	//need something
+        	//class is neither a module or a controller
+        }
 	}
 	
 	/**
@@ -121,6 +126,14 @@ class Peak_Controller_Front
 		$router->controller = $controller;
 		$router->action = $action;
 		$this->dispatch();
+	}
+	
+	/**
+	 * Force dispatch of $error_controller
+	 */
+	public function errorDispatch()
+	{
+		$this->forceDispatch($this->error_controller);
 	}
 
     /**

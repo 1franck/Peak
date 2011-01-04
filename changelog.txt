@@ -1,5 +1,9 @@
 #VERSION 0.8.3#
 
+ - fixed method dispatch() of Peak_Controller_Front when dispatching the default controller 
+
+ - added property $error_controller and method errorDispatch() in Peak_Controller_Front
+
  - deleted deprecated classes Peak_Core_Extension_Codegen, Peak_Core_Extension_Configs and Peak_Core_Extension_Lang
 
  - rewrited Peak_Codegen_Controller class to use Peak_Codegen_Class
