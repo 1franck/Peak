@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - deleted deprecated classes Peak_Core_Extension_Codegen, Peak_Core_Extension_Configs and Peak_Core_Extension_Lang
+
  - rewrited Peak_Codegen_Controller class to use Peak_Codegen_Class
 
  - rewrited Peak_Codegen_Bootstrap class to use Peak_Codegen_Class
