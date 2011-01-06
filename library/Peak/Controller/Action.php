@@ -110,7 +110,7 @@ abstract class Peak_Controller_Action
   
         $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->title;
 
-        //retreive requests param from router and remove 'mod' request witch it's used only by router
+        //retreive requests param(s) from router
         $this->params = Peak_Registry::o()->router->params;
         $this->params_assoc = Peak_Registry::o()->router->params_assoc;
     }
@@ -139,7 +139,7 @@ abstract class Peak_Controller_Action
      */
     public function isAction($name)
     {
-    	return (method_exists($this->name,$name)) ? true : false;
+    	return (method_exists($this->name, $name)) ? true : false;
     }
 
     /**
@@ -198,7 +198,7 @@ abstract class Peak_Controller_Action
      */    
     public function render()
     {                
-        $this->view->render($this->file,$this->path);     
+        $this->view->render($this->file, $this->path);     
         $this->postRender();
     }
 
