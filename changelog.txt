@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - added method postRender() in Peak_Controller_Front and fixed render() in Peak_Application
+
  - fixed method dispatch() of Peak_Controller_Front when dispatching the default controller 
 
  - added property $error_controller and method errorDispatch() in Peak_Controller_Front

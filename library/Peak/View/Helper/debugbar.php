@@ -1,6 +1,6 @@
 <?php
 /**
- * Graphic version of View_Debug_Bar
+ * Graphic version of View_Debug
  *
  * @author  Francois Lajoie
  * @version $Id$
