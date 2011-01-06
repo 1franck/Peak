@@ -34,7 +34,7 @@ class Peak_View_Theme
      */
     public function folder($name)
     {
-    	$config = Peak_Registry::o()->core_config;
+    	$config = Peak_Registry::o()->config;
     	
     	if(is_null($name))
     	{
