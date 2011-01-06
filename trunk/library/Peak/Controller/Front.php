@@ -155,6 +155,11 @@ class Peak_Controller_Front
 	 */
     public function postDispatch() { }
     
+    /**
+     * Called after rendering controller view
+     * Empty by default
+     */
+    public function postRender() { }   
     
     /**
      * Check if controller filename exists

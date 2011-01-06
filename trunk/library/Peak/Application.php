@@ -53,10 +53,8 @@ class Peak_Application
     public function run()
     {
     	$this->front->getRoute();
-    	
     	$this->front->preDispatch();
-    	
-    	$this->front->dispatch();   	
+    	$this->front->dispatch();
     	
     	return $this;
     }
@@ -67,6 +65,7 @@ class Peak_Application
     public function render()
     {
     	$this->front->controller->render();
+    	$this->front->postRender();
     }
 
 }
