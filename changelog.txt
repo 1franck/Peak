@@ -1,5 +1,7 @@
 #VERSION 0.8.3#
 
+ - added methods __construct() and _jsonError()(PHP 5.3) to Peak_Config_Json
+
  - added method postRender() in Peak_Controller_Front and fixed render() in Peak_Application
 
  - fixed method dispatch() of Peak_Controller_Front when dispatching the default controller 
