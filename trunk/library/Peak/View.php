@@ -230,7 +230,7 @@ class Peak_View
     public function theme($folder = null)
     {
         if(!($this->_theme instanceof Peak_View_Theme)) $this->_theme = new Peak_View_Theme($folder);
-        elseif(isset($folder)) $this->_theme->folder($folder); 
+        elseif(isset($folder)) $this->_theme->setFolder($folder); 
         return $this->_theme;
     }
 

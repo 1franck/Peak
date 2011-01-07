@@ -1,96 +1,81 @@
 <?php
 
 /**
- * Manage Application Views Themes
+ * Manage Application Views Themes folder(s)
  * 
- * @desc     Theme /layout, /partials, /scripts, /cache, /theme.ini
+ * @desc     Themes folder are /layout, /partials, /scripts, /cache
  *           By default they are in your application /views folder.
- *           If you set theme name with method folder(), application /views/themes/[name] will be used
+ *           If you set a theme name, then application folder /views/themes/[name] will be used
  * 
  * @author   Francois Lajoie
  * @version  $Id$
  */
 class Peak_View_Theme
 {
+	
     /**
-     * theme.ini options variables
-     *
-     * @var array
+     * theme folde name
+     * @var string
      */
-    private $_options = array();
     private $_theme_folder = null;
-      
-    
-    public function __construct()
+
+    /**
+     * __construct()
+     *
+     * @param string $name 
+     * @see setFolder()
+     */
+    public function __construct($name = null)
     {
-        $this->setOptions();
+    	if(isset($name)) $this->setFolder($name);
     }
     
     /**
      * Use views themes folder ( views/themes/[$name]/ ).
      * If $name is null, application /views/ folder will be used as views themes folder
      *
-     * @param string/null $name
+     * @param string|null $name
      */
-    public function folder($name)
+    public function setFolder($name)
     {
-    	$config = Peak_Registry::o()->config;
-    	
+    	$config = Peak_Registry::o()->config->getVars();
+
     	if(is_null($name))
     	{
-    		$config->views_themes_path   = $config->views_path;
-    		$config->theme_path          = $config->views_themes_path;
-    		$config->theme_scripts_path  = $config->theme_path.'/scripts';
-    		$config->theme_partials_path = $config->theme_path.'/partials';
-    		$config->theme_layouts_path  = $config->theme_path.'/layouts';
-    		$config->theme_cache_path    = $config->theme_path.'/cache';
+    		$config['path']['views_themes']   = $config['path']['views'];
+    		$config['path']['theme']          = $config->views_themes_path;
+    		$config['path']['theme_scripts']  = $config->theme_path.'/scripts';
+    		$config['path']['theme_partials'] = $config->theme_path.'/partials';
+    		$config['path']['theme_layouts']  = $config->theme_path.'/layouts';
+    		$config['path']['theme_cache']    = $config->theme_path.'/cache';
 
     	}
-    	elseif(!file_exists($config->views_path.'/themes/'.$name)) { 
+    	elseif(!$this->exists($name)) {
     		throw new Peak_Exception('ERR_VIEW_THEME_NOT_FOUND', $name);
     	}
     	else {
 
-    		$config->views_themes_path   = $config->views_path.'/themes';
-    		$config->theme_path          = $config->views_themes_path.'/'.$name;
-
-    		$config->theme_scripts_path  = $config->theme_path.'/scripts';
-    		$config->theme_partials_path = $config->theme_path.'/partials';
-    		$config->theme_layouts_path  = $config->theme_path.'/layouts';
-    		$config->theme_cache_path    = $config->theme_path.'/cache';
+    		$config['path']['views_themes']   = $config['path']['views'].'/themes';
+    		$config['path']['theme']          = $config['path']['views_themes'].'/'.$name;
+    		$config['path']['theme_scripts']  = $config['path']['theme'] .'/scripts';
+    		$config['path']['theme_partials'] = $config['path']['theme'] .'/partials';
+    		$config['path']['theme_layouts']  = $config['path']['theme'] .'/layouts';
+    		$config['path']['theme_cache']    = $config['path']['theme'] .'/cache';
     	}
+    	
+    	Peak_Registry::o()->config->setVars($config);
 
-    	$this->setOptions();
     	$this->_theme_folder = $name;
     }
     
-    
     /**
-     * Get template options array
+     * Check if theme folder exists
      *
-     * @return array
+     * @param  string $name
+     * @return bool
      */
-    public function getOptions($key = null)
+    public function exists($name)
     {
-        if(isset($key)) {
-            if(isset($this->_options[$key])) return $this->_options[$key];
-            else return null;
-        }
-        return $this->_options;
+    	return is_dir(Peak_Registry::o()->config->path['views'].'/themes/'.$name);
     }
-    
-    /**
-     * Get theme.ini variables if file exists
-     * result go to $this->options
-     */
-    public function setOptions()
-    {
-        $filepath = Peak_Core::getPath('theme').'/theme.ini';
-        if(file_exists($filepath)) {
-            $this->_options = parse_ini_file($filepath,true);
-        }    
-    }
-    
-
-
 }

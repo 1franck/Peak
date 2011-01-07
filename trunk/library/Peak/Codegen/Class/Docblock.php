@@ -55,9 +55,9 @@ class Peak_Codegen_Class_DocBlock
 	{
 		$data = $indent.'/**' . Peak_Codegen::LINE_BREAK;
 		$data .= $indent.' * '.$this->_title . Peak_Codegen::LINE_BREAK;
-		$data .= $indent.' *'.Peak_Codegen::LINE_BREAK;
-		
+	
 		if(!empty($this->_tags)) {
+			$data .= $indent.' *'.Peak_Codegen::LINE_BREAK;
 			foreach($this->_tags as $index => $tag) {
 				$data .= $indent.' * @'.$tag['tag'].' '.$tag['text'].Peak_Codegen::LINE_BREAK;
 			}
