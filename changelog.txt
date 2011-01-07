@@ -1,5 +1,11 @@
 #VERSION 0.8.3#
 
+ - added method exists() in Peak_View_Theme
+
+ - deleted deprecated methods setOptions() and getOptions() in Peak_View_Theme 
+
+ - fixed and renamed method folder() to setFolder() in Peak_View_Theme
+
  - added methods __construct() and _jsonError()(PHP 5.3) to Peak_Config_Json
 
  - added method postRender() in Peak_Controller_Front and fixed render() in Peak_Application
