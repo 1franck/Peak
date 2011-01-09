@@ -70,8 +70,15 @@ $form['app_bootstrap']    = 'on';
 $form['app_front']        = 'off';
 $form['app_configs']      = '
 [all]
-php.display_errors = 1
+php.display_errors         = 1
 php.display_startup_errors = 1
+php.date.timezone          = "America/Montreal"
+
+front.default_controller = "index"
+front.error_controller   = "error"
+
+view.setRenderEngine = "Layouts"
+view.useLayout       = "Main"
 
 [development]
 
@@ -80,8 +87,10 @@ php.display_startup_errors = 1
 [staging]
 
 [production]
-php.display_errors = 0
+php.display_errors         = 0
 php.display_startup_errors = 0';
+
+
 
 
 /**
@@ -186,6 +195,7 @@ if(isset($_POST['create'])) {
 						
 			$ctrls = explode(',',$form['app_controllers']);
 			foreach($ctrls as $ctrl) {
+				//create controller files
 				$ctrl = trim($ctrl);
 				$codegen = new Peak_Codegen_Controller();
 				$codegen->setName($ctrl)
@@ -197,6 +207,16 @@ if(isset($_POST['create'])) {
 				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
 					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
+				
+				//create controller view scripts folder and file
+				$script_folder = $app_folders['theme_scripts'].'/'.$ctrl;
+				if (!@mkdir($script_folder, 0, true)) {
+					$app_build_errors[] = 'Failed to create <code>'.$script_folder.'</code>';
+				}
+				if(!@file_put_contents($script_folder.'/index.php',' ')) {
+					$app_build_errors[] = 'Failed to create <code>'.$script_folder.'/index.php'.'</code>';
+				}
+								
 			}
 		}
 		
@@ -397,7 +417,7 @@ function errfield($name, $msg = false)
    <div class="block" style="margin:0 270px 0 0;">
     <p><small>
     This tools will help you to create application directory structure and save time. This file should be deleted and not used in production environment.
-    If its the first time you create a Peak application and you are not so sure about of settings below, just edit 'path' and leave others unchanged. 
+    If its the first time you create a Peak application and you are not so sure about of settings below, just edit 'Path' field and leave others unchanged. 
     Peak applications are flexible and can be constructed in several ways. This tools will only help you to start new application in its basic form.</small>
     </p>
    </div>
