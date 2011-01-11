@@ -13,7 +13,7 @@ class Peak_Controller_Helpers extends Peak_Helpers
 	 */
     public function __construct()
     {
-    	$this->_prefix    = 'Controller_Helper_';
+    	$this->_prefix    = array('Controller_Helper_', 'Peak_Controller_Helper_');
     	
     	$this->_paths     = array(Peak_Core::getPath('controllers_helpers'),
     			                  LIBRARY_ABSPATH.'/Peak/Controller/Helper');
