@@ -1,5 +1,9 @@
 #VERSION 0.8.3#
 
+ - added class Peak_Controller_Helper_Validate
+
+ - modified Peak_Controller_Helpers to support peak library controller helpers too
+
  - added method exists() in Peak_View_Theme
 
  - deleted deprecated methods setOptions() and getOptions() in Peak_View_Theme 
