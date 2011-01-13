@@ -37,7 +37,7 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
 		echo '<div id="pkdebugbar">
               <div class="pkdbpanel">
                <ul>
-                <li><a class="">PK v'._VERSION_.'/PHP '.phpversion().'</a></li>
+                <li><a class="">PK v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
                 <li><a class="clock pkdb_tab" id="pkdb_chrono" onclick="pkdebugShow(\'pkdb_chrono\');">'.$chrono.' ms</a></li>
                 <li><a class="memory">'.$this->getMemoryUsage().'</a></li>
                 <li><a class="files pkdb_tab" id="pkdb_include" onclick="pkdebugShow(\'pkdb_include\');">'.$files_count.' Files</a></li>

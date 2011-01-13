@@ -6,9 +6,9 @@
  * @version  $Id$ 
  */
 
-define('_VERSION_','0.8.3');
-define('_NAME_',   'PEAK');
-define('_DESCR_',  'Php wEb Application Kernel');
+define('PK_VERSION', '0.8.4');
+define('PK_NAME'   , 'PEAK');
+define('PK_DESCR'  , 'Php wEb Application Kernel');
 
 //handle all uncaught exceptions (try/catch block missing)
 set_exception_handler('pkexception');

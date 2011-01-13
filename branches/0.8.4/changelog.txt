@@ -1,3 +1,10 @@
+#VERSION 0.8.4#
+
+ - added abstract class Peak_Filters
+
+ - renamed constants _VERSION_, _NAME_ and _DESCR_ to PK_VERSION, PK_NAME and PK_DESCR
+
+
 #VERSION 0.8.3#
 
  - added class Peak_Controller_Helper_Validate
