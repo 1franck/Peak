@@ -113,6 +113,26 @@ abstract class Peak_Filters
 	}
 	
 	/**
+	 * Get sanitize filters var
+	 *
+	 * @return array
+	 */
+	public function getSanitizeFilters()
+	{
+		return $this->_sanitize;
+	}
+	
+	/**
+	 * Get validate filters var
+	 *
+	 * @return array
+	 */
+	public function getValidateFilters()
+	{
+		return $this->_validate;
+	}
+	
+	/**
 	 * Get errors
 	 *
 	 * @return array
