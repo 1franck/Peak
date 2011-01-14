@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - added methods _setError() and _regexp() to Peak_Filters
+
  - added methods getSanitizeFilters() and getValidateFilters() to Peak_Filters
 
  - added abstract class Peak_Filters

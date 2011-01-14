@@ -51,6 +51,9 @@ abstract class Peak_Filters
 			$this->_data = $data;
 		}
 		
+		// call setUp method if exists
+		if(method_exists($this, 'setUp')) $this->setUp();
+		
 		// call those method if exists to gather validate and sanitize filters from child class
 		if(method_exists($this,'setSanitize')) $this->_sanitize = $this->setSanitize();
 		if(method_exists($this,'setValidate')) $this->_validate = $this->setValidate();
@@ -143,7 +146,34 @@ abstract class Peak_Filters
 	}
 	
 	/**
-	 * Transform array to valid filters array
+	 * Set error message for data keyname
+	 * Usefull for FILTER_CALLBACK method
+	 *
+	 * @param string $name
+	 * @param string $message
+	 */
+	protected function _setError($name, $message)
+	{
+		$this->_errors_msg[$name] = $message;
+	}
+	
+	/**
+	 * Shorcut of FILTER_VALIDATE_REGEXP
+	 * Usefull for FILTER_CALLBACK methods
+	 *
+	 * @param  string $value
+	 * @param  string $regexp
+	 * @return string|false
+	 */
+	protected function _regexp($value, $regexp)
+	{
+		return filter_var($value, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
+	}
+	
+
+	
+	/**
+	 * Transform an array to valid filters array
 	 *
 	 * @param  array  $array 
 	 * @param  string $type 'sanitize' or 'validate'
