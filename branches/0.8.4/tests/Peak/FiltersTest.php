@@ -90,7 +90,7 @@ class Peak_FiltersTest extends PHPUnit_Framework_TestCase
 // example class that will be registered by Peak_Registry
 class ValidateClass extends Peak_Filters
 {
-    public function setValidate()
+    public function setValidation()
     {
         return array(
         
@@ -104,7 +104,7 @@ class ValidateClass extends Peak_Filters
 
 class SanitizeClass extends Peak_Filters 
 {
-	public function setSanitize()
+	public function setSanitization()
 	{
 		return array(
 		  

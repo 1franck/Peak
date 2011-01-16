@@ -55,8 +55,8 @@ abstract class Peak_Filters
 		if(method_exists($this, 'setUp')) $this->setUp();
 		
 		// call those method if exists to gather validate and sanitize filters from child class
-		if(method_exists($this,'setSanitize')) $this->_sanitize = $this->setSanitize();
-		if(method_exists($this,'setValidate')) $this->_validate = $this->setValidate();
+		if(method_exists($this,'setSanitization')) $this->_sanitize = $this->setSanitization();
+		if(method_exists($this,'setValidation')) $this->_validate = $this->setValidation();
 	}
 	
 	/**
@@ -80,7 +80,7 @@ abstract class Peak_Filters
 	 */
 	public function validate()
 	{
-		$filters = $this->_array2def($this->_validate, 'validate');
+		$filters = $this->_array2def($this->_validate);
 		
 		$data = filter_var_array($this->_data, $filters);
 		
@@ -188,7 +188,7 @@ abstract class Peak_Filters
 			{
 				if(is_array($v)) {
 										
-					//errors (push errors string to $this->_errors_msg because they are not a part of filters defenition
+					//errors (push errors string to $this->_errors_msg because they are not a part of filters definition
 					if(isset($v['error'])) {
 						$this->_errors_msg[$k] = $v['error'];
 						unset($array[$k]['error']);
