@@ -62,7 +62,7 @@ abstract class Peak_FormValidation
 		// call setUp method if exists
 		if(method_exists($this, 'setUp')) $this->setUp();
 		
-		if($this->_method = 'post') {
+		if($this->_method === 'post') {
 			$this->_data = $_POST;
 		}
 		else {
@@ -207,18 +207,36 @@ abstract class Peak_FormValidation
 		return $this->_errors;
 	}
 	
-	
+	/**
+     * Check if data is not empty
+     * 
+     * @param  misc $v
+     * @return bool
+     */
 	protected function _filter_not_empty($v)
 	{
 		if(empty($v)) return false;
 		else return true;
 	}
-	
+
+    /**
+     * Check if data is empty
+     *
+     * @param  misc $v
+     * @return bool
+     */
 	protected function _filter_empty($v)
 	{
 		return empty($v);
 	}
-	
+
+    /**
+     * Check lenght of a string
+     *
+     * @param  string $v
+     * @param  array  $opt keys supported: min, max
+     * @return bool
+     */
 	protected function _filter_lenght($v, $opt)
 	{
 		if(isset($opt['min'])) $min = $opt['min'];
@@ -233,32 +251,75 @@ abstract class Peak_FormValidation
 			return ((strlen($v) >= $min) && (strlen($v) <= $max)) ? true : false;
 		}
 	}
-	
+
+    /**
+     * Check if valid email
+     *
+     * @uses   FILTER_VALIDATE_EMAIL
+     * @param  string $v
+     * @return bool/string
+     */
 	protected function _filter_email($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_EMAIL);
 	}
-	
+
+    /**
+     * Check if is string contains chars [a-z|0-9] without space(s)
+     *
+     * @uses   FILTER_VALIDATE_REGEXP
+     * @param  string $v
+     * @return bool
+     */
 	protected function _filter_word($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z0-9]*$/')));
 	}
-	
+
+    /**
+     * Check if is string contains chars [a-z|0-9] with/without space(s)
+     *
+     * @uses   FILTER_VALIDATE_REGEXP
+     * @param  string $v
+     * @return bool
+     */
 	protected function _filter_words($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z0-9\s]*$/')));
 	}
-	
+
+    /**
+     * Check for integer
+     *
+     * @uses   FILTER_VALIDATE_INT
+     * @param  integer $v
+     * @return bool
+     */
 	protected function _filter_int($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_INT);
 	}
-	
+
+    /**
+     * Check if data match with another $_data key
+     *
+     * @param  string $v
+     * @param  string $opt
+     * @return bool
+     */
 	protected function _filter_match_key($v, $opt)
 	{
 		return ($v === ($this->_data[$opt])) ? true : false;
 	}
-		
+
+    /**
+     * Check for a regular expression
+     *
+     * @uses   FILTER_VALIDATE_REGEXP
+     * @param  string $v
+     * @param  string $regexp
+     * @return bool
+     */
 	protected function _filter_regexp($v, $regexp)
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
