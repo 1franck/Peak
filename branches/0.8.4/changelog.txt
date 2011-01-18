@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - deleted deprecated class Peak_Pattern
+
  - splited class Peak_FormValidation into Peak_Filters_Advanced and Peak_Filters_Form
 
  - simplified Peak_Filters and moved some code into Peak_Filters_Basic
