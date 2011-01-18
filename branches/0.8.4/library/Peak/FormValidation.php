@@ -208,6 +208,22 @@ abstract class Peak_FormValidation
 	}
 	
 	/**
+	 * Get class filters list
+	 */
+	public function getFiltersList()
+	{
+		$filters = array();
+		$methods = get_class_methods($this);
+		
+		foreach($methods as $method) {
+			if($this->_filter_regexp($method,'/^([_filter_][a-zA-Z]{1})/')) {
+				$filters[] = $method;
+			}
+		}
+		return $filters;
+	}
+	
+	/**
      * Check if data is not empty
      * 
      * @param  misc $v
@@ -263,30 +279,45 @@ abstract class Peak_FormValidation
 	{
 		return filter_var($v, FILTER_VALIDATE_EMAIL);
 	}
-
-    /**
-     * Check if is string contains chars [a-z|0-9] without space(s)
-     *
-     * @uses   FILTER_VALIDATE_REGEXP
-     * @param  string $v
-     * @return bool
-     */
-	protected function _filter_word($v)
+	
+	/**
+	 * Check for alpha char (a-z)
+	 *
+	 * @uses   FILTER_VALIDATE_REGEXP
+	 * @param  string     $v
+	 * @param  array|null $opt keys supported: lower, upper. if null both key are used
+	 * @return bool
+	 */
+	protected function _filter_alpha($v, $opt = null, $return_regopt = false)
 	{
-		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z0-9]*$/')));
+		if(is_array($opt)) {
+			$regopt = array();
+			if(isset($opt['lower']) && ($opt['lower'] === true)) { $regopt[] = 'a-z'; }
+			if(isset($opt['upper']) && ($opt['upper'] === true)) { $regopt[] = 'A-Z'; }
+			if(empty($regopt)) $regopt = array('a-z','A-Z');
+		}
+		else {
+			$regopt = array('a-z','A-Z');
+		}
+		if($return_regopt) return $regopt;
+		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
+	}
+	
+	/**
+	 * Same as _filter_alpha but support number(s)
+	 * 
+	 * @uses   FILTER_VALIDATE_REGEXP
+	 * @param  string $v
+	 * @param  array  $opt
+	 * @return bool
+	 */
+	protected function _filter_alpha_num($v,$opt = null)
+	{
+		$regopt = $this->_filter_alpha(null, $opt, true);
+		$regopt[] = '0-9';
+		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
 	}
 
-    /**
-     * Check if is string contains chars [a-z|0-9] with/without space(s)
-     *
-     * @uses   FILTER_VALIDATE_REGEXP
-     * @param  string $v
-     * @return bool
-     */
-	protected function _filter_words($v)
-	{
-		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^[a-zA-Z0-9\s]*$/')));
-	}
 
     /**
      * Check for integer
@@ -324,11 +355,5 @@ abstract class Peak_FormValidation
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
 	}
-	
-	protected function _filter_range($v, $opt)
-	{
-		//(is_array($opt))
-	}
-	
-	
+		
 }

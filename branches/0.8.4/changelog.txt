@@ -1,5 +1,8 @@
 #VERSION 0.8.4#
 
+ - deleted methods _filter_word() and filter_words in favor of new method _filter_alpha() and _filter_alpha_num(), and added
+   method getFiltersList() in Peak_FormValidation
+
  - added abstract class Peak_FormValidation
 
  - added methods _setError() and _regexp() to Peak_Filters
