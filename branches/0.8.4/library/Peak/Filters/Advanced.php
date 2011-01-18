@@ -1,49 +1,14 @@
 <?php
 /**
- * Form validation base class, support sanitize with php filter extension
- * This class help to validate/sanitize forms
+ * Filters advanced class wrapper
+ * This class help to validate data with multiple filters
  * 
  * @author  Francois Lajoie
  * @version $Id$
  */
-abstract class Peak_FormValidation 
+abstract class Peak_Filters_Advanced extends Peak_Filters 
 {
-	/**
-	 * Data on which we work 
-	 * @var array
-	 */
-	protected $_data = array();
-	
-	/**
-	 * Form method (post or get)
-	 * @var string
-	 */
-	protected $_method = 'post';
-	
-	/**
-	 * Sanitize filters
-	 * @var array
-	 */
-	protected $_sanitize;
-	
-	/**
-	 * Validate filters
-	 * @var array
-	 */
-	protected $_validate;
-	
-	/**
-	 * Errors found when validating
-	 * @var array
-	 */
-	protected $_errors = array();
-	
-	/**
-	 * Errors msg gather from $_validate
-	 * @var array
-	 */
-	protected $_errors_msg = array();
-	
+		
 	/**
 	 * Keep unknow key in $_data when using sanitize()
 	 * If false, each key that exists in $_data but not in $_sanitize will be removed (default behavior of filter_* functions)
@@ -51,29 +16,7 @@ abstract class Peak_FormValidation
 	 */
 	protected $_keep_unknow_sanitize_key = false;
 
-	
-	/**
-	 * Push array to the class for validation and sanitization
-	 *
-	 * @param array $data
-	 */
-	public function __construct()
-	{	
-		// call setUp method if exists
-		if(method_exists($this, 'setUp')) $this->setUp();
 		
-		if($this->_method === 'post') {
-			$this->_data = $_POST;
-		}
-		else {
-			$this->_data = $_GET;
-		}
-		
-		// call those method if exists to gather validate and sanitize filters from child class
-		if(method_exists($this,'setSanitization')) $this->_sanitize = $this->setSanitization();
-		if(method_exists($this,'setValidation')) $this->_validate = $this->setValidation();
-	}
-	
 	/**
 	 * Sanitize $_data using $_sanitize filters
 	 * 
@@ -186,27 +129,7 @@ abstract class Peak_FormValidation
 	{
 		return '_filter_'.$name;
 	}
-	
-	/**
-	 * Get data
-	 *
-	 * @return array
-	 */
-	public function getData()
-	{
-		return $this->_data;
-	}
 		
-	/**
-	 * Get errors
-	 *
-	 * @return array
-	 */
-	public function getErrors()
-	{
-		return $this->_errors;
-	}
-	
 	/**
 	 * Get class filters list
 	 */
