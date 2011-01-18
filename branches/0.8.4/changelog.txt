@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - fixed bug with Peak_View::setRenderEngine() and Partials render engine
+
  - deleted deprecated class Peak_Pattern
 
  - splited class Peak_FormValidation into Peak_Filters_Advanced and Peak_Filters_Form

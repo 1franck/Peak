@@ -176,9 +176,9 @@ class Peak_View
         {
             case 'partials':
             case 'Partials':
-                $groups = $this->theme()->getOptions('partials_groups');
-                $groups = (is_array($groups)) ? $groups : array();  
-                $options = $groups;
+                //$groups = $this->theme()->getOptions('partials_groups');
+                //$groups = (is_array($groups)) ? $groups : array();  
+                //$options = $groups;
                 break;
                 
             default :
