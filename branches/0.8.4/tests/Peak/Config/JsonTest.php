@@ -66,7 +66,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @expectedException Peak_Exception
 	 */
-	function testLoadFileException2()
+	function testLoadFileException2forPHP_5_3()
 	{
 
 		//PHP 5 >= 5.3
