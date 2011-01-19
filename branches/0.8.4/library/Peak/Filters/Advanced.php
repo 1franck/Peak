@@ -8,15 +8,15 @@
  */
 abstract class Peak_Filters_Advanced extends Peak_Filters 
 {
-		
+
 	/**
 	 * Keep unknow key in $_data when using sanitize()
 	 * If false, each key that exists in $_data but not in $_sanitize will be removed (default behavior of filter_* functions)
 	 * @var bool
 	 */
-	protected $_keep_unknow_sanitize_key = false;
+	protected $_keep_unknown_key_in_sanitize = false;
 
-		
+
 	/**
 	 * Sanitize $_data using $_sanitize filters
 	 * 
@@ -25,22 +25,21 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	public function sanitize()
 	{	
 		$filters = $this->_sanitize;
-		
-		if($this->_keep_unknow_sanitize_key) {
+
+		if($this->_keep_unknown_key_in_sanitize) {
 			$buffer_data = $this->_data;
 		}
-		
+
 		$this->_data = filter_var_array($this->_data, $filters);
-		
+
 		if(isset($buffer_data)) {
-			foreach($buffer_data as $k => $v)
-			{
+			foreach($buffer_data as $k => $v) {
 				if(!isset($this->_data[$k])) {
 					$this->_data[$k] = $v;
 				}
 			}
 		}
-		
+
 		return $this->_data;	
 	}
 	
@@ -50,30 +49,47 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 * @return bool
 	 */
 	public function validate()
-	{
-		//echo '<pre>data:'.print_r($this->_data,true).'<br />';
-		
+	{	
 		$result = array();
-		
+
 		foreach($this->_validate as $keyname => $keyval) {
-			
+
 			$i = 0;
+
+			//we got a key to validate that do not exists in $_data
+			//so we check if this keyname have isset filter name and an error msg,
+			//otherwise we simply skip the validation of the data keyname
+			if(!isset($this->_data[$keyname])) {
+				if(in_array('isset',$keyval['filters'])) {
+					//find key index for isset filter
+					foreach($keyval['filters'] as $fkey => $fval) {
+						if($fval === 'isset') {	$isset_key = $fkey;	break; }
+					}
+					if(isset($keyval['errors'][$isset_key])) {
+						$this->_errors[$keyname] = $keyval['errors'][$isset_key];
+					}
+					else $this->_errors[$keyname] = 'not set';
+					unset($isset_key);
+					continue;
+				}
+				else continue;
+			}
 			
-			foreach($keyval['filters'] as $subkey => $subkey_val) {
-				
-				if(is_int($subkey)) {
-					$filter_name = $subkey_val;
+			foreach($keyval['filters'] as $fkey => $fval) {
+
+				if(is_int($fkey)) {
+					$filter_name   = $fval;
 					$filter_method = $this->_filter2method($filter_name);
-					$filter_param = null;
+					$filter_param  = null;
 				}
 				else {
-					$filter_name = $subkey;
+					$filter_name  = $fkey;
 					$filter_method = $this->_filter2method($filter_name);
-					$filter_param  = $subkey_val;
+					$filter_param  = $fval;
 				}
-						
+	
 				if($this->_filterExists($filter_name)) {
-					
+
 					if(is_null($filter_param)) {
 						$filter_result = $this->$filter_method($this->_data[$keyname]);
 					}
@@ -81,7 +97,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 						$filter_result = $this->$filter_method($this->_data[$keyname],$filter_param);
 						if((bool)$filter_result === false) $filter_result = false;
 					}
-					
+
 					if($filter_result === false) {
 						//$result[$keyname] = $filter_result;
 						if((is_array($keyval['errors'])) && (isset($keyval['errors'][$i]))) {
@@ -91,23 +107,20 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 						//important! if a filter test fail, skip other test
 						break;
 					}
-					//else $result[$keyname] = true;
-						
 				}
+				else {
+					throw new Peak_Exception('ERR_CUSTOM', get_class($this).': unknow filter name '.$filter_name);
+				}
+				
 				unset($filter_result, $filter_param, $filter_method, $filter_name);
-			
+
 				++$i;
 			}
 		}
-		
-		//echo '<br />Result:';
-		//print_r($result);
-		//echo '<br />Errors'.print_r($this->_errors,true).'</pre>';
-		
-		if(empty($this->_errors)) return true;
-		else return false;		
+
+		return (empty($this->_errors)) ? true : false;	
 	}
-	
+
 	/**
 	 * Check if a filter name exists
 	 *
@@ -118,7 +131,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return (method_exists($this, $this->_filter2method($name)));
 	}
-	
+
 	/**
 	 * Get filter method name
 	 *
@@ -129,7 +142,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return '_filter_'.$name;
 	}
-		
+
 	/**
 	 * Get class filters list
 	 */
@@ -137,10 +150,10 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		$filters = array();
 		$methods = get_class_methods($this);
-		
-		foreach($methods as $method) {
-			if($this->_filter_regexp($method,'/^([_filter_][a-zA-Z]{1})/')) {
-				$filters[] = $method;
+
+		foreach($methods as $m) {
+			if($this->_filter_regexp($m,'/^([_filter_][a-zA-Z]{1})/')) {
+				$filters[] = $m;
 			}
 		}
 		return $filters;
@@ -154,8 +167,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
      */
 	protected function _filter_not_empty($v)
 	{
-		if(empty($v)) return false;
-		else return true;
+		return (empty($v)) ? false : true;
 	}
 
     /**
@@ -202,7 +214,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return filter_var($v, FILTER_VALIDATE_EMAIL);
 	}
-	
+
 	/**
 	 * Check for alpha char (a-z)
 	 *
@@ -219,13 +231,12 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			if(isset($opt['upper']) && ($opt['upper'] === true)) { $regopt[] = 'A-Z'; }
 			if(empty($regopt)) $regopt = array('a-z','A-Z');
 		}
-		else {
-			$regopt = array('a-z','A-Z');
-		}
+		else $regopt = array('a-z','A-Z');
+
 		if($return_regopt) return $regopt;
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
 	}
-	
+
 	/**
 	 * Same as _filter_alpha but support number(s)
 	 * 
@@ -240,7 +251,6 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		$regopt[] = '0-9';
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
 	}
-
 
     /**
      * Check for integer
@@ -278,5 +288,4 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
 	}
-		
 }

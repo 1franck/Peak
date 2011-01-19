@@ -12,25 +12,25 @@ abstract class Peak_Filters
 	 * @var array
 	 */
 	protected $_data = array();
-	
+
 	/**
 	 * Sanitize filters
 	 * @var array
 	 */
 	protected $_sanitize;
-	
+
 	/**
 	 * Validate filters
 	 * @var array
 	 */
 	protected $_validate;
-	
+
 	/**
 	 * Errors found when validating
 	 * @var array
 	 */
 	protected $_errors = array();
-	
+
 	/**
 	 * 
 	 */
@@ -38,13 +38,12 @@ abstract class Peak_Filters
 	{		
 		// call setUp method if exists
 		if(method_exists($this, 'setUp')) $this->setUp();
-		
-		// call those method if exists to gather validate and sanitize filters from child class
+
+		// call those methods if exists to gather validate and sanitize filters from child class
 		if(method_exists($this,'setSanitization')) $this->_sanitize = $this->setSanitization();
 		if(method_exists($this,'setValidation')) $this->_validate = $this->setValidation();
 	}
-	
-		
+
 	/**
 	 * Get data
 	 *
@@ -54,7 +53,7 @@ abstract class Peak_Filters
 	{
 		return $this->_data;
 	}
-	
+
 	/**
 	 * Get sanitize filters var
 	 *
@@ -64,7 +63,7 @@ abstract class Peak_Filters
 	{
 		return $this->_sanitize;
 	}
-	
+
 	/**
 	 * Get validate filters var
 	 *
@@ -74,7 +73,7 @@ abstract class Peak_Filters
 	{
 		return $this->_validate;
 	}
-	
+
 	/**
 	 * Get errors
 	 *

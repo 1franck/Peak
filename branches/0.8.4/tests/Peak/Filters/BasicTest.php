@@ -88,7 +88,7 @@ class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
 	  
 }
 
-// example class that will be registered by Peak_Registry
+
 class ValidateClass extends Peak_Filters_Basic
 {
     public function setValidation()

@@ -1,5 +1,9 @@
 #VERSION 0.8.4#
 
+ - fixed method validate() of Peak_Filter_Advanced to manage $_data keyname not set
+
+ - fixed method validate() of Peak_Filters_Advanced to throw exception when filter method is not found
+
  - fixed bug with Peak_View::setRenderEngine() and Partials render engine
 
  - deleted deprecated class Peak_Pattern
