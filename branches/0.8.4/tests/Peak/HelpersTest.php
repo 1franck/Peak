@@ -27,7 +27,7 @@ class Peak_HelpersTest extends PHPUnit_Framework_TestCase
 	function testCreateHelpersClass()
 	{		
 		$helper = new myHelpers();		
-		$this->assertType('Peak_Helpers', $helper);		
+		$this->assertInstanceOf('Peak_Helpers', $helper);		
 	}
 	
 	function testLoadHelpers()

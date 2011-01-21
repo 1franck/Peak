@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - fixed method save() from Peak_Codegen and added constant PHP_OPEN_TAG
+
  - added class Peak_Codegen_Front and Peak_Codegen_Index
 
  - fixed method validate() of Peak_Filter_Advanced to manage $_data keyname not set

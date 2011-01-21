@@ -28,7 +28,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 	function testCreateInstance()
 	{
 		$cf = new Peak_Config_Json();		
-		$this->assertType('Peak_Config_Json', $cf);
+		$this->assertInstanceOf('Peak_Config_Json', $cf);
 		$this->assertObjectHasAttribute('_vars', $cf);
 	}
 	

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * PHP class generator
  *
