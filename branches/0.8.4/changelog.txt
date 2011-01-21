@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - added class Peak_Codegen_Front and Peak_Codegen_Index
+
  - fixed method validate() of Peak_Filter_Advanced to manage $_data keyname not set
 
  - fixed method validate() of Peak_Filters_Advanced to throw exception when filter method is not found
