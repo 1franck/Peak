@@ -41,7 +41,7 @@ if(file_exists(PEAK_PATH.'/Peak/Core.php')) $peak_library_found = true;
 else $peak_library_found = false;
 
 //php version
-if(version_compare(PHP_VERSION, '5.2.0') >= 0) $php_version = true;
+if(version_compare(PHP_VERSION, '5.2.2') >= 0) $php_version = true;
 else $php_version;
 
 //apache
@@ -190,17 +190,17 @@ if(isset($_POST['create'])) {
 			$codegen = new Peak_Codegen_Bootstrap();
 			$codegen->addAction('_initEnv');
 			$filepath = $form['app_path'].'/bootstrap.php';
-			if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
-				$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
-			}
+			if(($codegen->save($filepath, true)) === false) {
+			    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+			}	
 		}
 		
 		//front controller
 		if($form['app_front'] === 'on') {
 		    $codegen = new Peak_Codegen_Front();
 		    $filepath = $form['app_path'].'/front.php';
-		    if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
-				$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+		    if(($codegen->save($filepath, true)) === false) {
+			    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 			}
 		}
 		
@@ -218,8 +218,8 @@ if(isset($_POST['create'])) {
 				        ->addPostAction();
 
 				$filepath = $form['app_path'].'/Controllers/'.$ctrl.'Controller.php';
-				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
-					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+				if(($codegen->save($filepath, true)) === false) {
+				    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
 				
 				//create controller view scripts folder and file
@@ -253,8 +253,8 @@ if(isset($_POST['create'])) {
 				$codegen = new Peak_Codegen_Bootstrap();
 				$filepath = $modpath.'/bootstrap.php';
 				$codegen->name = $mod.'_Bootstrap';
-				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
-					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+				if(($codegen->save($filepath, true)) === false) {
+				    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
 				//print_r($paths);
 			}
@@ -268,16 +268,16 @@ if(isset($_POST['create'])) {
 			if($form['public_index'] === 'on') {
 				$codegen = new Peak_Codegen_Index();
 				$filepath = $form['public_path'].'/index.php';
-				if(!@file_put_contents($filepath, '<?php'.Peak_Codegen::LINE_BREAK.$codegen->preview())) {
-					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+				if(($codegen->save($filepath, true)) === false) {
+				    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
 			}
 			if($form['public_htaccess'] === 'on') {
 				$codegen = new Peak_Codegen_Htaccess();
 				$codegen->env = 'development';
 				$filepath = $form['public_path'].'/.htaccess';
-				if(!@file_put_contents($filepath, $codegen->preview())) {
-					$app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
+				if(($codegen->save($filepath)) === false) {
+				    $app_build_errors[] = 'Failed to create <code>'.$filepath.'</code>';
 				}
 			}
 		}

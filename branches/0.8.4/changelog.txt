@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - rewrited class Peak_Chrono. This classs now manage a global timer and/or multiple timers
+
  - fixed method save() from Peak_Codegen and added constant PHP_OPEN_TAG
 
  - added class Peak_Codegen_Front and Peak_Codegen_Index
