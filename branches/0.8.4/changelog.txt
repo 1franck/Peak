@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - added static methods reset(), resetAll(), getMS(), isCompleted() and _elapsed() to Peak_Chrono
+
  - rewrited class Peak_Chrono. This classs now manage a global timer and/or multiple timers
 
  - fixed method save() from Peak_Codegen and added constant PHP_OPEN_TAG

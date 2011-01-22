@@ -18,7 +18,7 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
 		$files = $this->getFiles();		
 		$files_count = count($files['app']) + count($files['peak']);
 
-		if(Peak_Chrono::isOn()) $chrono = Peak_Chrono::get(null,4) * 1000;
+		if(Peak_Chrono::isCompleted()) $chrono = Peak_Chrono::getMs(null,4);
 		else $chrono = 'n/a';
 		
 		$sid = session_id();
