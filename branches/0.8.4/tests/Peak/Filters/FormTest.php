@@ -21,7 +21,7 @@ require_once 'Peak/Exception.php';
 class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
 {
 	
-    public function testLoadFiltersClass()
+    function testLoadFiltersClass()
     {   	
     	$f = new Form1();
     	
@@ -40,7 +40,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     }
     
-    public function testForm1ValidatePass1()
+    function testForm1ValidatePass1()
     {	
     	$_POST = array('namef' => 'mrjohn1', 'email' => 'mrjohn1@hotmail.com', 'password' => 'mypass2', 'repassword' => 'mypass2', 'unknow' => '123abc');
     	
@@ -53,7 +53,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     }
     
     
-    public function testForm1ValidateFail1()
+    function testForm1ValidateFail1()
     {
     	$_POST = array('name' => 'mrjohn1%', 'email' => 'mrjohn1hotmail.com', 'password' => 'mypass2', 'repassword' => 'mypassss2', 'unknow' => '123abc');
     	
@@ -134,7 +134,7 @@ class Form1 extends Peak_Filters_Form
     
     }
     
-    public function _filter_callbacktest($v)
+    function _filter_callbacktest($v)
     {
     	//do something
     	//return boolean result, here for the example return true

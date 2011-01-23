@@ -19,7 +19,7 @@ require_once 'Peak/Filters/Basic.php';
 class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
 {
 	
-    public function testLoadFiltersClass()
+    function testLoadFiltersClass()
     {   	
     	$f = new ValidateClass(array());
     	
@@ -38,7 +38,7 @@ class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
     }
     
     // class FiltersClass
-    public function testValidatePass1()
+    function testValidatePass1()
     {
     	$data_to_validate = array('mynumber' => 7);
     	
@@ -52,7 +52,7 @@ class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
     }
     
     // class FiltersClass
-    public function testValidateFail1()
+    function testValidateFail1()
     {
     	$data_to_validate = array('mynumber' => 13);
     	
@@ -70,7 +70,7 @@ class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
     }
     
     //class SanitizeClass
-    public function testSanitize1()
+    function testSanitize1()
     {
     	$data_to_sanitize = array('number' => '324fthy', 'cap' => 'i am a title', 'removed' => '');
     	

@@ -18,7 +18,7 @@ require_once 'Peak/Filters.php';
 class Peak_FiltersTest extends PHPUnit_Framework_TestCase
 {
 	
-    public function testLoadFiltersClass()
+    function testLoadFiltersClass()
     {   	
     	$f = new FiltersTest(array());
     	
