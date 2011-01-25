@@ -16,6 +16,7 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
 	{		
 		//files included				
 		$files = $this->getFiles();		
+		//print_r($files);
 		$files_count = count($files['app']) + count($files['peak']);
 
 		if(Peak_Chrono::isCompleted() || Peak_Chrono::isOn()) { $chrono = Peak_Chrono::getMs(null,4); }

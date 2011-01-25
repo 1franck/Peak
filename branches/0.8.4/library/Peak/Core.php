@@ -151,10 +151,7 @@ class Peak_Core
 
     	//save transformed config
     	$conf->setVars($final_config);
-    	Peak_Registry::set('config', $conf);
-
-    	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
-    	   	
+    	Peak_Registry::set('config', $conf);  	   	
 
     	//set some php ini settings
     	if(isset($conf->php)) {

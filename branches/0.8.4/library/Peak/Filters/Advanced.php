@@ -5,6 +5,41 @@
  * 
  * @author  Francois Lajoie
  * @version $Id$
+ * 
+ * FILTERS LIST FOR VALIDATION. 
+ * if you want more info on what a filter do, checkout the filter method docblock 
+ *  ____________________________________________
+ * | NAME      | OPTIONS* | METHOD NAME
+ * |____________________________________________
+ * |           |          |
+ * | alpha     | lower    | _filter_alpha()   
+ * |           | upper    |                   
+ * |-------------------------------------------
+ * | alpha_num | lower    | _filter_alpha_num()
+ * |           | upper    |
+ * |-------------------------------------------
+ * | email     |          | _filter_email()
+ * |-------------------------------------------
+ * | empty     |          | _filter_empty()
+ * |-------------------------------------------
+ * | int       | min      | _filter_int()
+ * |           | max      |
+ * |-------------------------------------------
+ * | lenght    | min      | _filter_lenght()
+ * |           | max      |
+ * |-------------------------------------------
+ * | match     | (string) | _filter_match()
+ * |-------------------------------------------
+ * | not_empty |          | _filter_not_empty()
+ * |-------------------------------------------
+ * | regexp    | (string) | _filter_regexp()
+ * |-------------------------------------------
+ * | required  |          | No method
+ * |___________________________________________
+ *   *options can be array keyname or variable type
+ * 
+ * Note that you can also define your own filters in your extended class
+ * by adding methods _filter_[youfiltername]
  */
 abstract class Peak_Filters_Advanced extends Peak_Filters 
 {
@@ -57,18 +92,19 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			$i = 0;
 
 			//we got a key to validate that do not exists in $_data
-			//so we check if this keyname have isset filter name and an error msg,
+			//so we check if the keyname have 'required' filter name w/o error msg,
 			//otherwise we simply skip the validation of the data keyname
+			//without triggering an error
 			if(!isset($this->_data[$keyname])) {
-				if(in_array('isset',$keyval['filters'])) {
+				if(in_array('required',$keyval['filters'])) {
 					//find key index for isset filter
 					foreach($keyval['filters'] as $fkey => $fval) {
-						if($fval === 'isset') {	$isset_key = $fkey;	break; }
+						if($fval === 'required') {	$isset_key = $fkey;	break; }
 					}
 					if(isset($keyval['errors'][$isset_key])) {
 						$this->_errors[$keyname] = $keyval['errors'][$isset_key];
 					}
-					else $this->_errors[$keyname] = 'not set';
+					else $this->_errors[$keyname] = 'required';
 					unset($isset_key);
 					continue;
 				}
@@ -104,7 +140,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 							$this->_errors[$keyname] = $keyval['errors'][$i];
 						}
 						else $this->_errors[$keyname] = 'not valid';
-						//important! if a filter test fail, skip other test
+						//important! if a filter test fail, skip other test for the keyname
 						break;
 					}
 				}
@@ -257,11 +293,28 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
      *
      * @uses   FILTER_VALIDATE_INT
      * @param  integer $v
+     * @param  array   $opt keys supported: min, max. if null, no range is used
      * @return bool
      */
-	protected function _filter_int($v)
+	protected function _filter_int($v, $opt = null)
 	{
-		return filter_var($v, FILTER_VALIDATE_INT);
+	    if(!isset($opt)) {
+	        return filter_var($v, FILTER_VALIDATE_INT);
+	    }
+	    else {
+	        if(filter_var($v, FILTER_VALIDATE_INT) !== false) {
+	            $return = array();
+	            if(isset($opt['min'])) {
+	                $return['min'] = ($v >= $opt['min']) ? true : false;
+	            }
+	            if(isset($opt['max'])) {
+	                $return['max'] = ($v <= $opt['max']) ? true : false;
+	            }
+	            foreach($return as $r) if($r === false) return false;
+	            return true;
+	        }
+	        else return false;
+	    }
 	}
 
     /**

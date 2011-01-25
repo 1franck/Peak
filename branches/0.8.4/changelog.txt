@@ -1,5 +1,9 @@
 #VERSION 0.8.4#
 
+ - fixed method _filter_int() in Peak_Filters_Advanced to support integer ranges(min,max)
+
+ - fixed double slash of paths in boot.php
+
  - deleted deprecated method config() in Peak_Core
 
  - added static methods reset(), resetAll(), getMS(), isCompleted() and _elapsed() to Peak_Chrono

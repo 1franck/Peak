@@ -42,7 +42,13 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     
     function testForm1ValidatePass1()
     {	
-    	$_POST = array('namef' => 'mrjohn1', 'email' => 'mrjohn1@hotmail.com', 'password' => 'mypass2', 'repassword' => 'mypass2', 'unknow' => '123abc');
+    	$_POST = array(
+    	'namef' => 'mrjohn1', 
+    	'email' => 'mrjohn1@hotmail.com',
+    	'password' => 'mypass2', 
+    	'repassword' => 'mypass2', 
+    	'unknow' => '123abc',
+    	'number' => 3);
     	
     	$f = new Form1();
     	
@@ -55,7 +61,13 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     
     function testForm1ValidateFail1()
     {
-    	$_POST = array('name' => 'mrjohn1%', 'email' => 'mrjohn1hotmail.com', 'password' => 'mypass2', 'repassword' => 'mypassss2', 'unknow' => '123abc');
+    	$_POST = array(
+    	'name' => 'mrjohn1%', 
+    	'email' => 'mrjohn1hotmail.com', 
+    	'password' => 'mypass2', 
+    	'repassword' => 'mypassss2', 
+    	'unknow' => '123abc', 
+    	'number' => 9);
     	
     	$f = new Form1();
     	
@@ -74,6 +86,9 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	    	
     	$this->assertArrayHasKey('repassword', $errors);
     	$this->assertTrue($errors['repassword'] === 'Password mismatch');
+    	
+    	$this->assertArrayHasKey('number', $errors);
+    	$this->assertTrue($errors['number'] === 'Number must be between 2 and 6');
     }
     
     /**
@@ -113,7 +128,7 @@ class Form1 extends Peak_Filters_Form
 		                                       
 		                    'errors'  => array('Name is empty',
 		                                       'Name contains invalid chars',
-		                                       'Name must between 4 and 10 chars',
+		                                       'Name must be between 4 and 10 chars',
 		                                       'Callback test fail')),
 		                                       
 		   'email' => array('filters' => array('email'),
@@ -128,7 +143,11 @@ class Form1 extends Peak_Filters_Form
 		   		                                  
 	       'repassword' => array('filters' => array('match_key' => 'password'),
 	                              
-	                             'errors'  => array('Password mismatch'))                                       
+	                             'errors'  => array('Password mismatch')),
+
+	       'number'     => array('filters' => array('int' => array('min' => 2, 'max' => 6)),
+	       
+	                             'errors'  => array('Number must be between 2 and 6'))                             
 		                                       
 	    );
     
