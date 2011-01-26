@@ -1,5 +1,11 @@
 #VERSION 0.8.4#
 
+ - fixed the problem with custom app class autoloading inside autoload.php. To avoid confusion and problems with case-sensitive
+   file system, app files and folders name should be in lower case except for controllers files that must have a 
+   upper 'C'(ex: indexController.php, contactController.php, etc...)
+
+ - fixed the problem with $_SERVER['DOCUMENT_ROOT'] not ending by / in some case inside boot.php
+
  - fixed method _filter_int() in Peak_Filters_Advanced to support integer ranges(min,max)
 
  - fixed double slash of paths in boot.php
