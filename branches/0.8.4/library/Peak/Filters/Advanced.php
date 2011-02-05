@@ -22,6 +22,8 @@
  * |-------------------------------------------
  * | empty     |          | _filter_empty()
  * |-------------------------------------------
+ * | enum      | (array)  | _filter_enum()
+ * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
  * |-------------------------------------------
@@ -249,6 +251,18 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	protected function _filter_email($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_EMAIL);
+	}
+	
+	/**
+	 * Checks if a value exists in an array
+	 *
+	 * @param  string $v
+	 * @param  array $opt
+	 * @return bool
+	 */
+	protected function _filter_enum($v, $opt)
+	{
+	    return (in_array($v,$opt));
 	}
 
 	/**

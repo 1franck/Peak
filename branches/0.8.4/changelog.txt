@@ -1,5 +1,7 @@
 #VERSION 0.8.4#
 
+ - added filter enum to Peak_Filters_Advanced
+
  - fixed the problem with custom app class autoloading inside autoload.php. To avoid confusion and problems with case-sensitive
    file system, app files and folders name should be in lower case except for controllers files that must have a 
    upper 'C'(ex: indexController.php, contactController.php, etc...)

@@ -48,7 +48,8 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'password' => 'mypass2', 
     	'repassword' => 'mypass2', 
     	'unknow' => '123abc',
-    	'number' => 3);
+    	'number' => 3,
+    	'answer' => 'test3');
     	
     	$f = new Form1();
     	
@@ -67,7 +68,8 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'password' => 'mypass2', 
     	'repassword' => 'mypassss2', 
     	'unknow' => '123abc', 
-    	'number' => 9);
+    	'number' => 9,
+    	'answer' => 'test2rwerwe');
     	
     	$f = new Form1();
     	
@@ -147,7 +149,11 @@ class Form1 extends Peak_Filters_Form
 
 	       'number'     => array('filters' => array('int' => array('min' => 2, 'max' => 6)),
 	       
-	                             'errors'  => array('Number must be between 2 and 6'))                             
+	                             'errors'  => array('Number must be between 2 and 6')),
+	                             
+	       'answer'     => array('filters' => array('enum' => array('test', 'test3', 'french potatoes')),
+	                             
+	                             'errors'  => array('Answer should be test, test3 or french potatoes'))                             
 		                                       
 	    );
     
