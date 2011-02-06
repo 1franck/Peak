@@ -1,5 +1,10 @@
 #VERSION 0.8.4#
 
+
+ - added function _autoloadAppBaseCustom() in autoload.php
+
+ - fixed a bug inside method render() in Peak_View_Render_Layout when layout file is specified but do not exists
+
  - added filter enum to Peak_Filters_Advanced
 
  - fixed the problem with custom app class autoloading inside autoload.php. To avoid confusion and problems with case-sensitive

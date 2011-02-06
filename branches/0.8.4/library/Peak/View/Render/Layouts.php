@@ -65,7 +65,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         }
                      
         //LAYOUT FILES VIEW IF EXISTS
-        if(isset($this->_layout_file)) {
+        if((isset($this->_layout_file)) && (file_exists(Peak_Core::getPath('theme_layouts').'/'.$this->_layout_file))) {
             $filepath = Peak_Core::getPath('theme_layouts').'/'.$this->_layout_file;
             $this->scripts_file = $file;
             $this->scripts_path = $path;

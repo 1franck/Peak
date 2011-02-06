@@ -18,6 +18,7 @@ spl_autoload_register('_autoloadAppCtrl');
 spl_autoload_register('_autoloadZendInternal');
 spl_autoload_register('_autoloadAppModules');
 spl_autoload_register('_autoloadAppCustom');
+spl_autoload_register('_autoloadAppBaseCustom');
 
 if(defined('ZEND_LIB_ABSPATH')) spl_autoload_register('_autoloadZend');
 
@@ -62,6 +63,15 @@ function _autoloadAppCustom($cn)
 {
 	$strtopath = strtolower(str_ireplace('app/','',_autoloadClass2File($cn)));
     $file = Peak_Core::getPath('application').'/'.$strtopath;
+
+    if(!file_exists($file)) return false;
+    include $file;
+}
+
+function _autoloadAppBaseCustom($cn)
+{
+    $strtopath = strtolower(str_ireplace('app/','',_autoloadClass2File($cn)));
+    $file = APPLICATION_ABSPATH.'/'.$strtopath;
 
     if(!file_exists($file)) return false;
     include $file;

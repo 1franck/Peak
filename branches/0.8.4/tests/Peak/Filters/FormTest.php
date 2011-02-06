@@ -91,6 +91,9 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     	$this->assertArrayHasKey('number', $errors);
     	$this->assertTrue($errors['number'] === 'Number must be between 2 and 6');
+    	
+    	$this->assertArrayHasKey('answer', $errors);
+    	$this->assertTrue($errors['answer'] === 'Answer should be test, test3 or french potatoes');
     }
     
     /**
