@@ -1,3 +1,61 @@
+#VERSION 0.8.4#
+ 
+ - simplified class Peak_Controller_Helper_Validate
+
+ - created Peak_Controller_Helper class and moved there method __call() from Peak_Controller_Helpers
+
+ - added function _autoloadAppBaseCustom() in autoload.php
+
+ - fixed a bug inside method render() in Peak_View_Render_Layout when layout file is specified but do not exists
+
+ - added filter enum to Peak_Filters_Advanced
+
+ - fixed the problem with custom app class autoloading inside autoload.php. To avoid confusion and problems with case-sensitive
+   file system, app files and folders name should be in lower case except for controllers files that must have a 
+   upper 'C'(ex: indexController.php, contactController.php, etc...)
+
+ - fixed the problem with $_SERVER['DOCUMENT_ROOT'] not ending by / in some case inside boot.php
+
+ - fixed method _filter_int() in Peak_Filters_Advanced to support integer ranges(min,max)
+
+ - fixed double slash of paths in boot.php
+
+ - deleted deprecated method config() in Peak_Core
+
+ - added static methods reset(), resetAll(), getMS(), isCompleted() and _elapsed() to Peak_Chrono
+
+ - rewrited class Peak_Chrono. This classs now manage a global timer and/or multiple timers
+
+ - fixed method save() from Peak_Codegen and added constant PHP_OPEN_TAG
+
+ - added class Peak_Codegen_Front and Peak_Codegen_Index
+
+ - fixed method validate() of Peak_Filter_Advanced to manage $_data keyname not set
+
+ - fixed method validate() of Peak_Filters_Advanced to throw exception when filter method is not found
+
+ - fixed bug with Peak_View::setRenderEngine() and Partials render engine
+
+ - deleted deprecated class Peak_Pattern
+
+ - splited class Peak_FormValidation into Peak_Filters_Advanced and Peak_Filters_Form
+
+ - simplified Peak_Filters and moved some code into Peak_Filters_Basic
+
+ - deleted methods _filter_word() and filter_words() in favor of new method _filter_alpha() and _filter_alpha_num(), and added
+   method getFiltersList() in Peak_FormValidation
+
+ - added abstract class Peak_FormValidation
+
+ - added methods _setError() and _regexp() to Peak_Filters
+
+ - added methods getSanitizeFilters() and getValidateFilters() to Peak_Filters
+
+ - added abstract class Peak_Filters
+
+ - renamed constants _VERSION_, _NAME_ and _DESCR_ to PK_VERSION, PK_NAME and PK_DESCR
+
+
 #VERSION 0.8.3#
 
  - added class Peak_Controller_Helper_Validate

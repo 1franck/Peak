@@ -28,7 +28,7 @@ class Peak_ConfigIniTest extends PHPUnit_Framework_TestCase
 	function testCreateInstance()
 	{
 		$cf = new Peak_Config_Ini();		
-		$this->assertType('Peak_Config_Ini', $cf);
+		$this->assertInstanceOf('Peak_Config_Ini', $cf);
 		$this->assertObjectHasAttribute('_vars', $cf);
 	}
 	

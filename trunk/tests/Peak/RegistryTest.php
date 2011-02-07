@@ -38,7 +38,7 @@ class Peak_RegistryTest extends PHPUnit_Framework_TestCase
 	function testGetInstance()
 	{
 		$reg = Peak_Registry::getInstance();		
-		$this->assertType('Peak_Registry', $reg); 
+		$this->assertInstanceOf('Peak_Registry', $reg); 
 	}
 	
 	function testIsRegistered()
@@ -50,18 +50,18 @@ class Peak_RegistryTest extends PHPUnit_Framework_TestCase
 	function testRegisteringObject()
     {
     	$obj = Peak_Registry::set('test_obj', new RegisteredClass());    	
-    	$this->assertType('RegisteredClass',$obj);
+    	$this->assertInstanceOf('RegisteredClass',$obj);
         $this->assertTrue(Peak_Registry::isRegistered('test_obj'),'test_obj should be registered');    
     }
     
     function testGetObject()
     {
     	$obj = Peak_Registry::get('test_obj');   	
-    	$this->assertType('RegisteredClass',$obj);
+    	$this->assertInstanceOf('RegisteredClass',$obj);
     	
     	unset($obj);    	
     	$obj = Peak_Registry::o()->test_obj;    	
-    	$this->assertType('RegisteredClass',$obj);
+    	$this->assertInstanceOf('RegisteredClass',$obj);
     }
     
     function testGetObjectsList()

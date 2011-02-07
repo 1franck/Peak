@@ -7,11 +7,16 @@
  */
 
 //define major abspath constants from root constant
-define('SVR_ABSPATH', str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT'])));
-define('PUBLIC_ABSPATH', SVR_ABSPATH.'/'.PUBLIC_ROOT);
-define('LIBRARY_ABSPATH', SVR_ABSPATH.'/'.LIBRARY_ROOT);
-define('APPLICATION_ABSPATH', SVR_ABSPATH.'/'.APPLICATION_ROOT);
-if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.'/'.ZEND_LIB_ROOT);
+
+//fix the problem with $_SERVER['DOCUMENT_ROOT'] not ending by / in some case
+$svr_path = str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT']));
+if(substr($svr_path, -1, 1) !== '/') $svr_path .= '/';
+define('SVR_ABSPATH', $svr_path); unset($svr_path);
+
+define('PUBLIC_ABSPATH', SVR_ABSPATH . PUBLIC_ROOT);
+define('LIBRARY_ABSPATH', SVR_ABSPATH . LIBRARY_ROOT);
+define('APPLICATION_ABSPATH', SVR_ABSPATH . APPLICATION_ROOT);
+if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.ZEND_LIB_ROOT);
 
 //load peak core and autoloader
 include LIBRARY_ABSPATH.'/Peak/Core.php';
