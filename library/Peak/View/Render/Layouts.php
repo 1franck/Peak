@@ -19,7 +19,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function useLayout($layout)
     {
-        if($this->isLayout($layout)) $this->_layout_file = $layout.'.php';
+        if($this->isLayout($layout.'.php')) $this->_layout_file = $layout.'.php';
     }
     
     /**
@@ -30,7 +30,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
      */
     public function isLayout($name)
     {
-    	return (file_exists(Peak_Core::getPath('theme_layouts').'/'.$name.'.php')) ? true : false;
+    	return (file_exists(Peak_Core::getPath('theme_layouts').'/'.$name)) ? true : false;
     }
 
     /**
@@ -65,7 +65,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
         }
                      
         //LAYOUT FILES VIEW IF EXISTS
-        if(isset($this->_layout_file)) {
+        if((isset($this->_layout_file)) && ($this->isLayout($this->_layout_file))) {
             $filepath = Peak_Core::getPath('theme_layouts').'/'.$this->_layout_file;
             $this->scripts_file = $file;
             $this->scripts_path = $path;

@@ -110,11 +110,11 @@ class Peak_View_Helper_Debug
 		$temp = get_included_files();
 		$files = array();
 		$total_size = 0;
-		$library_path = str_replace('\\','/',LIBRARY_ABSPATH);
+		$library_path = str_replace(array('\\','//'),'/',LIBRARY_ABSPATH);
 		foreach($temp as $file) {
 			$total_size += filesize($file);
 			$file = str_replace('\\','/',$file);
-			if(strstr($file, LIBRARY_ABSPATH) !== false) $files['peak'][] = $file;
+			if(stristr($file, $library_path) !== false) $files['peak'][] = $file;
 			else $files['app'][] = $file;
 		}
 		$files['total_size'] = $total_size;

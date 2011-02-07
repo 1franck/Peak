@@ -32,7 +32,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
 	
 	public function testControllerInstance()
     {
-        $this->assertType('Peak_Controller_Action', $this->peakcontroller);
+        $this->assertInstanceOf('Peak_Controller_Action', $this->peakcontroller);
     }
     
     public function testProperties()

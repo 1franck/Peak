@@ -6,9 +6,9 @@
  * @version  $Id$ 
  */
 
-define('_VERSION_','0.8.3');
-define('_NAME_',   'PEAK');
-define('_DESCR_',  'Php wEb Application Kernel');
+define('PK_VERSION', '0.8.4');
+define('PK_NAME'   , 'PEAK');
+define('PK_DESCR'  , 'Php wEb Application Kernel');
 
 //handle all uncaught exceptions (try/catch block missing)
 set_exception_handler('pkexception');
@@ -91,22 +91,22 @@ class Peak_Core
      *
      * @param string $file
      */
-    final public static function initConfig($file)
+    public static function initConfig($file, $apppath = APPLICATION_ABSPATH)
     {    		
     	self::getInstance();
     	
-    	$filetype = pathinfo($file,PATHINFO_EXTENSION);
+    	$filetype = pathinfo($file, PATHINFO_EXTENSION);
     	$env = self::getEnv();
     	
     	//load configuration object according to the file extension
     	switch($filetype) {
     		
     		case 'ini' : 
-    		    $conf = new Peak_Config_Ini(APPLICATION_ABSPATH.'/'.$file, true);
+    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
     		    break;
     		    
     		case 'php' :
-    			$array = include(APPLICATION_ABSPATH.'/'.$file);
+    			$array = include($apppath.'/'.$file);
     			$conf = new Peak_Config();
     			$conf->setVars($array);
     			break;
@@ -123,23 +123,23 @@ class Peak_Core
     	//add APPLICATION_ABSPATH to path config array if exists
     	if(isset($loaded_config['all']['path'])) {
     		foreach($loaded_config['all']['path'] as $pathname => $path) {
-    			$loaded_config['all']['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    			$loaded_config['all']['path'][$pathname] = $apppath.'/'.$path;
     		}
     	}
     	
     	//add APPLICATION_ABSPATH to 'path' key value
     	if(isset($loaded_config[$env]['path'])) {
     		foreach($loaded_config[$env]['path'] as $pathname => $path) {
-    			$loaded_config[$env]['path'][$pathname] = APPLICATION_ABSPATH.'/'.$path;
+    			$loaded_config[$env]['path'][$pathname] = $apppath.'/'.$path;
     		}
     	}
     	
     	//merge app config paths with core app paths  	
     	if(isset($loaded_config['all']['path'])) {
-    	    $loaded_config['all']['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths(APPLICATION_ABSPATH), $loaded_config['all']['path']);
+    	    $loaded_config['all']['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths($apppath), $loaded_config['all']['path']);
     	}
     	else {
-    		$loaded_config['all']['path'] = self::getDefaultAppPaths(APPLICATION_ABSPATH);
+    		$loaded_config['all']['path'] = self::getDefaultAppPaths($apppath);
     	}
 
     	//try to merge array section 'all' with current environment section if exists
@@ -151,10 +151,7 @@ class Peak_Core
 
     	//save transformed config
     	$conf->setVars($final_config);
-    	Peak_Registry::set('config', $conf);
-
-    	//echo '<pre>';  	print_r($conf);    	echo '</pre>';
-    	   	
+    	Peak_Registry::set('config', $conf);  	   	
 
     	//set some php ini settings
     	if(isset($conf->php)) {
@@ -220,7 +217,7 @@ class Peak_Core
      * @param   string $path
      * @return  string|null
      * 
-     * @example getPath('application') = Peak_Registry::o()->core_config->path['application']
+     * @example Peak_Core::getPath('application') = Peak_Registry::o()->config->path['application']
      */
     public static function getPath($path = 'application') 
     {
@@ -229,21 +226,7 @@ class Peak_Core
     	if(isset($c->path[$path])) return $c->path[$path];
     	else return null;
     }
-    
-    /**
-     * Get/Set core configurations
-     *
-     * @param  string $k configuration keyname
-     * @param  misc   $v configuration keyname value
-     * @return misc   return null if no config found or setting a new config value
-     */
-    public static function config($k,$v = null)
-    {
-    	$c = Peak_Registry::o()->config;
-    	if(isset($v)) $c->$k = $v;
-    	elseif(isset($c->$k)) return $c->$k;
-    	else return null;
-    }
+
 }
 
 /**
@@ -253,7 +236,7 @@ function _clean($str) {
     $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
     return $str;
 }
-function _cleans($strs,$keys_to_clean = null, $remove_keys = null) {
+function _cleans($strs, $keys_to_clean = null, $remove_keys = null) {
 	if(is_array($remove_keys)) { foreach($remove_keys as $k) { unset($strs[$key]); } }
     if(is_array($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
     else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }

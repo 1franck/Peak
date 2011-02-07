@@ -27,7 +27,7 @@ class Peak_RouterTest extends PHPUnit_Framework_TestCase
 	function testCreateInstance()
 	{
 		$rt = new Peak_Router('');		
-		$this->assertType('Peak_Router', $rt); 
+		$this->assertInstanceOf('Peak_Router', $rt); 
 	}
 	
 	

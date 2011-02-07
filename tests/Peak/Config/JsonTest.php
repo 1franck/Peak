@@ -28,7 +28,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 	function testCreateInstance()
 	{
 		$cf = new Peak_Config_Json();		
-		$this->assertType('Peak_Config_Json', $cf);
+		$this->assertInstanceOf('Peak_Config_Json', $cf);
 		$this->assertObjectHasAttribute('_vars', $cf);
 	}
 	
@@ -62,11 +62,18 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
         $this->fail('An expected exception has not been raised.');
         
  	}
+ 	
+ 	function testFor5_3()
+ 	{
+ 	    if((version_compare(PHP_VERSION, '5.3.0') >= 0)) {
+ 	        $this->LoadFileException2forPHP_5_3();
+ 	    }
+ 	}
 
 	/**
 	 * @expectedException Peak_Exception
 	 */
-	function testLoadFileException2()
+	function LoadFileException2forPHP_5_3()
 	{
 
 		//PHP 5 >= 5.3
