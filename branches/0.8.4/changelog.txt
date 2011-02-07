@@ -1,4 +1,6 @@
 #VERSION 0.8.4#
+ 
+ - simplified class Peak_Controller_Helper_Validate
 
  - created Peak_Controller_Helper class and moved there method __call() from Peak_Controller_Helpers
 
