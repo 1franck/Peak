@@ -1,5 +1,6 @@
 #VERSION 0.8.4#
 
+ - created Peak_Controller_Helper class and moved there method __call() from Peak_Controller_Helpers
 
  - added function _autoloadAppBaseCustom() in autoload.php
 
