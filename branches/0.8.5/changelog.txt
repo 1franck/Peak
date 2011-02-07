@@ -1,3 +1,7 @@
+#VERSION 0.8.5#
+
+ - added class Peak_Filters_Data
+
 #VERSION 0.8.4#
  
  - simplified class Peak_Controller_Helper_Validate

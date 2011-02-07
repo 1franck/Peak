@@ -17,7 +17,7 @@ abstract class Peak_Filters_Form extends Peak_Filters_Advanced
 
 	
 	/**
-	 * Push array to the class for validation and sanitization
+	 * Push $_POST or $_GET data to the class for validation and sanitization
 	 *
 	 * @param array $data
 	 */
