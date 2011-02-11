@@ -130,10 +130,16 @@ class Peak_Controller_Front
 	
 	/**
 	 * Force dispatch of $error_controller
+     *
+     * @param object $exception
 	 */
-	public function errorDispatch()
+	public function errorDispatch($exception = null)
 	{
 		$this->forceDispatch($this->error_controller);
+
+        if(($this->controller instanceof Peak_Controller_Action) && (isset($exception))) {
+            $this->controller->exception = $exception;
+        }
 	}
 
     /**

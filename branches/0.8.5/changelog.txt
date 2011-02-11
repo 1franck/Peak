@@ -1,5 +1,9 @@
 #VERSION 0.8.5#
 
+ - fixed Peak_Application_Modules to flush previous bootstrap if modules don't have his own
+
+ - fixed Peak_Application_Modules to load default Peak front controller if modules don't have his own
+
  - added class Peak_Filters_Data
 
 #VERSION 0.8.4#
