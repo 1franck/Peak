@@ -1,5 +1,10 @@
 #VERSION 0.8.5#
 
+ - splited dispatch() method of Peak_Controller_Front into dispatch(), _dispatchController(), _dispatchControllerAction() and
+   _dispatchModule(). Added posibility to inject exception object to error controller with errorDispatch().
+
+ - added class Peak_View_Render_VirtualLayouts
+
  - fixed Peak_Application_Modules to flush previous bootstrap if modules don't have his own
 
  - fixed Peak_Application_Modules to load default Peak front controller if modules don't have his own
