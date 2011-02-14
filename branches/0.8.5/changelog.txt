@@ -1,5 +1,9 @@
 #VERSION 0.8.5#
 
+ - added class Peak_Controller_Internal_PkError
+
+ - minor fixes to Peak_View_Render_VirtualLayouts
+
  - splited dispatch() method of Peak_Controller_Front into dispatch(), _dispatchController(), _dispatchControllerAction() and
    _dispatchModule(). Added posibility to inject exception object to error controller with errorDispatch().
 

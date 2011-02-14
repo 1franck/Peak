@@ -48,7 +48,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
     /**
      * Render virtual layout(s)
      * 
-     * <layout_content> tag inside layout will be replaced by $_content
+     * {CONTENT} tag inside layout will be replaced by $_content
      *
      * @param  string $file
      * @param  string $path
@@ -64,7 +64,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
             $output = $this->_content;
         }
         else {
-            $output = str_ireplace('<layout_content>', $this->_content, $this->_layout);
+            $output = str_ireplace('{CONTENT}', $this->_content, $this->_layout);
         }
 
         $this->output($output);
