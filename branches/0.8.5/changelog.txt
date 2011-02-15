@@ -1,5 +1,11 @@
 #VERSION 0.8.5#
 
+ - added method getRoute() in Peak_Controller_Action.
+
+ - replaced handleAction() method of Peak_Controller_Action for dispatch() and dispatchAction().
+
+ - fixed problem with method redirect() in Peak_Controller_Front when redirecting to an action in the same controller.
+
  - added class Peak_Controller_Internal_PkError
 
  - minor fixes to Peak_View_Render_VirtualLayouts

@@ -109,10 +109,50 @@ abstract class Peak_Controller_Action
         $this->title = str_ireplace('controller', '', $this->name);      
   
         $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->title;
+        
+        $this->getRoute();
+    }
+    
+    /**
+     * Get data from router needed for dispatch
+     */
+    public function getRoute()
+    {
+        $this->params = Peak_Registry::o()->router->params;      
+        $this->params_assoc = Peak_Registry::o()->router->params_assoc;     
+        $this->action = $this->action_prefix . Peak_Registry::o()->router->action;
+    }
+    
+    /**
+     * Dispatch controller action and other stuff around it
+     */
+    public function dispatch()
+    {
+        $this->preAction();
+        $this->dispatchAction();
+        $this->postAction();
+    }
+    
+    /**
+     * Dispatch action requested by router or the default action(_index)
+     */
+    public function dispatchAction()
+    {
+        $action = $this->action;
+        if($action === $this->action_prefix) $action = $this->action_prefix . 'index';
+        
+        if(($this->isAction($action))) $this->action = $action;
+        elseif(($action !== 'index') && (!($this->isAction($action)))) {
+        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->name));
+        }
+        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
-        //retreive requests param(s) from router
-        $this->params = Peak_Registry::o()->router->params;
-        $this->params_assoc = Peak_Registry::o()->router->params_assoc;
+        //set action filename
+        if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
+        else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
+        
+        //call requested action
+        $this->$action(); 
     }
 
     /**
@@ -140,34 +180,6 @@ abstract class Peak_Controller_Action
     public function isAction($name)
     {
     	return (method_exists($this->name, $name)) ? true : false;
-    }
-
-    /**
-     * Analyse router and lauch associated action method
-     *
-     * @param string $action_by_default   default method name if no request match to module actions
-     */   
-    public function handleAction($action_by_default = 'index')
-    {
-        $this->preAction();
-        
-        $action = $this->action_prefix . Peak_Registry::o()->router->action;
-        if($action === $this->action_prefix) $action = $this->action_prefix . $action_by_default;
-        
-        if(($this->isAction($action))) $this->action = $action;
-        elseif(($action !== $action_by_default) && (!($this->isAction($action)))) {
-        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->name));
-        }
-        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
-
-        //set action filename
-        if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
-        else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
-        
-        //call requested action
-        $this->$action();    
-        
-        $this->postAction();
     }
 
     /**
@@ -211,7 +223,7 @@ abstract class Peak_Controller_Action
      */
     public function redirect($ctrl, $action, $params = null)
     {
-    	Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
+        Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
     }
 
     /**
