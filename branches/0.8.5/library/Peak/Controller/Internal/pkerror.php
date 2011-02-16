@@ -116,14 +116,12 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
     {
         $table = '<table>';
         $exception = array('Message' => $this->exception->getMessage(),
-                           'Time' => $this->exception->getTime(),
                            'File' => $this->exception->getFile(),
                            'Line' => $this->exception->getLine(),
                            'Code' => $this->exception->getCode(),
                            'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
-                           
-        if(empty($exception['Time'])) $exception['Time'] = date('Y-m-d H:i:s');
-        
+                                  
+        $exception['Time'] = (!method_exists($this->exception,'getTime')) ? date('Y-m-d H:i:s') : $this->exception->getTime();       
                            
         foreach($exception as $k => $v) {
             $table .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';

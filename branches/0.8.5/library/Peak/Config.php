@@ -13,6 +13,16 @@ class Peak_Config implements IteratorAggregate, Countable
 	 * @var array
 	 */
 	protected $_vars = array();
+	
+	/**
+	 * Set array of data optionnaly
+	 *
+	 * @param array $vars
+	 */
+	public function __construct($vars = null)
+	{
+	    if(is_array($vars)) $this->setVars($vars);
+	}
 
 	/**
 	 * Set a new variable

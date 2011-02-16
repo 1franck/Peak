@@ -78,6 +78,8 @@ abstract class Peak_Controller_Action
     {   
         //initialize ctrl
         $this->initController();
+        //get route to dispatch
+        $this->getRoute();
     }
     
     /**
@@ -109,8 +111,6 @@ abstract class Peak_Controller_Action
         $this->title = str_ireplace('controller', '', $this->name);      
   
         $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->title;
-        
-        $this->getRoute();
     }
     
     /**
@@ -118,8 +118,8 @@ abstract class Peak_Controller_Action
      */
     public function getRoute()
     {
-        $this->params = Peak_Registry::o()->router->params;      
-        $this->params_assoc = Peak_Registry::o()->router->params_assoc;     
+        $this->params = Peak_Registry::o()->router->params;        
+        $this->params_assoc = new Peak_Config(Peak_Registry::o()->router->params_assoc);
         $this->action = $this->action_prefix . Peak_Registry::o()->router->action;
     }
     
@@ -193,6 +193,16 @@ abstract class Peak_Controller_Action
     	return $this->helpers;
     }
 
+    /**
+     * Access to params_assoc
+     *
+     * @return object
+     */
+    public function param()
+    {
+        return $this->params_assoc;
+    }
+    
     /**
      * Get current action method name
      *

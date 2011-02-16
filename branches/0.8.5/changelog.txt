@@ -1,5 +1,12 @@
 #VERSION 0.8.5#
 
+ - changed property $params_assoc from array to config object and added method param() to make easy access to the param object.
+   instead of accessing to params with $this->params_assoc['var'], we use now something like this: $this->param()->var.
+
+ - added method __construct() to Peak_Config.
+
+ - fixed a bug in method _exception2table() of class Peak_Controller_Internal_Pkerror.
+
  - fixed method _filter_alpha() of Peak_Filters_Advanced to support spaces.
 
  - added property $_global_sanitize and method globalSanitize() in Peak_Filters.
