@@ -270,15 +270,16 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 *
 	 * @uses   FILTER_VALIDATE_REGEXP
 	 * @param  string     $v
-	 * @param  array|null $opt keys supported: lower, upper. if null both key are used
+	 * @param  array|null $opt keys supported: lower, upper, space. if null, lower and upper key are used
 	 * @return bool
 	 */
 	protected function _filter_alpha($v, $opt = null, $return_regopt = false)
 	{
 		if(is_array($opt)) {
 			$regopt = array();
-			if(isset($opt['lower']) && ($opt['lower'] === true)) { $regopt[] = 'a-z'; }
-			if(isset($opt['upper']) && ($opt['upper'] === true)) { $regopt[] = 'A-Z'; }
+			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
+			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
+			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
 			if(empty($regopt)) $regopt = array('a-z','A-Z');
 		}
 		else $regopt = array('a-z','A-Z');

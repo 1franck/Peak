@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - fixed method _filter_alpha() of Peak_Filters_Advanced to support spaces.
+
  - added property $_global_sanitize and method globalSanitize() in Peak_Filters.
 
  - added method getRoute() in Peak_Controller_Action.
