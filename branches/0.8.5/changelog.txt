@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - added property $_global_sanitize and method globalSanitize() in Peak_Filters.
+
  - added method getRoute() in Peak_Controller_Action.
 
  - replaced handleAction() method of Peak_Controller_Action for dispatch() and dispatchAction().

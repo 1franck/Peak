@@ -18,6 +18,12 @@ abstract class Peak_Filters
 	 * @var array
 	 */
 	protected $_sanitize;
+	
+	/**
+	 * Global sanitize filters for all data
+	 * @var array
+	 */
+	protected $_global_sanitize;
 
 	/**
 	 * Validate filters
@@ -42,6 +48,7 @@ abstract class Peak_Filters
 		// call those methods if exists to gather validate and sanitize filters from child class
 		if(method_exists($this,'setSanitization')) $this->_sanitize = $this->setSanitization();
 		if(method_exists($this,'setValidation')) $this->_validate = $this->setValidation();
+		if(method_exists($this,'setGlobalSanitization')) $this->_global_sanitize = $this->setGlobalSanitization();
 	}
 
 	/**
@@ -63,6 +70,16 @@ abstract class Peak_Filters
 	{
 		return $this->_sanitize;
 	}
+	
+	/**
+	 * Get global sanitize filter
+	 *
+	 * @return array
+	 */
+	public function getGlobalSanitizeFilter()
+	{
+	    return $this->_global_sanitize;
+	}
 
 	/**
 	 * Get validate filters var
@@ -82,5 +99,20 @@ abstract class Peak_Filters
 	public function getErrors()
 	{
 		return $this->_errors;
+	}
+	
+	/**
+	 * Sanitize all data with $_global_sanitize
+	 */
+	public function globalSanitize()
+	{
+	    $filter = isset($this->_global_sanitize['filter']) ? $this->_global_sanitize['filter'] : null;
+	    $flags  = isset($this->_global_sanitize['flags'])  ? $this->_global_sanitize['flags']  : null;
+	    
+	    foreach($this->_data as $k => $v) {
+	        $this->_data[$k] = filter_var($v, $filter, $flags);
+	    }
+	    
+	    return $this->_data;
 	}
 }
