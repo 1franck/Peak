@@ -194,11 +194,11 @@ abstract class Peak_Controller_Action
     }
 
     /**
-     * Access to params_assoc
+     * Access to params_assoc object
      *
      * @return object
      */
-    public function param()
+    public function params()
     {
         return $this->params_assoc;
     }

@@ -1,7 +1,7 @@
 #VERSION 0.8.5#
 
- - changed property $params_assoc from array to config object and added method param() to make easy access to the param object.
-   instead of accessing to params with $this->params_assoc['var'], we use now something like this: $this->param()->var.
+ - changed property $params_assoc from array to config object and added method params() to make easy access to params key name.
+   instead of accessing to params with $this->params_assoc['var'], we use now something like this: $this->params()->var.
 
  - added method __construct() to Peak_Config.
 
