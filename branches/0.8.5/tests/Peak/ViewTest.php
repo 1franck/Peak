@@ -135,7 +135,7 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		
 		$config->view = array('set' => array('test' => 'value',
 		                                     'test2' => 'value2'),
-		                      'setRenderEngine' => 'Layouts');
+		                      'engine' => 'Layouts');
 		                                     
 	    Peak_Registry::set('config', $config);
 	    $view = new Peak_View();

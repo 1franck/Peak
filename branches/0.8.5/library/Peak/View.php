@@ -166,44 +166,18 @@ class Peak_View
     }
 
     /**
-     * Set view rendering engine. 'Layouts' by default
-     * 
-     * @param string $engine [Partials|Layouts|Xml|Json] ( /Peak/View/Render/ )
-     */
-    public function setRenderEngine($engine = 'Layouts')
-    {
-        switch($engine)
-        {
-            case 'partials':
-            case 'Partials':
-                //$groups = $this->theme()->getOptions('partials_groups');
-                //$groups = (is_array($groups)) ? $groups : array();  
-                //$options = $groups;
-                break;
-                
-            default :
-            	//if its unknow render engine, set layouts as default
-            	if(!class_exists('Peak_View_Render_'.$engine)) {
-            		$this->setRenderEngine('Layouts');
-            		return;
-            	}
-                break;
-        }
-        
-        $engine_class = 'Peak_View_Render_'.$engine;
-        
-        $this->_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
-
-        return $this;       
-    }
-
-    /**
-     * Return current view rendering engine object
+     * Set/Get current view rendering engine object
      *
+     * @param  string $engine_name 
      * @return object Peak_View_Render_*
      */
-    public function engine()
+    public function engine($engine_name = null)
     {
+        if(isset($engine_name)) {
+            $engine_class = 'Peak_View_Render_'.$engine_name;
+            $this->_engine = new $engine_class();
+        }
+        
         return $this->_engine;
     }
 
