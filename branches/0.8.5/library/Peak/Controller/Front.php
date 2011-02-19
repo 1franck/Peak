@@ -179,7 +179,7 @@ class Peak_Controller_Front
     	
     	//if redirection is in the same controller, we don't want to reload controller
         //and call twice preAction and postAction methods
-    	if((is_object($this->controller)) && (strtolower($ctrl) === strtolower($this->controller->title))) {
+    	if((is_object($this->controller)) && (strtolower($ctrl) === strtolower($this->controller->getTitle()))) {
 
             $this->controller->getRoute();
             $this->controller->dispatchAction();
