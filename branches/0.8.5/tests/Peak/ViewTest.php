@@ -120,13 +120,10 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->peakview->iniVar('viewvars.ini', dirname(__FILE__).'/../tmp/');
 				
 		$this->assertTrue(isset($this->peakview->name));
-		$this->assertTrue($this->peakview->name === 'jack');
 		
 		$this->assertTrue(isset($this->peakview->hobby));
-		$this->assertTrue($this->peakview->hobby === 'jack love to play poker');
 				
 		$this->assertTrue(isset($this->peakview->city));
-		$this->assertTrue($this->peakview->city === 'jack live in montreal');
 	}
 	
 	function testRegistryConfig()

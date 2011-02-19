@@ -34,9 +34,9 @@ class Peak_View
 
 
     /**
-     * Start template - set an array as template variable(optionnal)
+     * Load view - set an array|ini file as template variable(s) (optionnal)
      *
-     * @param array $vars
+     * @param array|string $vars
      */
     public function __construct($vars = null)
     {
@@ -229,28 +229,11 @@ class Peak_View
     {
     	if(!isset($path)) $filepath = Peak_Core::getPath('views_ini').'/'.$file;
     	else $filepath = $path.'/'.$file;
-    	
-        if(file_exists($filepath)) {
-            $ini_vars = parse_ini_file($filepath);
-            
-            //check for variables inside variable ( ini var syntax = $[myvarname] )
-            foreach($ini_vars as $k => $v)
-            {
-                $pattern = '/\$\[(?P<name>\w+)\]/i';
-                preg_match_all($pattern, $v, $m);
 
-                if(isset($m['name'])) {
-                    foreach($m['name'] as $var) {
-                        if(isset($this->$var)) $replacement = $this->$var;
-                        elseif(isset($ini_vars[$var])) $replacement = $ini_vars[$var]; 
-                        if(isset($replacement)) {
-                        	$ini_vars[$k] = str_replace('$['.$var.']', $replacement, $ini_vars[$k]);
-                        	unset($replacement);
-                        } 
-                    }
-                }
-            }
-            $this->_vars = array_merge($this->_vars,$ini_vars);
-        }
+    	if(file_exists($filepath)) {
+    	    $ini = new Peak_Config_Ini($filepath);
+    	    $merge_vars = $ini->arrayMergeRecursive($ini->getVars(), $this->_vars);
+    	    $this->_vars = $merge_vars;
+    	}
     }    
 }

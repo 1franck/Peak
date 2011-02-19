@@ -5,9 +5,10 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
- * @see Peak_Controller_Action, Peak_Registry, Peak_Core, Peak_Router, Peak_View, Peak_Exception
+ * @see Peak_Controller_Action, Peak_Config, Peak_Registry, Peak_Core, Peak_Router, Peak_View, Peak_Exception
  */
 require_once 'Peak/Controller/Action.php';
+require_once 'Peak/Config.php';
 require_once 'Peak/Registry.php';
 require_once 'Peak/Core.php';
 require_once 'Peak/Router.php';
@@ -52,7 +53,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     {
     	$actions = $this->peakcontroller->getActions();
     	
-    	$this->assertTrue($actions);
+    	$this->assertTrue(is_array($actions));
     	$this->assertTrue(count($actions) == 2);
     	$this->assertTrue($actions[0] === '_index');
     	$this->assertTrue($actions[1] === '_contact');
@@ -69,10 +70,11 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     	$this->assertFalse(isset(Peak_Registry::o()->view->test));
     }
     
-    function testHandleAction2()
+    function testdispatchAction2()
     {
     	//handle contact action (_contact)
     	Peak_Registry::o()->router->action = 'contact';
+    	$this->peakcontroller->getRoute();
     	$this->peakcontroller->dispatch();
     	
     	$this->assertTrue(Peak_Registry::o()->view->actiontest === 'contact value');
@@ -88,6 +90,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     {
     	//handle a default action that don't exists
     	Peak_Registry::o()->router->action = 'test';
+    	$this->peakcontroller->getRoute();
 		try {
 			$this->peakcontroller->dispatch();
 		}
@@ -99,8 +102,9 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
         
         //handle action from router that don't exists
         Peak_Registry::o()->router->action = 'test2';
+        $this->peakcontroller->getRoute();
 		try {
-			$this->peakcontroller->handleAction();
+			$this->peakcontroller->dispatch();
 		}
 		catch (InvalidArgumentException $expected) {
             return;

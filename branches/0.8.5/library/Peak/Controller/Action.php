@@ -136,7 +136,7 @@ abstract class Peak_Controller_Action
         foreach($c_methods as $method) {            
             if(preg_match($regexp,$method)) $actions[] = $method;
         }
-        
+
         return $actions;
     }
     

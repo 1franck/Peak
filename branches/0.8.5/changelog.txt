@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
  
+ - rewrited method iniVar() from Peak_View to use Peak_Config_Ini.
+ 
  - deleted property $actions and renamed method listActions() to getActions() in Peak_Controller_Action.
 
  - deleted properties $name and $title in favor of new methods getName() and getTitle() in Peak_Controller_Action and 
