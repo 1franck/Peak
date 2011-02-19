@@ -14,7 +14,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
      */
     public function preAction()
     {
-        $this->view->setRenderEngine('VirtualLayouts');
+        $this->view->engine('VirtualLayouts');
         $this->view->disableCache();    
     }
     

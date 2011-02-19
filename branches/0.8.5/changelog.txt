@@ -1,4 +1,11 @@
 #VERSION 0.8.5#
+ 
+ - deleted property $actions and renamed method listActions() to getActions() in Peak_Controller_Action.
+
+ - deleted properties $name and $title in favor of new methods getName() and getTitle() in Peak_Controller_Action and 
+   modified initController() method accordingly.
+
+ - modified exception constants messages in Peak_Exception.
 
  - removed method setRenderEngine() and moved code in engine() method. Use engine() for setting and getting render engine is 
    instead.
