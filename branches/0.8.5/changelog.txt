@@ -7,8 +7,7 @@
 
  - modified exception constants messages in Peak_Exception.
 
- - removed method setRenderEngine() and moved code in engine() method. Use engine() for setting and getting render engine is 
-   instead.
+ - removed method setRenderEngine() and moved code in engine() method. Use engine() for setting and getting render engine instead.
 
  - changed property $params_assoc from array to config object and added method params() to make easy access to params key name.
    instead of accessing to params with $this->params_assoc['var'], we use now something like this: $this->params()->var.

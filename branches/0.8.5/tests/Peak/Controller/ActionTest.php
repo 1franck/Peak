@@ -37,8 +37,8 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     
     public function testProperties()
     {
-    	$this->assertTrue($this->peakcontroller->title === 'test');
-    	$this->assertTrue($this->peakcontroller->name === 'testController');
+    	$this->assertTrue($this->peakcontroller->getTitle() === 'test');
+    	$this->assertTrue($this->peakcontroller->getName() === 'testController');
     }
     
     public function testIsAction()
@@ -48,25 +48,20 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     	$this->assertFalse($this->peakcontroller->isAction('_send'));
     }
     
-    public function testListActions()
+    public function testGetActions()
     {
-    	$this->assertEmpty($this->peakcontroller->actions);
-    	$this->peakcontroller->listActions();
+    	$actions = $this->peakcontroller->getActions();
     	
-    	$this->assertTrue(is_array($this->peakcontroller->actions));
-    	$this->assertTrue(count($this->peakcontroller->actions) == 2);
-    	$this->assertTrue($this->peakcontroller->actions[0] === '_index');
-    	$this->assertTrue($this->peakcontroller->actions[1] === '_contact');
-    	
-    	//relist again
-    	$this->peakcontroller->listActions();
-    	$this->assertTrue(count($this->peakcontroller->actions) == 2);
+    	$this->assertTrue($actions);
+    	$this->assertTrue(count($actions) == 2);
+    	$this->assertTrue($actions[0] === '_index');
+    	$this->assertTrue($actions[1] === '_contact');
     }
     
-    function testHandleAction()
+    function testDispatch()
     {
     	//handle default action (_index)
-    	$this->peakcontroller->handleAction();
+    	$this->peakcontroller->dispatch();
     	
     	$this->assertTrue(Peak_Registry::o()->view->actiontest === 'default value');
     	$this->assertTrue(Peak_Registry::o()->view->preactiontest === 'value');
@@ -78,7 +73,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     {
     	//handle contact action (_contact)
     	Peak_Registry::o()->router->action = 'contact';
-    	$this->peakcontroller->handleAction();
+    	$this->peakcontroller->dispatch();
     	
     	$this->assertTrue(Peak_Registry::o()->view->actiontest === 'contact value');
     	$this->assertTrue(Peak_Registry::o()->view->preactiontest === 'value');
@@ -89,11 +84,12 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     /**
 	 * @expectedException Peak_Exception
 	 */
-    function testHandleActionException()
+    function testdispatchException()
     {
     	//handle a default action that don't exists
+    	Peak_Registry::o()->router->action = 'test';
 		try {
-			$this->peakcontroller->handleAction('test');
+			$this->peakcontroller->dispatch();
 		}
 		catch (InvalidArgumentException $expected) {
             return;
@@ -102,9 +98,9 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
         $this->fail('An expected exception has not been raised.');
         
         //handle action from router that don't exists
-        Peak_Registry::o()->router->action = 'test';
+        Peak_Registry::o()->router->action = 'test2';
 		try {
-			$this->peakcontroller->handleAction('index');
+			$this->peakcontroller->handleAction();
 		}
 		catch (InvalidArgumentException $expected) {
             return;
