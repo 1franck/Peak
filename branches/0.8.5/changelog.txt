@@ -1,4 +1,6 @@
 #VERSION 0.8.5#
+
+ - deleted deprecated class Peak_View_Helper_Icon
  
  - rewrited method iniVar() from Peak_View to use Peak_Config_Ini.
  
