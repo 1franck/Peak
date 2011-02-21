@@ -281,8 +281,8 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			$regopt = array();
 			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
 			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
-			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
 			if(empty($regopt)) $regopt = array('a-z','A-Z');
+			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';	
 		}
 		else $regopt = array('a-z','A-Z');
 
