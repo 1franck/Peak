@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - added class Peak_Controller_Helper_Post
+
  - fixed a bug in method Peak_Filters_Advanced::_filter_alpha()
 
  - added class Peak_Model_DataObject
