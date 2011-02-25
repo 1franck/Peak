@@ -38,7 +38,9 @@ class Peak_Controller_Helper_Post extends Peak_Config
      */
     public function filter($key, $filter, $options)
     {
-        $this->$key = filter_var($this->$key, $filter, $options);
+        if(isset($this->_vars[$key])) {
+            $this->_vars[$key] = filter_var($this->_vars[$key], $filter, $options);
+        }
         return $this;
     }
 
