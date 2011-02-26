@@ -109,6 +109,14 @@ class Peak_Config implements IteratorAggregate, Countable
     }
     
     /**
+     * Flush all variable stored
+     */
+    public function flushVars()
+    {
+        $this->_vars = array();
+    }
+    
+    /**
 	 * Merge two arrays recursively overwriting the keys in the first array
 	 * if such key already exists
 	 *
