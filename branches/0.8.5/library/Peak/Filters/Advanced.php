@@ -14,11 +14,13 @@
  * |           |          |
  * | alpha     | lower    | _filter_alpha()   
  * |           | upper    |
- * |           | space    |        
+ * |           | space    |
+ * |           | punc     |
  * |-------------------------------------------
  * | alpha_num | lower    | _filter_alpha_num()
  * |           | upper    |
- * |           | space    |  
+ * |           | space    |
+ * |           | punc     |
  * |-------------------------------------------
  * | email     |          | _filter_email()
  * |-------------------------------------------
@@ -268,11 +270,11 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
 	/**
-	 * Check for alpha char (a-z)
+	 * Check for alpha char (a-z), with optionnaly space(s) and custom punctuation(s)
 	 *
 	 * @uses   FILTER_VALIDATE_REGEXP
 	 * @param  string     $v
-	 * @param  array|null $opt keys supported: lower, upper, space. if null, lower and upper key are used
+	 * @param  array|null $opt keys supported: lower, upper, space, punc. if null, lower and upper key are used
 	 * @return bool
 	 */
 	protected function _filter_alpha($v, $opt = null, $return_regopt = false)
@@ -282,7 +284,12 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
 			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
 			if(empty($regopt)) $regopt = array('a-z','A-Z');
-			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';	
+			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
+			if(isset($opt['punc']) && is_array($opt['punc'])) {
+			    foreach($opt['punc'] as $punc) {
+			        $regopt[] = '\\'.$punc;
+			    }
+			}
 		}
 		else $regopt = array('a-z','A-Z');
 

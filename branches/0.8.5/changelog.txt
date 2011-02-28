@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - added punctuation option in method Peak_Filters_Advanced::_filter_alpha()
+
  - added method flushVars() to Peak_Config
 
  - added class Peak_Controller_Helper_Post
