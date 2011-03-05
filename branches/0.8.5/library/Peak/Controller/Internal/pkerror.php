@@ -27,8 +27,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
         //force render and exit script
         //$this->view->render('','');
         //exit();
-    }
-    
+    }   
     
     /**
      * Default action handler, support exception object
@@ -144,26 +143,22 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
  <meta name="robots" content="noindex,nofollow" />
  <style type="text/css">
   <!--
- body {
-  margin:80px;
-  padding:0;
-  font:12px "Verdana";
-  background:#fff;
- }
- table { margin:0; }
- table td { padding:4px 8px; }
- .box {
+ .pkerrbox table { margin:0; border: 0 !important; }
+ .pkerrbox table td { padding:4px 8px; border: 0 !important; }
+ .pkerrbox {
+   margin:80px;
+   font:12px "Verdana" !important;
    padding:15px 20px;
    border: 1px solid #8ec1da;
    background-color: #ddeef6;
-   box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
+   /*box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
    -o-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
-   -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
-   -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
+   -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -50% #cbe6f2, 0 0 3px #8ec1da;
+   -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;*/
    color: #3985a8;
    text-shadow: 0 1px #fff;
   }
- .box.blue {
+ .pkerrbox.blue {
    border: 1px solid #8ec1da;
    background-color: #ddeef6;
    box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
@@ -172,7 +167,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
    -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #cbe6f2, 0 0 3px #8ec1da;
    color: #3985a8;
  }
- .box.yellow {
+ .pkerrbox.yellow {
    border: 1px solid #EEE679;
    background-color: #F8F7C5;
    box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
@@ -181,7 +176,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
    -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
    color: #99912B;
  }
- .box.red {
+ .pkerrbox.red {
    border: 1px solid #DE8D89;
    background-color: #F3C9C9;
    box-shadow: inset 0 1px 3px #fff, inset 0 -45px #E8B1AE, 0 0 3px #F3C9C9;
@@ -190,41 +185,52 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
    -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #E8B1AE, 0 0 3px #F3C9C9;
    color: #A93630;
  }
- .box h1 {
+ .pkerrbox.black {
+   border: 1px solid #222;
+   background-color: #444;
+   box-shadow: inset 0 1px 3px #fff, inset 0 -45px #111, 0 0 3px #ccc;
+   -o-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #111, 0 0 3px #ccc;
+   -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #111, 0 0 3px #ccc;
+   -moz-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #111, 0 0 3px #ccc;
+   color: #f1f1f1;
+   text-shadow: 0 1px #111;
+ }
+ .pkerrbox h1 {
   font-size:22px;
   margin:-15px -15px 12px -15px;
   padding:10px 15px;
+  border: 0 !important;
  }
- .box h2 {
+ .pkerrbox h2 {
   font-weight:bold;
   font-size:14px;
   margin:0 0 0px 0;
   padding:0px 0 0 0px;
+  border: 0 !important;
  }
- .box .block {
+ .pkerrbox .block {
   background:#f9f9f9;
-  border:1px solid #ccc;
   padding:12px;
   margin-top:15px;
+  color:#111;
+  text-shadow:none;
  }
- .box .block p {
+ .pkerrbox .block p {
   padding:10px 5px;
   margin:0;
  }
- .box, .box .block {
+ .pkerrbox, .pkerrbox .block {
   border-radius: 4px; -moz-border-radius: 4px; -o-border-radius:4px, -webkit-border-radius:4px;
  }
   -->
  </style>
 </head>
 <body>
-
-<div class="box blue">
+<div class="pkerrbox blue">
 <h1>'.$this->view->title.'</h1>
 <h2>'.$this->view->title_desc.'</h2>
 {CONTENT}
 </div>
-  
 </body>
 </html>';
     }

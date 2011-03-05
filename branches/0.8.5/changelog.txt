@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - fixed minor bug in Peak_View_Render_Layouts::render()
+
  - fixed minor bug in method getFiles() from Peak_View_Helper_Debug
 
  - added punctuation option in method Peak_Filters_Advanced::_filter_alpha()
