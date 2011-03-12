@@ -69,13 +69,27 @@ class Peak_Controller_Front
 	public function preDispatch() {	}
 
 	/**
-	 * Start dispatching to controller with the help of router
-	 * 
-	 * @param string $default_ctrl Controller called by default when no request
+	 * Call appropriate dispatching methods
 	 */
 	public function dispatch()
 	{
-		$router = Peak_Registry::o()->router;      
+	    $this->_dispatchController();
+	    
+	    if($this->controller instanceof Peak_Application_Modules) {
+        	$this->_dispatchModule();
+        }               
+        // execute a normal controller action
+        elseif($this->controller instanceof Peak_Controller_Action) {
+        	$this->_dispatchControllerAction(); 
+        }
+	}
+	
+	/**
+	 * Dispatch appropriate controller according to the router
+	 */
+	protected function _dispatchController()
+	{
+	    $router = Peak_Registry::o()->router;      
 		
 		//set default controller if router doesn't have one
 		if(!isset($router->controller)) {
@@ -96,22 +110,24 @@ class Peak_Controller_Front
 			else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
 		}
 		else $this->controller = new $ctrl_name();
- 
-        //if class if is an instance of Peak_Application_Modules, load a module app via a controller
-        if($this->controller instanceof Peak_Application_Modules) 
-        {
-        	Peak_Registry::o()->app->module = $this->controller;
-        	$this->controller->run();
-        }               
-        // execute a normal controller action
-        elseif($this->controller instanceof Peak_Controller_Action) {
-        	$this->controller->handleAction();
-        	$this->postDispatch();  
-        }       
-        else {
-        	//need something
-        	//class is neither a module or a controller
-        }
+	}
+	
+	/**
+	 * Dispatch action of controller
+	 */
+	protected function _dispatchControllerAction()
+	{
+	    $this->controller->dispatch();
+        $this->postDispatch(); 
+	}
+	
+	/**
+	 * Dispatch a module and run it
+	 */
+	protected function _dispatchModule()
+	{
+	    Peak_Registry::o()->app->module = $this->controller;
+        $this->controller->run();
 	}
 	
 	/**
@@ -130,14 +146,28 @@ class Peak_Controller_Front
 	
 	/**
 	 * Force dispatch of $error_controller
+     *
+     * @param object $exception
 	 */
-	public function errorDispatch()
+	public function errorDispatch($exception = null)
 	{
-		$this->forceDispatch($this->error_controller);
+		//$this->forceDispatch($this->error_controller);
+		
+		$router = Peak_Registry::o()->router;
+		$router->controller = $this->error_controller;
+		$router->action     = 'index';
+		
+		$this->_dispatchController();
+
+        if(($this->controller instanceof Peak_Controller_Action) && (isset($exception))) {
+            $this->controller->exception = $exception;
+        }
+        
+        $this->_dispatchControllerAction();
 	}
 
     /**
-     * Set a new request and redispath the controller
+     * Set a new request and redispatch the controller
      *
      * @param string     $ctrl
      * @param string     $action
@@ -146,7 +176,15 @@ class Peak_Controller_Front
     public function redirect($ctrl, $action = 'index', $params = null)
     {
     	Peak_Registry::o()->router->setRequest( array($ctrl, $action, $params) );
-    	$this->dispatch();
+    	
+    	//if redirection is in the same controller, we don't want to reload controller
+        //and call twice preAction and postAction methods
+    	if((is_object($this->controller)) && (strtolower($ctrl) === strtolower($this->controller->getTitle()))) {
+
+            $this->controller->getRoute();
+            $this->controller->dispatchAction();
+        }
+    	else $this->dispatch();
     }
 
     /**

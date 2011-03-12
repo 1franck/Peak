@@ -13,10 +13,14 @@
  * |____________________________________________
  * |           |          |
  * | alpha     | lower    | _filter_alpha()   
- * |           | upper    |                   
+ * |           | upper    |
+ * |           | space    |
+ * |           | punc     |
  * |-------------------------------------------
  * | alpha_num | lower    | _filter_alpha_num()
  * |           | upper    |
+ * |           | space    |
+ * |           | punc     |
  * |-------------------------------------------
  * | email     |          | _filter_email()
  * |-------------------------------------------
@@ -35,9 +39,22 @@
  * | not_empty |          | _filter_not_empty()
  * |-------------------------------------------
  * | regexp    | (string) | _filter_regexp()
- * |-------------------------------------------
- * | required  |          | No method
  * |___________________________________________
+ * 
+ * 
+ * VALIDATION SPECIAL FILTERS
+ *  ____________________________________________
+ * | NAME          |  DESCRIPTION
+ * |____________________________________________
+ * | required      |  Generate an error if
+ * |               |  data key not set
+ * |-------------------------------------------
+ * | if_not_empty  |  Process other filters if
+ * |               |  data key is not empty.
+ * |               |  Otherwise skip data key
+ * |               |  without generating error
+ * |___________________________________________
+ * 
  *   *options can be array keyname or variable type
  * 
  * Note that you can also define your own filters in your extended class
@@ -92,28 +109,34 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		foreach($this->_validate as $keyname => $keyval) {
 
 			$i = 0;
-
 			//we got a key to validate that do not exists in $_data
 			//so we check if the keyname have 'required' filter name w/o error msg,
 			//otherwise we simply skip the validation of the data keyname
 			//without triggering an error
 			if(!isset($this->_data[$keyname])) {
+			    
 				if(in_array('required',$keyval['filters'])) {
-					//find key index for isset filter
+					//find key index for required filter
 					foreach($keyval['filters'] as $fkey => $fval) {
-						if($fval === 'required') {	$isset_key = $fkey;	break; }
+						if($fval === 'required') { $findex = $fkey; break; }
 					}
-					if(isset($keyval['errors'][$isset_key])) {
-						$this->_errors[$keyname] = $keyval['errors'][$isset_key];
+					if(isset($keyval['errors'][$findex])) {
+						$this->_errors[$keyname] = $keyval['errors'][$findex];
 					}
 					else $this->_errors[$keyname] = 'required';
-					unset($isset_key);
 					continue;
 				}
 				else continue;
 			}
 			
 			foreach($keyval['filters'] as $fkey => $fval) {
+			    
+			    //skip special filters and conditionnal filter
+			    if($fval === 'required') continue;
+			    elseif($fval === 'if_not_empty') {
+			        if(!empty($this->_data[$keyname])) continue;
+			        else break;
+			    }
 
 				if(is_int($fkey)) {
 					$filter_name   = $fval;
@@ -167,7 +190,9 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 */
 	public function _filterExists($name)
 	{
-		return (method_exists($this, $this->_filter2method($name)));
+	    //special filters
+	    if(in_array($name,array('required'))) return true;
+		else return (method_exists($this, $this->_filter2method($name)));
 	}
 
 	/**
@@ -266,20 +291,26 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
 	/**
-	 * Check for alpha char (a-z)
+	 * Check for alpha char (a-z), with optionnaly space(s) and custom punctuation(s)
 	 *
 	 * @uses   FILTER_VALIDATE_REGEXP
 	 * @param  string     $v
-	 * @param  array|null $opt keys supported: lower, upper. if null both key are used
+	 * @param  array|null $opt keys supported: lower, upper, space, punc. if null, lower and upper key are used
 	 * @return bool
 	 */
 	protected function _filter_alpha($v, $opt = null, $return_regopt = false)
 	{
 		if(is_array($opt)) {
 			$regopt = array();
-			if(isset($opt['lower']) && ($opt['lower'] === true)) { $regopt[] = 'a-z'; }
-			if(isset($opt['upper']) && ($opt['upper'] === true)) { $regopt[] = 'A-Z'; }
+			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
+			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
 			if(empty($regopt)) $regopt = array('a-z','A-Z');
+			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
+			if(isset($opt['punc']) && is_array($opt['punc'])) {
+			    foreach($opt['punc'] as $punc) {
+			        $regopt[] = '\\'.$punc;
+			    }
+			}
 		}
 		else $regopt = array('a-z','A-Z');
 

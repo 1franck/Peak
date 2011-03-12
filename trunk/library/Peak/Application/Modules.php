@@ -48,11 +48,14 @@ abstract class Peak_Application_Modules
         	include Peak_Core::getPath('application').'/bootstrap.php';
         }
         $bootstrap_class = $this->_name.'_Bootstrap';
-        if(class_exists($bootstrap_class)) {
+        if(class_exists($bootstrap_class,false)) {
         	//delete previously added router regex for the module
         	Peak_Registry::o()->router->deleteRegex();  
         	//load module bootstrapper
         	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	
+        }
+        else {
+            Peak_Registry::o()->app->bootstrap = null;
         }
         
         //initialize module front if exists
@@ -60,8 +63,11 @@ abstract class Peak_Application_Modules
         	include Peak_Core::getPath('application').'/front.php';
         }
         $front_class = $this->_name.'_Front';
-        if(class_exists($front_class)) {
+        if(class_exists($front_class,false)) {
         	Peak_Registry::o()->app->front = new $front_class();
+        }
+        else {
+            Peak_Registry::o()->app->front = new Peak_Controller_Front();
         }
     }
     
