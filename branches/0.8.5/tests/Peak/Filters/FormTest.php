@@ -99,7 +99,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     /**
 	 * @expectedException Peak_Exception
 	 */
-	function testValidateException()
+	function testForm2ValidateException()
 	{
 		//try to validate form with unknow filter
 		$_POST = array('name' => 'mrjohn');
@@ -114,6 +114,47 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
  
         $this->fail('An expected exception has not been raised.');
         
+ 	}
+ 	
+ 	
+ 	function testForm3ValidatePass()
+ 	{
+ 	    //try to validate conditionnal filter
+		$_POST = array('name' => 'g@hotmail.com');
+		
+		$f = new Form3();
+
+		if($f->validate() === false) $result = false;
+    	else $result = true;
+
+    	$this->assertTrue($result);
+    	
+    	
+    	//try to validate conditionnal filter
+		$_POST = array('name' => '');
+		
+		$f = new Form3();
+
+		if($f->validate() === false) $result = false;
+    	else $result = true;
+   	
+    	$this->assertTrue($result);	
+ 	}
+ 	
+ 	function testForm3ValidateFail1()
+ 	{
+ 	    //try to validate form with unknow filter
+		$_POST = array('name' => 'g');
+		
+		$f = new Form3();
+
+		if($f->validate() === false) $result = false;
+    	else $result = true;
+    	
+    	print_r($f->getErrors());
+    	
+    	$this->assertFalse($result);
+		
  	}
     
 	  
@@ -183,5 +224,22 @@ class Form2 extends Peak_Filters_Form
                                   
 		                                       
 	    );   
+    }
+}
+
+class Form3 extends Peak_Filters_Form
+{
+    
+    public function setValidation()
+    {
+        return array(
+        
+          'name' => array('filters' => array('if_not_empty', 'email'),
+                          'errors'  => array('should be an email')),
+                          
+          /*'lastname' => array('filters' => array('if_isset','alpha'),
+                              'errors'  => array('should be alpha num')),*/
+        
+        );
     }
 }
