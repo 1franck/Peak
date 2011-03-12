@@ -116,7 +116,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
         
  	}
  	
- 	
+ 	// conditionnal filter pass
  	function testForm3ValidatePass()
  	{
  	    //try to validate conditionnal filter
@@ -141,6 +141,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($result);	
  	}
  	
+ 	// conditionnal filter fail
  	function testForm3ValidateFail1()
  	{
  	    //try to validate form with unknow filter
@@ -151,7 +152,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
 		if($f->validate() === false) $result = false;
     	else $result = true;
     	
-    	print_r($f->getErrors());
+    	//print_r($f->getErrors());
     	
     	$this->assertFalse($result);
 		

@@ -1,5 +1,7 @@
 #VERSION 0.8.5#
 
+ - added Peak_View_Helper_TagAttrs, Peak_View_Helper_Form, Peak_View_Helper_Form_Select, Peak_View_Helper_Form_Input
+
  - added special filters in Peak_Filters_Advanced and fixed method validate()
 
  - fixed minor bug in Peak_View_Render_Layouts::render()
