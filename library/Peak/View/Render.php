@@ -68,7 +68,8 @@ abstract class Peak_View_Render
     	if(!$return) echo $url;  
     	else return $url;
     }
-    
+
+
     /**
      * Call child output method and cache it if cache activated;
      * Can be overloaded by engines to customize how the cache data

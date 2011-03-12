@@ -34,9 +34,9 @@ class Peak_View
 
 
     /**
-     * Start template - set an array as template variable(optionnal)
+     * Load view - set an array|ini file as template variable(s) (optionnal)
      *
-     * @param array $vars
+     * @param array|string $vars
      */
     public function __construct($vars = null)
     {
@@ -166,44 +166,18 @@ class Peak_View
     }
 
     /**
-     * Set view rendering engine. 'Layouts' by default
-     * 
-     * @param string $engine [Partials|Layouts|Xml|Json] ( /Peak/View/Render/ )
-     */
-    public function setRenderEngine($engine = 'Layouts')
-    {
-        switch($engine)
-        {
-            case 'partials':
-            case 'Partials':
-                //$groups = $this->theme()->getOptions('partials_groups');
-                //$groups = (is_array($groups)) ? $groups : array();  
-                //$options = $groups;
-                break;
-                
-            default :
-            	//if its unknow render engine, set layouts as default
-            	if(!class_exists('Peak_View_Render_'.$engine)) {
-            		$this->setRenderEngine('Layouts');
-            		return;
-            	}
-                break;
-        }
-        
-        $engine_class = 'Peak_View_Render_'.$engine;
-        
-        $this->_engine = (isset($options)) ? new $engine_class($options) : new $engine_class();
-
-        return $this;       
-    }
-
-    /**
-     * Return current view rendering engine object
+     * Set/Get current view rendering engine object
      *
+     * @param  string $engine_name 
      * @return object Peak_View_Render_*
      */
-    public function engine()
+    public function engine($engine_name = null)
     {
+        if(isset($engine_name)) {
+            $engine_class = 'Peak_View_Render_'.$engine_name;
+            $this->_engine = new $engine_class();
+        }
+        
         return $this->_engine;
     }
 
@@ -255,28 +229,11 @@ class Peak_View
     {
     	if(!isset($path)) $filepath = Peak_Core::getPath('views_ini').'/'.$file;
     	else $filepath = $path.'/'.$file;
-    	
-        if(file_exists($filepath)) {
-            $ini_vars = parse_ini_file($filepath);
-            
-            //check for variables inside variable ( ini var syntax = $[myvarname] )
-            foreach($ini_vars as $k => $v)
-            {
-                $pattern = '/\$\[(?P<name>\w+)\]/i';
-                preg_match_all($pattern, $v, $m);
 
-                if(isset($m['name'])) {
-                    foreach($m['name'] as $var) {
-                        if(isset($this->$var)) $replacement = $this->$var;
-                        elseif(isset($ini_vars[$var])) $replacement = $ini_vars[$var]; 
-                        if(isset($replacement)) {
-                        	$ini_vars[$k] = str_replace('$['.$var.']', $replacement, $ini_vars[$k]);
-                        	unset($replacement);
-                        } 
-                    }
-                }
-            }
-            $this->_vars = array_merge($this->_vars,$ini_vars);
-        }
+    	if(file_exists($filepath)) {
+    	    $ini = new Peak_Config_Ini($filepath);
+    	    $merge_vars = $ini->arrayMergeRecursive($ini->getVars(), $this->_vars);
+    	    $this->_vars = $merge_vars;
+    	}
     }    
 }

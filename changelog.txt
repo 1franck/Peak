@@ -1,3 +1,68 @@
+#VERSION 0.8.5#
+
+ - added Peak_View_Helper_TagAttrs, Peak_View_Helper_Form, Peak_View_Helper_Form_Select, Peak_View_Helper_Form_Input
+
+ - added special filters in Peak_Filters_Advanced and fixed method validate()
+
+ - fixed minor bug in Peak_View_Render_Layouts::render()
+
+ - fixed minor bug in method getFiles() from Peak_View_Helper_Debug
+
+ - added punctuation option in method Peak_Filters_Advanced::_filter_alpha()
+
+ - added method flushVars() to Peak_Config
+
+ - added class Peak_Controller_Helper_Post
+
+ - fixed a bug in method Peak_Filters_Advanced::_filter_alpha()
+
+ - added class Peak_Model_DataObject
+
+ - deleted deprecated class Peak_View_Helper_Icon
+ 
+ - rewrited method iniVar() from Peak_View to use Peak_Config_Ini.
+ 
+ - deleted property $actions and renamed method listActions() to getActions() in Peak_Controller_Action.
+
+ - deleted properties $name and $title in favor of new methods getName() and getTitle() in Peak_Controller_Action and 
+   modified initController() method accordingly.
+
+ - modified exception constants messages in Peak_Exception.
+
+ - removed method setRenderEngine() and moved code in engine() method. Use engine() for setting and getting render engine instead.
+
+ - changed property $params_assoc from array to config object and added method params() to make easy access to params key name.
+   instead of accessing to params with $this->params_assoc['var'], we use now something like this: $this->params()->var.
+
+ - added method __construct() to Peak_Config.
+
+ - fixed a bug in method _exception2table() of class Peak_Controller_Internal_Pkerror.
+
+ - fixed method _filter_alpha() of Peak_Filters_Advanced to support spaces.
+
+ - added property $_global_sanitize and method globalSanitize() in Peak_Filters.
+
+ - added method getRoute() in Peak_Controller_Action.
+
+ - replaced handleAction() method of Peak_Controller_Action for dispatch() and dispatchAction().
+
+ - fixed problem with method redirect() in Peak_Controller_Front when redirecting to an action in the same controller.
+
+ - added class Peak_Controller_Internal_PkError
+
+ - minor fixes to Peak_View_Render_VirtualLayouts
+
+ - splited dispatch() method of Peak_Controller_Front into dispatch(), _dispatchController(), _dispatchControllerAction() and
+   _dispatchModule(). Added posibility to inject exception object to error controller with errorDispatch().
+
+ - added class Peak_View_Render_VirtualLayouts
+
+ - fixed Peak_Application_Modules to flush previous bootstrap if modules don't have his own
+
+ - fixed Peak_Application_Modules to load default Peak front controller if modules don't have his own
+
+ - added class Peak_Filters_Data
+
 #VERSION 0.8.4#
  
  - simplified class Peak_Controller_Helper_Validate

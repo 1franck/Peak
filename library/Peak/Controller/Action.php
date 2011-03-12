@@ -7,18 +7,6 @@
  */
 abstract class Peak_Controller_Action
 {
-	/**
-	 * child class name
-	 * @var string
-	 */
-    public $name;
-
-    /**
-     * child controller title
-     * @var string
-     */
-    public $title;
-
     /**
      * view script file to render
      * @var string
@@ -36,12 +24,6 @@ abstract class Peak_Controller_Action
      * @var string
      */
     public $action;
-
-    /**
-     * actions methods list
-     * @var array
-     */
-    public $actions = array();
     
     /**
      * Action method prefix
@@ -53,7 +35,7 @@ abstract class Peak_Controller_Action
      * instance of view
      * @var object
      */
-    protected $view;
+    public $view;
 
     /**
      * controller helpers objects
@@ -78,6 +60,8 @@ abstract class Peak_Controller_Action
     {   
         //initialize ctrl
         $this->initController();
+        //get route to dispatch
+        $this->getRoute();
     }
     
     /**
@@ -103,32 +87,99 @@ abstract class Peak_Controller_Action
      */
     final private function initController()
     {       
-        $this->view = Peak_Registry::o()->view;
-                               
-        $this->name = get_class($this);              
-        $this->title = str_ireplace('controller', '', $this->name);      
+        $this->view = Peak_Registry::o()->view; 
   
-        $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->title;
-
-        //retreive requests param(s) from router
-        $this->params = Peak_Registry::o()->router->params;
-        $this->params_assoc = Peak_Registry::o()->router->params_assoc;
+        $this->path = Peak_Core::getPath('theme_scripts').'/'.$this->getTitle();
     }
-
+    
     /**
-     * Create a list of "actions"(methods)
+     * Get controller class name
+     *
+     * @return string
      */
-    public function listActions()
+    public function getName()
     {
-    	$this->actions = array();
+        return get_class($this);
+    }
+    
+    /**
+     * Get controller class title
+     * 
+     * @return string
+     */
+    public function getTitle()
+    {
+        return str_ireplace('controller', '', $this->getName());  
+    }
+        
+    /**
+     * Get current action method name
+     *
+     * @return string
+     */
+    public function getAction()
+    {
+        return $this->action;
+    }
+    
+    /**
+     * Get array of controller "actions"(methods)
+     */
+    public function getActions()
+    {
+    	$actions = array();
     	
-        $c_methods = get_class_methods($this->name);
+        $c_methods = get_class_methods($this);
 
         $regexp = '/^(['.$this->action_prefix.']{'.strlen($this->action_prefix).'}[a-zA-Z]{1})/';
               
         foreach($c_methods as $method) {            
-            if(preg_match($regexp,$method)) $this->actions[] = $method;
+            if(preg_match($regexp,$method)) $actions[] = $method;
         }
+
+        return $actions;
+    }
+    
+    /**
+     * Get data from router needed for dispatch
+     */
+    public function getRoute()
+    {
+        $this->params = Peak_Registry::o()->router->params;        
+        $this->params_assoc = new Peak_Config(Peak_Registry::o()->router->params_assoc);
+        $this->action = $this->action_prefix . Peak_Registry::o()->router->action;
+    }    
+    
+    /**
+     * Dispatch controller action and other stuff around it
+     */
+    public function dispatch()
+    {
+        $this->preAction();
+        $this->dispatchAction();
+        $this->postAction();
+    }
+    
+    /**
+     * Dispatch action requested by router or the default action(_index)
+     */
+    public function dispatchAction()
+    {
+        $action = $this->action;
+        if($action === $this->action_prefix) $action = $this->action_prefix . 'index';
+        
+        if(($this->isAction($action))) $this->action = $action;
+        elseif(($action !== 'index') && (!($this->isAction($action)))) {
+        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
+        }
+        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
+
+        //set action filename
+        if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
+        else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
+        
+        //call requested action
+        $this->$action(); 
     }
 
     /**
@@ -139,35 +190,7 @@ abstract class Peak_Controller_Action
      */
     public function isAction($name)
     {
-    	return (method_exists($this->name, $name)) ? true : false;
-    }
-
-    /**
-     * Analyse router and lauch associated action method
-     *
-     * @param string $action_by_default   default method name if no request match to module actions
-     */   
-    public function handleAction($action_by_default = 'index')
-    {
-        $this->preAction();
-        
-        $action = $this->action_prefix . Peak_Registry::o()->router->action;
-        if($action === $this->action_prefix) $action = $this->action_prefix . $action_by_default;
-        
-        if(($this->isAction($action))) $this->action = $action;
-        elseif(($action !== $action_by_default) && (!($this->isAction($action)))) {
-        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->name));
-        }
-        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
-
-        //set action filename
-        if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
-        else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
-        
-        //call requested action
-        $this->$action();    
-        
-        $this->postAction();
+    	return (method_exists($this, $name)) ? true : false;
     }
 
     /**
@@ -182,14 +205,14 @@ abstract class Peak_Controller_Action
     }
 
     /**
-     * Get current action method name
+     * Access to params_assoc object
      *
-     * @return string
+     * @return object
      */
-    public function getAction()
+    public function params()
     {
-        return $this->action;
-    }
+        return $this->params_assoc;
+    }    
 
     /**
      * Call view render with controller $file and $path
@@ -211,7 +234,7 @@ abstract class Peak_Controller_Action
      */
     public function redirect($ctrl, $action, $params = null)
     {
-    	Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
+        Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
     }
 
     /**

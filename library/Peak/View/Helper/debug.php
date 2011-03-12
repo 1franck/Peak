@@ -110,7 +110,7 @@ class Peak_View_Helper_Debug
 		$temp = get_included_files();
 		$files = array();
 		$total_size = 0;
-		$library_path = str_replace(array('\\','//'),'/',LIBRARY_ABSPATH);
+		$library_path = str_replace(array('\\','//'),'/',realpath(LIBRARY_ABSPATH));
 		foreach($temp as $file) {
 			$total_size += filesize($file);
 			$file = str_replace('\\','/',$file);

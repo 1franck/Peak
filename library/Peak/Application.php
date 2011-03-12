@@ -34,7 +34,7 @@ class Peak_Application
     {                
         // register application/view/router instance
         Peak_Registry::set('app', $this);
-        Peak_Registry::set('view', new Peak_View('default.ini'));
+        Peak_Registry::set('view', new Peak_View());
         Peak_Registry::set('router', new Peak_Router(PUBLIC_ROOT));
              
         // load app bootstrap
