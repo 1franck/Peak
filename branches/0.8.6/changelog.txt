@@ -1,3 +1,6 @@
+#VERSION 0.8.6#
+
+
 #VERSION 0.8.5#
 
  - added Peak_View_Helper_TagAttrs, Peak_View_Helper_Form, Peak_View_Helper_Form_Select, Peak_View_Helper_Form_Input

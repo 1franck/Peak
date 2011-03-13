@@ -76,8 +76,9 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
         if(!empty($_SESSION)) {
         echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
         }
-        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>
-              </div>';
+        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
+        echo '<h2>SERVER</h2><pre>'.print_r($_SERVER,true).'</pre>';
+        echo '</div>';
         
         //registry
         echo '<div class="window" id="pkdb_registry_window">';
