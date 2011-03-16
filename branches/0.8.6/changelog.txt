@@ -1,5 +1,6 @@
 #VERSION 0.8.6#
 
+ - updated method output of Peak_View_Helper_Form_Select and Peak_View_Helper_Form_Input
 
 #VERSION 0.8.5#
 

@@ -95,12 +95,13 @@ class Peak_View_Helper_Form_Input extends Peak_View_Helper_ElementAttrs
     
     /**
      * Echo Input element result
-     * 
-     * @result string
-     */
-    public function output()
+     *
+     * @param string $before
+     * @param string $after
+     */ 
+    public function output($before = null, $after = null)
     {
-        echo $this->get();
+        echo $before.$this->get().$after;
     }
     
     /**
