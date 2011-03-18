@@ -161,7 +161,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 
 					if($filter_result === false) {
 						//$result[$keyname] = $filter_result;
-						if((is_array($keyval['errors'])) && (isset($keyval['errors'][$i]))) {
+						if((isset($keyval['errors'])) && (is_array($keyval['errors'])) && (isset($keyval['errors'][$i]))) {
 							$this->_errors[$keyname] = $keyval['errors'][$i];
 						}
 						else $this->_errors[$keyname] = 'not valid';

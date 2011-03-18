@@ -208,6 +208,7 @@ return '<style type="text/css">
 
 #pkdebugbar div.window h2 {
  margin:10px 0 10px 0;
+ font-size:18px !important;
 }
 -->
 </style>';

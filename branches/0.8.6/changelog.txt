@@ -1,5 +1,9 @@
 #VERSION 0.8.6#
 
+ - fixed minor problem of css style in Peak_View_Helper_Debugbar
+
+ - fixed method validate() for array key errors that do not exists in Peak_Filters_Advanced
+
  - updated method output of Peak_View_Helper_Form_Select and Peak_View_Helper_Form_Input
 
 #VERSION 0.8.5#
