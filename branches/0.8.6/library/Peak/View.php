@@ -131,7 +131,7 @@ class Peak_View
      * @see    __set()
      * @return Peak_View
      */
-    public function set($name,$value = null)
+    public function set($name, $value = null)
     {
     	$this->__set($name,$value);
     	return $this;    	
@@ -155,6 +155,25 @@ class Peak_View
     public function getVars()
     {
         return $this->_vars;
+    }
+
+    /**
+     * Set/Overwrite some view vars
+     */
+    public function setVars($vars)
+    {
+        $this->_vars = $vars;
+    }
+
+    /**
+     * Set/Add some view vars
+     * Existing var key name will be overwrited, otherwise var is added to current $_vars 
+     */
+    public function addVars($vars)
+    {
+        foreach($vars as $k => $v) {
+            $this->set($k,$v);
+        }
     }
 
     /**
