@@ -2,12 +2,12 @@
 /**
  * Test Helper
  */
-require_once dirname(__FILE__).'/../TestHelper.php';
+require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
  * @see Peak_Bootstrap, Peak_Core
  */
-require_once 'Peak/Bootstrap.php';
+require_once 'Peak/Application/Bootstrap.php';
 require_once 'Peak/Core.php';
 
 /**
@@ -34,7 +34,7 @@ class Peak_BootstrapTest extends PHPUnit_Framework_TestCase
 }
 
 // example bootstrap class
-class bootstrap extends Peak_Bootstrap
+class bootstrap extends Peak_Application_Bootstrap
 {
 	public $i = 0;
 	
