@@ -5,7 +5,7 @@
  * @author   Francois Lajoie
  * @version  $Id$
  */
-abstract class Peak_Bootstrap
+abstract class Peak_Application_Bootstrap
 {
 
     /**
