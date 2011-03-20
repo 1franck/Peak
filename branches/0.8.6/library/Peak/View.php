@@ -216,8 +216,8 @@ class Peak_View
     /**
      * Render Controller Action View file with the current rendering engine
      * 
-     * @param string $file
-     * @param string $path
+     * @param  string $file
+     * @param  string $path
      * @return string or array   return array of view files when layout is used
      */
     public function render($file,$path)
