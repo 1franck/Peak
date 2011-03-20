@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added method getEngineName() to Peak_View
+
  - moved class Peak_Bootstrap to /Application/ folder and renamed it Peak_Application_Bootstrap
 
  - added methods setVars() and addVars() to Peak_View

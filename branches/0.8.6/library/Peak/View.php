@@ -201,6 +201,19 @@ class Peak_View
     }
 
     /**
+     * Get render engine name
+     *
+     * @return string
+     */
+    public function getEngineName()
+    {
+        if(is_object($this->_engine)) {
+            return strtolower(str_replace('Peak_View_Render_', '', get_class($this->_engine)));
+        }
+        else return null;
+    }
+
+    /**
      * Render Controller Action View file with the current rendering engine
      * 
      * @param string $file
