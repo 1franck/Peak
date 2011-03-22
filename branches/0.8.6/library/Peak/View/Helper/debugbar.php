@@ -1,12 +1,12 @@
 <?php
 /**
- * Graphic version of View_Debug
+ * Graphic version of Peak_View_Helper_debug
  *
  * @author  Francois Lajoie
  * @version $Id$
  * @uses    jQuery, Fugue icons, Peak_View_Helper_Debug, Peak_Chrono  
  */
-class View_Helper_Debugbar extends Peak_View_Helper_Debug 
+class View_Helper_Debugbar extends Peak_View_Helper_debug 
 {
 	
 	/**
