@@ -14,8 +14,8 @@ if(substr($svr_path, -1, 1) !== '/') $svr_path .= '/';
 define('SVR_ABSPATH', $svr_path); unset($svr_path);
 
 define('PUBLIC_ABSPATH', SVR_ABSPATH . PUBLIC_ROOT);
-define('LIBRARY_ABSPATH', SVR_ABSPATH . LIBRARY_ROOT);
-define('APPLICATION_ABSPATH', SVR_ABSPATH . APPLICATION_ROOT);
+define('LIBRARY_ABSPATH', realpath(SVR_ABSPATH . LIBRARY_ROOT));
+define('APPLICATION_ABSPATH', realpath(SVR_ABSPATH . APPLICATION_ROOT));
 if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.ZEND_LIB_ROOT);
 
 //load peak core and autoloader

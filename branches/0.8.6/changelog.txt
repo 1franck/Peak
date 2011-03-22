@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - resolved paths in boot.php with realpath()
+
  - fixed Peak_Codegen_Bootstrap because we have renamed bootstrap class
 
  - moved code from Peak_Core_Extension_Modules to Peak_Application_Modules and deleted modules core extensions
