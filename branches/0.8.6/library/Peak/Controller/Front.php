@@ -117,8 +117,7 @@ class Peak_Controller_Front
 	 */
 	protected function _dispatchControllerAction()
 	{
-	    $this->controller->dispatch();
-        $this->postDispatch(); 
+	    $this->controller->dispatch(); 
 	}
 	
 	/**

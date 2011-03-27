@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - moved front controller postDispath() call to Peak_Application::run()
+
  - resolved paths in boot.php with realpath()
 
  - fixed Peak_Codegen_Bootstrap because we have renamed bootstrap class

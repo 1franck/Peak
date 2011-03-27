@@ -53,6 +53,7 @@ class Peak_Application
     	$this->front->getRoute();
     	$this->front->preDispatch();
     	$this->front->dispatch();
+        $this->front->postDispatch();
     	
     	return $this;
     }
