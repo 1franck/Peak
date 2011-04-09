@@ -16,11 +16,13 @@
  * |           | upper    |
  * |           | space    |
  * |           | punc     |
+ * |           | french   |
  * |-------------------------------------------
  * | alpha_num | lower    | _filter_alpha_num()
  * |           | upper    |
  * |           | space    |
  * |           | punc     |
+ * |           | french   |
  * |-------------------------------------------
  * | email     |          | _filter_email()
  * |-------------------------------------------
@@ -30,6 +32,10 @@
  * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
+ * |-------------------------------------------
+ * | float     | min      | _filter_float()
+ * |           | max      |
+ * |           | thousans |
  * |-------------------------------------------
  * | lenght    | min      | _filter_lenght()
  * |           | max      |
@@ -418,4 +424,6 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
 	}
+	
+	
 }
