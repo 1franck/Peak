@@ -304,7 +304,8 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			$regopt = array();
 			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
 			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
-			if(empty($regopt)) $regopt = array('a-z','A-Z');
+			if(isset($opt['french']) && ($opt['french'] === true)) $regopt[] = 'À-ÿ';
+			if(empty($regopt)) $regopt = array('a-z','A-Z','À-ÿ');
 			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
 			if(isset($opt['punc']) && is_array($opt['punc'])) {
 			    foreach($opt['punc'] as $punc) {
@@ -312,7 +313,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			    }
 			}
 		}
-		else $regopt = array('a-z','A-Z');
+		else $regopt = array('a-z','A-Z','À-ÿ');
 
 		if($return_regopt) return $regopt;
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
@@ -348,6 +349,37 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	    }
 	    else {
 	        if(filter_var($v, FILTER_VALIDATE_INT) !== false) {
+	            $return = array();
+	            if(isset($opt['min'])) {
+	                $return['min'] = ($v >= $opt['min']) ? true : false;
+	            }
+	            if(isset($opt['max'])) {
+	                $return['max'] = ($v <= $opt['max']) ? true : false;
+	            }
+	            foreach($return as $r) if($r === false) return false;
+	            return true;
+	        }
+	        else return false;
+	    }
+	}
+
+	/**
+	 * Validate float number
+	 *
+	 * @param  float $v
+	 * @param  array $opt
+	 * @return bool
+	 */
+	protected function _filter_float($v, $opt = null)
+	{
+		if(!isset($opt)) {
+	        return filter_var($v, FILTER_VALIDATE_FLOT);
+	    }
+	    else {
+	    	if(isset($opt['thousand'])) $flag = FILTER_FLAG_ALLOW_THOUSAND;
+	    	else $flag = null;
+
+	        if(filter_var($v, FILTER_VALIDATE_FLOAT, $flag) !== false) {
 	            $return = array();
 	            if(isset($opt['min'])) {
 	                $return['min'] = ($v >= $opt['min']) ? true : false;
