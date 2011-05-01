@@ -230,11 +230,23 @@ abstract class Peak_Controller_Action
      *
      * @param string     $ctrl
      * @param string     $action
-     * @param array/null $params
+     * @param array|null $params
      */
     public function redirect($ctrl, $action, $params = null)
     {
         Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
+    }
+    
+    /**
+     * Call front controller redirect() method. 
+     * Same as redirect() but redirect to an action in the current controller only
+     *
+     * @param string     $action
+     * @param array|null $params
+     */
+    public function redirectAction($action, $params = null)
+    {
+        Peak_Registry::o()->app->front->redirect($this->getTitle(), $action, $params);
     }
 
     /**

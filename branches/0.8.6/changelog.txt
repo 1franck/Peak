@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added method redirectAction() in Peak_Controller_Action
+
  - added method _filter_float and fixed _filter_alpha to support french chars in Peak_Filters_Advanced
 
  - moved front controller postDispath() call to Peak_Application::run()
