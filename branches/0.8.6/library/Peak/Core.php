@@ -91,7 +91,7 @@ class Peak_Core
      *
      * @param string $file
      */
-    public static function initConfig($file, $apppath = APPLICATION_ABSPATH)
+    public static function initConfig($file, $apppath)
     {    		
     	self::getInstance();
     	
@@ -225,6 +225,72 @@ class Peak_Core
     	
     	if(isset($c->path[$path])) return $c->path[$path];
     	else return null;
+    }
+    
+    /**
+     * Framework booting level
+     *
+     * @param  integer $level
+     * @return null|Peak_Application
+     */
+    public static function init($level = 1)
+    {
+        //only peak basic config / includepath
+        if($level >= 1) {
+            
+            //define server document root absolute path
+            $svr_path = str_replace('\\','/',realpath($_SERVER['DOCUMENT_ROOT']));
+            if(substr($svr_path, -1, 1) !== '/') $svr_path .= '/';
+            define('SVR_ABSPATH', $svr_path); unset($svr_path);
+            
+            //define libray path
+            define('LIBRARY_ABSPATH', str_ireplace(array(substr(__FILE__, -14),'\\'), array('','/'), __FILE__));
+            
+            //add LIBRARY_ABSPATH to include path
+            set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, LIBRARY_ABSPATH.'/Peak/Libs', get_include_path())));
+        }
+                
+        //peak autoloader
+        if($level >= 2) {
+
+            //load peak core autoloader
+            include LIBRARY_ABSPATH.'/Peak/autoload.php';
+        }
+        
+        //peak basic config with app config
+        if($level >= 3) {
+
+            define('PUBLIC_ABSPATH', SVR_ABSPATH . PUBLIC_ROOT);
+            define('APPLICATION_ABSPATH', realpath(SVR_ABSPATH . APPLICATION_ROOT));
+            if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.ZEND_LIB_ROOT);
+            
+            //if ZEND_LIB_ABSPATH is specified, we add it to include path
+            if(defined('ZEND_LIB_ABSPATH')) {
+                set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), ZEND_LIB_ABSPATH)));
+            }
+        }
+      
+        //peak app config init
+        if($level >= 4) {
+            
+            //init app&core configurations
+            if(defined('APPLICATION_CONFIG')) {
+                Peak_Core::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
+            }
+            else throw new Peak_Exception('ERR_CUSTOM', 'No configuration have been specified!');
+        }
+        
+        //peak app object init
+        if($level >= 5) {
+            
+            //include application bootstrap if exists
+            if(file_exists(APPLICATION_ABSPATH.'/bootstrap.php')) include APPLICATION_ABSPATH.'/bootstrap.php';
+
+            //include application front extension if exists
+            if(file_exists(APPLICATION_ABSPATH.'/front.php')) include APPLICATION_ABSPATH.'/front.php';
+            
+            return new Peak_Application();
+        }
     }
 
 }

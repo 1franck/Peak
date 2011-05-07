@@ -1,5 +1,9 @@
 #VERSION 0.8.6#
 
+ - add method Peak_Core::init() to emulate boot.php process step by step
+
+ - minor fix to class name in file Peak/Filters/Data.php
+
  - added method redirectAction() in Peak_Controller_Action
 
  - added method _filter_float and fixed _filter_alpha to support french chars in Peak_Filters_Advanced
