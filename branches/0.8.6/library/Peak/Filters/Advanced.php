@@ -44,6 +44,8 @@
  * |-------------------------------------------
  * | not_empty |          | _filter_not_empty()
  * |-------------------------------------------
+ * | text      |          | _filter_text()
+ * |-------------------------------------------
  * | regexp    | (string) | _filter_regexp()
  * |___________________________________________
  * 
@@ -333,9 +335,24 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 * @param  array  $opt
 	 * @return bool
 	 */
-	protected function _filter_alpha_num($v,$opt = null)
+	protected function _filter_alpha_num($v, $opt = null)
 	{
 		$regopt = $this->_filter_alpha(null, $opt, true);
+		$regopt[] = '0-9';
+		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
+	}
+	
+	/**
+	 * Same as _filter_alpha_num but some default punctuations/symbol 
+	 * ().!-?_,;'"%$
+	 *
+	 * @param  string $v
+	 * @return bool
+	 */
+	protected function _filter_text($v)
+	{
+	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '!', '-', '?', '_', ',', ';', '\'','"','%','$'));
+	    $regopt = $this->_filter_alpha(null, $opt, true);
 		$regopt[] = '0-9';
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
 	}

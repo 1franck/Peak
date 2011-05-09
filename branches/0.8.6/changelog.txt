@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added filter text to Peak_Filters_Advanced
+
  - add method Peak_Core::init() to emulate boot.php process step by step
 
  - minor fix to class name in file Peak/Filters/Data.php
