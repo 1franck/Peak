@@ -35,7 +35,7 @@
  * |-------------------------------------------
  * | float     | min      | _filter_float()
  * |           | max      |
- * |           | thousans |
+ * |           | thousansd|
  * |-------------------------------------------
  * | lenght    | min      | _filter_lenght()
  * |           | max      |
@@ -396,7 +396,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	protected function _filter_float($v, $opt = null)
 	{
 		if(!isset($opt)) {
-	        return filter_var($v, FILTER_VALIDATE_FLOT);
+	        return filter_var($v, FILTER_VALIDATE_FLOAT);
 	    }
 	    else {
 	    	if(isset($opt['thousand'])) $flag = FILTER_FLAG_ALLOW_THOUSAND;
