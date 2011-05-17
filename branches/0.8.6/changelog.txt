@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added method _filterRecursive() in Peak_Controller_Helper_Post to support multidimensionnal post sanitization
+
  - added class Peak_Model_Zendatable
 
  - fixed _filter_float() constant name error in Peak_Filters_Advanced
