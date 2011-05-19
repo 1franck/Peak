@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added method _globalSanitizeRecursive() in Peak_Filters and modified globalSanitize() to support multidimensionnal array
+
  - added method _filterRecursive() in Peak_Controller_Helper_Post to support multidimensionnal post sanitization
 
  - added class Peak_Model_Zendatable
@@ -8,7 +10,7 @@
 
  - added filter text to Peak_Filters_Advanced
 
- - add method Peak_Core::init() to emulate boot.php process step by step
+ - added method Peak_Core::init() to emulate boot.php process step by step
 
  - minor fix to class name in file Peak/Filters/Data.php
 
