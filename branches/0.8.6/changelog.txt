@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - added method model() in Peak_Controller_Action
+
  - added method _globalSanitizeRecursive() in Peak_Filters and modified globalSanitize() to support multidimensionnal array
 
  - added method _filterRecursive() in Peak_Controller_Helper_Post to support multidimensionnal post sanitization

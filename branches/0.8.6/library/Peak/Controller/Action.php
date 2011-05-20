@@ -203,6 +203,29 @@ abstract class Peak_Controller_Action
         if(!is_object($this->helpers)) $this->helpers = new Peak_Controller_Helpers();
     	return $this->helpers;
     }
+    
+
+    /**
+     * Instanciate models
+     * 
+     * @example 
+     * $page = $this->model('test/page')  is the same as $page = new App_Models_Test_Page();
+     * $this->model('test/page', 'page')  is the same as $this->page = new App_Models_Test_Page();
+     *
+     * @param  string $model_path
+     * @param  string $varname
+     * @return objct    return object if $varname is null
+     */
+    public function model($model_path, $varname = null)
+    {
+        $model = str_replace('/','_',$model_path);
+        $class = 'App_Models_'.$model;
+        if(isset($varname)) {
+            $this->$varname = new $class();
+            return $this;
+        }
+        else return new $class();
+    }
 
     /**
      * Access to params_assoc object
