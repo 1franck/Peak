@@ -1,4 +1,6 @@
-=Example of file that launch application, generally index.php=
+=Example of file that launch application=
+
+_/peakdev/site/public/index.php_
 {{{
 
 <?php
