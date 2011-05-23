@@ -1,6 +1,6 @@
 =Example of file that launch application=
 
-_/peakdev/site/public/index.php_
+_/site/public/index.php_
 {{{
 
 <?php
@@ -11,9 +11,9 @@ _/peakdev/site/public/index.php_
 /**
  * REQUIRED CONSTANTS
  */
-define('PUBLIC_ROOT',        'peakdev/site/public');
+define('PUBLIC_ROOT',        'site/public');
 define('LIBRARY_ROOT',       'peakdev/branches/0.8.6/library');
-define('APPLICATION_ROOT',   'peakdev/site/app/doc');
+define('APPLICATION_ROOT',   'site/app/demoapp');
 define('APPLICATION_CONFIG', 'app.ini');
 
 /**
