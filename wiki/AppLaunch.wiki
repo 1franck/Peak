@@ -1,0 +1,65 @@
+{{{
+
+<?php
+/**
+ * Peak Documentation app
+ */
+//error_reporting(-1);
+error_reporting(E_ALL|E_STRICT);
+
+/**
+ * REQUIRED CONSTANTS
+ */
+define('PUBLIC_ROOT',        'peakdev/site/public');
+define('LIBRARY_ROOT',       'peakdev/branches/0.8.6/library');
+define('APPLICATION_ROOT',   'peakdev/site/app/doc');
+define('APPLICATION_CONFIG', 'app.ini');
+
+/**
+ * OPTIONNAL CONSTANTS
+ */
+define('APPLICATION_ENV',  'development');
+//define('ZEND_LIB_ROOT','framework/ZendFramework-1.11.0-minimal/library');
+
+
+include './../../../'.LIBRARY_ROOT.'/Peak/Chrono.php';
+
+Peak_Chrono::start();
+
+//include './../../../'.LIBRARY_ROOT.'/Peak/Core.php';
+include './../../../'.LIBRARY_ROOT.'/Peak/boot.php';
+
+
+
+/* session */
+session_name();
+session_start();
+
+
+try {
+   //start app
+   //$app = Peak_Core::init(5);
+   $app = new Peak_Application();
+   
+   //run and render app  
+   $app->run()
+       ->render();         
+	
+}
+catch (Exception $e) {
+
+    echo $e->getMessage();
+	if(isset($app)) {
+		try {
+			$app->front->errorDispatch();
+			$app->render();
+		} catch(Exception $e) {
+			echo $e->getMessage();
+		}
+	}
+	else {
+		echo $e->getMessage();
+	}
+}
+
+}}}
