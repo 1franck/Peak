@@ -37,7 +37,7 @@
  * |           | max      |
  * |           | thousansd|
  * |-------------------------------------------
- * | lenght    | min      | _filter_lenght()
+ * | length    | min      | _filter_length()
  * |           | max      |
  * |-------------------------------------------
  * | match     | (string) | _filter_match()
@@ -253,13 +253,13 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
     /**
-     * Check lenght of a string
+     * Check length of a string
      *
      * @param  string $v
      * @param  array  $opt keys supported: min, max
      * @return bool
      */
-	protected function _filter_lenght($v, $opt)
+	protected function _filter_length($v, $opt)
 	{
 		if(isset($opt['min'])) $min = $opt['min'];
 		if(isset($opt['max'])) $max = $opt['max'];

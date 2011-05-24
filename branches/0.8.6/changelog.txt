@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - corrected method name _filter_length() in Peak_Filters_Advanced
+
  - added method model() in Peak_Controller_Action
 
  - added method _globalSanitizeRecursive() in Peak_Filters and modified globalSanitize() to support multidimensionnal array
