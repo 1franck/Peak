@@ -5,7 +5,7 @@ _/site/public/index.php_
 
 <?php
 /**
- * Peak Documentation app
+ * Peak example app launch
  */
 
 /**
@@ -17,7 +17,8 @@ define('APPLICATION_ROOT',   'site/app/demoapp');
 define('APPLICATION_CONFIG', 'app.ini');
 
 /**
- * OPTIONNAL CONSTANTS
+ * OPTIONNAL CONSTANTS 
+ * You can alternatively define this constant in .htaccess file with command "SetEnv APPLICATION_ENV"
  */
 define('APPLICATION_ENV',  'development');
 
