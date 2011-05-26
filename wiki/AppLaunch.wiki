@@ -22,9 +22,15 @@ define('APPLICATION_CONFIG', 'app.ini');
  */
 define('APPLICATION_ENV',  'development');
 
-include './../../../'.LIBRARY_ROOT.'/Peak/boot.php';
+/**
+ * Load Peak Core
+ */
+include './../../../'.LIBRARY_ROOT.'/Peak/Core.php';
 
 
+/**
+ * App start
+ */
 try {
    //start app
    $app = Peak_Core::init(5);
