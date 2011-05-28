@@ -1,3 +1,4 @@
+#summary Example of launching an application with Peak Framework
 =Example of launching an application with Peak Framework=
 
 _/site/public/index.php_
