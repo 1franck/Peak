@@ -1,5 +1,7 @@
 #VERSION 0.8.6#
 
+ - fixed problem with $params in method Peak_Controller_Front::redirect() and modified method Peak_Router::setRequest() accordingly
+
  - corrected method name _filter_length() in Peak_Filters_Advanced
 
  - added method model() in Peak_Controller_Action

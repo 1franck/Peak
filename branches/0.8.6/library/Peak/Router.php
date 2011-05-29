@@ -171,6 +171,7 @@ class Peak_Router
 	 */
 	public function setRequest($request)
 	{
+	    $this->reset();
 	    $this->request = $request;
 	    $this->resolveRequest();
 	}
