@@ -6,7 +6,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-abstract class Peak_Filters_Form extends Peak_Filters_Advanced  
+class Peak_Filters_Data extends Peak_Filters_Advanced  
 {
 
 

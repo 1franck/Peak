@@ -128,10 +128,13 @@ class Peak_View_Helper_Form_Select extends Peak_View_Helper_TagAttrs
     
     /**
      * Echo Select element result
+     *
+     * @param string $before
+     * @param string $after
      */
-    public function output()
+    public function output($before = null, $after = null)
     {
-        echo $this->get();
+        echo $before.$this->get().$after;
     }
     
     /**

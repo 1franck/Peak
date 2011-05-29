@@ -117,8 +117,7 @@ class Peak_Controller_Front
 	 */
 	protected function _dispatchControllerAction()
 	{
-	    $this->controller->dispatch();
-        $this->postDispatch(); 
+	    $this->controller->dispatch(); 
 	}
 	
 	/**
@@ -175,7 +174,13 @@ class Peak_Controller_Front
      */
     public function redirect($ctrl, $action = 'index', $params = null)
     {
-    	Peak_Registry::o()->router->setRequest( array($ctrl, $action, $params) );
+	    $request = array($ctrl, $action);
+		
+		if(isset($params) && is_array($params)) {
+		    $request = array_merge($request, $params);
+		}
+		
+    	Peak_Registry::o()->router->setRequest($request);
     	
     	//if redirection is in the same controller, we don't want to reload controller
         //and call twice preAction and postAction methods
