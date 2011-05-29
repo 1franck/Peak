@@ -1,12 +1,12 @@
 <?php
 /**
- * Graphic version of View_Debug
+ * Graphic version of Peak_View_Helper_debug
  *
  * @author  Francois Lajoie
  * @version $Id$
  * @uses    jQuery, Fugue icons, Peak_View_Helper_Debug, Peak_Chrono  
  */
-class View_Helper_Debugbar extends Peak_View_Helper_Debug 
+class View_Helper_Debugbar extends Peak_View_Helper_debug 
 {
 	
 	/**
@@ -76,8 +76,9 @@ class View_Helper_Debugbar extends Peak_View_Helper_Debug
         if(!empty($_SESSION)) {
         echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
         }
-        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>
-              </div>';
+        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
+        echo '<h2>SERVER</h2><pre>'.print_r($_SERVER,true).'</pre>';
+        echo '</div>';
         
         //registry
         echo '<div class="window" id="pkdb_registry_window">';
@@ -207,6 +208,7 @@ return '<style type="text/css">
 
 #pkdebugbar div.window h2 {
  margin:10px 0 10px 0;
+ font-size:18px !important;
 }
 -->
 </style>';

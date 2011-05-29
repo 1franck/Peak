@@ -16,11 +16,13 @@
  * |           | upper    |
  * |           | space    |
  * |           | punc     |
+ * |           | french   |
  * |-------------------------------------------
  * | alpha_num | lower    | _filter_alpha_num()
  * |           | upper    |
  * |           | space    |
  * |           | punc     |
+ * |           | french   |
  * |-------------------------------------------
  * | email     |          | _filter_email()
  * |-------------------------------------------
@@ -31,12 +33,18 @@
  * | int       | min      | _filter_int()
  * |           | max      |
  * |-------------------------------------------
- * | lenght    | min      | _filter_lenght()
+ * | float     | min      | _filter_float()
+ * |           | max      |
+ * |           | thousansd|
+ * |-------------------------------------------
+ * | length    | min      | _filter_length()
  * |           | max      |
  * |-------------------------------------------
  * | match     | (string) | _filter_match()
  * |-------------------------------------------
  * | not_empty |          | _filter_not_empty()
+ * |-------------------------------------------
+ * | text      |          | _filter_text()
  * |-------------------------------------------
  * | regexp    | (string) | _filter_regexp()
  * |___________________________________________
@@ -161,7 +169,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 
 					if($filter_result === false) {
 						//$result[$keyname] = $filter_result;
-						if((is_array($keyval['errors'])) && (isset($keyval['errors'][$i]))) {
+						if((isset($keyval['errors'])) && (is_array($keyval['errors'])) && (isset($keyval['errors'][$i]))) {
 							$this->_errors[$keyname] = $keyval['errors'][$i];
 						}
 						else $this->_errors[$keyname] = 'not valid';
@@ -245,13 +253,13 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
     /**
-     * Check lenght of a string
+     * Check length of a string
      *
      * @param  string $v
      * @param  array  $opt keys supported: min, max
      * @return bool
      */
-	protected function _filter_lenght($v, $opt)
+	protected function _filter_length($v, $opt)
 	{
 		if(isset($opt['min'])) $min = $opt['min'];
 		if(isset($opt['max'])) $max = $opt['max'];
@@ -304,7 +312,8 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			$regopt = array();
 			if(isset($opt['lower']) && ($opt['lower'] === true)) $regopt[] = 'a-z';
 			if(isset($opt['upper']) && ($opt['upper'] === true)) $regopt[] = 'A-Z';
-			if(empty($regopt)) $regopt = array('a-z','A-Z');
+			if(isset($opt['french']) && ($opt['french'] === true)) $regopt[] = 'À-ÿ';
+			if(empty($regopt)) $regopt = array('a-z','A-Z','À-ÿ');
 			if(isset($opt['space']) && ($opt['space'] === true)) $regopt[] = '\s';
 			if(isset($opt['punc']) && is_array($opt['punc'])) {
 			    foreach($opt['punc'] as $punc) {
@@ -312,7 +321,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			    }
 			}
 		}
-		else $regopt = array('a-z','A-Z');
+		else $regopt = array('a-z','A-Z','À-ÿ');
 
 		if($return_regopt) return $regopt;
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
@@ -326,9 +335,24 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 * @param  array  $opt
 	 * @return bool
 	 */
-	protected function _filter_alpha_num($v,$opt = null)
+	protected function _filter_alpha_num($v, $opt = null)
 	{
 		$regopt = $this->_filter_alpha(null, $opt, true);
+		$regopt[] = '0-9';
+		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
+	}
+	
+	/**
+	 * Same as _filter_alpha_num but some default punctuations/symbol 
+	 * ().!-?_,;'"%$
+	 *
+	 * @param  string $v
+	 * @return bool
+	 */
+	protected function _filter_text($v)
+	{
+	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '!', '-', '?', '_', ',', ';', '\'','"','%','$'));
+	    $regopt = $this->_filter_alpha(null, $opt, true);
 		$regopt[] = '0-9';
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
 	}
@@ -348,6 +372,37 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	    }
 	    else {
 	        if(filter_var($v, FILTER_VALIDATE_INT) !== false) {
+	            $return = array();
+	            if(isset($opt['min'])) {
+	                $return['min'] = ($v >= $opt['min']) ? true : false;
+	            }
+	            if(isset($opt['max'])) {
+	                $return['max'] = ($v <= $opt['max']) ? true : false;
+	            }
+	            foreach($return as $r) if($r === false) return false;
+	            return true;
+	        }
+	        else return false;
+	    }
+	}
+
+	/**
+	 * Validate float number
+	 *
+	 * @param  float $v
+	 * @param  array $opt
+	 * @return bool
+	 */
+	protected function _filter_float($v, $opt = null)
+	{
+		if(!isset($opt)) {
+	        return filter_var($v, FILTER_VALIDATE_FLOAT);
+	    }
+	    else {
+	    	if(isset($opt['thousand'])) $flag = FILTER_FLAG_ALLOW_THOUSAND;
+	    	else $flag = null;
+
+	        if(filter_var($v, FILTER_VALIDATE_FLOAT, $flag) !== false) {
 	            $return = array();
 	            if(isset($opt['min'])) {
 	                $return['min'] = ($v >= $opt['min']) ? true : false;
@@ -386,4 +441,6 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
 	}
+	
+	
 }

@@ -109,10 +109,27 @@ abstract class Peak_Filters
 	    $filter = isset($this->_global_sanitize['filter']) ? $this->_global_sanitize['filter'] : null;
 	    $flags  = isset($this->_global_sanitize['flags'])  ? $this->_global_sanitize['flags']  : null;
 	    
-	    foreach($this->_data as $k => $v) {
-	        $this->_data[$k] = filter_var($v, $filter, $flags);
-	    }
+	    $this->_data = $this->_globalSanitizeRecursive($this->_data, $filter, $flags);
 	    
 	    return $this->_data;
+	}
+	
+	/**
+	 * Make globalSanitize() recursive
+	 *
+	 * @param  array   $array
+	 * @param  integer $filter
+	 * @param  integer $flags
+	 * @return array
+	 */
+	private function _globalSanitizeRecursive($array, $filter, $flags)
+	{
+	    foreach($array as $k => $v) {
+	        if(!is_array($v)) $array[$k] = filter_var($v, $filter, $flags);
+	        else {
+	            $array[$k] = $this->_globalSanitizeRecursive($v, $filter, $flags);
+	        }
+	    }
+	    return $array;
 	}
 }

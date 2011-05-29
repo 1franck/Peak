@@ -22,7 +22,7 @@ class Peak_Codegen_Bootstrap extends Peak_Codegen
 		$this->class = new Peak_Codegen_Class();
 		
 		$this->class->setName('Bootstrap')
-		            ->setExtends('Peak_Bootstrap')
+		            ->setExtends('Peak_Application_Bootstrap')
 		            ->docblock()->setTitle('App Bootstrapper');
 	}
 	

@@ -13,6 +13,7 @@ require_once 'Peak/View/Render/Layouts.php';
 require_once 'Peak/Exception.php';
 require_once 'Peak/Registry.php';
 require_once 'Peak/Config.php';
+require_once 'Peak/Config/Ini.php';
 
 
 /**
@@ -97,6 +98,41 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		//check is vars array is empty
 		$vars = $this->peakview->getVars();
 		$this->assertTrue(empty($vars));
+	}
+
+	function testSetVars()
+	{
+		$this->assertTrue($this->peakview->countVars() == 0);
+
+		$this->peakview->setVars(array('test' => 'test1', 'name' => 'john'));
+
+		$this->assertTrue($this->peakview->countVars() == 2);
+	}
+
+	function testAddVars()
+	{
+		$this->assertTrue($this->peakview->countVars() == 0);
+
+		$this->peakview->addVars(array('test' => 'test1', 'name' => 'john'));
+
+		$this->assertTrue($this->peakview->countVars() == 2);
+
+		$this->peakview->addVars(array('test2' => 'test1', 'name' => 'john'));
+
+		$this->assertTrue($this->peakview->countVars() == 3);
+	}
+
+	function testSetEngine()
+	{
+		$name = $this->peakview->getEngineName();
+
+		$this->assertTrue($name === null);
+
+		$this->peakview->engine('layouts');
+
+		$name = $this->peakview->getEngineName();
+
+		$this->assertTrue($name === 'layouts');
 	}
 	
 	/**

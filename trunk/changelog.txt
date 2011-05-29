@@ -1,3 +1,51 @@
+#VERSION 0.8.6#
+
+ - added params to method helper() in Peak_View
+
+ - fixed problem with $params in method Peak_Controller_Front::redirect() and modified method Peak_Router::setRequest() accordingly
+
+ - corrected method name _filter_length() in Peak_Filters_Advanced
+
+ - added method model() in Peak_Controller_Action
+
+ - added method _globalSanitizeRecursive() in Peak_Filters and modified globalSanitize() to support multidimensionnal array
+
+ - added method _filterRecursive() in Peak_Controller_Helper_Post to support multidimensionnal post sanitization
+
+ - added class Peak_Model_Zendatable
+
+ - fixed _filter_float() constant name error in Peak_Filters_Advanced
+
+ - added filter text to Peak_Filters_Advanced
+
+ - added method Peak_Core::init() to emulate boot.php process step by step
+
+ - minor fix to class name in file Peak/Filters/Data.php
+
+ - added method redirectAction() in Peak_Controller_Action
+
+ - added method _filter_float and fixed _filter_alpha to support french chars in Peak_Filters_Advanced
+
+ - moved front controller postDispath() call to Peak_Application::run()
+
+ - resolved paths in boot.php with realpath()
+
+ - fixed Peak_Codegen_Bootstrap because we have renamed bootstrap class
+
+ - moved code from Peak_Core_Extension_Modules to Peak_Application_Modules and deleted modules core extensions
+
+ - added method getEngineName() to Peak_View
+
+ - moved class Peak_Bootstrap to /Application/ folder and renamed it Peak_Application_Bootstrap
+
+ - added methods setVars() and addVars() to Peak_View
+
+ - fixed minor problem of css style in Peak_View_Helper_Debugbar
+
+ - fixed method validate() for array key errors that do not exists in Peak_Filters_Advanced
+
+ - updated method output of Peak_View_Helper_Form_Select and Peak_View_Helper_Form_Input
+
 #VERSION 0.8.5#
 
  - added Peak_View_Helper_TagAttrs, Peak_View_Helper_Form, Peak_View_Helper_Form_Select, Peak_View_Helper_Form_Input

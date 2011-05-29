@@ -35,15 +35,13 @@ abstract class Peak_Application_Modules
      * Get the name of child class and use it as the module name
      * Prepare core to run a module
      * init module bootstrap and front controller if exists
-     * 
-     * @uses Peak_Core_Extension_Modules
      */
     public function __construct()
     {      	
     	//prepare module
     	$this->prepare();
               
-        //initialize module bootstrap if exists
+        //initialize module bootstrap if exists, otherwise unset app bootstrap
         if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
         	include Peak_Core::getPath('application').'/bootstrap.php';
         }
@@ -54,11 +52,9 @@ abstract class Peak_Application_Modules
         	//load module bootstrapper
         	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	
         }
-        else {
-            Peak_Registry::o()->app->bootstrap = null;
-        }
+        else Peak_Registry::o()->app->bootstrap = null;
         
-        //initialize module front if exists
+        //initialize module front if exists, otherwise load peak default front
         if(file_exists(Peak_Core::getPath('application').'/front.php')) {
         	include Peak_Core::getPath('application').'/front.php';
         }
@@ -66,13 +62,11 @@ abstract class Peak_Application_Modules
         if(class_exists($front_class,false)) {
         	Peak_Registry::o()->app->front = new $front_class();
         }
-        else {
-            Peak_Registry::o()->app->front = new Peak_Controller_Front();
-        }
+        else Peak_Registry::o()->app->front = new Peak_Controller_Front();
     }
     
     /**
-     * Prepare modules app and init Modules core extension
+     * Prepare modules app and init modules
      */
     protected function prepare()
     {
@@ -90,12 +84,36 @@ abstract class Peak_Application_Modules
     	if(empty($this->_name)) $this->_name = $this->_ctrl_name;
 
     	//overdrive application paths to modules folder with Peak_Core_Extension_Modules
-    	Peak_Core::getInstance()->modules()->init($this->_name, $this->_path);
+        $this->init($this->_name, $this->_path);
     }
-      
-    
+
+
     /**
-     * Run modules requested controller.
+     * Overdrive core application paths configs to a module application paths.
+     *
+     * @param string $module  folder name of the module to load
+     * @param string 
+     */
+    public function init($module, $path = null)
+    {
+        $config = Peak_Registry::o()->config;
+    
+        $module_path = (isset($path)) ? $path : $config->modules_path.'/'.$module;
+        
+        if(is_dir($module_path)) {
+                        
+            //backup previous application configs before overloading core configurations
+            Peak_Registry::set('app_config', clone $config);
+            
+            $config->module_name = $module;
+            
+            //get default path structure for module path application
+            $config->path = Peak_Core::getDefaultAppPaths($module_path);
+        }  
+    }
+
+    /**
+     * Run modules requested controller
      */
     public function run()
     {      	
@@ -107,7 +125,7 @@ abstract class Peak_Application_Modules
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run();
     }
-    
+
     /**
      * Return the module name
      * 
@@ -117,7 +135,7 @@ abstract class Peak_Application_Modules
     {
     	return $this->_name;
     }
-    
+
     /**
      * Return module path
      *
@@ -127,7 +145,7 @@ abstract class Peak_Application_Modules
     {
     	return $this->_path;
     }
-    
+
     /**
      * Return module location relative to the application
      * Will return true if the module is inside Peak library folder 
@@ -138,5 +156,4 @@ abstract class Peak_Application_Modules
     {
     	return $this->_internal;    	
     }
-        
 }

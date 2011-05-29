@@ -131,7 +131,7 @@ class Peak_View
      * @see    __set()
      * @return Peak_View
      */
-    public function set($name,$value = null)
+    public function set($name, $value = null)
     {
     	$this->__set($name,$value);
     	return $this;    	
@@ -155,6 +155,25 @@ class Peak_View
     public function getVars()
     {
         return $this->_vars;
+    }
+
+    /**
+     * Set/Overwrite some view vars
+     */
+    public function setVars($vars)
+    {
+        $this->_vars = $vars;
+    }
+
+    /**
+     * Set/Add some view vars
+     * Existing var key name will be overwrited, otherwise var is added to current $_vars 
+     */
+    public function addVars($vars)
+    {
+        foreach($vars as $k => $v) {
+            $this->set($k,$v);
+        }
     }
 
     /**
@@ -182,10 +201,23 @@ class Peak_View
     }
 
     /**
+     * Get render engine name
+     *
+     * @return string
+     */
+    public function getEngineName()
+    {
+        if(is_object($this->_engine)) {
+            return strtolower(str_replace('Peak_View_Render_', '', get_class($this->_engine)));
+        }
+        else return null;
+    }
+
+    /**
      * Render Controller Action View file with the current rendering engine
      * 
-     * @param string $file
-     * @param string $path
+     * @param  string $file
+     * @param  string $path
      * @return string or array   return array of view files when layout is used
      */
     public function render($file,$path)
@@ -213,9 +245,23 @@ class Peak_View
      *
      * @return object Peak_View_Helpers
      */
-    public function helper()
+    public function helper($name = null, $method = null, $params = array())
     {
     	if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
+    	
+    	if(isset($name)) {
+    	    if((isset($this->helper()->$name)) || $this->helper()->exists($name)) {      
+    	        if(!isset($method)) return $this->helper()->$name;
+    	        else {
+    	            if(!isset($params)) return $this->helper()->$name->$method();
+    	            else return call_user_func_array(array($this->helper()->$name, $method), $params);
+    	        }
+    	    }
+    	    elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
+    	            trigger_error('[ERR] View helper '.$name.'() doesn\'t exists');
+    	    }
+    	}
+    	
     	return $this->_helpers;
     }
 

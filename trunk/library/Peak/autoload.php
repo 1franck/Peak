@@ -27,6 +27,7 @@ function _autoloadPeak($cn)
     $file = LIBRARY_ABSPATH.'/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
+    return true;
 }
 
 function _autoloadAppCtrl($cn)

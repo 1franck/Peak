@@ -53,15 +53,32 @@ class Peak_Controller_Helper_Post extends Peak_Config
      */
     public function filterAll($filter, $options)
     {
-        $vars = $this->getVars();
-        
-        foreach($vars as $key => $val) {
-            $vars[$key] = filter_var($val, $filter, $options);
-        }
-        
+        $vars = $this->_filterRecursive($filter, $options, $this->getVars());
         $this->setVars($vars);
         return $this;
     }
+    
+    /**
+     * Filter recursively ( used by filterAll() and filterAllAsString() )
+     *
+     * @param  integer|constant $filter
+     * @param  array $options
+     * @param  array $array
+     * @return array
+     */
+    private function _filterRecursive($filter, $options, $array) 
+    {
+        foreach($array as $key => $val) {
+        
+            if(is_array($val)) {
+                $array[$key] = $this->_filterRecursive($filter, $options, $val);
+            }
+            else $array[$key] = filter_var($val, $filter, $options);
+        }
+        return $array;
+    }
+    
+    
 
     /**
      * Filter all variables as string by stripping tags and special characters.
