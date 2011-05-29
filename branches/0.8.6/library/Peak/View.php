@@ -245,9 +245,23 @@ class Peak_View
      *
      * @return object Peak_View_Helpers
      */
-    public function helper()
+    public function helper($name = null, $method = null, $params = array())
     {
     	if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
+    	
+    	if(isset($name)) {
+    	    if((isset($this->helper()->$name)) || $this->helper()->exists($name)) {      
+    	        if(!isset($method)) return $this->helper()->$name;
+    	        else {
+    	            if(!isset($params)) return $this->helper()->$name->$method();
+    	            else return call_user_func_array(array($this->helper()->$name, $method), $params);
+    	        }
+    	    }
+    	    elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
+    	            trigger_error('[ERR] View helper '.$name.'() doesn\'t exists');
+    	    }
+    	}
+    	
     	return $this->_helpers;
     }
 
