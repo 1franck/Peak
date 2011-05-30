@@ -1,3 +1,7 @@
+#VERSION 0.8.7#
+
+ - added View helper js
+
 #VERSION 0.8.6#
 
  - added params to method helper() in Peak_View
