@@ -41,7 +41,7 @@ class Peak_Application
         if(class_exists('bootstrap',false)) $this->bootstrap = new bootstrap();   
         
         // load front controller
-        $this->front = (class_exists('front',false)) ? new front() : Peak_Controller_Front();
+        $this->front = (class_exists('front',false)) ? new front() : new Peak_Controller_Front();
     }
     
     /**
