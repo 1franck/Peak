@@ -1,5 +1,9 @@
 #VERSION 0.8.7#
 
+ - modified method Peak_Controller_Front::errorDispath() to return Peak_Application instance
+
+ - fixed method Peak_Application::_construct() due to missing keywork "new" before Peak_Controller_Front object
+
  - added View helper js
 
 #VERSION 0.8.6#

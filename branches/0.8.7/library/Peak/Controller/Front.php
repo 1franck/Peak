@@ -163,6 +163,8 @@ class Peak_Controller_Front
         }
         
         $this->_dispatchControllerAction();
+        
+        return Peak_Registry::o()->app;
 	}
 
     /**
