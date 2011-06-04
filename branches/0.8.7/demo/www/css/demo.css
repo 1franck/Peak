@@ -1,14 +1,15 @@
 body {
  background:#111 url('../img/deepbluecoffee.jpg') 50% 0 no-repeat;
  color:#fff;
- font:12px Verdana;
- text-align:center;
+ font-size:20px;
+ font-family: 'Unkempt', 'Verdana', serif;
  margin:30px 0;
+ text-align:center;
 }
 
 h1 {
- font-family: 'Unkempt', serif;
- font-size: 36px;
+ font-family: 'Unkempt', 'Verdana', serif;
+ font-size: 38px;
  font-style: normal;
  font-weight: 400;
  text-shadow: none;
@@ -17,4 +18,27 @@ h1 {
  letter-spacing: 0em;
  word-spacing: 0em;
  line-height: 1.2; 
+}
+
+a,a:link,a:visited {
+ color:#D3CAB9;
+}
+
+#wrap {
+ width:1000px;
+ margin:0 auto;
+ text-align:left;
+}
+
+#wrap h1 {
+ text-align:center;
+ margin:0 auto;
+ width:100%;
+}
+
+.box {
+ background:url('../img/shader.png') repeat;
+ margin:30px 130px;
+ padding:20px;
+ border:1px solid #111;
 }

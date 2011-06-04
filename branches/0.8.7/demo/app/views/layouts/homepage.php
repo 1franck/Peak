@@ -6,9 +6,11 @@
 </head>
 <body>
 
+<div id="wrap">
 <?php
  $this->layoutContent();
 ?>
+</div>
 
 </body>
 </html>
