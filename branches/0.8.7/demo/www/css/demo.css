@@ -1,0 +1,20 @@
+body {
+ background:#111 url('../img/deepbluecoffee.jpg') 50% 0 no-repeat;
+ color:#fff;
+ font:12px Verdana;
+ text-align:center;
+ margin:30px 0;
+}
+
+h1 {
+ font-family: 'Unkempt', serif;
+ font-size: 36px;
+ font-style: normal;
+ font-weight: 400;
+ text-shadow: none;
+ text-decoration: none;
+ text-transform: none;
+ letter-spacing: 0em;
+ word-spacing: 0em;
+ line-height: 1.2; 
+}
