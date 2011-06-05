@@ -225,7 +225,7 @@ class Peak_View
         if(is_object($this->_engine)) {
             $this->engine()->render($file,$path);
         }
-        else throw new Peak_Exception('ERR_VIEW_ENGINE_NOT_SET');
+        else throw new Peak_View_Exception('ERR_VIEW_ENGINE_NOT_SET');
     }
 
     /**

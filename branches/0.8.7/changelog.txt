@@ -1,4 +1,6 @@
 #VERSION 0.8.7#
+ 
+ - simplified Peak_Exception, added class Peak_Controller_Exception and Peak_View_Exception and modified many classes accordingly
 
  - modified method Peak_Controller_Front::errorDispath() to return Peak_Application instance
 

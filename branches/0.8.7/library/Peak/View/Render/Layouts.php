@@ -61,7 +61,7 @@ class Peak_View_Render_Layouts extends Peak_View_Render
 
         if(!file_exists($filepath)) {
             $filepath = Peak_Registry::o()->app->front->controller->getTitle() .'/'. basename($filepath);
-            throw new Peak_Exception('ERR_VIEW_SCRIPT_NOT_FOUND', $filepath);
+            throw new Peak_View_Exception('ERR_VIEW_SCRIPT_NOT_FOUND', $filepath);
         }
                      
         //LAYOUT FILES VIEW IF EXISTS

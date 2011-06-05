@@ -107,7 +107,7 @@ class Peak_Controller_Front
 				$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
 				$this->controller = new $ctrl_name();
 			}
-			else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
+			else throw new Peak_Controller_Exception('ERR_CTRL_NOT_FOUND', $ctrl_name);
 		}
 		else $this->controller = new $ctrl_name();
 	}

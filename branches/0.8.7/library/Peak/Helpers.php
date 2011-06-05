@@ -32,6 +32,12 @@ abstract class Peak_Helpers
      * @var string
      */
     protected $_exception = 'ERR_DEFAULT';
+    
+    /**
+     * Exception class
+     * @var string
+     */
+    protected $_exception_class = 'Peak_Exception';
 
     /**
      * Retreive objects, try to create object if not already setted
@@ -67,12 +73,12 @@ abstract class Peak_Helpers
 						break;
 					}
 				}
-				if(!isset($helper_class_name)) throw new Peak_Exception($this->_exception,$name);
+				if(!isset($helper_class_name)) throw new $this->_exception_class($this->_exception,$name);
 				
 				$this->_objects[$name] = new $helper_class_name();
 				return $this->_objects[$name];
 			}
-			else throw new Peak_Exception($this->_exception,$name);
+			else throw new $this->_exception_class($this->_exception,$name);
 		}
 	}
 	

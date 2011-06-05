@@ -170,9 +170,9 @@ abstract class Peak_Controller_Action
         
         if(($this->isAction($action))) $this->action = $action;
         elseif(($action !== 'index') && (!($this->isAction($action)))) {
-        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
+        	throw new Peak_Controller_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
         }
-        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
+        else throw new Peak_Controller_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
         //set action filename
         if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';

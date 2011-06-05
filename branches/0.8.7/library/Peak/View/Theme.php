@@ -51,7 +51,7 @@ class Peak_View_Theme
 
     	}
     	elseif(!$this->exists($name)) {
-    		throw new Peak_Exception('ERR_VIEW_THEME_NOT_FOUND', $name);
+    		throw new Peak_View_Exception('ERR_VIEW_THEME_NOT_FOUND', $name);
     	}
     	else {
 
