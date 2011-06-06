@@ -1,4 +1,8 @@
 #VERSION 0.8.7#
+
+ - optimized Peak_Core::initConfig() by removing copy of configs array  
+
+ - added passing by reference to __get() method in Peak_Config()
  
  - simplified Peak_Exception, added class Peak_Controller_Exception and Peak_View_Exception and modified many classes accordingly
 

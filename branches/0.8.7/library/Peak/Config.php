@@ -41,7 +41,7 @@ class Peak_Config implements IteratorAggregate, Countable
      * @param  string $name
      * @return misc   Will return null if variable keyname is not found
      */
-    public function __get($name)
+    public function &__get($name)
     {
     	if(isset($this->_vars[$name])) return $this->_vars[$name];
     	else return null;
