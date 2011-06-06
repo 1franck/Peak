@@ -83,7 +83,7 @@ abstract class Peak_Application_Modules
     	//module name
     	if(empty($this->_name)) $this->_name = $this->_ctrl_name;
 
-    	//overdrive application paths to modules folder with Peak_Core_Extension_Modules
+    	//overdrive application paths to modules folder
         $this->init($this->_name, $this->_path);
     }
 
