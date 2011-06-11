@@ -1,5 +1,7 @@
 #VERSION 0.8.7#
 
+ - modified method Peak_Controller_Internal_PkError::_exception2table()
+
  - optimized Peak_Core::initConfig() by removing copy of configs array  
 
  - added passing by reference to __get() method in Peak_Config()

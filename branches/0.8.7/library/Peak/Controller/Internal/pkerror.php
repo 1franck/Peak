@@ -38,7 +38,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
             if($this->exception instanceof Peak_Exception) {
             	switch($this->exception->getErrkey()) {
             	    
-            	    case 'ERR_APP_CTRL_NOT_FOUND' : 
+            	    case 'ERR_CTRL_NOT_FOUND' : 
             	    case 'ERR_ROUTER_URI_NOT_FOUND' :
             	        $this->_404();
             	        break;
@@ -115,14 +115,36 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
     {
         $table = '<table>';
         $exception = array('Message' => $this->exception->getMessage(),
-                           'File' => $this->exception->getFile(),
+                           'Exception' => get_class($this->exception),
+                           'File' => str_replace(array('\\',SVR_ABSPATH),array('/',''),$this->exception->getFile()),
                            'Line' => $this->exception->getLine(),
                            'Code' => $this->exception->getCode(),
                            'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
+                           
+        $trace = explode('<br />',$exception['Trace']);
+        $result = '';
+        foreach($trace as $line) {
+            $line_data = explode(' ',$line);
+            if(count($line_data) >= 3) {
+                foreach($line_data as $i => $col) {
+                    if($i == 1) {
+                        $temp = str_replace('):',')',$col);
+                        $temp = explode('(',$temp);
+                        $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
+                    }
+                    elseif($i == 2) $result .= ' <strong><code>'.$col.'</code> --> </strong> '.$temp;
+                    else $result .= ' '.$col;
+                }
+                $result .= '<br />';
+            }
+            else $result .= $line.'<br />';
+        }
+        $exception['Trace'] = $result;
                                   
         $exception['Time'] = (!method_exists($this->exception,'getTime')) ? date('Y-m-d H:i:s') : $this->exception->getTime();       
                            
         foreach($exception as $k => $v) {
+            if($k === 'Message') $v = '<strong>'.$v.'</strong>';
             $table .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';
         }
         
