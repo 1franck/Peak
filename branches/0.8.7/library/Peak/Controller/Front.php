@@ -32,6 +32,18 @@ class Peak_Controller_Front
 	 */
 	public $allow_internal_controllers = false;
 	
+	/**
+	 * Allow/Disallow application modules
+	 * @var bool
+	 */
+	public $allow_app_modules = true;
+	
+	/**
+	 * Allow/Disallow Peak library internal modules
+	 * @var bool
+	 */
+	public $allow_internal_modules = true;
+	
 	
 	/**
 	 * class construct
@@ -90,12 +102,12 @@ class Peak_Controller_Front
 	protected function _dispatchController()
 	{
 	    $router = Peak_Registry::o()->router;      
-		
+
 		//set default controller if router doesn't have one
 		if(!isset($router->controller)) {
 			$router->controller = $this->default_controller;
 		}
-
+		
 		//set controller class name
 		$ctrl_name = $router->controller.'Controller';
 
