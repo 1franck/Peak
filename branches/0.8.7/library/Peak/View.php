@@ -64,9 +64,10 @@ class Peak_View
      * @param  string $name
      * @return anything
      */
-    public function __get($name)
+    public function &__get($name)
     {        
-        return array_key_exists($name,$this->_vars) ? $this->_vars[$name] : null;
+        if(isset($this->_vars[$name])) return $this->_vars[$name];
+    	else return null;
     }
 
     /**
