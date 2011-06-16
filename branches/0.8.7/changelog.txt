@@ -1,5 +1,8 @@
 #VERSION 0.8.7#
 
+ - modified method Peak_View::__call() to allow calling helper class like a method with arguments. 
+   first argument represent method name and the others , the method arguments.
+
  - added passing by reference to __get() method in Peak_View
 
  - modified method Peak_Controller_Internal_PkError::_exception2table()
