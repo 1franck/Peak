@@ -67,7 +67,7 @@ class Peak_View
     public function &__get($name)
     {        
         if(isset($this->_vars[$name])) return $this->_vars[$name];
-    	else return null;
+    	else return ${null};
     }
 
     /**

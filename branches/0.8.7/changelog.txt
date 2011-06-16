@@ -1,5 +1,7 @@
 #VERSION 0.8.7#
 
+ - patched regression problem with recent changes of Peak_View::__get() and Peak_Config::__get()
+
  - modified method Peak_View::__call() to allow calling helper class like a method with arguments. 
    first argument represent method name and the others , the method arguments.
 
