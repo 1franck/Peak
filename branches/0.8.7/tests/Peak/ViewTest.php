@@ -11,6 +11,7 @@ require_once 'Peak/View.php';
 require_once 'Peak/View/Render.php';
 require_once 'Peak/View/Render/Layouts.php';
 require_once 'Peak/Exception.php';
+require_once 'Peak/View/Exception.php';
 require_once 'Peak/Registry.php';
 require_once 'Peak/Config.php';
 require_once 'Peak/Config/Ini.php';
@@ -59,6 +60,12 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->peakview->test = 'value';		
 		$this->assertTrue(isset($this->peakview->test));
 		$this->assertTrue($this->peakview->test === 'value');
+		
+		//passed by ref __get
+		$this->peakview->test2 = array('key1' => 'value1');
+		$this->assertTrue($this->peakview->test2['key1'] === 'value1');
+		$this->peakview->test2['key1'] = 'novalue';
+		$this->assertTrue($this->peakview->test2['key1'] === 'novalue');
 				
 		//__unset, __isset
 		unset($this->peakview->test);
@@ -136,7 +143,7 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * @expectedException Peak_Exception
+	 * @expectedException Peak_View_Exception
 	 */
 	function testRenderException()
 	{
