@@ -1,1 +1,2 @@
-PHP 5.2.2 at least
+* PHP 5.2.2 at least
+* Apache mod_rewrite
