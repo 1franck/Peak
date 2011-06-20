@@ -1,2 +1,2 @@
-* [Requirements Requirements]
-* [AppLaunch Application launch]
+ * [Requirements Requirements]
+ * [AppLaunch Application launch]
