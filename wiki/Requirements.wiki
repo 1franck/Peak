@@ -1,3 +1,4 @@
+#sidebar tableofcontents
 =Requirements=
  * PHP 5.2.2 at least
  * Apache mod_rewrite
