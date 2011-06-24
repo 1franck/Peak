@@ -28,6 +28,14 @@ class indexController extends Peak_Controller_Action
     {
 
     }
+    
+    /**
+     * Show debug bar after rendering action view
+     */
+    public function postRender()
+    {
+        //$this->view->debugbar('show');
+    }
 
 
 }

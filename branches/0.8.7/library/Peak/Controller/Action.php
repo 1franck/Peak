@@ -109,7 +109,10 @@ abstract class Peak_Controller_Action
      */
     public function getTitle()
     {
-        return str_ireplace('controller', '', $this->getName());  
+        if(preg_match('#^Peak_Controller_Internal_[a-zA-Z_-]*$#', $this->getName())) {
+            return str_replace('Peak_Controller_Internal_','',$this->getName());
+        }
+        else return str_ireplace('controller', '', $this->getName());  
     }
         
     /**

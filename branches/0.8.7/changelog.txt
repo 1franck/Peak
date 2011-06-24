@@ -1,5 +1,7 @@
 #VERSION 0.8.7#
 
+ - fixed method getTitle() in Peak_Controller_Action for Peak internal controller classes
+
  - deprecated boot.php
 
  - patched regression problem with recent changes of Peak_View::__get() and Peak_Config::__get()
