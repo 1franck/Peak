@@ -190,8 +190,9 @@ class Peak_Controller_Front
     {
 	    $request = array($ctrl, $action);
 		
-		if(isset($params) && is_array($params)) {
-		    $request = array_merge($request, $params);
+		if(isset($params)) {
+		    if(is_array($params)) $request = array_merge($request, $params);
+		    else $request[] = $params;
 		}
 		
     	Peak_Registry::o()->router->setRequest($request);
