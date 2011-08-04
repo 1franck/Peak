@@ -1,5 +1,7 @@
 #VERSION 0.8.7#
 
+ - added method renderwithjQueryTag() to class View_Helper_js
+
  - added class Peak_Controller_Helper_Request
 
  - fixed method redirect() of Peak_Controller_Front to support an non-array $params

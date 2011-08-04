@@ -10,7 +10,7 @@ class View_Helper_js
     /**
      * Render Javascript file(s) with <script> tag(s)
      *
-     * @param string $filename
+     * @param string|array $filename
      */
     public function renderWithTag($filename) 
     {
@@ -27,6 +27,29 @@ class View_Helper_js
             echo '<script type="text/javascript">';
             $this->render($filename);
             echo '</script>';
+        }
+    }
+    
+    /**
+     * Render Javascript file(s) with <script> tag(s) and jQuery tags
+     *
+     * @param string|array $filename
+     */
+    public function renderWithjQueryTag($filename)
+    {
+        if(is_array($filename)) {
+            foreach($filename as $file) {
+                if($this->exists($file)) {
+                    echo '<script type="text/javascript">$(function() {'."\n";
+                    $this->render($file);
+                    echo '});</script>';
+                }
+            }
+        }
+        elseif($this->exists($filename)) {          
+            echo '<script type="text/javascript">$(function() {'."\n";
+            $this->render($filename);
+            echo '});</script>';
         }
     }
     
