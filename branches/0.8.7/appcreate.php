@@ -77,8 +77,8 @@ php.date.timezone          = "America/Montreal"
 front.default_controller = "index"
 front.error_controller   = "error"
 
-view.engine = "Layouts"
-view.useLayout       = "Main"
+view.engine    = "Layouts"
+view.useLayout = "Main"
 
 [development]
 
