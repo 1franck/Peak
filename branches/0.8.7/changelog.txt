@@ -1,5 +1,7 @@
 #VERSION 0.8.7#
 
+ - added method redirectUrl() in Peak_Controller_Action
+
  - added method renderwithjQueryTag() to class View_Helper_js
 
  - added class Peak_Controller_Helper_Request
