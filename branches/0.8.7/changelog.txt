@@ -1,5 +1,9 @@
 #VERSION 0.8.7#
 
+ - udpated method matchRegex() from Peak_Router to accept regex named subpatterns as controller params
+ 
+ - modified token separator from '.' to more natural '/' char in Peak_Router::addRegex()
+
  - added method redirectUrl() in Peak_Controller_Action
 
  - added method renderwithjQueryTag() to class View_Helper_js
