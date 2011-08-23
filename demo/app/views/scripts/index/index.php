@@ -1,0 +1,1 @@
+<h1>Congratulation!<br />You just launched a demo application<br />running under Peak Framework <?php echo PK_VERSION; ?></h1>

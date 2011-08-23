@@ -64,9 +64,10 @@ class Peak_View
      * @param  string $name
      * @return anything
      */
-    public function __get($name)
+    public function &__get($name)
     {        
-        return array_key_exists($name,$this->_vars) ? $this->_vars[$name] : null;
+        if(isset($this->_vars[$name])) return $this->_vars[$name];
+    	else return ${null};
     }
 
     /**
@@ -104,7 +105,15 @@ class Peak_View
         if(method_exists($this->engine(),$method)) {
         	return call_user_func_array(array($this->engine(), $method), $args);        
         }
-        elseif((isset($this->helper()->$method)) || ($this->helper()->exists($method))) return $this->helper()->$method;
+        elseif((isset($this->helper()->$method)) || ($this->helper()->exists($method))) {
+            if(!empty($args)) {
+                $helper = $method;
+                $method = $args[0]; 
+                $args = array_slice($args,1);
+                return call_user_func_array(array($this->helper()->$helper, $method), $args);
+            }
+            return $this->helper()->$method;
+        }
         elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
             trigger_error('View method/helper '.$method.'() doesn\'t exists');
         }
@@ -225,7 +234,7 @@ class Peak_View
         if(is_object($this->_engine)) {
             $this->engine()->render($file,$path);
         }
-        else throw new Peak_Exception('ERR_VIEW_ENGINE_NOT_SET');
+        else throw new Peak_View_Exception('ERR_VIEW_ENGINE_NOT_SET');
     }
 
     /**

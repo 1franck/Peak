@@ -1,3 +1,42 @@
+#VERSION 0.8.7#
+
+ - udpated method matchRegex() from Peak_Router to accept regex named subpatterns as controller params
+ 
+ - modified token separator from '.' to more natural '/' char in Peak_Router::addRegex()
+
+ - added method redirectUrl() in Peak_Controller_Action
+
+ - added method renderwithjQueryTag() to class View_Helper_js
+
+ - added class Peak_Controller_Helper_Request
+
+ - fixed method redirect() of Peak_Controller_Front to support an non-array $params
+
+ - fixed method getTitle() in Peak_Controller_Action for Peak internal controller classes
+
+ - deprecated boot.php
+
+ - patched regression problem with recent changes of Peak_View::__get() and Peak_Config::__get()
+
+ - modified method Peak_View::__call() to allow calling helper class like a method with arguments. 
+   first argument represent method name and the others , the method arguments.
+
+ - added passing by reference to __get() method in Peak_View
+
+ - modified method Peak_Controller_Internal_PkError::_exception2table()
+
+ - optimized Peak_Core::initConfig() by removing copy of configs array  
+
+ - added passing by reference to __get() method in Peak_Config
+ 
+ - simplified Peak_Exception, added class Peak_Controller_Exception and Peak_View_Exception and modified many classes accordingly
+
+ - modified method Peak_Controller_Front::errorDispath() to return Peak_Application instance
+
+ - fixed method Peak_Application::_construct() due to missing keywork "new" before Peak_Controller_Front object
+
+ - added View helper js
+
 #VERSION 0.8.6#
 
  - added params to method helper() in Peak_View

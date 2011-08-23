@@ -4,6 +4,8 @@
  * 
  * @author   Francois Lajoie
  * @version  $Id$
+ *
+ * @deprecated
  */
 
 //define major abspath constants from root constant

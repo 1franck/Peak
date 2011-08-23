@@ -32,6 +32,18 @@ class Peak_Controller_Front
 	 */
 	public $allow_internal_controllers = false;
 	
+	/**
+	 * Allow/Disallow application modules
+	 * @var bool
+	 */
+	public $allow_app_modules = true;
+	
+	/**
+	 * Allow/Disallow Peak library internal modules
+	 * @var bool
+	 */
+	public $allow_internal_modules = true;
+	
 	
 	/**
 	 * class construct
@@ -90,12 +102,12 @@ class Peak_Controller_Front
 	protected function _dispatchController()
 	{
 	    $router = Peak_Registry::o()->router;      
-		
+
 		//set default controller if router doesn't have one
 		if(!isset($router->controller)) {
 			$router->controller = $this->default_controller;
 		}
-
+		
 		//set controller class name
 		$ctrl_name = $router->controller.'Controller';
 
@@ -107,7 +119,7 @@ class Peak_Controller_Front
 				$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
 				$this->controller = new $ctrl_name();
 			}
-			else throw new Peak_Exception('ERR_APP_CTRL_NOT_FOUND', $ctrl_name);
+			else throw new Peak_Controller_Exception('ERR_CTRL_NOT_FOUND', $ctrl_name);
 		}
 		else $this->controller = new $ctrl_name();
 	}
@@ -163,6 +175,8 @@ class Peak_Controller_Front
         }
         
         $this->_dispatchControllerAction();
+        
+        return Peak_Registry::o()->app;
 	}
 
     /**
@@ -176,8 +190,9 @@ class Peak_Controller_Front
     {
 	    $request = array($ctrl, $action);
 		
-		if(isset($params) && is_array($params)) {
-		    $request = array_merge($request, $params);
+		if(isset($params)) {
+		    if(is_array($params)) $request = array_merge($request, $params);
+		    else $request[] = $params;
 		}
 		
     	Peak_Registry::o()->router->setRequest($request);
