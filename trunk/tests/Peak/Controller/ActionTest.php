@@ -5,7 +5,7 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
- * @see Peak_Controller_Action, Peak_Config, Peak_Registry, Peak_Core, Peak_Router, Peak_View, Peak_Exception
+ * @see Peak_Controller_Action, Peak_Config, Peak_Registry, Peak_Core, Peak_Router, Peak_View, Peak_Exception, Peak_Controller_Exception
  */
 require_once 'Peak/Controller/Action.php';
 require_once 'Peak/Config.php';
@@ -14,6 +14,7 @@ require_once 'Peak/Core.php';
 require_once 'Peak/Router.php';
 require_once 'Peak/View.php';
 require_once 'Peak/Exception.php';
+require_once 'Peak/Controller/Exception.php';
 
 /**
  * @category   Peak
@@ -84,7 +85,7 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
     }
     
     /**
-	 * @expectedException Peak_Exception
+	 * @expectedException Peak_Controller_Exception
 	 */
     function testdispatchException()
     {

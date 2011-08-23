@@ -5,6 +5,8 @@
  * @uses    PHP Filter extensions for sanitazation and validation
  * @author  Francois Lajoie
  * @version $Id$
+ * 
+ * @dependencies Peak_Filters
  */
 abstract class Peak_Filters_Basic extends Peak_Filters
 {

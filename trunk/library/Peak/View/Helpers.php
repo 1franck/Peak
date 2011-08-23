@@ -20,6 +20,8 @@ class Peak_View_Helpers extends Peak_Helpers
     			                  LIBRARY_ABSPATH.'/Peak/View/Helper');
     			                  
     	$this->_exception = 'ERR_VIEW_HELPER_NOT_FOUND';
+    	
+    	$this->_exception_class = 'Peak_View_Exception';
     }
     
     /**

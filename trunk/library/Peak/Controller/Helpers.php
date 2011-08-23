@@ -19,6 +19,8 @@ class Peak_Controller_Helpers extends Peak_Helpers
     			                  LIBRARY_ABSPATH.'/Peak/Controller/Helper');
     			                  
     	$this->_exception = 'ERR_CTRL_HELPER_NOT_FOUND';
+    	
+    	$this->_exception_class = 'Peak_Controller_Exception';
     }
 
 }

@@ -109,7 +109,10 @@ abstract class Peak_Controller_Action
      */
     public function getTitle()
     {
-        return str_ireplace('controller', '', $this->getName());  
+        if(preg_match('#^Peak_Controller_Internal_[a-zA-Z_-]*$#', $this->getName())) {
+            return str_replace('Peak_Controller_Internal_','',$this->getName());
+        }
+        else return str_ireplace('controller', '', $this->getName());  
     }
         
     /**
@@ -170,9 +173,9 @@ abstract class Peak_Controller_Action
         
         if(($this->isAction($action))) $this->action = $action;
         elseif(($action !== 'index') && (!($this->isAction($action)))) {
-        	throw new Peak_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
+        	throw new Peak_Controller_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
         }
-        else throw new Peak_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
+        else throw new Peak_Controller_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
         //set action filename
         if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
@@ -271,6 +274,21 @@ abstract class Peak_Controller_Action
     {
         Peak_Registry::o()->app->front->redirect($this->getTitle(), $action, $params);
     }
+	
+	/**
+	 * Use View helper "redirect" to make a HTTP header redirection
+	 *
+	 * @param string  $url
+	 * @param bool    $base_url
+	 * @param integer $http_code
+	 */
+	public function redirectUrl($url, $http_code = 302, $base_url = true)
+	{
+		if($base_url) $url = $this->view->baseUrl($url,true);
+		$this->view->redirect()->url($url, $http_code);
+		//prevent the execution of the rest of controller action 
+		exit();
+	}
 
     /**
      * Action before controller requested action

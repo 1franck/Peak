@@ -197,11 +197,9 @@ class Peak_Router
 	 */
 	public function addRegex($regex, $route)
 	{
-		if(is_array($route)) {
-			$this->_regex[$regex] = $route;
-		}
+		if(is_array($route)) $this->_regex[$regex] = $route;
 		else {
-			$route = explode('.', $route);
+			$route = explode('/', $route);
 			$this->_regex[$regex] = array('controller' => $route[0], 'action' => $route[1]);
 		}
 		return $this;
@@ -224,13 +222,28 @@ class Peak_Router
 
 				//we got a positive preg_match
 				if($result) {
+
 					//if url match a regexp but end up with additionnal data, the url should be not valid otherwise 
 					//we will have url that can ends with anything and still be valid for the application and google, wich its bad
 					if($this->request_uri === $matches[0]) {
+					
+					    //set up controller and action
+					    $this->controller = $route['controller'];
+						$this->action = $route['action'];
+							
+					    //determine type of array (array assoc or not)
+						$arr_assoc = (array_keys($matches) !== range(0, count($matches) - 1));
 						
-						$this->controller = $route['controller'];
-						$this->action = $route['action'];					
-						$this->params = array_slice($matches,1);
+						if($arr_assoc === true) {
+							$rex_params = array_slice($matches,1);
+							$params = array();
+							foreach($rex_params as $i => $p) {
+								$params[] = (is_string($i)) ? $i : $p;
+							}
+							$this->params = $params;
+						}
+						else $this->params = array_slice($matches,1);
+						
 						$this->paramsToAssoc();
 						
 						return true;

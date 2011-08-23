@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('PK_VERSION', '0.8.6');
+define('PK_VERSION', '0.8.7');
 define('PK_NAME'   , 'PEAK');
 define('PK_DESCR'  , 'Php wEb Application Kernel');
 
@@ -94,9 +94,9 @@ class Peak_Core
     public static function initConfig($file, $apppath)
     {    		
     	self::getInstance();
-    	
-    	$filetype = pathinfo($file, PATHINFO_EXTENSION);
+
     	$env = self::getEnv();
+    	$filetype = pathinfo($file, PATHINFO_EXTENSION);
     	
     	//load configuration object according to the file extension
     	switch($filetype) {
@@ -116,41 +116,37 @@ class Peak_Core
     	if((!isset($conf->$env)) && (!isset($conf->all))) {
     		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
     	}
-
-    	//get config array and merge according to the environment
-    	$loaded_config = $conf->getVars();
     	
     	//add APPLICATION_ABSPATH to path config array if exists
-    	if(isset($loaded_config['all']['path'])) {
-    		foreach($loaded_config['all']['path'] as $pathname => $path) {
-    			$loaded_config['all']['path'][$pathname] = $apppath.'/'.$path;
+    	if(isset($conf->all['path'])) {
+    		foreach($conf->all['path'] as $pathname => $path) {
+    			$conf->all['path'][$pathname] = $apppath.'/'.$path;
     		}
     	}
     	
     	//add APPLICATION_ABSPATH to 'path' key value
-    	if(isset($loaded_config[$env]['path'])) {
-    		foreach($loaded_config[$env]['path'] as $pathname => $path) {
-    			$loaded_config[$env]['path'][$pathname] = $apppath.'/'.$path;
+    	if(isset($conf->$env['path'])) {
+    		foreach($conf->$env['path'] as $pathname => $path) {
+    			$conf->$env['path'][$pathname] = $apppath.'/'.$path;
     		}
     	}
     	
     	//merge app config paths with core app paths  	
-    	if(isset($loaded_config['all']['path'])) {
-    	    $loaded_config['all']['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths($apppath), $loaded_config['all']['path']);
+    	if(isset($conf->all['path'])) {
+    	    $conf->all['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths($apppath), $conf->all['path']);
     	}
     	else {
-    		$loaded_config['all']['path'] = self::getDefaultAppPaths($apppath);
+    		$conf->all['path'] = self::getDefaultAppPaths($apppath);
     	}
 
     	//try to merge array section 'all' with current environment section if exists
-    	if(isset($loaded_config['all']) && isset($loaded_config[$env])) {
-    		$final_config = $conf->arrayMergeRecursive($loaded_config['all'],$loaded_config[$env]);
+    	if(isset($conf->all) && isset($conf->$env)) {
+    		$conf->setVars($conf->arrayMergeRecursive($conf->all,$conf->$env));
     	}
-    	elseif(isset($loaded_config[$env])) $final_config = $loaded_config[$env];
-    	else $final_config = $loaded_config['all'];
+    	elseif(isset($conf->$env)) $conf->setVars($conf->$env);
+    	else $conf->setVars($conf->all);
 
-    	//save transformed config
-    	$conf->setVars($final_config);
+    	//save transformed config to registry
     	Peak_Registry::set('config', $conf);  	   	
 
     	//set some php ini settings
