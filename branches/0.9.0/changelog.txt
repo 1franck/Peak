@@ -1,3 +1,8 @@
+#VERSION 0.9.0#
+
+ - deleted deprecated file boot.php. Use Peak_Core::init() instead
+
+
 #VERSION 0.8.7#
 
  - udpated method matchRegex() from Peak_Router to accept regex named subpatterns as controller params
