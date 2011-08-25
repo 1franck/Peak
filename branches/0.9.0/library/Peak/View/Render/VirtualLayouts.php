@@ -6,7 +6,6 @@
  * 
  * @author   Francois Lajoie
  * @version  $Id$
- * 
  */
 class Peak_View_Render_VirtualLayouts extends Peak_View_Render
 {

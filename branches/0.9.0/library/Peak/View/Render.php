@@ -12,7 +12,11 @@ abstract class Peak_View_Render
     public $scripts_path;          //controller action script view file name used
        
     protected $_cache;             //view cache object
-           
+	
+	//force child to implement those functions
+    abstract public function render($file, $path);
+	abstract protected function output($data);
+	
     /**
      * Point to Peak_View __get method
      *

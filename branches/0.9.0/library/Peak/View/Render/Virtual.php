@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak View Render Engine: Virtual
  * 
@@ -7,7 +6,6 @@
  * 
  * @author   Francois Lajoie
  * @version  $Id$
- * 
  */
 class Peak_View_Render_Virtual extends Peak_View_Render
 {

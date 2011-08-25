@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - added abstract method render() and output() to Peak_View_Render
+
  - deleted deprecated file boot.php. Use Peak_Core::init() instead
 
 
