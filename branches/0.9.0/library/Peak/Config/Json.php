@@ -56,6 +56,9 @@ class Peak_Config_Json extends Peak_Config
 	{
 		if(function_exists('json_last_error')) {
 
+            //workaround JSON_ERROR_UTF8 --> PHP 5 >= 5.3.3
+			if(!defined('JSON_ERROR_UTF8')) define('JSON_ERROR_UTF8',5);
+			   
 			switch(json_last_error()) {
 				case JSON_ERROR_DEPTH:
 					$e =  'Maximum stack depth exceeded';

@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - fixed method Peak_Config_Json::_jsonError(), JSON_ERROR_UTF8 constant don't exists until php 5.3.3
+
  - added abstract method render() and output() to Peak_View_Render
 
  - deleted deprecated file boot.php. Use Peak_Core::init() instead
