@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - updated Zend Framework version 1.11.1 to 1.11.10 in vendors folder
+
  - updated geshi version and deleted old php folder in vendors folder
 
  - renamed libs folder to vendors, changed set_include_path in Peak_Core accordingly
