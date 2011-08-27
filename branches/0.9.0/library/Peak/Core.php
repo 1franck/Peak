@@ -243,7 +243,7 @@ class Peak_Core
             define('LIBRARY_ABSPATH', str_ireplace(array(substr(__FILE__, -14),'\\'), array('','/'), __FILE__));
             
             //add LIBRARY_ABSPATH to include path
-            set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, LIBRARY_ABSPATH.'/Peak/Libs', get_include_path())));
+            set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, LIBRARY_ABSPATH.'/Peak/Vendors', get_include_path())));
         }
                 
         //peak autoloader
