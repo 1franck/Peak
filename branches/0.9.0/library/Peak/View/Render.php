@@ -14,7 +14,7 @@ abstract class Peak_View_Render
     protected $_cache;             //view cache object
 	
 	//force child to implement those functions
-    abstract public function render($file, $path);
+    abstract public function render($file, $path = null);
 	abstract protected function output($data);
 	
     /**
