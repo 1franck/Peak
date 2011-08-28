@@ -5,10 +5,16 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Helpers, Peak_Exception
  */
 require_once 'Peak/Helpers.php';
 require_once 'Peak/Exception.php';
+
+/**
+ * Fixture(s)
+ */
+require_once dirname(__FILE__).'/HelpersTest/MyHelpers.php';
 
 /**
  * @category   Peak
@@ -26,7 +32,7 @@ class Peak_HelpersTest extends PHPUnit_Framework_TestCase
 
 	function testCreateHelpersClass()
 	{		
-		$helper = new myHelpers();		
+		$helper = new MyHelpers();		
 		$this->assertInstanceOf('Peak_Helpers', $helper);		
 	}
 	
@@ -73,28 +79,5 @@ class Peak_HelpersTest extends PHPUnit_Framework_TestCase
         }
         $this->fail('An expected exception has not been raised.');
 	}
-		
-	
-  
-}
 
-
-/**
- * Class Helpers Examples
- */
-class myhelpers extends Peak_Helpers
-{
-	
-	public function __construct()
-	{
-		
-		$this->_prefix    = array('MyHelper_', 'Helper_');
-    	
-    	$this->_paths     = array(TESTS_PATH.'/tmp//helpers');
-    			                  
-    	$this->_exception = 'ERR_CUSTOM';
-
-	}
-	
-	
 }

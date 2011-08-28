@@ -5,12 +5,20 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Filters, Peak_Filters_Advanced, Peak_Filters_Form, Peak_Exception
  */
 require_once 'Peak/Filters.php';
 require_once 'Peak/Filters/Advanced.php';
 require_once 'Peak/Filters/Form.php';
 require_once 'Peak/Exception.php';
+
+/**
+ * Fixture(s)
+ */
+require_once dirname(__FILE__).'/FormTest/Form1.php';
+require_once dirname(__FILE__).'/FormTest/Form2.php';
+require_once dirname(__FILE__).'/FormTest/Form3.php';
 
 /**
  * @category   Peak
@@ -156,91 +164,5 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     	$this->assertFalse($result);
 		
- 	}
-    
-	  
-}
-
-//form example 1
-class Form1 extends Peak_Filters_Form
-{
-    public function setValidation()
-    {
-    	return array(
-    	                  
-		   'name'  => array('filters' => array('not_empty', 
-		                                       'alpha_num',
-		                                       'lenght' => array('min' => 4, 'max' => 10),
-		                                       'callbacktest'),
-		                                       
-		                    'errors'  => array('Name is empty',
-		                                       'Name contains invalid chars',
-		                                       'Name must be between 4 and 10 chars',
-		                                       'Callback test fail')),
-		                                       
-		   'email' => array('filters' => array('email'),
-		                                       
-		                    'errors'  => array('Email not valid')),
-		                                       
-		   'password' => array('filters' => array('not_empty', 
-		                                          'alpha_num'),
-		                                          
-		   		               'errors'  => array('Password is empty',
-		   		                                  'Password contain invalid characters')), 
-		   		                                  
-	       'repassword' => array('filters' => array('match_key' => 'password'),
-	                              
-	                             'errors'  => array('Password mismatch')),
-
-	       'number'     => array('filters' => array('int' => array('min' => 2, 'max' => 6)),
-	       
-	                             'errors'  => array('Number must be between 2 and 6')),
-	                             
-	       'answer'     => array('filters' => array('enum' => array('test', 'test3', 'french potatoes')),
-	                             
-	                             'errors'  => array('Answer should be test, test3 or french potatoes'))                             
-		                                       
-	    );
-    
-    }
-    
-    function _filter_callbacktest($v)
-    {
-    	//do something
-    	//return boolean result, here for the example return true
-    	return true;
-    }
-}
-
-//form example 2 - validate should throw an exception since filter 'unknowfilter' do not exists
-class Form2 extends Peak_Filters_Form
-{
-    public function setValidation()
-    {
-    	return array(
-		 
-		   'name'  => array('filters' => array('unknowfilter'),
-		                                       
-		                    'errors'  => array('Name is empty')),
-                                  
-		                                       
-	    );   
-    }
-}
-
-class Form3 extends Peak_Filters_Form
-{
-    
-    public function setValidation()
-    {
-        return array(
-        
-          'name' => array('filters' => array('if_not_empty', 'email'),
-                          'errors'  => array('should be an email')),
-                          
-          /*'lastname' => array('filters' => array('if_isset','alpha'),
-                              'errors'  => array('should be alpha num')),*/
-        
-        );
-    }
+ 	}  
 }

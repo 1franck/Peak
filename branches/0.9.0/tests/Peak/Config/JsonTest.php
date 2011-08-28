@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Config, Peak_Config_Json, Peak_Exception
  */
 require_once 'Peak/Config.php';
@@ -35,7 +36,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 	function testCreateInstanceWithFile()
 	{	
 	    //with sections
-		$cf = new Peak_Config_Json(TESTS_PATH.'/tmp/app.json');
+		$cf = new Peak_Config_Json(dirname(__FILE__).'/JsonTest/app.json');
 		
 		$this->assertTrue(isset($cf->all));
 		$this->assertTrue(is_array($cf->all));
@@ -53,7 +54,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 	{
 		//try to load a file that don't exists
 		try {
-			$this->peakconfig->loadFile(TESTS_PATH.'/tmp/app2.json');
+			$this->peakconfig->loadFile(dirname(__FILE__).'/JsonTest/app2.json');
 		}
 		catch (InvalidArgumentException $expected) {
             return;
@@ -80,7 +81,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 		if(function_exists('json_last_error')) {
 			//try to load a file with syntax error(s)
 			try {
-				$this->peakconfig->loadFile(TESTS_PATH.'/tmp/appwitherror.json', true);
+				$this->peakconfig->loadFile(dirname(__FILE__).'/JsonTest/appwitherror.json', true);
 			}
 			catch (InvalidArgumentException $expected) {
 				return;
@@ -90,6 +91,5 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 			$this->fail('An expected exception has not been raised.');
 		}
 	}
-	
-  
+
 }

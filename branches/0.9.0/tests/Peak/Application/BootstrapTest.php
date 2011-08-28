@@ -5,10 +5,16 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Bootstrap, Peak_Core
  */
 require_once 'Peak/Application/Bootstrap.php';
 require_once 'Peak/Core.php';
+
+/**
+ * Fixture(s)
+ */
+require_once dirname(__FILE__).'/BootstrapTest/Bootstrap.php';
 
 /**
  * @category   Peak
@@ -21,37 +27,14 @@ class Peak_BootstrapTest extends PHPUnit_Framework_TestCase
 	
 	function testBootstrapInstance()
 	{
-		$boot = new bootstrap();
+		$boot = new Bootstrap();
 		$this->assertTrue($boot->i == 2);
 	}
 	
 	function testGetEnv()
 	{
-		$boot = new bootstrap();		
+		$boot = new Bootstrap();		
 		$this->assertTrue($boot->getEnv() === 'production');
 	}
 
-}
-
-// example bootstrap class
-class bootstrap extends Peak_Application_Bootstrap
-{
-	public $i = 0;
-	
-	//should be executed on class load
-    public function _foo()
-    {
-        ++$this->i;
-    }
-    
-    //should be executed on class load
-    public function _bar()
-    {
-    	++$this->i;
-    }
-    
-    public function foobar()
-    {
-    	++$this->i;
-    }
 }

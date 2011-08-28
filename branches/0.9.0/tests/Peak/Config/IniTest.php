@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Config, Peak_Config_Ini, Peak_Exception
  */
 require_once 'Peak/Config.php';
@@ -45,13 +46,13 @@ class Peak_ConfigIniTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_array($cf->production));
 		
 		//whitout sections
-		$cf = new Peak_Config_Ini(TESTS_PATH.'/tmp/app.ini', false);
+		$cf = new Peak_Config_Ini(dirname(__FILE__).'/IniTest/app.ini', false);
 		
 		$this->assertFalse(isset($cf->all));
 		$this->assertTrue(isset($cf->php));
 		
 		//with a specific section
-		$cf = new Peak_Config_Ini(TESTS_PATH.'/tmp/app.ini', true,'development');
+		$cf = new Peak_Config_Ini(dirname(__FILE__).'/IniTest/app.ini', true,'development');
 
 		$this->assertFalse(isset($cf->all));
 		$this->assertTrue(isset($cf->front));
@@ -83,7 +84,7 @@ class Peak_ConfigIniTest extends PHPUnit_Framework_TestCase
 
         //try to load a file with syntax error(s)
         try {
-			$this->peakconfig->loadFile(TESTS_PATH.'/tmp/appwitherror.ini', true);
+			$this->peakconfig->loadFile(dirname(__FILE__).'/IniTest/appwitherror.ini', true);
 		}
 		catch (InvalidArgumentException $expected) {
             return;
