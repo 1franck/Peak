@@ -1,5 +1,9 @@
 #VERSION 0.9.0#
 
+ - modified method init() from Peak_Core to throw an exception when path(s) or config constants are missing 
+
+ - added new constant to Peak_Exception and updated method handleErrConstToText()
+
  - updated Zend Framework version 1.11.1 to 1.11.10 in vendors folder
 
  - updated geshi version and deleted old php folder in vendors folder

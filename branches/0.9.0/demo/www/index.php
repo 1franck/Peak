@@ -36,6 +36,7 @@ try {
         ->render();   
 }
 catch (Exception $e) {
+    //echo $e->getMessage(); exit();
     $app->front->errorDispatch($e)
                ->render();
 }

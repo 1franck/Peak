@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak exception
  * 
@@ -19,6 +18,7 @@ class Peak_Exception extends Exception
 	 * Errors messages
 	 */
 	const ERR_ROUTER_URI_NOT_FOUND          = 'Request uri not found.';
+	const ERR_CORE_INIT_CONST_MISSING       = '%1$s is not specified (const %2$s)';
 	const ERR_DEFAULT                       = 'Request failed';
 	const ERR_CUSTOM                        = '%1$s';
 		
@@ -52,8 +52,7 @@ class Peak_Exception extends Exception
 	    else $r = self::ERR_DEFAULT;
 	    
 	    if(isset($infos)) {
-	        if(is_array($infos)) $r = vsprintf($r,$infos);
-	        else $r = sprintf($r,trim($infos));	        
+			$r = (is_array($infos)) ? vsprintf($r,$infos) : sprintf($r,trim($infos));
 	    }
 
 		return htmlentities(strip_tags($r))."\n";
