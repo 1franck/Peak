@@ -1,5 +1,13 @@
 #VERSION 0.9.0#
 
+ - passed method generate() to abstract method in Peak_Codegen
+ 
+ - moved method getIndent() from Peak_Codegen_Class to Peak_Codegen
+
+ - fixed method generate() that was not using $_is_abstract property in Peak_Codegen_Class
+
+ - added property $_is_final and method isFinal() to Peak_Codegen_Class
+
  - added null default value to param $path of method Peak_View_Render::render()
 
  - modified method init() from Peak_Core to throw an exception when path(s) or config constants are missing 

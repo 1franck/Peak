@@ -23,6 +23,18 @@ abstract class Peak_Codegen
 	const PHP_OPEN_TAG = '<?php';
 	
 	/**
+	 * Get indentation string
+	 *
+	 * @param  integer $multiplicator Represent number of indentation(s). By default 1
+	 * @return string
+	 */
+    public function getIndent($multiplicator = 1)
+	{
+		$pad_length = self::INDENTATION_SPACE * $multiplicator;
+		return str_pad('',$pad_length);
+	}
+	
+	/**
 	 * Get preview of generated code
 	 *
 	 * @return string
@@ -54,13 +66,13 @@ abstract class Peak_Codegen
 	}
 	
 	/**
-	 * Need to be overloaded by child but optionnal
+	 * Optionnal, Can be overloaded by child. Will be call each time before generate()
 	 */
 	public function preGenerate() { }
 	
 	/**
 	 * Need to be overloaded by child
 	 */
-	public function generate() { }
+	abstract public function generate();
 	
 }
