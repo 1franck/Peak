@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - added constant PHP_CLOSE_TAG to Peak_Codegen
+
  - passed method generate() to abstract method in Peak_Codegen
  
  - moved method getIndent() from Peak_Codegen_Class to Peak_Codegen

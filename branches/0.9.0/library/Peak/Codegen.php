@@ -23,6 +23,11 @@ abstract class Peak_Codegen
 	const PHP_OPEN_TAG = '<?php';
 	
 	/**
+	 * PHP close tag
+	 */
+	const PHP_CLOSE_TAG = '?>';
+	
+	/**
 	 * Get indentation string
 	 *
 	 * @param  integer $multiplicator Represent number of indentation(s). By default 1
@@ -61,7 +66,7 @@ abstract class Peak_Codegen
 		    $data = Peak_Codegen::PHP_OPEN_TAG . Peak_Codegen::LINE_BREAK . $data;
 		}
 		
-		$result = @file_put_contents($filepath, $data, $file_put_contents_flags);
+		$result = file_put_contents($filepath, $data, $file_put_contents_flags);
 		return $result;
 	}
 	

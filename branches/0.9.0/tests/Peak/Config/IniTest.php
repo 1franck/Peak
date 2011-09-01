@@ -36,7 +36,7 @@ class Peak_ConfigIniTest extends PHPUnit_Framework_TestCase
 	function testCreateInstanceWithFile()
 	{	
 	    //with sections
-		$cf = new Peak_Config_Ini(TESTS_PATH.'/tmp/app.ini', true);
+		$cf = new Peak_Config_Ini(dirname(__FILE__).'/IniTest/app.ini', true);
 		
 		$this->assertTrue(isset($cf->all));
 		$this->assertTrue(is_array($cf->all));

@@ -24,15 +24,35 @@ require_once dirname(__FILE__).'/CodegenTest/SimpleClass.php';
 class Peak_CodegenTest extends PHPUnit_Framework_TestCase
 {
 	
+	public function setUp()
+	{
+		$this->simpleClass = new SimpleClass();
+	}
+	
     public function testSimpleClass()
-    {   	
-    	$cg = new SimpleClass();
-    	
-    	$this->assertInstanceOf('Peak_Codegen', $cg);
-    	$this->assertInstanceOf('SimpleClass', $cg);
-    	
-    	
+    {   	    	
+    	$this->assertInstanceOf('Peak_Codegen', $this->simpleClass);
+    	$this->assertInstanceOf('SimpleClass', $this->simpleClass);
     }
-    	  
+	
+	public function testPreview()
+	{
+    	$content = $this->simpleClass->preview();
+		
+		$this->assertTrue($content === '<?php'."\n".'echo "hello!";');
+	}
+	
+	public function testSave()
+	{
+		$filepath = dirname(__FILE__).'/CodegenTest/test.php';
+		$result = $this->simpleClass->save($filepath);
+		
+		$this->assertTrue((bool)$result);
+		$this->assertTrue(file_exists($filepath));
+		
+		$content = file_get_contents($filepath);
+		$this->assertTrue($content === '<?php'."\n".'echo "hello!";');
+		unlink($filepath);
+	}
 }
 
