@@ -27,7 +27,6 @@ function _autoloadPeak($cn)
     $file = LIBRARY_ABSPATH.'/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
-    return true;
 }
 
 function _autoloadAppCtrl($cn)
@@ -40,8 +39,7 @@ function _autoloadAppCtrl($cn)
 //check internal zend lib (they have priority over external ZEND_LIB_ABSPATH)
 function _autoloadZendInternal($cn)
 {
-    //$file = Peak_Core::getPath('libs').'/'._autoloadClass2File($cn);
-    $file = LIBRARY_ABSPATH.'/Peak/Libs/'._autoloadClass2File($cn);
+    $file = LIBRARY_ABSPATH.'/Peak/Vendors/'._autoloadClass2File($cn);
     if(!file_exists($file)) return false;
     include $file;
 }

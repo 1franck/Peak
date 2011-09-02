@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - fixed Vendors path name in autoload.php
+
  - added constant PHP_CLOSE_TAG to Peak_Codegen
 
  - passed method generate() to abstract method in Peak_Codegen
