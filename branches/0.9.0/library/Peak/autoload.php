@@ -76,7 +76,7 @@ function _autoloadAppBaseCustom($cn)
     include $file;
 }
 
-//check external zend lib path
+// check external zend lib path
 function _autoloadZend($cn)
 {
     $file = ZEND_LIB_ABSPATH.'/'._autoloadClass2File($cn);

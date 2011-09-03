@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Zend reflection class wrapper
  * 
@@ -11,13 +10,13 @@
  */
 class Peak_Zreflection
 {
-    
+
     /**
      * Zend_Reflection_Class object
      * @var object
      */
     public $class;
-    
+
     /**
      * Load Zend_Reflection_Class
      *
@@ -32,7 +31,7 @@ class Peak_Zreflection
             $this->class = new Zend_Reflection_Class($class);
         }
     }
-    
+
     /**
      * Retreive class description 
      * 
@@ -50,7 +49,7 @@ class Peak_Zreflection
         catch(Exception $e) { $descr = ''; }
         return $descr;
     }
-    
+
     /**
      * Retreive class description tags
      *
@@ -68,7 +67,7 @@ class Peak_Zreflection
         catch(Exception $e) { $classDoctags = ''; }
         return $classDoctags;
     }
-    
+
     /**
      * Get class properties, parent class and interfaces
      *
@@ -101,7 +100,7 @@ class Peak_Zreflection
 
         return $declaration;
     }
-    
+
     /**
      * Get methods separated by inheritance
      *
@@ -123,7 +122,7 @@ class Peak_Zreflection
     	
     	return $result;
     }
-    
+
     /**
      * Get class declaring class name of a method 
      *
@@ -134,7 +133,7 @@ class Peak_Zreflection
     {
         return $this->class->getMethod($name)->getDeclaringClass()->getName();
     }
-    
+
     /**
      * Get method visibility
      *
@@ -153,7 +152,7 @@ class Peak_Zreflection
 
         return implode(' ',$v);
     }
-    
+
     /**
      * Get a method description from current class
      *
@@ -183,7 +182,7 @@ class Peak_Zreflection
     	if($type === 'short') return $shortdescr;
     	else return $longdescr;
     }
-    
+
     /**
      * Get method comment tags
      *
@@ -200,7 +199,7 @@ class Peak_Zreflection
 		
 		return $comment_tags;
     }
-    
+
     /**
      * Get properties separated by inheritance
      *
@@ -222,7 +221,7 @@ class Peak_Zreflection
     	
     	return $result;
     }
-    
+
     /**
      * Get class declaring class name of a property 
      *
@@ -233,7 +232,7 @@ class Peak_Zreflection
     {
         return $this->class->getProperty($name)->getDeclaringClass()->getName();
     }
-    
+
     /**
      * Get property visibility
      *
@@ -252,7 +251,7 @@ class Peak_Zreflection
 
         return implode(' ',$v);
     }
-    
+
     /**
      * Get property description from the current class
      *
@@ -284,7 +283,7 @@ class Peak_Zreflection
     	if($type === 'short') return $shortdescr;
     	else return $longdescr;
     }
-    
+
     /**
      * Get property comment tags
      *
@@ -302,8 +301,7 @@ class Peak_Zreflection
 		
 		return $comment_tags;
     }
-    
-    
+
     /**
      * Get params object as list
      *
@@ -349,7 +347,7 @@ class Peak_Zreflection
         }
         return $paramsArray;
     }
-    
+
     /**
      * Get tags object as array
      *
@@ -367,5 +365,4 @@ class Peak_Zreflection
     	
     	return $result;
     }
-    
 }

@@ -43,7 +43,7 @@ class Peak_Application
         // load front controller
         $this->front = (class_exists('front',false)) ? new front() : new Peak_Controller_Front();
     }
-    
+
     /**
      * Load front controller and start dispatching
      * @see Peak_Controller_Front::dispatch() for param

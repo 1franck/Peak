@@ -21,20 +21,19 @@ class Peak_Core
      * @var object
      */
     protected $_extensions;
-    
+
     /**
      * Current Environment
      * @final
      * @var string
      */
     private static $_env;
-    
+
     /**
      * object itself
      * @var object
      */
     private static $_instance = null; 
-    
     
     /**
      * Singleton peak core
@@ -85,7 +84,6 @@ class Peak_Core
     	return $this->_extensions;
     }
 
-    
     /**
      * Init application config
      *
@@ -158,7 +156,6 @@ class Peak_Core
     			}    			
     		}
     	}
-
     }
 
     /**
@@ -185,7 +182,7 @@ class Peak_Core
                      'theme_layouts'       => $app_path.'/views/layouts',
                      'theme_cache'         => $app_path.'/views/cache');
     }
-    
+
     /**
      * Get environment in .htaccess or from constant APPLICATION_DEV and store it to $_env
      * If environment if already stored in $_env, we return it instead.
@@ -222,7 +219,7 @@ class Peak_Core
     	if(isset($c->path[$path])) return $c->path[$path];
     	else return null;
     }
-    
+
     /**
      * Framework booting level
      *
@@ -247,7 +244,7 @@ class Peak_Core
 														   LIBRARY_ABSPATH.'/Peak/Vendors',
 														   get_include_path())));
         }
-                
+  
         //LEVEL 2 - load peak core autoloader
         if($level >= 2) include LIBRARY_ABSPATH.'/Peak/autoload.php';
         
@@ -292,7 +289,6 @@ class Peak_Core
             return new Peak_Application();
         }
     }
-
 }
 
 /**

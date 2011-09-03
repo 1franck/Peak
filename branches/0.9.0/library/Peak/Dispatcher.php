@@ -15,50 +15,50 @@
  */
 abstract class Peak_Dispatcher
 {
-	
+
 	/**
 	 * always reflect current resource of a called action
 	 * @var array
 	 */
     public $resource;
-    
+
     /**
      * container for response
      * @var array
      */
     public $response = array();
-    
+
     /**
      * global variable allow
      * @var array
      */
     private $_accepted_globals = array('_GET','_POST','_SESSION');
-    
+
     /**
      * actions method list depending on $_accepted_globals
      * @var array
      */
     private $_actions = array();
-    
+
     /**
      * allow multiple actions calls. if isset to false, its first in first out
      * @var bool
      */
     private $_recursivity  = false;
-        
+
     /**
      * define the maximum of actions that can be called in the hole process
      * @var integer
      */
     private $_recursivity_depth = 3;
-                                                                            
+   
     /**
      * number of actions called
      * @var integer
      */
     private $_actions_triggered = 0;
-    
-    
+
+
     /**
      * Load dispatcher actions
      */
@@ -68,7 +68,6 @@ abstract class Peak_Dispatcher
         $this->setRecursivity($recursivity, $recursivity_depth);
         $this->_listActions();
     }
-    
     
     /**
      * Start the first in, first out action(s) dispath. 
@@ -109,10 +108,8 @@ abstract class Peak_Dispatcher
                     }
                 }
             }
-            
         }
     }
-    
     
     /**
      * Stop recursivity
@@ -123,7 +120,7 @@ abstract class Peak_Dispatcher
         $this->_recursivity = false;
         $this->resource = null;
     }
-    
+
     /**
      * Reset object to default value
      */
@@ -137,7 +134,7 @@ abstract class Peak_Dispatcher
         $this->response = array();
         $this->_listActions();
     }
-    
+
     /**
      * Set Recursion to true/false
      *
@@ -148,7 +145,7 @@ abstract class Peak_Dispatcher
         $this->_recursivity = $status;
         $this->_recursivity_depth = $depth;        
     }
-    
+
     /**
      * List all actions regarding $_accepted_globals
      */
@@ -160,7 +157,7 @@ abstract class Peak_Dispatcher
             $l = strlen($prefix) + 1;
             $regexps[] = '/^(['.$prefix.'_]{'.$l.'}[a-zA-Z]{1})/';
         }
-                
+        
         $c_methods = get_class_methods(get_class($this));
         
         $this->_actions = array();
@@ -175,7 +172,7 @@ abstract class Peak_Dispatcher
             }
         }
     }
-    
+
     /**
      * Return actions
      *
@@ -185,7 +182,7 @@ abstract class Peak_Dispatcher
     {
         return $this->_actions;
     }
-    
+
     /**
      * Return accepted globals
      * 
@@ -195,7 +192,7 @@ abstract class Peak_Dispatcher
     {
     	return $this->_accepted_globals;
     }
-    
+
     /**
      * Return recursivity
      * 
@@ -205,7 +202,7 @@ abstract class Peak_Dispatcher
     {
     	return $this->_recursivity;
     }
-    
+
     /**
      * Return recursivity depth
      * 
@@ -215,7 +212,7 @@ abstract class Peak_Dispatcher
     {
     	return $this->_recursivity_depth;
     }
-    
+
     /**
      * Return number of actions triggered
      * 
@@ -225,5 +222,4 @@ abstract class Peak_Dispatcher
     {
     	return $this->_actions_triggered;
     }
-    
 }

@@ -12,13 +12,13 @@ class Peak_Lang
 	 * @var string
 	 */
     private $_lang;
-    
+
     /**
      * File translation
      * @var string
      */
     private $_file;  
-    
+
     /**
      * Array of translation
      * @var array
@@ -35,7 +35,7 @@ class Peak_Lang
 	{
 	    $this->load($lang);
 	}
-	
+
 	/**
      * Load lang translation files
      *
@@ -55,7 +55,7 @@ class Peak_Lang
 		
 		if(!is_array($this->translations)) $this->translations = array();
 	}
-	
+
 	/**
 	 * Translate text
 	 *
@@ -77,19 +77,16 @@ class Peak_Lang
 	    
 	    return $translation;
 	}	
-
 }
-
 
 /**
  * Echo an translation
  *
  * @param see method translate() of Peak_Lang for info on params
  */
-function __($text, $replaces = null, $func = null) {
-		
-	if(Peak_Registry::obj()->lang instanceof Peak_Lang)
-	{       
+function __($text, $replaces = null, $func = null)
+{
+	if(Peak_Registry::obj()->lang instanceof Peak_Lang)	{       
 	    return Peak_Registry::obj()->lang->translate((string)$text, $replaces, $func);
 	}
 	else return $text;
