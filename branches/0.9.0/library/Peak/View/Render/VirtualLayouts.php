@@ -53,7 +53,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
      * @param  string $path
      * @return string
      */
-    public function render($file,$path)
+    public function render($file,$path = null)
     {       
         //CONTROLLER FILE VIEW       
         $this->scripts_file = $file;
