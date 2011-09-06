@@ -1,6 +1,6 @@
 #VERSION 0.9.0#
 
- - fixed method render() in Peak_Render_VirtualLayouts due to recent change in Peak_View_Render
+ - fixed methods render() and output() in Peak_Render_VirtualLayouts due to recent change in Peak_View_Render
 
  - fixed Vendors path name in autoload.php
 

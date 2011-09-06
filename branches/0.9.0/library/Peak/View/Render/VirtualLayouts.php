@@ -74,7 +74,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
      *
      * @param string $data
      */
-    private function output($data)
+    protected function output($data)
     {
         echo $data;    
     }
