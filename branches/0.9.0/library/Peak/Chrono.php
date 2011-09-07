@@ -132,7 +132,7 @@ class Peak_Chrono
     }
 
     /**
-     * Same as get() but return timer in microseconds
+     * Same as get() but return timer in milliseconds
      *
      * @see get()
      */

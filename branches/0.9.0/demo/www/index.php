@@ -22,7 +22,13 @@ define('APPLICATION_CONFIG', 'app.ini');
 define('APPLICATION_ENV',  'development');
 
 /**
- * Load core
+ * Load and start chrono for demo purpose
+ */
+include './../../library/Peak/Chrono.php';
+Peak_Chrono::start();
+
+/**
+ * Load framework core
  */
 include './../../library/Peak/Core.php';
 
