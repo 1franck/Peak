@@ -1,9 +1,13 @@
 <?php
 /**
+ * DEMO
+ * @version $Id$
+ */
+
+/**
  * FOR DEMO PURPOSE ONLY
  */
 $demo_path = substr(str_replace(array($_SERVER['DOCUMENT_ROOT'],'www'),'',str_replace('\\','/',dirname(__FILE__))), 0, -1);
-//echo $demo_path.'<br />';
 
 /**
  * REQUIRED CONSTANTS
