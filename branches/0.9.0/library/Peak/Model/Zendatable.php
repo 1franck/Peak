@@ -101,9 +101,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        }
 	    }
 	    
-	    if(count($data) == 1) {
-	        $data = $data[0];
-	    }
+	    if(count($data) == 1) $data = $data[0];
 	    
 	    return $data;
 	}
@@ -182,5 +180,16 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        $this->_db->insert($this->_name, $data);
 	        return $this->_db->lastInsertId();
 	    }
+	}
+	
+	/**
+	 * Shorcut for $_db->query()
+	 *
+	 * @param  string   $query
+	 * @return resource
+	 */
+	public function query($query)
+	{
+		return $this->_db->query($query);
 	}
 }
