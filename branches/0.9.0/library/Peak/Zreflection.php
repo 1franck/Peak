@@ -25,9 +25,9 @@ class Peak_Zreflection
      * @param string $class
      * @param bool   $autoload
      */
-    public function loadClass($class,$autoload = true)
+    public function loadClass($class, $autoload = true)
     {
-        if(class_exists($class,$autoload)) {
+        if(class_exists($class, $autoload)) {
             $this->class = new Zend_Reflection_Class($class);
         }
     }
@@ -99,6 +99,26 @@ class Peak_Zreflection
         $declaration['interfaces'] = $interfaces;
 
         return $declaration;
+    }
+    
+    /**
+     * Get class constants
+     *
+     * @return array
+     */
+    public function getConstants()
+    {
+        return $this->class->getConstants();
+    }
+    
+    /**
+     * Get class methods
+     *
+     * @return array
+     */ 
+    public function getMethods()
+    {
+        return $this->class->getMethods();
     }
 
     /**
@@ -199,6 +219,16 @@ class Peak_Zreflection
 		
 		return $comment_tags;
     }
+    
+    /**
+     * Get class properties
+     *
+     * @return array
+     */ 
+    public function getProperties()
+    {
+        return $this->class->getProperties();
+    }
 
     /**
      * Get properties separated by inheritance
@@ -259,7 +289,6 @@ class Peak_Zreflection
      * 
      * @param  string $property
      * @param  string $type
-     * 
      * @return string
      */
     public function getPropertyDoc($property, $type = 'short')
@@ -308,10 +337,10 @@ class Peak_Zreflection
      * @uses   Zend_Reflection_Parameter
      * 
      * @param  object $params
-     * 
+     * @param  array  $router 
      * @return string
      */
-    public function paramsAsList($paramsObject,$router)
+    public function paramsAsList($paramsObject, $router)
     {
         $params_list = array();
 
@@ -339,8 +368,7 @@ class Peak_Zreflection
      */
     public function paramsToArray($method)
     {
-        global $doc;
-        $params = $doc->class->getMethod($method)->getParameters();
+        $params = $this->class->getMethod($method)->getParameters();
         $paramsArray = array();
         foreach($params as $param) {
             $paramsArray[] = $param->name;
