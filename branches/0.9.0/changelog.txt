@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - added methods getParentMethods(), getSelfMethods(), getParentProperties() and getSelfProperties() to Peak_Zreflection
+
  - fixed method paramsToArray() from Peak_Zreflection
 
  - added methods getMethods(), getProperties() and getConstants() to Peak_Zreflection

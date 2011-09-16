@@ -110,9 +110,9 @@ class Peak_Zreflection
     {
         return $this->class->getConstants();
     }
-    
+        
     /**
-     * Get class methods
+     * Get class methods, self and parents
      *
      * @return array
      */ 
@@ -120,23 +120,45 @@ class Peak_Zreflection
     {
         return $this->class->getMethods();
     }
+    
+    /**
+     * Get class parent methods only
+     *
+     * @return array
+     */
+    public function getParentMethods()
+    {
+        $result = $this->getMethodsByInheritance();
+        return $result['parent'];
+    }
+    
+    /**
+     * Get class self methods only
+     *
+     * @return array
+     */
+    public function getSelfMethods()
+    {
+        $result = $this->getMethodsByInheritance();
+        return $result['self'];
+    }
 
     /**
-     * Get methods separated by inheritance
+     * Get methods separated by inheritance(self or parent)
      *
      * @return array
      */
     public function getMethodsByInheritance()
     {
-    	$result = array('child' => array(), 'parent' => array());
+    	$result = array('self' => array(), 'parent' => array());
     	
-    	$mets = $this->class->getMethods();
-    	if($mets) {
-    		foreach ($mets as $met) {
-    			if(strtolower($this->getMethodClassname($met->name)) !== strtolower($this->class->getName())) {
-    				$result['parent'][] = $met;
-    			}
-    			else $result['child'][] = $met;
+    	$methods = $this->class->getMethods();
+        
+    	if($methods) {
+            $classname = strtolower($this->class->getName());
+    		foreach ($mets as $m) {
+    			if(strtolower($this->getMethodClassname($m->name)) !== $classname) $result['parent'][] = $m;
+    			else $result['self'][] = $m;
     		}
     	}
     	
@@ -229,6 +251,28 @@ class Peak_Zreflection
     {
         return $this->class->getProperties();
     }
+    
+    /**
+     * Get class parent properties only
+     *
+     * @return array
+     */
+    public function getParentProperties()
+    {
+        $result = $this->getPropertiesByInheritance();
+        return $result['parent'];
+    }
+    
+    /**
+     * Get class self properties only
+     *
+     * @return array
+     */
+    public function getSelfProperties()
+    {
+        $result = $this->getPropertiesByInheritance();
+        return $result['self'];
+    }
 
     /**
      * Get properties separated by inheritance
@@ -237,15 +281,14 @@ class Peak_Zreflection
      */
     public function getPropertiesByInheritance()
     {
-    	$result = array('child' => array(), 'parent' => array());
+    	$result = array('self' => array(), 'parent' => array());
     	
     	$props = $this->class->getProperties();
     	if($props) {
+            $classname = strtolower($this->class->getName());
     		foreach ($props as $prop) {
-    			if(strtolower($this->getPropertyClassname($prop->name)) !== strtolower($this->class->getName())) {
-    				$result['parent'][] = $prop;
-    			}
-    			else $result['child'][] = $prop;
+    			if(strtolower($this->getPropertyClassname($prop->name)) !== $classname) $result['parent'][] = $prop;
+    			else $result['self'][] = $prop;
     		}
     	}
     	
