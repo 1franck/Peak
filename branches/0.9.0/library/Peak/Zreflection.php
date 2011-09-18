@@ -60,12 +60,19 @@ class Peak_Zreflection
     public function getClassDocTags()
     {
         //get class doc comment tags
+        $result = array();
         try {
             $classDoc = new Zend_Reflection_Docblock($this->class->getDocComment());
-            $classDoctags = (is_object($classDoc)) ? $classDoc->getTags() : '';
+            $tags = (is_object($classDoc)) ? $classDoc->getTags() : array();
+
+            foreach($tags as $tag) {
+                $result[] = array('name' => trim($tag->getName()),
+                                  'description' => trim($tag->getDescription()));
+            }
+
         }
-        catch(Exception $e) { $classDoctags = ''; }
-        return $classDoctags;
+        catch(Exception $e) { $result = array(); }
+        return $result;
     }
 
     /**
@@ -83,7 +90,7 @@ class Peak_Zreflection
         if($this->class->isFinal())       $properties[] = 'final';
         if($this->class->isInternal())    $properties[] = 'internal';
         if($this->class->isUserDefined()) $properties[] = 'user-defined';
-        $properties[] = ($this->class->isInterface()) ? 'interface' : ' class';
+        $properties[] = ($this->class->isInterface()) ? 'interface' : 'class';
 
         $declaration['properties'] = $properties;
 
