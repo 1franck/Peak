@@ -163,7 +163,7 @@ class Peak_Zreflection
         
     	if($methods) {
             $classname = strtolower($this->class->getName());
-    		foreach ($mets as $m) {
+    		foreach ($methods as $m) {
     			if(strtolower($this->getMethodClassname($m->name)) !== $classname) $result['parent'][] = $m;
     			else $result['self'][] = $m;
     		}

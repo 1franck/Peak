@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - fixed variable name error in getMethodsByInheritance() of class Peak_Zreflection
+
  - fixed minor trim problem of method getClassDeclaration() in Peak_Zreflection
 
  - modified getClassDocTags() of Peak_Zreflection to return array instead of object

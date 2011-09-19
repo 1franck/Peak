@@ -82,8 +82,42 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->zref->loadClass('class1', false);
 		
 		$declaration = $this->zref->getClassDeclaration();
+
 		$this->assertTrue(is_array($declaration));
-		//print_r($declaration);
+		$this->assertTrue(count($declaration) == 2);
+		$this->assertArrayHasKey('properties', $declaration);
+		$this->assertTrue(count($declaration['properties']) == 3);
+		$this->assertArrayHasKey('interfaces', $declaration);
+		$this->assertTrue(count($declaration['interfaces']) == 1);
+	}
+	
+	function testgetConstants()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$constants = $this->zref->getConstants();
+		
+		$this->assertNotEmpty($constants);
+		$this->assertTrue(count($constants) == 1);
+	}
+	
+	function testgetMethods()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$methods =  $this->zref->getMethods();
+		$this->assertNotEmpty($methods);
+		$this->assertTrue(count($methods) == 1);
 	}
 
+    function testgetMethodsByInheritance()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$methods =  $this->zref->getMethodsByInheritance();
+		$this->assertNotEmpty($methods);
+		$this->assertTrue(count($methods) == 2);
+		$this->assertArrayHasKey('self', $methods);
+		$this->assertArrayHasKey('parent', $methods);
+	}
 }

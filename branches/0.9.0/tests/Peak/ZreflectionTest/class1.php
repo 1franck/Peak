@@ -10,6 +10,11 @@
 abstract class class1 implements Countable
 {
     /**
+     * Constant example
+     */
+    const MY_CONSTANT1 = 'foobar';
+    
+    /**
      * Misc array of data
      * @var array
      */
