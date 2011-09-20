@@ -217,7 +217,7 @@ class Peak_Zreflection
     	try {
     		$oMethod = new Zend_Reflection_Method($this->class->getName() ,$method);
     		$shortdescr = $oMethod->getDocblock()->getShortDescription();
-    		$longdescr = $oMethod->getDocblock()->getShortDescription();
+    		$longdescr = $oMethod->getDocblock()->getLongDescription();
 
     		if($shortdescr === $longdescr) $longdescr = null;
     		elseif((empty($shortdescr)) && (!empty($longdescr))) {
@@ -228,8 +228,7 @@ class Peak_Zreflection
     	}
     	catch(Exception $e) { $shortdescr = null; $longdescr = null; }
     	
-    	if($type === 'short') return $shortdescr;
-    	else return $longdescr;
+    	return ($type === 'short') ? $shortdescr : $longdescr;
     }
 
     /**

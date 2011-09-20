@@ -14,7 +14,7 @@ require_once 'Peak/Zreflection.php';
  * Fixture(s)
  */
 require_once dirname(__FILE__).'/ZreflectionTest/class1.php';
-
+require_once dirname(__FILE__).'/ZreflectionTest/class2.php';
 /**
  * Include path
  */
@@ -44,7 +44,6 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 	function setUp()
 	{
 		$this->zref = new Peak_Zreflection();
-
 	}
 
 	function testLoadClass()
@@ -80,7 +79,6 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 	function testgetClassDeclaration()
 	{
 		$this->zref->loadClass('class1', false);
-		
 		$declaration = $this->zref->getClassDeclaration();
 
 		$this->assertTrue(is_array($declaration));
@@ -88,6 +86,12 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->assertArrayHasKey('properties', $declaration);
 		$this->assertTrue(count($declaration['properties']) == 3);
 		$this->assertArrayHasKey('interfaces', $declaration);
+		$this->assertTrue(count($declaration['interfaces']) == 1);
+		
+		$this->zref->loadClass('class2', false);
+		$declaration = $this->zref->getClassDeclaration();
+		
+		$this->assertTrue(count($declaration['properties']) == 2);
 		$this->assertTrue(count($declaration['interfaces']) == 1);
 	}
 	
@@ -119,5 +123,61 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(count($methods) == 2);
 		$this->assertArrayHasKey('self', $methods);
 		$this->assertArrayHasKey('parent', $methods);
+		$this->assertTrue(empty($methods['parent']));
+		$this->assertTrue(count($methods['self']) == 1);
+	}
+	
+	function testgetSelfMethods()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$methods =  $this->zref->getSelfMethods();
+		
+		$this->assertNotEmpty($methods);
+		$this->assertTrue(count($methods) == 1);
+	}
+	
+	function testgetParentMethods()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$methods =  $this->zref->getParentMethods();
+		
+		$this->assertEmpty($methods);
+	}
+	
+	function testgetMethodClassname()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$classname = $this->zref->getMethodClassname('count');
+		$this->assertTrue($classname === 'class1');
+		
+		$classname = $this->zref->getMethodClassname('setName');
+		$this->assertTrue($classname === 'class2');
+	}
+	
+	function testgetMethodVisibility()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$visiblity = $this->zref->getMethodVisibility('count');
+		$this->assertTrue($visiblity === 'public');
+		
+		$visiblity = $this->zref->getMethodVisibility('_sanitizeName');
+		$this->assertTrue($visiblity === 'protected');
+	}
+	
+	function testgetMethodDoc()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$doc = $this->zref->getMethodDoc('count');
+		$this->assertTrue($doc === 'Return the count of $_misc_data');
+		
+		$this->zref->loadClass('class2', false);
+		
+		$doc = $this->zref->getMethodDoc('setName', 'long');
+		$this->assertTrue($doc === 'Long description text...');
 	}
 }

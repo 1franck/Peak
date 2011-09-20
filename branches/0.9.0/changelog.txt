@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - fixed method getMethodDoc() who was not returning long description in class Peak_Zreflection
+
  - fixed variable name error in getMethodsByInheritance() of class Peak_Zreflection
 
  - fixed minor trim problem of method getClassDeclaration() in Peak_Zreflection
