@@ -127,10 +127,12 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
             $line_data = explode(' ',$line);
             if(count($line_data) >= 3) {
                 foreach($line_data as $i => $col) {
-                    if($i == 1) {
+					if(!isset($temp)) $temp = '';
+                    if($i == 1 && !empty($col)) {
                         $temp = str_replace('):',')',$col);
                         $temp = explode('(',$temp);
-                        $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
+						if(!is_array($temp)) $temp = '';
+                        else $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
                     }
                     elseif($i == 2) $result .= ' <strong><code>'.$col.'</code> --> </strong> '.$temp;
                     else $result .= ' '.$col;
