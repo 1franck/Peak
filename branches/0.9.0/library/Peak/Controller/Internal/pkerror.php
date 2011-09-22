@@ -131,7 +131,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                     if($i == 1 && !empty($col)) {
                         $temp = str_replace('):',')',$col);
                         $temp = explode('(',$temp);
-						if(!is_array($temp)) $temp = '';
+						if(!is_array($temp)  || count($temp < 2)) $temp = '';
                         else $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
                     }
                     elseif($i == 2) $result .= ' <strong><code>'.$col.'</code> --> </strong> '.$temp;
