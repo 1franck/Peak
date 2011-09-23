@@ -77,7 +77,7 @@ abstract class Peak_Controller_Action
         	return $this->helper()->$helper;
         }
         elseif(defined('APPLICATION_ENV') && in_array(APPLICATION_ENV, array('development', 'testing'))) {
-            trigger_error('Controller method/helper '.$method.'() doesn\'t exists');
+            trigger_error('Controller method/helper '.$helper.'() doesn\'t exists');
         }
     }
 

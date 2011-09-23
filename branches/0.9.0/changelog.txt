@@ -1,5 +1,7 @@
 #VERSION 0.9.0#
 
+ - fixed variable name error in method __call() of class Peak_Controller_Action
+
  - fixed array offset problem in _exception2table() of class Peak_Controller_Internal_PkError
 
  - fixed method getMethodDoc() who was not returning long description in class Peak_Zreflection
