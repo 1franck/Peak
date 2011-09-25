@@ -110,6 +110,8 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->zref->loadClass('class1', false);
 		
 		$methods =  $this->zref->getMethods();
+		
+		//print_r($methods);
 		$this->assertNotEmpty($methods);
 		$this->assertTrue(count($methods) == 1);
 		$this->assertArrayHasKey('name', $methods[0]);
@@ -227,18 +229,18 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_array($props));
 		$this->assertTrue(count($props) == 2);
 		
-		$this->assertTrue($props[0]->name === '_name');
-		$this->assertTrue($props[1]->name === '_misc_data');
+		$this->assertTrue($props[0]['name'] === '_name');
+		$this->assertTrue($props[1]['name'] === '_misc_data');
 	}
 	
 	function testgetParentProperties()
 	{
 		$this->zref->loadClass('class2', false);
 		$props = $this->zref->getParentProperties();
-
+print_R($props);
 		$this->assertTrue(is_array($props));
 		$this->assertTrue(count($props) == 1);
-		$this->assertTrue($props[0]->name === '_misc_data');
+		$this->assertTrue($props[0]['name'] === '_misc_data');
 	}
 	
 	function testgetSelfProperties()

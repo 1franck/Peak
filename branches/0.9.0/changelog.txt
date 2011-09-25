@@ -1,5 +1,8 @@
 #VERSION 0.9.0#
 
+ - fixed method getPropertiesByInheritance() following the change of getProperties() in Peak_Zreflection
+ - rewrited completly getProperties() to return all infos of properties in array format in Peak_Zreflection
+ - modified method docTagsToArray() to accept object or array of object in Peak_Zreflection
  - fixed method getMethodsByInheritance() following the change of getMethods() in Peak_Zreflection
  - rewrited completly getMethods() to return all infos of methods in array format in Peak_Zreflection
  - added method getMethodDeclaration() in Peak_Zreflection

@@ -149,7 +149,7 @@ class Peak_Zreflection
             $data['params_string'] = $params;
             $result[] = $data;
         }
-        //print_r($result);
+        
         return $result;
     }
     
@@ -201,7 +201,7 @@ class Peak_Zreflection
     /**
      * Get method decalration, also know as modifiers
      *
-     * @param  string $method_name
+     * @param  string $name
      * @return array
      */
     public function getMethodDeclaration($name)
@@ -310,7 +310,24 @@ class Peak_Zreflection
      */ 
     public function getProperties()
     {
-        return $this->class->getProperties();
+        $result = array();
+        $properties = $this->class->getProperties();
+        
+        foreach($properties as $p) {
+            $name = $p->name;
+            $data = array('name' => $name,
+                          'class' => $this->getPropertyClassname($name),
+                          'visibility' => $this->getPropertyVisibility($name),
+                          'static' => $p->isStatic(),
+                          'doc' => array('short' => $this->getPropertyDoc($name),
+                                         'long'  => $this->getPropertyDoc($name, 'long'),
+                                         'tags'  => $this->getPropertyDocTags($name)),
+                         );
+
+            $result[] = $data;
+        }
+        //print_r($result);
+        return $result;
     }
     
     /**
@@ -337,7 +354,7 @@ class Peak_Zreflection
     }
 
     /**
-     * Get properties separated by inheritance
+     * Get properties separated by inheritance(self or parent)
      *
      * @return array
      */
@@ -345,18 +362,19 @@ class Peak_Zreflection
     {
     	$result = array('self' => array(), 'parent' => array());
     	
-    	$props = $this->class->getProperties();
+    	$props = $this->getProperties();
+        
     	if($props) {
             $classname = strtolower($this->class->getName());
-    		foreach ($props as $prop) {
-    			if(strtolower($this->getPropertyClassname($prop->name)) !== $classname) $result['parent'][] = $prop;
-    			else $result['self'][] = $prop;
+    		foreach ($props as $p) {
+    			if(strtolower($p['class']) === $classname) $result['self'][] = $p;
+    			else $result['parent'][] = $p;
     		}
     	}
     	
     	return $result;
     }
-
+    
     /**
      * Get class declaring class name of a property 
      *
@@ -426,14 +444,20 @@ class Peak_Zreflection
      */
     public function getPropertyDocTags($property)
     {
+        $result = array();
+        
     	try {
     		$oProperty = new ReflectionProperty($this->class->getName(), $property);
     		$oDocblock = new Zend_Reflection_Docblock($oProperty->getDocComment());
 			$comment_tags = $oDocblock->getTags();
+            
+            foreach($comment_tags as $tag) {
+                $result[] = $this->docTagsToArray($tag);
+            }
 		}
-		catch(Exception $e) { $comment_tags = ''; }
+		catch(Exception $e) { $result = array(); }
 		
-		return $comment_tags;
+		return $result;
     }
 
     /**
@@ -484,18 +508,27 @@ class Peak_Zreflection
     /**
      * Get tags object as array
      *
-     * @param  array $tag
+     * @param  array|object $tags
      * @return array
      */
-    public function docTagsToArray($tag)
+    public function docTagsToArray($tags)
     {
-    	$result = array('name' => '','type' => '', 'variable' => '', 'description' => '');
-    	
-    	if(method_exists($tag,'getName')) $result['name'] = trim($tag->getName());
-    	if(method_exists($tag,'getType')) $result['type'] = trim($tag->getType());
-    	if(method_exists($tag,'getVariableName')) $result['variable'] = trim($tag->getVariableName());
-    	if(method_exists($tag,'getDescription')) $result['description'] = trim($tag->getDescription());
-    	
-    	return $result;
+        $result = array();
+    	$fields = array('name' => '','type' => '', 'variable' => '', 'description' => '');
+        
+        $tags_array = (!is_array($tags)) ? array($tags) : $tags;
+
+        foreach($tags_array as $t) {
+            $tag = $fields;
+            if(method_exists($t,'getName')) $tag['name'] = trim($t->getName());
+            if(method_exists($t,'getType')) $tag['type'] = trim($t->getType());
+            if(method_exists($t,'getVariableName')) $tag['variable'] = trim($t->getVariableName());
+            if(method_exists($t,'getDescription')) $tag['description'] = trim($t->getDescription());
+            $result[] = $tag;
+        }
+        if(empty($result)) $result[] = $fields;
+//print_r($result);
+        if(!is_array($tags)) return $result[0];
+    	else return $result;
     }
 }
