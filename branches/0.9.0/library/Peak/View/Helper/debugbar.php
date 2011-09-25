@@ -71,12 +71,12 @@ class View_Helper_Debugbar extends Peak_View_Helper_debug
         echo '</div>';
 
         //variables
-        echo '<div class="window" id="pkdb_vars_window">
-              <h2>$_COOKIE</h2><pre>'.print_r($_COOKIE,true).'</pre>';
+        echo '<div class="window" id="pkdb_vars_window">';
+		echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
         if(!empty($_SESSION)) {
-        echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
+			echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
         }
-        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
+		echo '<h2>$_COOKIE</h2><pre>'.print_r($_COOKIE,true).'</pre>';
         echo '<h2>SERVER</h2><pre>'.print_r($_SERVER,true).'</pre>';
         echo '</div>';
         
