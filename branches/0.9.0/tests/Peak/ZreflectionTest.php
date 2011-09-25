@@ -180,4 +180,46 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$doc = $this->zref->getMethodDoc('setName', 'long');
 		$this->assertTrue($doc === 'Long description text...');
 	}
+	
+	function testgetMethodDocTags()
+	{
+		$this->zref->loadClass('class1', false);
+		$tags = $this->zref->getMethodDocTags('count');
+		
+		$this->assertTrue(count($tags) == 1);
+		
+		$this->zref->loadClass('class2', false);
+		$tags = $this->zref->getMethodDocTags('getNameWithPrefix');
+		
+		$this->assertTrue(count($tags) == 2);
+		//print_r($tags);
+		$this->assertTrue(count($tags[0]) == 4);
+		$this->assertTrue($tags[0]['type'] === 'string');
+		$this->assertTrue($tags[0]['name'] === 'param');
+		$this->assertTrue($tags[0]['variable'] === '$prefix');
+		$this->assertTrue($tags[0]['description'] === 'Set a prefix string to name');
+		//print_r($tags);
+	}
+	
+	function testgetProperties()
+	{
+		$this->zref->loadClass('class1', false);
+		
+		$props = $this->zref->getProperties();
+		
+		$this->assertTrue(is_array($props));
+		$this->assertTrue(count($props) == 1);
+		
+		$this->assertTrue($props[0]->name === '_misc_data');
+	}
+	
+	function testgetParentProperties()
+	{
+		$this->zref->loadClass('class2', false);
+		$props = $this->zref->getParentProperties();
+
+		$this->assertTrue(is_array($props));
+		$this->assertTrue(count($props) == 1);
+		$this->assertTrue($props[0]->name === '_misc_data');
+	}
 }

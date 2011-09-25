@@ -38,6 +38,17 @@ class class2 extends class1
     }
     
     /**
+     * Get name with a prefix
+     *
+     * @param  string $prefix Set a prefix string to name
+     * @return string
+     */
+    public function getNameWithPrefix($prefix)
+    {
+        
+    }
+    
+    /**
      * Sanitize name
      *
      * @return string
@@ -46,4 +57,6 @@ class class2 extends class1
     {
         return strip_tags($name);
     }
+    
+    
 }

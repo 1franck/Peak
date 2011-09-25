@@ -130,6 +130,7 @@ class Peak_Zreflection
     
     /**
      * Get class parent methods only
+     * Parent private method(s) can't be retreived
      *
      * @return array
      */
@@ -235,17 +236,22 @@ class Peak_Zreflection
      * Get method comment tags
      *
      * @param  string $method
-     * @return object
+     * @return array
      */
     public function getMethodDocTags($method)
     {
+        $result = array();
     	try {
 			$oDocBlock = new Zend_Reflection_Docblock($this->class->getMethod($method)->getDocblock()->getContents());
 			$comment_tags = $oDocBlock->getTags();
+            
+            foreach($comment_tags as $tag) {
+                $result[] = $this->docTagsToArray($tag);
+            }
 		}
-		catch(Exception $e) { $comment_tags = ''; }
+		catch(Exception $e) { $result = array(); }
 		
-		return $comment_tags;
+		return $result;
     }
     
     /**
@@ -260,7 +266,8 @@ class Peak_Zreflection
     
     /**
      * Get class parent properties only
-     *
+     * Parent private property(ies) can't be retreived
+     * 
      * @return array
      */
     public function getParentProperties()
@@ -428,17 +435,17 @@ class Peak_Zreflection
     /**
      * Get tags object as array
      *
-     * @param  object $tag
+     * @param  array $tag
      * @return array
      */
     public function docTagsToArray($tag)
     {
-    	$result = array('name' => '','type' => '', 'variableName' => '', 'description' => '');
+    	$result = array('name' => '','type' => '', 'variable' => '', 'description' => '');
     	
-    	if(method_exists($tag,'getName')) $result['name'] = $tag->getName();
-    	if(method_exists($tag,'getType')) $result['type'] = $tag->getType();
-    	if(method_exists($tag,'getVariableName')) $result['variableName'] = $tag->getVariableName();
-    	if(method_exists($tag,'getDescription')) $result['description'] = $tag->getDescription();
+    	if(method_exists($tag,'getName')) $result['name'] = trim($tag->getName());
+    	if(method_exists($tag,'getType')) $result['type'] = trim($tag->getType());
+    	if(method_exists($tag,'getVariableName')) $result['variable'] = trim($tag->getVariableName());
+    	if(method_exists($tag,'getDescription')) $result['description'] = trim($tag->getDescription());
     	
     	return $result;
     }

@@ -1,5 +1,8 @@
 #VERSION 0.9.0#
 
+ - modified array key name inside method docTagsToArray() of class Peak_Zreflection
+ - modified method getMethodDocTags() from Peak_Zreflection to use docTagsToArray() instead of 
+   returning Zend_Reflection_Docblock object
  - fixed variable name error in method __call() of class Peak_Controller_Action
  - fixed array offset problem in _exception2table() of class Peak_Controller_Internal_PkError
  - fixed method getMethodDoc() who was not returning long description in class Peak_Zreflection

@@ -18,7 +18,7 @@ abstract class class1 implements Countable
      * Misc array of data
      * @var array
      */
-    private $_misc_data = array('key1' => 'val1',
+    protected $_misc_data = array('key1' => 'val1',
                                 'key2' => 'val2');
     
     /**
