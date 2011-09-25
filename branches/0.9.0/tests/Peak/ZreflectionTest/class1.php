@@ -22,7 +22,7 @@ abstract class class1 implements Countable
                                 'key2' => 'val2');
     
     /**
-     * Return the count of $_misc_data
+     * Return the count of $_misc_data 
      *
      * @return integer
      */

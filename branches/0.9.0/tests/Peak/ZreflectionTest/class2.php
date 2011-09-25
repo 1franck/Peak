@@ -45,7 +45,7 @@ class class2 extends class1
      */
     public function getNameWithPrefix($prefix)
     {
-        
+        return $prefix.' '.$this->_name;
     }
     
     /**

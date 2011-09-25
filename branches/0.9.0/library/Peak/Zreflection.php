@@ -125,7 +125,32 @@ class Peak_Zreflection
      */ 
     public function getMethods()
     {
-        return $this->class->getMethods();
+        $result = array();
+        $methods = $this->class->getMethods();
+        foreach($methods as $m) {
+            $name = $m->name;
+            $data = array('name' => $name,
+                          'class' => $m->getDeclaringClass()->getName(),
+                          'visibility' => $this->getMethodVisibility($name),
+                          'declaration' => $this->getMethodDeclaration($name),
+                          'doc' => array('short' => $this->getMethodDoc($name),
+                                         'long' => $this->getMethodDoc($name, 'long'),
+                                         'tags' => $this->getMethodDocTags($name)),
+                          'params_count' => $m->getNumberOfParameters(),
+                          'params_required_count' => $m->getNumberOfRequiredParameters(),
+                          'params' => $this->paramsToArray($name),
+                          'params_string' => '',
+                          'start_line' => $m->getStartLine(),
+                          'start_line_doc' => $m->getStartLine(true),
+                          'end_line' => $m->getEndLine(),
+                          'body' => $m->getBody(),
+                         );
+            $params = $this->paramsAsList($this->class->getMethod($name)->getParameters(),array($data['class'],$name));
+            $data['params_string'] = $params;
+            $result[] = $data;
+        }
+        //print_r($result);
+        return $result;
     }
     
     /**
@@ -160,17 +185,41 @@ class Peak_Zreflection
     {
     	$result = array('self' => array(), 'parent' => array());
     	
-    	$methods = $this->class->getMethods();
+    	$methods = $this->getMethods();
         
     	if($methods) {
             $classname = strtolower($this->class->getName());
     		foreach ($methods as $m) {
-    			if(strtolower($this->getMethodClassname($m->name)) !== $classname) $result['parent'][] = $m;
-    			else $result['self'][] = $m;
+    			if(strtolower($m['class']) === $classname) $result['self'][] = $m;
+    			else $result['parent'][] = $m;
     		}
     	}
     	
     	return $result;
+    }
+    
+    /**
+     * Get method decalration, also know as modifiers
+     *
+     * @param  string $method_name
+     * @return array
+     */
+    public function getMethodDeclaration($name)
+    {
+        $declaration = array();
+        
+        $m = $this->class->getMethod($name);
+
+        //method delcaration
+        if($m->isAbstract())    $declaration[] = 'abstract';
+        if($m->isStatic())      $declaration[] = 'static';
+        if($m->isFinal())       $declaration[] = 'final';
+        if($m->isInternal())    $declaration[] = 'internal';
+        if($m->isUserDefined()) $declaration[] = 'user-defined';
+        if($m->isConstructor()) $declaration[] = 'constructor';
+        if($m->isDestructor())  $declaration[] = 'destructor';
+        
+        return $declaration;
     }
 
     /**

@@ -112,6 +112,20 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$methods =  $this->zref->getMethods();
 		$this->assertNotEmpty($methods);
 		$this->assertTrue(count($methods) == 1);
+		$this->assertArrayHasKey('name', $methods[0]);
+		$this->assertArrayHasKey('class', $methods[0]);
+		$this->assertArrayHasKey('declaration', $methods[0]);
+		$this->assertArrayHasKey('visibility', $methods[0]);
+		$this->assertArrayHasKey('doc', $methods[0]);
+		$this->assertArrayHasKey('params_count', $methods[0]);
+		$this->assertArrayHasKey('params_required_count', $methods[0]);
+		$this->assertArrayHasKey('params', $methods[0]);
+		$this->assertArrayHasKey('params_string', $methods[0]);
+		$this->assertArrayHasKey('start_line', $methods[0]);
+		$this->assertArrayHasKey('start_line_doc', $methods[0]);
+		$this->assertArrayHasKey('end_line', $methods[0]);
+		$this->assertArrayHasKey('body', $methods[0]);
+		
 	}
 
     function testgetMethodsByInheritance()
@@ -119,6 +133,9 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->zref->loadClass('class1', false);
 		
 		$methods =  $this->zref->getMethodsByInheritance();
+		
+		//print_r($methods);
+		
 		$this->assertNotEmpty($methods);
 		$this->assertTrue(count($methods) == 2);
 		$this->assertArrayHasKey('self', $methods);
@@ -203,14 +220,15 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 	
 	function testgetProperties()
 	{
-		$this->zref->loadClass('class1', false);
+		$this->zref->loadClass('class2', false);
 		
 		$props = $this->zref->getProperties();
 		
 		$this->assertTrue(is_array($props));
-		$this->assertTrue(count($props) == 1);
+		$this->assertTrue(count($props) == 2);
 		
-		$this->assertTrue($props[0]->name === '_misc_data');
+		$this->assertTrue($props[0]->name === '_name');
+		$this->assertTrue($props[1]->name === '_misc_data');
 	}
 	
 	function testgetParentProperties()
@@ -221,5 +239,10 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_array($props));
 		$this->assertTrue(count($props) == 1);
 		$this->assertTrue($props[0]->name === '_misc_data');
+	}
+	
+	function testgetSelfProperties()
+	{
+		
 	}
 }
