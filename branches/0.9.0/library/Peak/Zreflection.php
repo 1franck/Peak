@@ -527,7 +527,7 @@ class Peak_Zreflection
             $result[] = $tag;
         }
         if(empty($result)) $result[] = $fields;
-//print_r($result);
+
         if(!is_array($tags)) return $result[0];
     	else return $result;
     }

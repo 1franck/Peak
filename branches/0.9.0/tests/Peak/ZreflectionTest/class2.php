@@ -43,7 +43,7 @@ class class2 extends class1
      * @param  string $prefix Set a prefix string to name
      * @return string
      */
-    public function getNameWithPrefix($prefix)
+    public function getNameWithPrefix($prefix = 'Mr')
     {
         return $prefix.' '.$this->_name;
     }

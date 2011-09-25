@@ -237,7 +237,7 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 	{
 		$this->zref->loadClass('class2', false);
 		$props = $this->zref->getParentProperties();
-print_R($props);
+		//print_R($props);
 		$this->assertTrue(is_array($props));
 		$this->assertTrue(count($props) == 1);
 		$this->assertTrue($props[0]['name'] === '_misc_data');
@@ -245,6 +245,80 @@ print_R($props);
 	
 	function testgetSelfProperties()
 	{
-		
+		$this->zref->loadClass('class2', false);
+		$props = $this->zref->getSelfProperties();
+		//print_R($props);
+		$this->assertTrue(is_array($props));
+		$this->assertTrue(count($props) == 1);
+		$this->assertTrue($props[0]['name'] === '_name');
 	}
+	
+	function testgetPropertiesByInheritance()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$props =  $this->zref->getPropertiesByInheritance();
+		
+		//print_r($methods);
+		
+		$this->assertNotEmpty($props);
+		$this->assertTrue(count($props) == 2);
+		$this->assertArrayHasKey('self', $props);
+		$this->assertArrayHasKey('parent', $props);
+		$this->assertTrue(count($props['self']) == 1);
+		$this->assertTrue(count($props['parent']) == 1);
+	}
+	
+	function testgetPropertyClassname()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$classname = $this->zref->getPropertyClassname('_name');
+		$this->assertTrue($classname === 'class2');
+		
+		$classname = $this->zref->getPropertyClassname('_misc_data');
+		$this->assertTrue($classname === 'class1');
+	}
+	
+	function testgetPropertyVisibility()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$visiblity = $this->zref->getPropertyVisibility('_name');
+		$this->assertTrue($visiblity === 'protected');
+		
+		$visiblity = $this->zref->getPropertyVisibility('_misc_data');
+		$this->assertTrue($visiblity === 'protected');
+	}
+	
+	function testgetPropertyDoc()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$doc = $this->zref->getPropertyDoc('_name');
+		$this->assertTrue($doc === 'Name');
+		$doc = $this->zref->getPropertyDoc('_name', 'long');
+		$this->assertTrue($doc === '');
+		
+		$doc = $this->zref->getPropertyDoc('_misc_data');
+		$this->assertTrue($doc === 'Misc array of data');
+        $doc = $this->zref->getPropertyDoc('_misc_data', 'long');
+		$this->assertTrue($doc === 'Very long description');
+	}
+	
+	function testgetPropertyDocTags()
+	{
+		$this->zref->loadClass('class2', false);
+		
+		$tags = $this->zref->getPropertyDocTags('_name');
+		
+		print_r($tags);
+		
+		$this->assertTrue(is_array($tags));
+		$this->assertTrue(count($tags) == 1);
+		$this->assertTrue(count($tags[0]) == 4);
+		$this->assertTrue($tags[0]['name'] === 'var');
+		$this->assertTrue($tags[0]['type'] === 'array');
+	}
+
 }

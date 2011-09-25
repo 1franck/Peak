@@ -16,10 +16,13 @@ abstract class class1 implements Countable
     
     /**
      * Misc array of data
+     * 
+     * Very long description
+     * 
      * @var array
      */
     protected $_misc_data = array('key1' => 'val1',
-                                'key2' => 'val2');
+                                  'key2' => 'val2');
     
     /**
      * Return the count of $_misc_data 
