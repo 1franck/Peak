@@ -1,5 +1,6 @@
 #VERSION 0.9.0#
 
+ - renamed view helpers classes debugbar and js based on framework class naming convention
  - changed vars print order in class View_Helper_Debugbar
  - fixed method getPropertiesByInheritance() following the change of getProperties() in Peak_Zreflection
  - rewrited completly getProperties() to return all infos of properties in array format in Peak_Zreflection

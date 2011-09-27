@@ -6,7 +6,7 @@
  * @version $Id$
  * @uses    jQuery, Fugue icons, Peak_View_Helper_Debug, Peak_Chrono  
  */
-class View_Helper_Debugbar extends Peak_View_Helper_debug 
+class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug 
 {
 	
 	/**

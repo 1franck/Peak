@@ -5,7 +5,7 @@
  * 
  * @version $Id$
  */
-class View_Helper_js
+class Peak_View_Helper_js
 {
     /**
      * Render Javascript file(s) with <script> tag(s)
