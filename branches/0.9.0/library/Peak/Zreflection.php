@@ -143,8 +143,9 @@ class Peak_Zreflection
                           'start_line' => $m->getStartLine(),
                           'start_line_doc' => $m->getStartLine(true),
                           'end_line' => $m->getEndLine(),
-                          'body' => $m->getBody(),
+                          'body' => $m->getBody(), //seems to crash with class containing constants
                          );
+            //echo $name;
             $params = $this->paramsAsList($this->class->getMethod($name)->getParameters(),array($data['class'],$name));
             $data['params_string'] = $params;
             $result[] = $data;
