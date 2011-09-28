@@ -225,7 +225,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		$content = '
         <div class="hero-unit">
           <h1>Welcome to framework inspector</h1>
-          <p>This tool user PHP Reflection to generate documentation about Peak Framework Components.</p>
+          <p>This tool use PHP Reflection to generate documentation about Peak Framework Components.</p>
         </div>';
 		
 		$this->view->setContent($content);
