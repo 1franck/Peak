@@ -132,6 +132,7 @@ class Peak_Zreflection
             $data = array('name' => $name,
                           'class' => $m->getDeclaringClass()->getName(),
                           'visibility' => $this->getMethodVisibility($name),
+                          'static' => $m->isStatic(),
                           'declaration' => $this->getMethodDeclaration($name),
                           'doc' => array('short' => $this->getMethodDoc($name),
                                          'long' => $this->getMethodDoc($name, 'long'),
@@ -248,7 +249,7 @@ class Peak_Zreflection
         elseif($this->class->getMethod($name)->isPrivate()) $v['visibility'] = 'private';
         elseif($this->class->getMethod($name)->isProtected()) $v['visibility'] = 'protected';
 
-        if($this->class->getMethod($name)->isStatic()) $v['static'] = 'static';
+        //if($this->class->getMethod($name)->isStatic()) $v['static'] = 'static';
 
         return implode(' ',$v);
     }
@@ -401,7 +402,7 @@ class Peak_Zreflection
         elseif($this->class->getProperty($name)->isPrivate()) $v['visibility'] = 'private';
         elseif($this->class->getProperty($name)->isProtected()) $v['visibility'] = 'protected';
 
-        if($this->class->getProperty($name)->isStatic()) $v['static'] = 'static';
+        //if($this->class->getProperty($name)->isStatic()) $v['static'] = 'static';
 
         return implode(' ',$v);
     }

@@ -1,8 +1,8 @@
 <?php
-
 /**
- * View Helper Js
- * 
+ * Peak View Helper Js
+ *
+ * @author  Francois lajoie
  * @version $Id$
  */
 class Peak_View_Helper_js

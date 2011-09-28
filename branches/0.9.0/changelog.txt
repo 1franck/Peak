@@ -1,5 +1,10 @@
 #VERSION 0.9.0#
 
+ - added new internal controller class named Peak_Controller_Internal_Pkdoc
+ - added new class named Peak_Zreflection_Class
+ - fixed some class name of Peak_View_Helper_*
+ - removed static verification from getPropertyVisibility() and getMethodVisibility() and static status to
+   getMethods() and getProperties() instead in class Peak_Zreflection
  - renamed view helpers classes debugbar and js based on framework class naming convention
  - changed vars print order in class View_Helper_Debugbar
  - fixed method getPropertiesByInheritance() following the change of getProperties() in Peak_Zreflection

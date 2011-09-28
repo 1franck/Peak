@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Generate input form element
  *
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Form_Input extends Peak_View_Helper_ElementAttrs
+class Peak_View_Helper_Form_Input extends Peak_View_Helper_tagAttrs
 {
     
     /**
