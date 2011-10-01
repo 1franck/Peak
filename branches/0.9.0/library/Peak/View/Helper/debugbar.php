@@ -75,7 +75,8 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		$views_vars = htmlentities(print_r($this->view->getVars(),true));
 		echo '<h2>VIEW</h2><pre>'.$views_vars.'</pre>';
         if(!empty($_SESSION)) {
-			echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
+			$sessions_vars = htmlentities(print_r($_SESSION,true));
+			echo '<h2>$_SESSION</h2><pre>'.$sessions_vars.'</pre>';
         }
 		echo '<h2>$_COOKIE</h2><pre>'.print_r($_COOKIE,true).'</pre>';
         echo '<h2>SERVER</h2><pre>'.print_r($_SERVER,true).'</pre>';
