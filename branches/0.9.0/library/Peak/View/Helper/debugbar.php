@@ -72,7 +72,8 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 
         //variables
         echo '<div class="window" id="pkdb_vars_window">';
-		echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
+		$views_vars = htmlentities(print_r($this->view->getVars(),true));
+		echo '<h2>VIEW</h2><pre>'.$views_vars.'</pre>';
         if(!empty($_SESSION)) {
 			echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
         }
@@ -88,7 +89,8 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         }
         
         foreach(Peak_Registry::getObjectsList() as $name) {
-        	echo '<h2>'.$name.'</h2><pre>'.print_r(Peak_Registry::get($name),true).'</pre>';
+			$object_data = htmlentities(print_r(Peak_Registry::get($name),true));
+        	echo '<h2>'.$name.'</h2><pre>'.$object_data.'</pre>';
         }
         echo '</div>';
         

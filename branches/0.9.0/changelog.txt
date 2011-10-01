@@ -1,5 +1,6 @@
 #VERSION 0.9.0#
 
+ - fixed Peak_View_Helper_Debugbar by encoding html entities in html/js code data 
  - added new internal controller class named Peak_Controller_Internal_Pkdoc
  - added new class named Peak_Zreflection_Class
  - fixed some class name of Peak_View_Helper_*
