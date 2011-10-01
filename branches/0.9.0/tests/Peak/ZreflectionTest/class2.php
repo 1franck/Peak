@@ -16,6 +16,18 @@ class class2 extends class1
     protected $_name;
     
     /**
+     * Nick name
+     * @var string
+     */
+    public $nickname = 'Unknown';
+    
+    /**
+     * Number of messages
+     * @var integer
+     */
+    public static $nb_messages = 0;
+    
+    /**
      * Set name
      * 
      * Long description text...

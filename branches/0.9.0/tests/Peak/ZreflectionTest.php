@@ -101,8 +101,13 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		
 		$constants = $this->zref->getConstants();
 		
+		//print_r($this->zref->class->getProperties());
+		//print_r($constants);
+		
 		$this->assertNotEmpty($constants);
-		$this->assertTrue(count($constants) == 1);
+		$this->assertTrue(count($constants) == 2);
+		
+		
 	}
 	
 	function testgetMethods()
@@ -226,11 +231,15 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		
 		$props = $this->zref->getProperties();
 		
+		//print_r($props);
+		
 		$this->assertTrue(is_array($props));
-		$this->assertTrue(count($props) == 2);
+		$this->assertTrue(count($props) == 4);
 		
 		$this->assertTrue($props[0]['name'] === '_name');
-		$this->assertTrue($props[1]['name'] === '_misc_data');
+		$this->assertTrue($props[1]['name'] === 'nickname');
+        $this->assertTrue($props[2]['name'] === 'nb_messages');
+        $this->assertTrue($props[3]['name'] === '_misc_data');
 	}
 	
 	function testgetParentProperties()
@@ -249,7 +258,7 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		$props = $this->zref->getSelfProperties();
 		//print_R($props);
 		$this->assertTrue(is_array($props));
-		$this->assertTrue(count($props) == 1);
+		$this->assertTrue(count($props) == 3);
 		$this->assertTrue($props[0]['name'] === '_name');
 	}
 	
@@ -259,13 +268,13 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		
 		$props =  $this->zref->getPropertiesByInheritance();
 		
-		//print_r($methods);
+		//print_r($props);
 		
 		$this->assertNotEmpty($props);
 		$this->assertTrue(count($props) == 2);
 		$this->assertArrayHasKey('self', $props);
 		$this->assertArrayHasKey('parent', $props);
-		$this->assertTrue(count($props['self']) == 1);
+		$this->assertTrue(count($props['self']) == 3);
 		$this->assertTrue(count($props['parent']) == 1);
 	}
 	
@@ -312,13 +321,13 @@ class Peak_ZreflectionTest extends PHPUnit_Framework_TestCase
 		
 		$tags = $this->zref->getPropertyDocTags('_name');
 		
-		print_r($tags);
+		//print_r($tags);
 		
 		$this->assertTrue(is_array($tags));
 		$this->assertTrue(count($tags) == 1);
 		$this->assertTrue(count($tags[0]) == 4);
 		$this->assertTrue($tags[0]['name'] === 'var');
-		$this->assertTrue($tags[0]['type'] === 'array');
+		$this->assertTrue($tags[0]['description'] === 'string');
 	}
 
 }

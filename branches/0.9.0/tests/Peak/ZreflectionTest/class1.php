@@ -15,6 +15,11 @@ abstract class class1 implements Countable
     const MY_CONSTANT1 = 'foobar';
     
     /**
+     * Constant example
+     */
+    const MY_CONSTANT2 = 'bar foo';
+    
+    /**
      * Misc array of data
      * 
      * Very long description
