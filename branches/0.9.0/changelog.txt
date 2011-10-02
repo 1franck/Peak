@@ -1,5 +1,6 @@
 #VERSION 0.9.0#
 
+ - fixed problem with method getProperties() with value when class is abstract or is an interface in class Peak_Zreflection
  - rewrited method getConstants() from Peak_Zreflection
  - modified method getProperties() to retreive also values of properties in class Peak_Zreflection
  - fixed Peak_View_Helper_Debugbar by encoding html entities in html/js code data 

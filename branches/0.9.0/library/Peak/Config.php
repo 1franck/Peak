@@ -48,7 +48,7 @@ class Peak_Config implements IteratorAggregate, Countable
     }
 
     /**
-     * Isset varaible
+     * Isset variable
      *
      * @param  string $name
      * @return bool

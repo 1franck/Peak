@@ -334,13 +334,27 @@ class Peak_Zreflection
                                          'tags'  => $this->getPropertyDocTags($name)),
                           'value' => '',
                          );
+
+            // getting property value if we can
+            // (getting value of protected and private prop is php 5.3+)
+            if(!$this->class->isAbstract() || !$this->class->isInterface()) {
+                $result[] = $data;
+                continue;
+            }
             
-            // getting property value (getting value of protected and private prop is php 5.3+)
+            $parent = $this->class->getParentClass();
+            
+            if(is_object($parent) && ($parent->isAbstract() || $parent->isInterface())) {
+                $result[] = $data;
+                continue;
+            }
+            // private or proctected property
             if($data['visibility'] !== 'public' && (version_compare(PHP_VERSION, '5.3.0', '>='))) {
                 $prop = $this->class->getProperty($name);
                 $prop->setAccessible(true);
-                $data['value'] = $prop->getValue();
+                $data['value'] = $prop->getValue(new $data['class']());
             }
+            // public property
             elseif($data['visibility'] === 'public') {
                 if($p->isStatic() === true) {
                     $data['value'] = $this->class->getProperty($name)->getValue();
@@ -349,6 +363,7 @@ class Peak_Zreflection
                     $data['value'] = $this->class->getProperty($name)->getValue(new $data['class']());
                 }
             }
+            
             $result[] = $data;
         }
         //print_r($result);
