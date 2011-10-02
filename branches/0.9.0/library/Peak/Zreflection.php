@@ -115,7 +115,15 @@ class Peak_Zreflection
      */
     public function getConstants()
     {
-        return $this->class->getConstants();
+        $result = array();
+        $constants = $this->class->getConstants();
+        foreach($constants as $k => $v) {
+            $data = array('name' => $k,
+                          'value' => $v);
+            $result[] = $data;
+        }
+        
+        return $result;        
     }
         
     /**

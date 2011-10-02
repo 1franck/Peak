@@ -7,22 +7,21 @@
  */
 class Peak_Zreflection_Class extends Peak_Zreflection
 {
-    //class
+    // class
     public $class_name;
     public $class_declaration;
     public $class_doc_short;
     public $class_doc_long;
     public $class_doc_tags;
     
-    //constants
-    public $self_constant = array();
-    public $parent_constant  = array();
+    // constants
+    public $constants = array();
     
-    //methods
+    // methods
     public $self_methods  = array();
     public $parent_methods  = array();
     
-    //properties
+    // properties
     public $self_properties  = array();
     public $parent_properties = array();
     
