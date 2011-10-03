@@ -1,9 +1,13 @@
 <?php
 /**
+ * DEMO
+ * @version $Id$
+ */
+
+/**
  * FOR DEMO PURPOSE ONLY
  */
 $demo_path = substr(str_replace(array($_SERVER['DOCUMENT_ROOT'],'www'),'',str_replace('\\','/',dirname(__FILE__))), 0, -1);
-//echo $demo_path.'<br />';
 
 /**
  * REQUIRED CONSTANTS
@@ -22,7 +26,13 @@ define('APPLICATION_CONFIG', 'app.ini');
 define('APPLICATION_ENV',  'development');
 
 /**
- * Load core
+ * Load and start chrono for demo purpose
+ */
+include './../../library/Peak/Chrono.php';
+Peak_Chrono::start();
+
+/**
+ * Load framework core
  */
 include './../../library/Peak/Core.php';
 
@@ -36,6 +46,7 @@ try {
         ->render();   
 }
 catch (Exception $e) {
+    //echo $e->getMessage(); exit();
     $app->front->errorDispatch($e)
                ->render();
 }

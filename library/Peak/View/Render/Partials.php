@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak View Render Engine: Partials
  * 
@@ -66,7 +65,7 @@ class Peak_View_Render_Partials extends Peak_View_Render
      * @param string $path
      * @return array/string
      */
-    public function render($file,$path = null)
+    public function render($file, $path = null)
     {    
         //CONTROLLER FILE VIEW       
         $this->_scripts_file = $file;

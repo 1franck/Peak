@@ -5,9 +5,9 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Html
+class Peak_View_Helper_html
 {
-	
+
 	/**
      * Generate html doctype
      *

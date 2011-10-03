@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Misc usefull view helper functions for text
  * 
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Text
+class Peak_View_Helper_text
 {
     
     
@@ -53,9 +52,8 @@ class Peak_View_Helper_Text
     }
     
     /**
-     * Truncate a string to a certain length if necessary,
-     * optionally splitting in the middle of a word, and
-     * appending the $etc string or inserting $etc into the middle.
+     * Truncate a string to a certain length if necessary, optionally splitting in the
+     * middle of a word, and appending the $etc string or inserting $etc into the middle.
      *
      * @param string $string
      * @param integer $length

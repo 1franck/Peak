@@ -118,7 +118,7 @@ class Peak_View
             trigger_error('View method/helper '.$method.'() doesn\'t exists');
         }
     }
-    
+
     /**
      * Get array 'view' from registered object 'config' if exists
      */

@@ -11,6 +11,7 @@
  $this->layoutContent();
 ?>
 </div>
+page generated in <?php echo Peak_Chrono::getMS(); ?>ms
 
 </body>
 </html>

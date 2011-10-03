@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_View, Peak_View_Render, Peak_View_Render_Layouts, Peak_Exception, Peak_Registry, Peak_Config
  */
 require_once 'Peak/View.php';
@@ -160,7 +161,7 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	
 	function testIniVar()
 	{
-		$this->peakview->iniVar('viewvars.ini', dirname(__FILE__).'/../tmp/');
+		$this->peakview->iniVar('viewvars.ini', dirname(__FILE__).'/ViewTest/');
 				
 		$this->assertTrue(isset($this->peakview->name));
 		

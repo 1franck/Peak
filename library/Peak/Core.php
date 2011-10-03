@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('PK_VERSION', '0.8.7');
+define('PK_VERSION', '0.9.0');
 define('PK_NAME'   , 'PEAK');
 define('PK_DESCR'  , 'Php wEb Application Kernel');
 
@@ -21,20 +21,19 @@ class Peak_Core
      * @var object
      */
     protected $_extensions;
-    
+
     /**
      * Current Environment
      * @final
      * @var string
      */
     private static $_env;
-    
+
     /**
      * object itself
      * @var object
      */
     private static $_instance = null; 
-    
     
     /**
      * Singleton peak core
@@ -85,7 +84,6 @@ class Peak_Core
     	return $this->_extensions;
     }
 
-    
     /**
      * Init application config
      *
@@ -158,7 +156,6 @@ class Peak_Core
     			}    			
     		}
     	}
-
     }
 
     /**
@@ -185,7 +182,7 @@ class Peak_Core
                      'theme_layouts'       => $app_path.'/views/layouts',
                      'theme_cache'         => $app_path.'/views/cache');
     }
-    
+
     /**
      * Get environment in .htaccess or from constant APPLICATION_DEV and store it to $_env
      * If environment if already stored in $_env, we return it instead.
@@ -222,7 +219,7 @@ class Peak_Core
     	if(isset($c->path[$path])) return $c->path[$path];
     	else return null;
     }
-    
+
     /**
      * Framework booting level
      *
@@ -231,7 +228,7 @@ class Peak_Core
      */
     public static function init($level = 1)
     {
-        //only peak basic config / includepath
+        //LEVEL 1 - only peak basic config / include path
         if($level >= 1) {
             
             //define server document root absolute path
@@ -243,40 +240,44 @@ class Peak_Core
             define('LIBRARY_ABSPATH', str_ireplace(array(substr(__FILE__, -14),'\\'), array('','/'), __FILE__));
             
             //add LIBRARY_ABSPATH to include path
-            set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH, LIBRARY_ABSPATH.'/Peak/Libs', get_include_path())));
+            set_include_path(implode(PATH_SEPARATOR, array(LIBRARY_ABSPATH,
+														   LIBRARY_ABSPATH.'/Peak/Vendors',
+														   get_include_path())));
         }
-                
-        //peak autoloader
-        if($level >= 2) {
-
-            //load peak core autoloader
-            include LIBRARY_ABSPATH.'/Peak/autoload.php';
-        }
+  
+        //LEVEL 2 - load peak core autoloader
+        if($level >= 2) include LIBRARY_ABSPATH.'/Peak/autoload.php';
         
-        //peak basic config with app config
+        //LEVEL 3 - peak basic config with app config
+		//need constant PUBLIC_ROOT and APPICATION_ROOT to work properly
         if($level >= 3) {
 
+            if(!defined('PUBLIC_ROOT'))
+				throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Public root','PUBLIC_ROOT'));
+			if(!defined('APPLICATION_ROOT'))
+			    throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Application root','APPLICATION_ROOT'));
+				
             define('PUBLIC_ABSPATH', SVR_ABSPATH . PUBLIC_ROOT);
             define('APPLICATION_ABSPATH', realpath(SVR_ABSPATH . APPLICATION_ROOT));
-            if(defined('ZEND_LIB_ROOT')) define('ZEND_LIB_ABSPATH',SVR_ABSPATH.ZEND_LIB_ROOT);
-            
-            //if ZEND_LIB_ABSPATH is specified, we add it to include path
-            if(defined('ZEND_LIB_ABSPATH')) {
-                set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), ZEND_LIB_ABSPATH)));
-            }
+			
+			//if ZEND_LIB_ABSPATH is specified, we add it to include path
+            if(defined('ZEND_LIB_ROOT')) {
+				define('ZEND_LIB_ABSPATH',SVR_ABSPATH.ZEND_LIB_ROOT);
+				set_include_path(implode(PATH_SEPARATOR, array(get_include_path(), ZEND_LIB_ABSPATH)));
+			}
         }
       
-        //peak app config init
+        //LEVEL 4 - peak app config init
         if($level >= 4) {
             
             //init app&core configurations
-            if(defined('APPLICATION_CONFIG')) {
-                Peak_Core::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
-            }
-            else throw new Peak_Exception('ERR_CUSTOM', 'No configuration have been specified!');
+            if(!defined('APPLICATION_CONFIG'))
+                throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Configuration filename','APPLICATION_CONFIG'));
+            
+			self::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
         }
         
-        //peak app object init
+        //LEVEL 5 - peak app object init
         if($level >= 5) {
             
             //include application bootstrap if exists
@@ -288,7 +289,6 @@ class Peak_Core
             return new Peak_Application();
         }
     }
-
 }
 
 /**

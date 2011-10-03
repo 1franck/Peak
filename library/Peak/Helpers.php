@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak Abstract Helpers Object Containers
  *  
@@ -8,31 +7,31 @@
  */
 abstract class Peak_Helpers
 {
-    
+
 	/**
 	 * Class name prefix
 	 * @var string|array
 	 */
 	protected $_prefix = '';
-	
+
 	/**
 	 * Helpers file path(s)
 	 * @var array
 	 */
 	protected $_paths = array();
-	
+
 	/**
 	 * Helpers objects
 	 * @var array
 	 */
     protected $_objects = array();
-    
+
     /**
      * Exception constant
      * @var string
      */
     protected $_exception = 'ERR_DEFAULT';
-    
+
     /**
      * Exception class
      * @var string
@@ -81,7 +80,7 @@ abstract class Peak_Helpers
 			else throw new $this->_exception_class($this->_exception,$name);
 		}
 	}
-	
+
 	/**
 	 * Check if $_objects key name exists
 	 *
@@ -92,7 +91,7 @@ abstract class Peak_Helpers
 	{
 		return (isset($this->_objects[$name])) ? true : false;
 	}
-	
+
 	/**
 	 * Unset helper object
 	 *
@@ -102,7 +101,7 @@ abstract class Peak_Helpers
 	{
 		if(array_key_exists($name,$this->_objects)) unset($this->_objects[$name]);
 	}
-	
+
 	/**
 	 * Check recursively if helper file exists based on $_path
 	 *
@@ -120,5 +119,4 @@ abstract class Peak_Helpers
 		}
 		return $file_found; 
 	}
-	
 }

@@ -6,7 +6,6 @@
  * 
  * @author   Francois Lajoie
  * @version  $Id$
- * 
  */
 class Peak_View_Render_VirtualLayouts extends Peak_View_Render
 {
@@ -54,7 +53,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
      * @param  string $path
      * @return string
      */
-    public function render($file,$path)
+    public function render($file,$path = null)
     {       
         //CONTROLLER FILE VIEW       
         $this->scripts_file = $file;
@@ -75,7 +74,7 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
      *
      * @param string $data
      */
-    private function output($data)
+    protected function output($data)
     {
         echo $data;    
     }

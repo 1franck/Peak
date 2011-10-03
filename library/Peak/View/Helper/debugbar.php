@@ -6,7 +6,7 @@
  * @version $Id$
  * @uses    jQuery, Fugue icons, Peak_View_Helper_Debug, Peak_Chrono  
  */
-class View_Helper_Debugbar extends Peak_View_Helper_debug 
+class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug 
 {
 	
 	/**
@@ -71,12 +71,14 @@ class View_Helper_Debugbar extends Peak_View_Helper_debug
         echo '</div>';
 
         //variables
-        echo '<div class="window" id="pkdb_vars_window">
-              <h2>$_COOKIE</h2><pre>'.print_r($_COOKIE,true).'</pre>';
+        echo '<div class="window" id="pkdb_vars_window">';
+		$views_vars = htmlentities(print_r($this->view->getVars(),true));
+		echo '<h2>VIEW</h2><pre>'.$views_vars.'</pre>';
         if(!empty($_SESSION)) {
-        echo '<h2>$_SESSION</h2><pre>'.print_r($_SESSION,true).'</pre>';
+			$sessions_vars = htmlentities(print_r($_SESSION,true));
+			echo '<h2>$_SESSION</h2><pre>'.$sessions_vars.'</pre>';
         }
-        echo '<h2>VIEW</h2><pre>'.print_r($this->view->getVars(),true).'</pre>';
+		echo '<h2>$_COOKIE</h2><pre>'.print_r($_COOKIE,true).'</pre>';
         echo '<h2>SERVER</h2><pre>'.print_r($_SERVER,true).'</pre>';
         echo '</div>';
         
@@ -88,7 +90,8 @@ class View_Helper_Debugbar extends Peak_View_Helper_debug
         }
         
         foreach(Peak_Registry::getObjectsList() as $name) {
-        	echo '<h2>'.$name.'</h2><pre>'.print_r(Peak_Registry::get($name),true).'</pre>';
+			$object_data = htmlentities(print_r(Peak_Registry::get($name),true));
+        	echo '<h2>'.$name.'</h2><pre>'.$object_data.'</pre>';
         }
         echo '</div>';
         

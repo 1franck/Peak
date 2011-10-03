@@ -13,7 +13,7 @@ class Peak_Config implements IteratorAggregate, Countable
 	 * @var array
 	 */
 	protected $_vars = array();
-	
+
 	/**
 	 * Set array of data optionnaly
 	 *
@@ -48,7 +48,7 @@ class Peak_Config implements IteratorAggregate, Countable
     }
 
     /**
-     * Isset varaible
+     * Isset variable
      *
      * @param  string $name
      * @return bool
@@ -97,7 +97,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	return $this->_vars;
     }
-    
+
     /**
      * Set an array into object
      *
@@ -107,7 +107,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
     	$this->_vars = $array;
     }
-    
+
     /**
      * Flush all variable stored
      */
@@ -115,7 +115,7 @@ class Peak_Config implements IteratorAggregate, Countable
     {
         $this->_vars = array();
     }
-    
+
     /**
 	 * Merge two arrays recursively overwriting the keys in the first array
 	 * if such key already exists

@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Config
  */
 require_once 'Peak/Config.php';
@@ -61,8 +62,5 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		foreach($this->peakconfig as $key) ++$count;
 		
 		$this->assertTrue(count($this->peakconfig) == 3);
-	}
-	
-	
-  
+	}  
 }

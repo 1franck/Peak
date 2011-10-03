@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Manage http redirection for url and controller
  * 
  * @authors  Francois Lajoie
  * @version  $Id$
  */
-class Peak_View_Helper_Redirect
+class Peak_View_Helper_redirect
 {
 	
 	private $_status_codes = array('300' => 'Multiple Choices',

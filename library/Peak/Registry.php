@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak Objects Registry
  * 
@@ -14,16 +13,16 @@ class Peak_Registry
 	 * @var array
 	 */
     protected static $_objects = array();
-    
+
     /**
      * Instance of registry
      * @var object
      */
     protected static $_instance = null;                               
-                          
+
     private final function __clone() { trigger_error('Can\'t clone registry', E_USER_ERROR); }
     private final function __construct() { }
-        
+
     /**
 	 * Return an registered object or null
 	 *
@@ -34,7 +33,7 @@ class Peak_Registry
 	{
 	    return isset(self::$_objects[$name]) ? self::$_objects[$name] : null;
 	}
-	
+
     /**
      * set/get registry instance
      *
@@ -45,7 +44,7 @@ class Peak_Registry
 		if(is_null(self::$_instance)) self::$_instance = new self();
 		return self::$_instance;
 	}
-	
+
 	/**
 	 * Shortcut of method getInstance()
 	 *
@@ -55,7 +54,7 @@ class Peak_Registry
 	{
 		return self::getInstance();
 	}
-	
+
 	/**
 	 * Same as method register but static
 	 *
@@ -68,7 +67,7 @@ class Peak_Registry
 	    self::$_objects[$name] = $obj;
 	    return self::$_objects[$name];
 	}
-	
+
 	/**
 	 * Get registered object
 	 *
@@ -79,7 +78,7 @@ class Peak_Registry
 	{
 	    if(self::isRegistered($name)) return self::$_objects[$name];
 	}
-	
+
 	/**
 	 * Get class name of a registered object
 	 *
@@ -91,7 +90,7 @@ class Peak_Registry
 		if(self::isRegistered($name)) return get_class(self::$_objects[$name]);
 		else return false;
 	}
-	
+
     /**
 	 * Return objects list
 	 *
@@ -101,7 +100,7 @@ class Peak_Registry
 	{
 	    return array_keys(self::$_objects);
 	}
-	
+
 	/**
 	 * Unregister an object
 	 *
@@ -111,7 +110,7 @@ class Peak_Registry
 	{
 	    if(self::isRegistered($name)) unset(self::$_objects[$name]);
 	}
-	
+
 	/**
 	 * Check if an object var name is registered
 	 *
@@ -122,7 +121,7 @@ class Peak_Registry
 	{
 	    return isset(self::$_objects[$name]) ? true : false;
 	}
-	
+
 	/**
 	 * Check class name of registered object match
 	 *
@@ -136,5 +135,4 @@ class Peak_Registry
 	    }
 	    return false;
 	}
-	      
 }

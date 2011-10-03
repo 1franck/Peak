@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Chrono
  */
 require_once 'Peak/Chrono.php';

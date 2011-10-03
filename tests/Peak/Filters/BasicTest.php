@@ -5,10 +5,17 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Filters, Peak_Filters_Basic
  */
 require_once 'Peak/Filters.php';
 require_once 'Peak/Filters/Basic.php';
+
+/**
+ * Fixture(s)
+ */
+require_once dirname(__FILE__).'/BasicTest/ValidateClass.php';
+require_once dirname(__FILE__).'/BasicTest/SanitizeClass.php';
 
 /**
  * @category   Peak
@@ -86,38 +93,4 @@ class Peak_FiltersBasicTest extends PHPUnit_Framework_TestCase
     	$this->assertTrue($data_sanitized['cap'] === 'I AM A TITLE');
     }
 	  
-}
-
-
-class ValidateClass extends Peak_Filters_Basic
-{
-    public function setValidation()
-    {
-        return array(
-        
-        'mynumber' => array('filter' => FILTER_VALIDATE_INT,
-                            'options' => array('min_range' => 1, 'max_range' => 10),
-                            'error'   => 'mynumber should be an integer between 1 and 10')
-        
-        );
-    }
-}
-
-class SanitizeClass extends Peak_Filters_Basic 
-{
-	public function setSanitization()
-	{
-		return array(
-		  
-		  'number' => FILTER_SANITIZE_NUMBER_INT,
-		  'cap'    => array('filter'  => FILTER_CALLBACK,
-		                    'options' => array($this, 'sanitizeCap'))
-		
-		);
-	}
-	
-	public function sanitizeCap($value)
-	{
-		return strtoupper($value);
-	}
 }
