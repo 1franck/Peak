@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak exception
  * 
@@ -8,21 +7,22 @@
  */
 class Peak_Exception extends Exception
 {
-	   
+
     /**
      * Error constant name
      * @var string
      */
 	private $_errkey;
-    
+
 	/**
 	 * Errors messages
 	 */
 	const ERR_ROUTER_URI_NOT_FOUND          = 'Request uri not found.';
+	const ERR_CORE_INIT_CONST_MISSING       = '%1$s is not specified (const %2$s)';
 	const ERR_DEFAULT                       = 'Request failed';
 	const ERR_CUSTOM                        = '%1$s';
-		
-	
+
+
     /**
      * Set error key constant
      *
@@ -37,7 +37,7 @@ class Peak_Exception extends Exception
    
 		parent::__construct($message);
 	}
-	
+
 	/**
 	 * Handle error key constants
 	 *
@@ -52,8 +52,7 @@ class Peak_Exception extends Exception
 	    else $r = self::ERR_DEFAULT;
 	    
 	    if(isset($infos)) {
-	        if(is_array($infos)) $r = vsprintf($r,$infos);
-	        else $r = sprintf($r,trim($infos));	        
+			$r = (is_array($infos)) ? vsprintf($r,$infos) : sprintf($r,trim($infos));
 	    }
 
 		return htmlentities(strip_tags($r))."\n";
@@ -85,11 +84,9 @@ class Peak_Exception extends Exception
 		return $debug;
 	}
 	
-		
 	public function getErrkey() { return $this->_errkey; }
-		
-	public function getLevel() { return $this->_level; }
-	
-	public function getTime() { return date('Y-m-d H:i:s'); }
 
+	public function getLevel() { return $this->_level; }
+
+	public function getTime() { return date('Y-m-d H:i:s'); }
 }

@@ -13,7 +13,7 @@ class Peak_Chrono
      * @var array
      */
     private static $_global = array('start' => false, 'end' => false);
-    
+
     /**
      * Timers list
      * @var array
@@ -45,7 +45,7 @@ class Peak_Chrono
         }
         else self::$_global['end'] = self::getMicrotime();     
     }
-    
+
     /**
      * Check if a timer name exists
      *
@@ -56,7 +56,7 @@ class Peak_Chrono
     {
         return array_key_exists($name, self::$_timers);
     }
-    
+
     /**
      * Check if chrono is started but not ended
      *
@@ -76,7 +76,7 @@ class Peak_Chrono
             return false;
         }   
     }
-    
+
     /**
      * Check if a timer is completed (started and ended)
      *
@@ -130,9 +130,9 @@ class Peak_Chrono
         }        
         else return false;
     }
-    
+
     /**
-     * Same as get() but return timer in microseconds
+     * Same as get() but return timer in milliseconds
      *
      * @see get()
      */
@@ -143,8 +143,7 @@ class Peak_Chrono
         
         return $sec * 1000;      
     }
-    
-        
+
     /**
      * Reset global timer or a specific timer
      *
@@ -157,7 +156,7 @@ class Peak_Chrono
         }
         else self::$_global = array('start' => false, 'end' => false);  
     }
-    
+
     /**
      * Reset all timers
      */
@@ -166,7 +165,7 @@ class Peak_Chrono
         self::reset();
         self::$_timers = array();
     }
-    
+
     /**
      * Calculate the difference between microtime(s) values
      *
@@ -177,5 +176,4 @@ class Peak_Chrono
     {
         return ($timer_array['end'] - $timer_array['start']);
     }
-
 }

@@ -11,17 +11,34 @@ abstract class Peak_Codegen
 	 * Indentation space
 	 */
 	const INDENTATION_SPACE = 4;
-	
+
 	/**
 	 * Line break symbol
 	 */
 	const LINE_BREAK = "\n";
-	
+
 	/**
 	 * PHP open tag
 	 */
 	const PHP_OPEN_TAG = '<?php';
-	
+
+	/**
+	 * PHP close tag
+	 */
+	const PHP_CLOSE_TAG = '?>';
+
+	/**
+	 * Get indentation string
+	 *
+	 * @param  integer $multiplicator Represent number of indentation(s). By default 1
+	 * @return string
+	 */
+    public function getIndent($multiplicator = 1)
+	{
+		$pad_length = self::INDENTATION_SPACE * $multiplicator;
+		return str_pad('',$pad_length);
+	}
+
 	/**
 	 * Get preview of generated code
 	 *
@@ -32,7 +49,7 @@ abstract class Peak_Codegen
 		$this->preGenerate();
 		return $this->generate();
 	}
-	
+
 	/**
 	 * Save generated code
 	 *
@@ -49,18 +66,18 @@ abstract class Peak_Codegen
 		    $data = Peak_Codegen::PHP_OPEN_TAG . Peak_Codegen::LINE_BREAK . $data;
 		}
 		
-		$result = @file_put_contents($filepath, $data, $file_put_contents_flags);
+		$result = file_put_contents($filepath, $data, $file_put_contents_flags);
 		return $result;
 	}
-	
+
 	/**
-	 * Need to be overloaded by child but optionnal
+	 * Optionnal, Can be overloaded by child. Will be call each time before generate()
 	 */
 	public function preGenerate() { }
 	
 	/**
 	 * Need to be overloaded by child
 	 */
-	public function generate() { }
-	
+	abstract public function generate();
+
 }

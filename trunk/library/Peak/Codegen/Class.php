@@ -33,6 +33,12 @@ class Peak_Codegen_Class extends Peak_Codegen
 	private $_is_abstract = false;
 	
 	/**
+	 * Class final status
+	 * @var bool
+	 */
+	private $_is_final = false;
+	
+	/**
 	 * Class docblock
 	 * @var object
 	 */
@@ -131,10 +137,23 @@ class Peak_Codegen_Class extends Peak_Codegen
 	 * @param  bool $abstract
 	 * @return bool|object
 	 */
-	public function isAbstract($abstract)
+	public function isAbstract($abstract = null)
 	{
 		if(!isset($abstract)) return $this->_is_abstract;
 		$this->_is_abstract = $abstract;
+		return $this;
+	}
+	
+	/**
+	 * Set/Get class final status 
+	 *
+	 * @param  bool $final
+	 * @return bool|object
+	 */
+	public function isFinal($final = null)
+	{
+		if(!isset($final)) return $this->_is_final;
+		$this->_is_final = $final;
 		return $this;
 	}
 	
@@ -281,12 +300,6 @@ class Peak_Codegen_Class extends Peak_Codegen
 		}
 	}
 	
-	public static function getIndent($multiplicator = 1)
-	{
-		$pad_length = self::INDENTATION_SPACE * $multiplicator;
-		return str_pad('',$pad_length);
-	}
-	
 	/**
 	 * Generate class content
 	 *
@@ -294,7 +307,6 @@ class Peak_Codegen_Class extends Peak_Codegen
 	 */
 	public function generate()
 	{
-		
 		$data = '';
 
 		// class dockblock
@@ -304,6 +316,12 @@ class Peak_Codegen_Class extends Peak_Codegen
 		
 		// class name
 		$data .= 'class '.$this->_name;
+		
+		// abstract class
+		if($this->_is_abstract) $data = 'abstract '.$data;
+		
+		// final class
+		if($this->_is_final) $data = 'final '.$data;
 
 		// class extends
 		if(!is_null($this->_extends)) $data .= ' extends '.$this->_extends;
@@ -346,7 +364,5 @@ class Peak_Codegen_Class extends Peak_Codegen
 		$data .= self::LINE_BREAK.'}';
 
 		return $data;
-		
 	}
-	
 }

@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Controller_Action, Peak_Config, Peak_Registry, Peak_Core, Peak_Router, Peak_View, Peak_Exception, Peak_Controller_Exception
  */
 require_once 'Peak/Controller/Action.php';
@@ -15,6 +16,11 @@ require_once 'Peak/Router.php';
 require_once 'Peak/View.php';
 require_once 'Peak/Exception.php';
 require_once 'Peak/Controller/Exception.php';
+
+/**
+ * Fixture(s)
+ */
+require_once dirname(__FILE__).'/ActionTest/testController.php';
 
 /**
  * @category   Peak
@@ -113,36 +119,5 @@ class Peak_Controller_ActionTest extends PHPUnit_Framework_TestCase
  
         $this->fail('An expected exception has not been raised.');
     }
-    
-    
-    
-}
-
-
-/**
- * Controller class test
- */
-class testController extends Peak_Controller_Action 
-{ 
-	
-	public function preAction()
-	{ 
-		$this->view->preactiontest = 'value';	
-	}
-	
-	public function _index()
-	{
-		$this->view->actiontest = 'default value';
-	}
-		
-	public function _contact()
-	{ 
-		$this->view->actiontest = 'contact value';
-	}
-	
-	public function postAction()
-	{
-		$this->view->postactiontest = 'value';
-	}
 
 }

@@ -18,7 +18,7 @@ abstract class Peak_Filters
 	 * @var array
 	 */
 	protected $_sanitize;
-	
+
 	/**
 	 * Global sanitize filters for all data
 	 * @var array
@@ -70,7 +70,7 @@ abstract class Peak_Filters
 	{
 		return $this->_sanitize;
 	}
-	
+
 	/**
 	 * Get global sanitize filter
 	 *
@@ -100,7 +100,7 @@ abstract class Peak_Filters
 	{
 		return $this->_errors;
 	}
-	
+
 	/**
 	 * Sanitize all data with $_global_sanitize
 	 */
@@ -113,7 +113,7 @@ abstract class Peak_Filters
 	    
 	    return $this->_data;
 	}
-	
+
 	/**
 	 * Make globalSanitize() recursive
 	 *

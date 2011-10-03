@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Simple but very usefull xml class
  * 
@@ -15,14 +14,14 @@ class Peak_Xml
      * @var  string
      */
     public static $file_content;
-    
+
     /**
      * feed content object
      *
      * @var object
      */
     public static $feed_content;
-    
+
     /**
      * Timeout for getting the xml file
      *
@@ -42,7 +41,7 @@ class Peak_Xml
 
        self::_load_and_parse($filepath,$replaces);
     }
-    
+
     /**
      * Retreive an external xml with CURL and save to a temp file and load it as simplexml object
      *
@@ -67,7 +66,7 @@ class Peak_Xml
         
         self::_load_and_parse($tempfile,$replaces);
     }
-    
+
     /**
      * Create a stream context from current $timeout
      *
@@ -79,7 +78,7 @@ class Peak_Xml
                                                                        'timeout' => self::$timeout,
                                                                        'method' => 'GET')));      
     }
-    
+
     /**
      * Load and parse a local xml as simplexml object
      *
@@ -106,7 +105,6 @@ class Peak_Xml
         }
         else self::$feed_content = false;
     }
-    
 }
 
 

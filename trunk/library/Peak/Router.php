@@ -8,7 +8,7 @@
  */
 class Peak_Router
 {
-        
+
 	/**
 	 * default url relative root set with __construct()
 	 * @var string

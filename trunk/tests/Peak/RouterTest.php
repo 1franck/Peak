@@ -5,6 +5,7 @@
 require_once dirname(__FILE__).'/../TestHelper.php';
 
 /**
+ * Component(s)
  * @see Peak_Router, Peak_Exception
  */
 require_once 'Peak/Router.php';
@@ -178,7 +179,7 @@ class Peak_RouterTest extends PHPUnit_Framework_TestCase
 	function testSimpleRegex2()
 	{
 		//add regex the short way with custom integer
-		$this->peakrouter->addRegex('post/(\d+)', 'blog.post');
+		$this->peakrouter->addRegex('post/(\d+)', 'blog/post');
 		
 		//fake $_SERVER['REQUEST_URI'];
 		$_SERVER['REQUEST_URI'] = '/post/89';

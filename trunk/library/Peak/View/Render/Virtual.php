@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak View Render Engine: Virtual
  * 
@@ -7,7 +6,6 @@
  * 
  * @author   Francois Lajoie
  * @version  $Id$
- * 
  */
 class Peak_View_Render_Virtual extends Peak_View_Render
 {
@@ -55,7 +53,7 @@ class Peak_View_Render_Virtual extends Peak_View_Render
      * @param string $path
      * @return array/string
      */
-    public function render($file,$path)
+    public function render($file, $path = null)
     {       
         //CONTROLLER FILE VIEW       
         $this->scripts_file = $file;
