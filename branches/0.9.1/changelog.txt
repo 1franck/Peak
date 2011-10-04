@@ -1,5 +1,7 @@
 #VERSION 0.9.1#
 
+ - added method postDispatchController() in Peak_Controller_Front
+
 #VERSION 0.9.0#
 
  - fixed problem with method getProperties() with value when class is abstract or is an interface in class Peak_Zreflection
