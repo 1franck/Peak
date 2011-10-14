@@ -217,8 +217,8 @@ return '<style type="text/css">
  border-bottom:0;
  text-align:left;
  background:#f1f1f1;
- background-image: -moz-linear-gradient(100% 100% 90deg, #ccc, #f1f1f1) !important;
- background-image: -webkit-gradient(linear, left bottom, left top, from(#ccc), to(#f1f1f1)) !important;
+ background-image: -moz-linear-gradient(100% 100% 90deg, #ddd, #f1f1f1) !important;
+ background-image: -webkit-gradient(linear, left bottom, left top, from(#ddd), to(#f1f1f1)) !important;
  border-radius:6px 6px 0 0;
  -moz-border-radius:6px 6px 0 0;
  -webkit-border-radius:6px 6px 0 0;
