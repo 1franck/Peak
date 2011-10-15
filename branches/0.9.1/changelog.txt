@@ -1,5 +1,6 @@
 #VERSION 0.9.1#
 
+ - modified methods getSize() from class Peak_Spl_Dirinfo and Peak_Spl_Fileinfo
  - minor change to css in Peak_View_Helper_Debugbar
  - added method postDispatchController() in Peak_Controller_Front
 
