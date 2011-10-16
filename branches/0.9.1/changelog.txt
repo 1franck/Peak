@@ -1,5 +1,7 @@
 #VERSION 0.9.1#
 
+ - added $router property in Peak_Controller_Front, Router object is now also stored in the Front Controller, 
+   modified Peak_Application accordingly
  - modified methods getSize() from class Peak_Spl_Dirinfo and Peak_Spl_Fileinfo
  - minor change to css in Peak_View_Helper_Debugbar
  - added method postDispatchController() in Peak_Controller_Front
