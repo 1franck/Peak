@@ -1,5 +1,6 @@
 #VERSION 0.9.1#
 
+ - modified method redirectAction() to use method redirect() in Peak_Controller_Action
  - added $router property in Peak_Controller_Front, Router object is now also stored in the Front Controller, 
    modified Peak_Application accordingly
  - modified methods getSize() from class Peak_Spl_Dirinfo and Peak_Spl_Fileinfo
