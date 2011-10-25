@@ -1,5 +1,6 @@
 #VERSION 0.9.1#
 
+ - deleted deprecated class Peak_View_Helper_Country 
  - added method getColunms() in Peak_Model_Zendatable
  - removed properties $_auto_describe and $_describe and method describe() in class Peak_Model_Zendatable.
    All those informations are already in the parent class, modified methods __construct() and cleanArray() accordingly
