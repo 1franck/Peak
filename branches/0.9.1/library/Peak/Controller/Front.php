@@ -55,6 +55,7 @@ class Peak_Controller_Front
 	 */
 	public function __construct()
 	{
+		$this->router = Peak_Registry::o()->router;
 		$this->_registryConfig();
 	}
 	

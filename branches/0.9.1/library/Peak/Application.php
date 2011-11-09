@@ -41,7 +41,6 @@ class Peak_Application
         
         // load front controller
         $this->front = (class_exists('front',false)) ? new front() : new Peak_Controller_Front();
-		$this->front->router = $router;
     }
 
     /**
