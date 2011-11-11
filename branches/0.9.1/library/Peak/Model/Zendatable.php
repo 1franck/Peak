@@ -156,6 +156,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
 	        $this->_db->update($this->_name, $data, $where);
+			return $data[$pm];
 	    }
 	    else {
 	        //insert

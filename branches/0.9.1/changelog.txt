@@ -1,5 +1,6 @@
 #VERSION 0.9.1#
 
+ - fixed method save() from Peak_Model_Zendatable to return primary key on update query
  - fixed a bug introduced in Peak_Controller_Front when added $router property
  - fixed method isValid() from Peak_View_Cache to support custom cache id
  - removed all shorcut methods about cache in Peak_View_Render
