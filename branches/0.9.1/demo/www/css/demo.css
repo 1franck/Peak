@@ -1,44 +1,87 @@
+/* Override some defaults */
+html, body {
+  background-color: #E1EBF7;
+  background:#eee url('../img/drip2.png') 0 38px repeat-x;
+  font-family:Chivo;
+  font-size:16px;
+}
 body {
- background:#111 url('../img/deepbluecoffee.jpg') 50% 0 no-repeat;
- color:#fff;
- font-size:20px;
- font-family: 'Unkempt', 'Verdana', serif;
- margin:30px 0;
- text-align:center;
+  padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
+}
+.container > footer p {
+  text-align: center; /* center align it with the container */
+}
+.container {
+  width: 820px; /* downsize our container to make the content feel a bit tighter and more cohesive. NOTE: this removes two full columns from the grid, meaning you only go to 14 columns and not 16. */
 }
 
-h1 {
- font-family: 'Unkempt', 'Verdana', serif;
- font-size: 38px;
- font-style: normal;
- font-weight: 400;
- text-shadow: none;
- text-decoration: none;
- text-transform: none;
- letter-spacing: 0em;
- word-spacing: 0em;
- line-height: 1.2; 
+/* The white background content wrapper */
+.content {
+  background-color: #fff;
+  padding: 20px;
+  margin: 10px -20px 0 -20px; /* negative indent the amount of the padding to maintain the grid system */
+  -webkit-border-radius: 6px 6px 6px 6px;
+     -moz-border-radius: 6px 6px 6px 6px;
+          border-radius: 6px 6px 6px 6px;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+     -moz-box-shadow: 0 1px 2px rgba(0,0,0,.15);
+          box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-a,a:link,a:visited {
- color:#D3CAB9;
+/* Page header tweaks */
+.page-header {
+  background:#f1f1f1;
+  text-shadow:2px 2px 0 #fff;
+  padding: 20px 20px 10px;
+  margin: -20px -20px 20px;
+  -webkit-border-radius: 6px 6px 0 0;
+     -moz-border-radius: 6px 6px 0 0;
+          border-radius: 6px 6px 0 0;
+ background-image: linear-gradient(bottom, rgb(245,245,245) 33%, rgb(241,241,241) 79%);
+background-image: -o-linear-gradient(bottom, rgb(245,245,245) 33%, rgb(241,241,241) 79%);
+background-image: -moz-linear-gradient(bottom, rgb(245,245,245) 33%, rgb(241,241,241) 79%);
+background-image: -webkit-linear-gradient(bottom, rgb(245,245,245) 33%, rgb(241,241,241) 79%);
+background-image: -ms-linear-gradient(bottom, rgb(245,245,245) 33%, rgb(241,241,241) 79%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.33, rgb(245,245,245)),
+	color-stop(0.79, rgb(241,241,241))
+);
+
 }
 
-#wrap {
- width:1000px;
- margin:0 auto;
- text-align:left;
+/* Styles you shouldn't keep as they are for displaying this base example only */
+.content .span10,
+.content .span4 {
+  min-height: 200px;
+}
+/* Give a quick and non-cross-browser friendly divider */
+.content .span4 {
+  margin-left: 0;
+  padding-left: 19px;
+  border-left: 1px solid #eee;
 }
 
-#wrap h1 {
- text-align:center;
- margin:0 auto;
- width:100%;
+.topbar .brand {
+  font-family: 'Merienda One', cursive;
+  font-size:18px;
+  text-shadow:2px 2px 0 #333;
+}
+.topbar .fill {
+  background:#000000 !important;
+  padding-top:10px;
+}
+.topbar .btn {
+  border: 0;
 }
 
-.box {
- background:url('../img/shader.png') repeat;
- margin:30px 130px;
- padding:20px;
- border:1px solid #111;
+.coffee_cup {
+  position:absolute;
+  margin:-60px 0 0 -70px;
+  width:128px;
+  height:128px;
+  background:url('../img/1321325090_Coffecup.png') 10px 120% no-repeat;
 }
