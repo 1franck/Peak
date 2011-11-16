@@ -1,5 +1,7 @@
 #VERSION 0.9.1#
 
+ - fixed class name case sensitive problem on certain os with Peak_View_Helper_form, Peak_View_Helper_form_select and
+   Peak_View_Helper_form_input
  - fixed some display bugs in Peak_Controller_Internal_Pkdoc
  - fixed method save() from Peak_Model_Zendatable to return primary key on update query
  - fixed a bug introduced in Peak_Controller_Front when added $router property
