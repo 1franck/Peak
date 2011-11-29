@@ -24,18 +24,18 @@ abstract class Peak_Controller_Action
      * @var string
      */
     public $action;
+	
+	/**
+     * instance of view
+     * @var object
+     */
+    public $view;
     
     /**
      * Action method prefix
      * @var string
      */
     protected $action_prefix = '_';
-
-    /**
-     * instance of view
-     * @var object
-     */
-    public $view;
 
     /**
      * controller helpers objects
@@ -272,7 +272,7 @@ abstract class Peak_Controller_Action
      */
     public function redirectAction($action, $params = null)
     {
-        Peak_Registry::o()->app->front->redirect($this->getTitle(), $action, $params);
+        $this->redirect($this->getTitle(), $action, $params);
     }
 	
 	/**

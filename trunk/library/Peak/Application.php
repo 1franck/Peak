@@ -8,7 +8,6 @@
  */
 class Peak_Application
 {
-
 	/**
 	 * app bootstrap object if exists
 	 * @var object
@@ -35,8 +34,8 @@ class Peak_Application
         // register application/view/router instance
         Peak_Registry::set('app', $this);
         Peak_Registry::set('view', new Peak_View());
-        Peak_Registry::set('router', new Peak_Router(PUBLIC_ROOT));
-             
+        Peak_Registry::set('router', $router = new Peak_Router(PUBLIC_ROOT));
+		
         // load app bootstrap
         if(class_exists('bootstrap',false)) $this->bootstrap = new bootstrap();   
         
@@ -66,5 +65,4 @@ class Peak_Application
     	$this->front->controller->render();
     	$this->front->postRender();
     }
-
 }

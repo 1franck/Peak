@@ -1,17 +1,59 @@
-<html>
-<head>
-<title>Demo App</title>
-<link rel="stylesheet" type="text/css" href="<?php $this->baseUrl('css/demo.css'); ?>" media="screen" />
-<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Unkempt"  >
-</head>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Demo App</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" type="text/css" href="<?php $this->baseUrl('css/bootstrap.min.css'); ?>" media="screen" />
+    <link rel="stylesheet" type="text/css" href="<?php $this->baseUrl('css/demo.css'); ?>" media="screen" />
+    <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
+  </head>
 <body>
 
-<div id="wrap">
-<?php
- $this->layoutContent();
-?>
-</div>
-page generated in <?php echo Peak_Chrono::getMS(); ?>ms
+    <div class="topbar">
+      <div class="fill">
+        <div class="container">
+          <a class="brand" href="#">Peak Framework</a>
 
-</body>
+          <ul class="nav">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="content">
+        <div class="page-header">
+          <h1>It's Demo App <small>Yeah!</small></h1>
+        </div>
+        <div class="row">
+          <div class="span10">
+            <?php $this->layoutContent(); ?>
+          </div>
+          <div class="span4">
+            <h3>What's next?</h3>
+            <ul>
+             <li><a href="#">Coming soon...</a></li>
+             <!--
+             <li><a href="#">How to start</a></li>
+             <li><a href="#">Requirements</a></li>
+             <li><a href="#">Documentation</a></li>
+             <li><a href="#">Framework Autodoc</a></li>
+            -->
+            </ul>
+          </div>
+        </div>
+        <div class="coffee_cup"></div>
+      </div>
+
+      <footer>
+        <!--<p>&copy; Company 2011</p>-->
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
 </html>

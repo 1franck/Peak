@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak_Spl_Fileinfo
  * 
@@ -10,10 +9,8 @@
  */
 class Peak_Spl_Fileinfo extends SplFileInfo 
 {
-
 	/**
 	 * Change these setting to create custom formatting
-	 *
 	 * @var array
 	 */
 	public $formats = array('time'  => null,
@@ -33,8 +30,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 			$this->formats = array_merge($this->formats, $formats);
 		}
 	}
-	
-	                        
+
 	/**
 	 * Change the current file used
 	 *
@@ -45,7 +41,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 	{
 		$this->__construct($filepath,$formats);
 	}
-	
+
 	/**
 	 * Check if format exists
 	 *
@@ -59,7 +55,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		}
 		else return false;
 	}
-	
+
 	/**
 	 * Get file perms. use $format['perms']
 	 *
@@ -72,7 +68,6 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		if(($format) || ($this->getFormat('perms'))) $perms = substr(sprintf('%o', $perms), -4);
 		return $perms;
 	}
-	
 
 	/**
 	 * Get latest file access time. use $format['time']
@@ -87,7 +82,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		elseif($this->getFormat('time')) $time = date($this->getFormat('time'),$time);
 		return $time;
 	}
-	
+
 	/**
 	 * Get file creation time. use $format['time']
 	 *
@@ -101,7 +96,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		elseif($this->getFormat('time')) $time = date($this->getFormat('time'),$time);
 		return $time;
 	}
-	
+
 	/**
 	 * Get file modification time. use $format['time']
 	 *
@@ -115,8 +110,7 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 		elseif($this->getFormat('time')) $time = date($this->getFormat('time'),$time);
 		return $time;
 	}
-	
-	
+
 	/**
 	 * Get file size. use $format['size']
 	 *
@@ -125,30 +119,13 @@ class Peak_Spl_Fileinfo extends SplFileInfo
 	 */
 	public function getSize($format = false)
 	{
-		$bytes = parent::getSize();  
-		$return = $bytes;      
-		if(($format) || ($this->getFormat('size'))) {
-			if ($bytes >= 1099511627776) {
-				$return = round($bytes / 1024 / 1024 / 1024 / 1024, 2);
-				$suffix = 'TB';
-			}
-			elseif ($bytes >= 1073741824) {
-				$return = round($bytes / 1024 / 1024 / 1024, 2);
-				$suffix = 'GB';
-			}
-			elseif ($bytes >= 1048576) {
-				$return = round($bytes / 1024 / 1024, 2);
-				$suffix = 'MB';
-			}
-			else {
-				$return = round($bytes / 1024, 2);
-				$suffix = 'KB';
-			}
-			$return == 1 ? $return .= ' ' . $suffix : $return .= ' ' . $suffix . 's';
+		if(!$format) return parent::getSize();
+		else {
+            $unit = array('B','kB','MB','GB','TB','PB');
+            return @round($this->_size/pow(1024,($i=floor(log($this->_size,1024)))),2).' '.$unit[$i];
 		}
-		return $return;
 	}
-	
+
 	/**
 	 * Get file extension
 	 *

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Peak_Model_Zendatable
  * Base for db tables using Zend_Db
@@ -9,43 +8,30 @@
  */
 abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 {
-    
     /**
 	 * Count from the latest fetch
 	 * @var integer
 	 */
 	public $last_count = null;
-	
-	/**
-	 * Will describe() table on class load
-	 * @var bool
-	 */
-	protected $_auto_describe = false;
-	
+
     /**
 	 * Set db default adpater
 	 */
 	public function __construct()
 	{
 		$this->_db = $this->getDefaultAdapter();
-		
-		if($this->_auto_describe) $this->describe();
 	}
-	
-	/**
-	 * Describe current table and store result into $describe and $columns
-	 */
-	public function describe()
-	{
-	    if(!isset($this->describe)) {
-	        $this->describe = $this->_db->describeTable($this->_name);
 
-	        //retreive columns(or field)
-	        $this->columns = array();
-	        foreach($this->describe as $col => $d) { $this->columns[] = $col; }
-	    }
+	/**
+	 * Get table columns
+	 *
+	 * @return array
+	 */
+	public function getColumns()
+	{
+		return $this->_getCols();
 	}
-	
+
 	/**
 	 * Delete primary key(s)
 	 *
@@ -61,7 +47,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
 	    return $this->delete($where);
 	}
-	
+
 	/**
 	 * Check if a specific key exists in table
 	 *
@@ -80,7 +66,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    
 	    return (is_null($result)) ? false : true;
 	}
-	
+
 	/**
 	 * Find something by its primary key. If $_object_mapper exists
 	 * will return data(s) row(s) in form of object mapper
@@ -105,7 +91,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    
 	    return $data;
 	}
-	
+
 	/**
 	 * Count row from a table
 	 *
@@ -126,7 +112,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
         $rows = $this->fetchAll($select);      
         return($rows[0]->itemcount);
 	}
-	
+
 	/**
 	 * Get default primary key string name
 	 *
@@ -137,7 +123,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    if(is_array($this->_primary)) return $this->_primary[1];
 	    else return $this->_primary;
 	}
-	
+
 	/**
 	 * Remove unknow column keyname form an array
 	 *
@@ -146,16 +132,13 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 */
 	public function cleanArray($data)
 	{
-	    $this->describe();
-	    
 	    //remove unknow table key
 	    foreach($data as $k => $v) {
-	        if(!isset($this->describe[$k])) unset($data[$k]);
+	        if(!isset($this->_metadata[$k])) unset($data[$k]);
 	    }
-	    
 	    return $data;
 	}
-	
+
 	/**
 	 * Insert/Update depending of the presence of primary key or not
 	 * Support only one primary key
@@ -165,7 +148,6 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 */
 	public function save($data)
 	{
-	    
 	    $data = $this->cleanArray($data);
 	    
 	    $pm = $this->getPrimaryKey();
@@ -174,6 +156,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
 	        $this->_db->update($this->_name, $data, $where);
+			return $data[$pm];
 	    }
 	    else {
 	        //insert
@@ -181,7 +164,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        return $this->_db->lastInsertId();
 	    }
 	}
-	
+
 	/**
 	 * Shorcut for $_db->query()
 	 *

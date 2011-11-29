@@ -20,7 +20,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
     public function preAction()
     {
         $this->view->engine('VirtualLayouts');
-        $this->view->disableCache();
+        $this->view->cache()->disable();
 		
 		$this->getFrameworkClasses();
 		$this->layout();
@@ -142,6 +142,9 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	  pre {
 		line-height:18px !important;
 	  }
+      footer {
+       text-align:center;
+      }
 	  .sidebar li a {
 		/*font-weight:bold;*/
 	  }
@@ -178,6 +181,14 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	  .span16 h1 {
 		color:#ccc;
 	  }
+      .clear {
+       clear:both;
+       height:1px;
+      }
+      .clear_right {
+       clear:right;
+       height:1px;
+      }
 	  
     </style>
   </head>
@@ -211,7 +222,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
       <div class="content" style="margin-left:260px;">
         		
 		{CONTENT}
-
+        
+        <div class="clear"></div>
         <footer>
           <p>Peak Framework '.PK_VERSION.'</p>
         </footer>
@@ -293,8 +305,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		</table>
         </div><!-- /hero-unit -->
 		
-		<!-- Example row of columns -->
-        <div class="row" style="margin:0 20px;">
+		<!-- CLASS ELEMENTS LIST -->
+        <div class="row" style="margin:0 20px;width:1080px;">
           <div class="span5">
             <h2>Methods ('.count($this->ref->self_methods).')</h2><p>';
 		
@@ -331,7 +343,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		}
             
 		// spacer line
-        $content .= '<div class="span16" style="margin:12px 0;">&nbsp;</div>';
+        $content .= '<div class="span16" style="margin:12px 0;height:10px;">&nbsp;</div>';
 		
 		// need to be fixed in zreflection to return an array
 		if(!empty($this->ref->constants)) {
@@ -339,7 +351,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			$content .= '<div class="span16">';
 			foreach($this->ref->constants as $v) {
 				$content .= '<h2 id="'.$v['name'].'">'.$v['name'].'</h2>';
-				$content .= '<div class="block">value &rarr; '.$v['value'].'</div>';
+				$content .= '<div class="block">value &rarr; '.htmlentities($v['value']).'</div>';
 			}
 			$content .= '</div>';
 		}
