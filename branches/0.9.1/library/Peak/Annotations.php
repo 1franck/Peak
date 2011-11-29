@@ -126,7 +126,7 @@ class Peak_Annotations
                 $final[$i] = array('tag' => $v['tag'], 'params' => array());
 
                 //detect here if we got a param with quote or not
-                //since space is the separator between params, if a param need space,
+                //since space is the separator between params, if a param need space(s),
                 //it must be surrounded by " to be detected as 1 param
                 $regex = '#(("(?<param>([^"]{1,}))")|(?<param2>([^"\s]{1,})))#i';
                 preg_match_all($regex, trim($v['params']), $matches_params, PREG_SET_ORDER);

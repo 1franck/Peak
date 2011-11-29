@@ -62,7 +62,7 @@ class Peak_AnnotationsTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertTrue(count($annotations) == 1);
 		
-		print_r($annotations);
+		//print_r($annotations);
 		    
 	}
 }
