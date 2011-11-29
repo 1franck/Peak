@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Access to /form/ objects helpers
  *
@@ -15,7 +14,7 @@ class Peak_View_Helper_Form
      */
     public function select()
     {
-        return new Peak_View_Helper_Form_Select();
+        return new Peak_View_Helper_Form_select();
     }
     
     /**
@@ -25,7 +24,6 @@ class Peak_View_Helper_Form
      */
     public function input()
     {
-        return new Peak_View_Helper_Form_Input();
+        return new Peak_View_Helper_Form_input();
     }
 }
-

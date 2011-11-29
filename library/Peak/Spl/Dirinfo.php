@@ -13,13 +13,13 @@ class Peak_Spl_Dirinfo
 	 * @var integer
 	 */
 	protected $_size = 0;
-	
+
 	/**
 	 * Number of files
 	 * @var integer
 	 */
 	protected $_nbfiles = 0;
-	
+
 	/**
 	 * Gather information about directory
 	 * 
@@ -35,7 +35,7 @@ class Peak_Spl_Dirinfo
 			++$this->_nbfiles;
 		}
 	}
-		
+
 	/**
 	 * Return directory size
 	 *
@@ -46,28 +46,11 @@ class Peak_Spl_Dirinfo
 	{
 		if(!$format) return $this->_size;
 		else {
-			$bytes = $this->_size;
-			if ($bytes >= 1099511627776) {
-				$return = round($bytes / 1024 / 1024 / 1024 / 1024, 2);
-				$suffix = 'TB';
-			}
-			elseif ($bytes >= 1073741824) {
-				$return = round($bytes / 1024 / 1024 / 1024, 2);
-				$suffix = 'GB';
-			}
-			elseif ($bytes >= 1048576) {
-				$return = round($bytes / 1024 / 1024, 2);
-				$suffix = 'MB';
-			}
-			else {
-				$return = round($bytes / 1024, 2);
-				$suffix = 'KB';
-			}
-			$return == 1 ? $return .= ' ' . $suffix : $return .= ' ' . $suffix . 's';
-			return $return;
+            $unit = array('B','kB','MB','GB','TB','PB');
+            return @round($this->_size/pow(1024,($i=floor(log($this->_size,1024)))),2).' '.$unit[$i];
 		}
 	}
-	
+
 	/**
 	 * Return number of files of directory 
 	 *
@@ -77,5 +60,5 @@ class Peak_Spl_Dirinfo
 	{
 		return $this->_nbfiles;
 	}
-	
+
 }

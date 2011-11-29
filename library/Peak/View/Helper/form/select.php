@@ -1,12 +1,11 @@
 <?php
-
 /**
  * Generate select form element
  * 
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Form_Select extends Peak_View_Helper_TagAttrs
+class Peak_View_Helper_Form_Select extends Peak_View_Helper_tagattrs
 {
     /**
      * Options data

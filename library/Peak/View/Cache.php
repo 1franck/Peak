@@ -44,7 +44,6 @@ class Peak_View_Cache
 		return Peak_Registry::o()->view->engine()->_scripts_path;
 	}
 
-
 	/**
      * Enable output caching. 
      * Avoid using in controllers actions that depends on $_GET, $_POST or any dynamic value for setting the view
@@ -79,19 +78,25 @@ class Peak_View_Cache
 
 	/**
      * Check if current view script file is cached/expired
-     * Note: if $this->_cache_id is not set, this will generate a new id from $id params if set or from the current controller file - path
-     *
+     * Note: if $this->_cache_id is not set, this will generate a new id from $id params if set or
+     * from the current controller file - path
+     * Notes: Custom $id can lead to problems if used with controller redirection * need to be fix
+     * 
      * @return bool
      */
-	public function isCached($id = null)
+	public function isValid($id = null)
 	{
 		if($this->_use_cache === false) return false;
 
-		//when checking isCached in controller action. $_scripts_file, $_scripts_path, $_cache_id are not set yet
-		if(!isset($id)) {
-			$this->genCacheId(Peak_Registry::o()->app->front->controller->name, Peak_Registry::o()->app->front->controller->action);
+		//when checking isValid without a custom id in controller action we generated a new id based
+		//on controller name and action name. If id is null but, cache id is already generated, we use it.
+		if(is_null($id)) {
+			if(is_null($this->_cache_id)) {
+				$this->genCacheId(Peak_Registry::o()->app->front->controller->getName(),
+								  Peak_Registry::o()->app->front->controller->action);
+			}
 		}
-		else $this->genCacheId('', $id);
+		else $this->genCacheId(null, $id);
 
 		$filepath = $this->getCacheFile();
 
@@ -111,10 +116,10 @@ class Peak_View_Cache
      * @param string $path
      * @param string $file
      */
-	public function genCacheId($path = null,$file = null, $return = false)
+	public function genCacheId($path = null, $file = null, $return = false)
 	{
 		//use current $this->_script_file and _script_path if no path/file scpecified
-		if(!isset($path)) $key = $this->getScriptPath().$this->getScriptFile();
+		if(!isset($path) && !isset($file)) $key = $this->getScriptPath().$this->getScriptFile();
 		else $key = $path.$file;
 
 		if(!$return) $this->_cache_id = hash('md5', $key);
@@ -136,7 +141,7 @@ class Peak_View_Cache
      *
      * @param bool $status
      */
-	public function enableCacheStrip($status)
+	public function enableStrip($status)
 	{
 		if(is_bool($status)) $this->_cache_strip = $status;
 	}
@@ -149,10 +154,10 @@ class Peak_View_Cache
      * @param  integer $expiration
      * @return bool
      */
-	public function isCachedBlock($id, $expiration)
+	public function isValidBlock($id, $expiration)
 	{
 		$this->enable($expiration);
-		if($this->isCached($id)) return true;
+		if($this->isValid($id)) return true;
 		else {
 			ob_start();
 			return false;
@@ -162,7 +167,7 @@ class Peak_View_Cache
 	/**
      * Close buffer of a cache block previously started by isCachedBlock()
      */
-	public function cacheBlockEnd()
+	public function blockEnd()
 	{
 		file_put_contents($this->getCacheFile(), preg_replace('!\s+!', ' ', ob_get_contents()));
 		ob_get_flush();

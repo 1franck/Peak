@@ -7,7 +7,12 @@
  */
 class Peak_Controller_Front
 {
-
+	/**
+	 * Router object
+	 * @var object
+	 */
+	public $router;
+	
 	/**
 	 * Controller object
 	 * @var object
@@ -50,6 +55,7 @@ class Peak_Controller_Front
 	 */
 	public function __construct()
 	{
+		$this->router = Peak_Registry::o()->router;
 		$this->_registryConfig();
 	}
 	
@@ -71,7 +77,7 @@ class Peak_Controller_Front
 	 */
 	public function getRoute()
 	{
-		Peak_Registry::o()->router->getRequestURI();
+		$this->router->getRequestURI();
 	}
 
 	/**
@@ -101,27 +107,27 @@ class Peak_Controller_Front
 	 */
 	protected function _dispatchController()
 	{
-	    $router = Peak_Registry::o()->router;      
-
 		//set default controller if router doesn't have one
-		if(!isset($router->controller)) {
-			$router->controller = $this->default_controller;
+		if(!isset($this->router->controller)) {
+			$this->router->controller = $this->default_controller;
 		}
 		
 		//set controller class name
-		$ctrl_name = $router->controller.'Controller';
+		$ctrl_name = $this->router->controller.'Controller';
 
 		//check if it's valid application controller
 		if(!$this->isController($ctrl_name))
 		{
 			//check for peak internal controller
-			if(($this->allow_internal_controllers === true) && ($this->isInternalController($router->controller))) {
-				$ctrl_name = 'Peak_Controller_Internal_'.$router->controller;
+			if(($this->allow_internal_controllers === true) && ($this->isInternalController($this->router->controller))) {
+				$ctrl_name = 'Peak_Controller_Internal_'.$this->router->controller;
 				$this->controller = new $ctrl_name();
 			}
 			else throw new Peak_Controller_Exception('ERR_CTRL_NOT_FOUND', $ctrl_name);
 		}
 		else $this->controller = new $ctrl_name();
+		
+		$this->postDispatchController();
 	}
 	
 	/**
@@ -143,15 +149,15 @@ class Peak_Controller_Front
 	
 	/**
 	 * Force dispatching to a specific controller/action
+	 * @deprecated
 	 *
 	 * @param string $ctrl
 	 * @param string $action
 	 */
 	public function forceDispatch($controller, $action = 'index')
 	{
-		$router = Peak_Registry::o()->router;
-		$router->controller = $controller;
-		$router->action = $action;
+		$this->router->controller = $controller;
+		$this->router->action = $action;
 		$this->dispatch();
 	}
 	
@@ -162,11 +168,8 @@ class Peak_Controller_Front
 	 */
 	public function errorDispatch($exception = null)
 	{
-		//$this->forceDispatch($this->error_controller);
-		
-		$router = Peak_Registry::o()->router;
-		$router->controller = $this->error_controller;
-		$router->action     = 'index';
+		$this->router->controller = $this->error_controller;
+		$this->router->action     = 'index';
 		
 		$this->_dispatchController();
 
@@ -195,7 +198,7 @@ class Peak_Controller_Front
 		    else $request[] = $params;
 		}
 		
-    	Peak_Registry::o()->router->setRequest($request);
+    	$this->router->setRequest($request);
     	
     	//if redirection is in the same controller, we don't want to reload controller
         //and call twice preAction and postAction methods
@@ -212,6 +215,12 @@ class Peak_Controller_Front
 	 * Empty by default
 	 */
     public function postDispatch() { }
+	
+	/**
+	 * Called after controller loading
+	 * Empty by default
+	 */
+	public function postDispatchController() { }
     
     /**
      * Called after rendering controller view

@@ -73,7 +73,6 @@ class Peak_View_Render_Layouts extends Peak_View_Render
 
         if(isset($no_cache)) $this->output($filepath);
         else $this->preOutput($filepath);
- 
     }
     
      

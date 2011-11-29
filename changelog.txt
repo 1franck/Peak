@@ -1,3 +1,27 @@
+#VERSION 0.9.1#
+
+ - added class Peak_Annotations
+ - fixed class name case sensitive problem on certain os with Peak_View_Helper_form, Peak_View_Helper_form_select and
+   Peak_View_Helper_form_input
+ - fixed some display bugs in Peak_Controller_Internal_Pkdoc
+ - fixed method save() from Peak_Model_Zendatable to return primary key on update query
+ - fixed a bug introduced in Peak_Controller_Front when added $router property
+ - fixed method isValid() from Peak_View_Cache to support custom cache id
+ - removed all shorcut methods about cache in Peak_View_Render
+ - renamed methods isCached() to isValid(), enableCacheStrip() to enableStrip(), isCachedBlock() to isValidBlock(),
+   cacheBlockEnd() to blockEnd() in Peak_View_Cache
+ - fixed bug in isCached() of class Peak_View_Cache
+ - deleted deprecated class Peak_View_Helper_Country 
+ - added method getColunms() in Peak_Model_Zendatable
+ - removed properties $_auto_describe and $_describe and method describe() in class Peak_Model_Zendatable.
+   All those informations are already in the parent class, modified methods __construct() and cleanArray() accordingly
+ - modified method redirectAction() to use method redirect() in Peak_Controller_Action
+ - added $router property in Peak_Controller_Front, Router object is now also stored in the Front Controller, 
+   modified Peak_Application accordingly
+ - modified methods getSize() from class Peak_Spl_Dirinfo and Peak_Spl_Fileinfo
+ - minor change to css in Peak_View_Helper_Debugbar
+ - added method postDispatchController() in Peak_Controller_Front
+
 #VERSION 0.9.0#
 
  - fixed problem with method getProperties() with value when class is abstract or is an interface in class Peak_Zreflection

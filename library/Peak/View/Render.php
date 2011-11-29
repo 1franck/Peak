@@ -7,16 +7,16 @@
  */
 abstract class Peak_View_Render
 {
-    
+
     public $scripts_file;          //controller action script view path used 
     public $scripts_path;          //controller action script view file name used
-       
+
     protected $_cache;             //view cache object
-	
+
 	//force child to implement those functions
     abstract public function render($file, $path = null);
 	abstract protected function output($data);
-	
+
     /**
      * Point to Peak_View __get method
      *
@@ -27,7 +27,7 @@ abstract class Peak_View_Render
     {
         return Peak_Registry::o()->view->$name;
     }
-    
+
     /**
      * Point to Peak_View __isset method
      *
@@ -38,7 +38,7 @@ abstract class Peak_View_Render
     {
         return isset(Peak_Registry::o()->view->$name);
     }
-    
+
     /**
      * Silent call to unknow method or
      * Throw trigger error when DEV_MODE is activated 
@@ -52,7 +52,6 @@ abstract class Peak_View_Render
     	return call_user_func_array(array($view, $method), $args);
     }
 
-    
     /**
      * Return public root url of your application
      *
@@ -73,7 +72,6 @@ abstract class Peak_View_Render
     	else return $url;
     }
 
-
     /**
      * Call child output method and cache it if cache activated;
      * Can be overloaded by engines to customize how the cache data
@@ -82,10 +80,10 @@ abstract class Peak_View_Render
      */
     protected function preOutput($data)
     {
-        if(!$this->isCacheActivated()) $this->output($data);
+        if(!$this->cache()->isEnabled()) $this->output($data);
         else {            
             //use cache instead outputing and evaluating view script
-            if($this->cache()->isCached()) include($this->cache()->getCacheFile());
+            if($this->cache()->isValid()) include($this->cache()->getCacheFile());
             else {
                 //cache and output current view script
                 ob_start();
@@ -110,69 +108,5 @@ abstract class Peak_View_Render
     	if(!is_object($this->_cache)) $this->_cache = new Peak_View_Cache();
     	return $this->_cache;
     }
-    
-    /**
-     * Check if cache object is loaded and cache enable
-     *
-     * @return bool
-     */
-    public function isCacheActivated()
-    {
-    	if(!is_object($this->_cache)) return false;
-    	else return $this->cache()->isEnabled();
-    }
-    
-    /**
-     * Shorcut of $this->cache()->enable()
-     *
-     * @see Peak_View_Cache::enable()
-     */
-    public function enableCache($time)
-    {
-    	$this->cache()->enable($time);
-    }
-    
-    /**
-     * Shorcut of $this->cache()->disable()
-     */
-    public function disableCache()
-    {
-    	$this->cache()->disable();	
-    }
-    
-    /**
-     * Shorcut of $this->cache()->isCached()
-     *
-     * @see Peak_View_Cache::isCached()
-     */
-    public function isCached($id = null)
-    {
-    	return $this->cache()->isCached($id);
-    }
 
-    /**
-     * Shorcut of $this->cache()->isCachedBlock()
-     *
-     * @see Peak_View_Cache::isCachedBlock()
-     */
-    public function isCachedBlock($id, $expiration)
-    {
-    	return $this->cache()->isCachedBlock($id, $expiration);
-    }
-
-    /**
-     * Shorcut of $this->cache()->cacheBlockEnd()
-     */
-    public function cacheBlockEnd()
-    {
-    	$this->cache()->cacheBlockEnd();
-    }
-
-    /**
-     * Shorcut of $this->cache()->getCacheBlock()
-     */
-    public function getCacheBlock()
-    {
-    	$this->cache()->getCacheBlock();
-    }      
 }
