@@ -366,7 +366,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'</h2>';
 				$content .= '<div class="block"><h5>'.$v['doc']['short'].'</h5>';
 				foreach($v['doc']['tags'] as $t) {
-					$content .= '@'.$t['name'].' '.$t['description'].'<br />';
+					$content .= '@'.$t['name'].' '.htmlentities($t['description']).'<br />';
 				}
 				$content .= '</div>';
 			}
@@ -385,7 +385,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 				                 '.$this->_visibility_label($v['visibility']).'
 								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'
 								 </h2>';
-				$content .= '<div class="block"><h5>'.$v['doc']['short'].'</h5><h5>'.$v['doc']['long'].'</h5><br />';
+				$content .= '<div class="block"><h5>'.htmlentities($v['doc']['short']).'</h5><h5>'.htmlentities($v['doc']['long']).'</h5><br />';
 				foreach($v['doc']['tags'] as $t) {
 					$content .= '@'.$t['name'].' '.$t['type'].' '.$t['variable'].' '.$t['description'].'<br />';
 				}

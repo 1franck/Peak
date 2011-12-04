@@ -1,5 +1,6 @@
 #VERSION 0.9.2#
  
+ - fixed html entities problem in Peak_Controller_Internal_Pkdoc
  - fixed another class name problem on certain case sensitive os with Peak_View_Helper_form, Peak_View_Helper_form_select, 
    Peak_View_Helper_form_input and Peak_View_Helper_tagattrs
  
