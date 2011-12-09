@@ -29,7 +29,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	/**
 	 * Show debugbar. For DEV purpose only
 	 */
-	public function postAction()
+	public function postRender()
 	{
 		$this->view->debugbar()->show();
 	}
@@ -51,6 +51,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		if(isset($this->params[0]) && in_array($this->params[0], $this->view->classes)) {
 			
 			$this->ref = new Peak_Zreflection_Class();
+
 			$this->ref->loadClass($this->params[0]);
 			$this->view->class = $this->ref;
 			
@@ -110,8 +111,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	private function layout()
 	{
 		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/1.4.0/bootstrap.min.css');
-		$layout = '
-<!DOCTYPE html>
+		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">

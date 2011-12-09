@@ -143,14 +143,6 @@ class Zend_Reflection_Method extends ReflectionMethod
      */
     public function getBody()
     {
-        /**
-         * THIS *FIX* A PROBLEM WITH INTERNAL CLASS
-         * the filename is empty when its an internal class so the rest of method crash
-         * @author Francois Lajoie
-         */
-        $filename = $this->getDeclaringClass()->getFileName();
-        if(empty($filename)) return;
-        
         $lines = array_slice(
             file($this->getDeclaringClass()->getFileName(), FILE_IGNORE_NEW_LINES),
             $this->getStartLine(),
