@@ -8,7 +8,7 @@
  * FOR DEMO PURPOSE ONLY
  */
 $demo_path = substr(str_replace(array($_SERVER['DOCUMENT_ROOT'],basename(dirname(__FILE__))),'',str_replace('\\','/',dirname(__FILE__))), 0, -1);
-
+@session_start();
 /**
  * OPTIONNAL CONSTANTS
  * Hint: This can be setted as well in .htaccess

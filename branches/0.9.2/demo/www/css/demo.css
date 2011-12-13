@@ -1,11 +1,12 @@
 /* Override some defaults */
 html, body {
-  background-color: #E1EBF7;
-  background:#eee url('../img/drip2.png') 0 38px repeat-x;
+  
+  background-color: #eee;
   font-family:Chivo;
   font-size:16px;
 }
 body {
+  background:#eee url('../img/drip2.png') 0 38px repeat-x;
   padding-top: 40px; /* 40px to make the container go all the way to the bottom of the topbar */
 }
 .container > footer p {
@@ -65,17 +66,28 @@ background-image: -webkit-gradient(
   border-left: 1px solid #eee;
 }
 
-.topbar .brand {
+.topbar2 {
+ z-index:2;
+ margin-top:-40px;
+}
+.topbar2 .brand {
   font-family: 'Merienda One', cursive;
   font-size:18px;
   text-shadow:2px 2px 0 #333;
+  color:#fff;
+  text-decoration:none;
 }
-.topbar .fill {
+.topbar2 .fill {
+  background-image:none;
+  background-color:#000000 !important;
   background:#000000 !important;
-  padding-top:10px;
+  padding-top:20px;
 }
-.topbar .btn {
+.topbar2 .btn {
   border: 0;
+}
+.topbar2 a {
+  
 }
 
 .coffee_cup {
