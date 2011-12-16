@@ -40,14 +40,29 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		
 		//print css & js
 		echo $this->_getAssets();
+        
+        //zend_db_profiler
+        $zdb_profiler = false;
+        if(class_exists('Zend_Db_Table', false)) {
+            $zdb_profiler = Zend_Db_Table::getDefaultAdapter()->getProfiler();
+            if($zdb_profiler->getEnabled() === false) $zdb_profiler = false;
+        }
+         
 		
 		//debug bar html
 		echo '<div id="pkdebugbar">
               <div class="pkdbpanel">
                <ul>
                 <li><a class="">PK v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
-                <li><a class="clock pkdb_tab" id="pkdb_chrono" onclick="pkdebugShow(\'pkdb_chrono\');">'.$chrono.' ms</a></li>
-                <li><a class="memory">'.$this->getMemoryUsage().'</a></li>
+                <li><a class="clock pkdb_tab" id="pkdb_chrono" onclick="pkdebugShow(\'pkdb_chrono\');">'.$chrono.' ms</a></li>';
+        if($zdb_profiler !== false) {
+            $nb_query = $zdb_profiler->getTotalNumQueries();
+            $nb_query = ($nb_query > 1) ? $nb_query.' queries' : $nb_query.' query';
+            $nb_query_chrono = round($zdb_profiler->getTotalElapsedSecs() * 1000,2).' ms';
+            echo '<li><a class="db pkdb_tab" id="pkdb_database" onclick="pkdebugShow(\'pkdb_database\');">'.$nb_query_chrono.' / '.$nb_query.'</a></li>';
+        }
+        
+        echo '  <li><a class="memory">'.$this->getMemoryUsage().'</a></li>
                 <li><a class="files pkdb_tab" id="pkdb_include" onclick="pkdebugShow(\'pkdb_include\');">'.$files_count.' Files</a></li>
                 <li><a class="variables pkdb_tab" id="pkdb_vars" onclick="pkdebugShow(\'pkdb_vars\');">Variables</a></li>
                 <li><a class="registry pkdb_tab" id="pkdb_registry" onclick="pkdebugShow(\'pkdb_registry\');">Registry</a></li>
@@ -129,6 +144,27 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         	echo '<h2 id="'.$name.'">'.$name.'</h2><pre>'.$object_data.'</pre>';
         }
         echo '</div>';
+        
+        if($zdb_profiler !== false) {
+            echo '<div class="window resizable" id="pkdb_database_window">';
+            echo '<h2>Database</h2>'.$nb_query.' in '.$nb_query_chrono.'<br />';
+            $longest_query_chrono  = 0;
+            $longest_query = null;
+            
+            foreach ($zdb_profiler->getQueryProfiles() as $query) {
+                if ($query->getElapsedSecs() > $longest_query_chrono) {
+                    $longest_query_chrono = $query->getElapsedSecs();
+                    $longest_query = htmlentities($query->getQuery());
+                }
+            }
+            $longest_query_chrono = round($longest_query_chrono * 1000,2);
+            $longest_query_percent = round($longest_query_chrono / ($zdb_profiler->getTotalElapsedSecs() * 1000) * 100);
+            $average = round(($zdb_profiler->getTotalElapsedSecs() /$zdb_profiler->getTotalNumQueries()) *1000, 2);
+
+            echo 'Average: '.$average.' ms / query<br /><br />';
+            echo 'Longest query &rarr; '.$longest_query_chrono.' ms ('.$longest_query_percent.'%)<pre>' . $longest_query . '</pre><br />';
+            echo '</div>';
+        }
         
         
         echo '</div><!-- /pkdbpanel --></div><!-- /pkdebugbar -->';
