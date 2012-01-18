@@ -49,5 +49,6 @@ catch (Peak_Controller_Exception $e) {
                ->render();
 }
 catch (Peak_Exception $e) {
-    echo $e->getMessage(); exit();
+    echo $e->getMessage();
+    exit();
 }
