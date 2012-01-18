@@ -98,16 +98,20 @@ class Peak_Core
     	
     	//load configuration object according to the file extension
     	switch($filetype) {
-    		
-    		case 'ini' : 
-    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
-    		    break;
-    		    
+
     		case 'php' :
     			$array = include($apppath.'/'.$file);
     			$conf = new Peak_Config();
     			$conf->setVars($array);
     			break;
+			
+			case 'ini' : 
+    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
+    		    break;
+			
+			default :
+				throw new Peak_Exception('ERR_CONFIG_FILE');
+				break;
     	}
     	
     	//check if we got the configuration for current environment mode or at least section 'all'

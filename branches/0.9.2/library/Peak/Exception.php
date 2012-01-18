@@ -21,7 +21,7 @@ class Peak_Exception extends Exception
 	const ERR_CORE_INIT_CONST_MISSING       = '%1$s is not specified (const %2$s)';
 	const ERR_DEFAULT                       = 'Request failed';
 	const ERR_CUSTOM                        = '%1$s';
-
+	const ERR_CONFIG_FILE                   = 'Application configuration file format invalid';
 
     /**
      * Set error key constant

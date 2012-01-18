@@ -44,8 +44,10 @@ try {
     $app->run()
         ->render();   
 }
-catch (Exception $e) {
-    //echo $e->getMessage(); exit();
+catch (Peak_Controller_Exception $e) {
     $app->front->errorDispatch($e)
                ->render();
+}
+catch (Peak_Exception $e) {
+    echo $e->getMessage(); exit();
 }
