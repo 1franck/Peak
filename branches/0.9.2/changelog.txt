@@ -1,5 +1,6 @@
 #VERSION 0.9.2#
  
+ - fixed two small bugs in Peak_View_Helper_Debugbar
  - fixed method cleanArray() in Peak_Model_Zendatable to force Zend_db to describe table. This prevents
    issues in some case where method save() is the first interaction with the table and $_metadata are not 
    yet gathered.

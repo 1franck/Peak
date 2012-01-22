@@ -136,7 +136,8 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         echo '<div class="window resizable" id="pkdb_registry_window">';
         echo '<h2>'.count(Peak_Registry::getObjectsList()).' registered objects</h2>';
         foreach(Peak_Registry::getObjectsList() as $name) {
-        	echo '<strong><a href="#'.$name.'">'.$name.'</a></strong> ['.Peak_Registry::getClassName($name).']<br />';
+			$type = is_object(Peak_Registry::o()->$name) ? Peak_Registry::getClassName($name) : '';
+        	echo '<strong><a href="#'.$name.'">'.$name.'</a></strong> ['.$type.']<br />';
         }
         
         foreach(Peak_Registry::getObjectsList() as $name) {
@@ -148,21 +149,25 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         if($zdb_profiler !== false) {
             echo '<div class="window resizable" id="pkdb_database_window">';
             echo '<h2>Database</h2>'.$nb_query.' in '.$nb_query_chrono.'<br />';
-            $longest_query_chrono  = 0;
-            $longest_query = null;
-            
-            foreach ($zdb_profiler->getQueryProfiles() as $query) {
-                if ($query->getElapsedSecs() > $longest_query_chrono) {
-                    $longest_query_chrono = $query->getElapsedSecs();
-                    $longest_query = htmlentities($query->getQuery());
-                }
-            }
-            $longest_query_chrono = round($longest_query_chrono * 1000,2);
-            $longest_query_percent = round($longest_query_chrono / ($zdb_profiler->getTotalElapsedSecs() * 1000) * 100);
-            $average = round(($zdb_profiler->getTotalElapsedSecs() /$zdb_profiler->getTotalNumQueries()) *1000, 2);
 
-            echo 'Average: '.$average.' ms / query<br /><br />';
-            echo 'Longest query &rarr; '.$longest_query_chrono.' ms ('.$longest_query_percent.'%)<pre>' . $longest_query . '</pre><br />';
+			if($zdb_profiler->getTotalNumQueries() > 0) {
+				
+				$longest_query_chrono  = 0;
+				$longest_query = null;
+				
+				foreach ($zdb_profiler->getQueryProfiles() as $query) {
+					if ($query->getElapsedSecs() > $longest_query_chrono) {
+						$longest_query_chrono = $query->getElapsedSecs();
+						$longest_query = htmlentities($query->getQuery());
+					}
+				}
+				$longest_query_chrono = round($longest_query_chrono * 1000,2);
+				$longest_query_percent = round($longest_query_chrono / ($zdb_profiler->getTotalElapsedSecs() * 1000) * 100);
+				$average = round(($zdb_profiler->getTotalElapsedSecs() /$zdb_profiler->getTotalNumQueries()) *1000, 2);
+	
+				echo 'Average: '.$average.' ms / query<br /><br />';
+				echo 'Longest query &rarr; '.$longest_query_chrono.' ms ('.$longest_query_percent.'%)<pre>' . $longest_query . '</pre><br />';
+			}
             echo '</div>';
         }
         
