@@ -9,11 +9,6 @@ abstract class Peak_Application_Modules
 {
 
 	/**
-	 * @deprecated
-	 */
-	protected $_ctrl_name = '';
-	
-	/**
 	 * Module name
 	 * @var string
 	 */
@@ -70,23 +65,38 @@ abstract class Peak_Application_Modules
      */
     protected function prepare()
     {
-    	if(!($this->_internal))	{
-    		//ctrl name
-    		$this->_ctrl_name = str_ireplace('controller','',get_class($this));
-    		$this->_path = Peak_Core::getPath('modules').'/'.$this->_ctrl_name;
-    	}
-    	else {
-    		//ctrl name
-    		$this->_ctrl_name = str_ireplace('Peak_Controller_Internal_','',get_class($this));
-    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/'.$this->_ctrl_name;
-    	}
-    	//module name
-    	if(empty($this->_name)) $this->_name = $this->_ctrl_name;
+		$this->defineName();
+		$this->definePath();
 
     	//overdrive application paths to modules folder
         $this->init($this->_name, $this->_path);
     }
 
+	/**
+	 * Define module name
+	 */
+	protected function defineName()
+	{
+		if(empty($this->_name)) {
+			if(!($this->_internal))	$replace = 'controller';
+			else $replace = 'Peak_Controller_Internal_';
+
+			$this->_name = str_ireplace($replace,'',get_class($this));
+		}
+	}
+
+	/**
+	 * Define module path
+	 */
+	protected function definePath()
+	{
+		if(!($this->_internal))	{
+    		$this->_path = Peak_Core::getPath('modules').'/'.$this->_name;
+    	}
+    	else {
+    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/'.$this->_name;
+    	}
+	}
 
     /**
      * Overdrive core application paths configs to a module application paths.
@@ -116,11 +126,9 @@ abstract class Peak_Application_Modules
      * Run modules requested controller
      */
     public function run()
-    {      	
-        $router = Peak_Registry::o()->router; 
-        
+    {
         //add module name to the end Peak_Router $base_uri      
-        $router->base_uri .= $this->_name.'/';
+        Peak_Registry::o()->router->base_uri .= $this->_name.'/';
  
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run();
