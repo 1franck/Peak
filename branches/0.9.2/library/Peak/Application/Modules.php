@@ -21,15 +21,13 @@ abstract class Peak_Application_Modules
     protected $_path = '';
     
     /**
-     * Module status
+     * Module type
      * @var bool
      */
     protected $_internal = false;
         
     /**
-     * Get the name of child class and use it as the module name
-     * Prepare core to run a module
-     * init module bootstrap and front controller if exists
+     * Init module, bootstrap and front controller if exists and run module
      */
     public function __construct()
     {      	
