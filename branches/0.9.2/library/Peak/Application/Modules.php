@@ -33,29 +33,19 @@ abstract class Peak_Application_Modules
     {      	
     	//prepare module
     	$this->prepare();
-              
-        //initialize module bootstrap if exists, otherwise unset app bootstrap
-        if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
-        	include Peak_Core::getPath('application').'/bootstrap.php';
-        }
-        $bootstrap_class = $this->_name.'_Bootstrap';
-        if(class_exists($bootstrap_class,false)) {
-        	//delete previously added router regex for the module
-        	Peak_Registry::o()->router->deleteRegex();  
-        	//load module bootstrapper
-        	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	
-        }
-        else Peak_Registry::o()->app->bootstrap = null;
+		
+		//delete previously added router regex for the module
+        Peak_Registry::o()->router->deleteRegex();
         
-        //initialize module front if exists, otherwise load peak default front
-        if(file_exists(Peak_Core::getPath('application').'/front.php')) {
-        	include Peak_Core::getPath('application').'/front.php';
-        }
-        $front_class = $this->_name.'_Front';
-        if(class_exists($front_class,false)) {
-        	Peak_Registry::o()->app->front = new $front_class();
-        }
-        else Peak_Registry::o()->app->front = new Peak_Controller_Front();
+		$app_path = Peak_Core::getPath('application');		
+		      
+        //load initialize module bootstrap if exists
+        if(file_exists($app_path.'/bootstrap.php')) include $app_path.'/bootstrap.php';
+		Peak_Registry::o()->app->loadBootstrap($this->_name.'_');
+		
+		//initialize module front if exists, otherwise load peak default front
+        if(file_exists($app_path.'/front.php')) include $app_path.'/front.php';
+		Peak_Registry::o()->app->loadFront($this->_name.'_');
     }
     
     /**
