@@ -1,5 +1,6 @@
 #VERSION 0.9.2#
  
+ - added class Peak_Model_Authentication to simplify authentication mechanism with database 
  - fixed method preAction() of Peak_Controller_Internal_PkError due to recent change in Peak_View_Cache
  - modified method __construct() from Peak_Application_Modules to use newly created method in Peak_Application 
  - added 2 methods in Peak_Application to clean up method __construct()
