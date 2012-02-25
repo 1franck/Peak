@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('PK_VERSION', '0.9.1');
+define('PK_VERSION', '0.9.2');
 define('PK_NAME'   , 'PEAK');
 define('PK_DESCR'  , 'Php wEb Application Kernel');
 
@@ -98,16 +98,20 @@ class Peak_Core
     	
     	//load configuration object according to the file extension
     	switch($filetype) {
-    		
-    		case 'ini' : 
-    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
-    		    break;
-    		    
+
     		case 'php' :
     			$array = include($apppath.'/'.$file);
     			$conf = new Peak_Config();
     			$conf->setVars($array);
     			break;
+			
+			case 'ini' : 
+    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
+    		    break;
+			
+			default :
+				throw new Peak_Exception('ERR_CONFIG_FILE');
+				break;
     	}
     	
     	//check if we got the configuration for current environment mode or at least section 'all'

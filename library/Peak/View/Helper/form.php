@@ -5,7 +5,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Form
+class Peak_View_Helper_form
 {
     /**
      * Select form element 
@@ -14,7 +14,7 @@ class Peak_View_Helper_Form
      */
     public function select()
     {
-        return new Peak_View_Helper_Form_select();
+        return new Peak_View_Helper_form_select();
     }
     
     /**
@@ -24,6 +24,6 @@ class Peak_View_Helper_Form
      */
     public function input()
     {
-        return new Peak_View_Helper_Form_input();
+        return new Peak_View_Helper_form_input();
     }
 }

@@ -37,14 +37,37 @@ class Peak_Application
         Peak_Registry::set('router', $router = new Peak_Router(PUBLIC_ROOT));
 		
         // load app bootstrap
-        if(class_exists('bootstrap',false)) $this->bootstrap = new bootstrap();   
+		$this->loadBootstrap();
         
         // load front controller
-        $this->front = (class_exists('front',false)) ? new front() : new Peak_Controller_Front();
+		$this->loadFront();
     }
 
+	/**
+	 * Load and store application Bootstrapper
+	 *
+	 * @param string $prefix Bootstrap class prefix name if exists
+	 */
+	public function loadBootstrap($prefix = '')
+	{
+		$cname = $prefix.'Bootstrap';
+		if(class_exists($cname,false)) $this->bootstrap = new $cname();
+		else $this->bootstrap = null;
+	}
+
+	/**
+	 * Load and store application Front Controller
+	 *
+	 * @param string $prefix Front class prefix name if exists
+	 */
+	public function loadFront($prefix = '')
+	{
+		$cname = $prefix.'Front';
+		$this->front = (class_exists($cname,false)) ? new $cname() : new Peak_Controller_Front();
+	}
+
     /**
-     * Load front controller and start dispatching
+     * Start front dispatching
      * @see Peak_Controller_Front::dispatch() for param
      */
     public function run()

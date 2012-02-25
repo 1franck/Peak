@@ -5,7 +5,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Form_Input extends Peak_View_Helper_tagattrs
+class Peak_View_Helper_form_input extends Peak_View_Helper_tagattrs
 {
     
     /**
