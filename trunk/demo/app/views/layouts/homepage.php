@@ -7,15 +7,13 @@
     <meta name="author" content="">
     <link rel="stylesheet" type="text/css" href="<?php $this->baseUrl('css/bootstrap.min.css'); ?>" media="screen" />
     <link rel="stylesheet" type="text/css" href="<?php $this->baseUrl('css/demo.css'); ?>" media="screen" />
-    <link href='http://fonts.googleapis.com/css?family=Chivo' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Merienda+One' rel='stylesheet' type='text/css'>
   </head>
 <body>
 
-    <div class="topbar">
+    <div class="topbar2">
       <div class="fill">
         <div class="container">
-          <a class="brand" href="#">Peak Framework</a>
+          <a class="brand" href="#"><strong>Pe</strong>ak Fr<strong>a</strong>mewor<strong>k</strong></a>
 
           <ul class="nav">
           </ul>

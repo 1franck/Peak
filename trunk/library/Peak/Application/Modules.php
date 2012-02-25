@@ -9,11 +9,6 @@ abstract class Peak_Application_Modules
 {
 
 	/**
-	 * @deprecated
-	 */
-	protected $_ctrl_name = '';
-	
-	/**
 	 * Module name
 	 * @var string
 	 */
@@ -26,43 +21,31 @@ abstract class Peak_Application_Modules
     protected $_path = '';
     
     /**
-     * Module status
+     * Module type
      * @var bool
      */
     protected $_internal = false;
         
     /**
-     * Get the name of child class and use it as the module name
-     * Prepare core to run a module
-     * init module bootstrap and front controller if exists
+     * Init module, bootstrap and front controller if exists and run module
      */
     public function __construct()
     {      	
     	//prepare module
     	$this->prepare();
-              
-        //initialize module bootstrap if exists, otherwise unset app bootstrap
-        if(file_exists(Peak_Core::getPath('application').'/bootstrap.php')) {
-        	include Peak_Core::getPath('application').'/bootstrap.php';
-        }
-        $bootstrap_class = $this->_name.'_Bootstrap';
-        if(class_exists($bootstrap_class,false)) {
-        	//delete previously added router regex for the module
-        	Peak_Registry::o()->router->deleteRegex();  
-        	//load module bootstrapper
-        	Peak_Registry::o()->app->bootstrap = new $bootstrap_class();     	
-        }
-        else Peak_Registry::o()->app->bootstrap = null;
+		
+		//delete previously added router regex for the module
+        Peak_Registry::o()->router->deleteRegex();
         
-        //initialize module front if exists, otherwise load peak default front
-        if(file_exists(Peak_Core::getPath('application').'/front.php')) {
-        	include Peak_Core::getPath('application').'/front.php';
-        }
-        $front_class = $this->_name.'_Front';
-        if(class_exists($front_class,false)) {
-        	Peak_Registry::o()->app->front = new $front_class();
-        }
-        else Peak_Registry::o()->app->front = new Peak_Controller_Front();
+		$app_path = Peak_Core::getPath('application');		
+		      
+        //load initialize module bootstrap if exists
+        if(file_exists($app_path.'/bootstrap.php')) include $app_path.'/bootstrap.php';
+		Peak_Registry::o()->app->loadBootstrap($this->_name.'_');
+		
+		//initialize module front if exists, otherwise load peak default front
+        if(file_exists($app_path.'/front.php')) include $app_path.'/front.php';
+		Peak_Registry::o()->app->loadFront($this->_name.'_');
     }
     
     /**
@@ -70,23 +53,38 @@ abstract class Peak_Application_Modules
      */
     protected function prepare()
     {
-    	if(!($this->_internal))	{
-    		//ctrl name
-    		$this->_ctrl_name = str_ireplace('controller','',get_class($this));
-    		$this->_path = Peak_Core::getPath('modules').'/'.$this->_ctrl_name;
-    	}
-    	else {
-    		//ctrl name
-    		$this->_ctrl_name = str_ireplace('Peak_Controller_Internal_','',get_class($this));
-    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/'.$this->_ctrl_name;
-    	}
-    	//module name
-    	if(empty($this->_name)) $this->_name = $this->_ctrl_name;
+		$this->defineName();
+		$this->definePath();
 
     	//overdrive application paths to modules folder
         $this->init($this->_name, $this->_path);
     }
 
+	/**
+	 * Define module name
+	 */
+	protected function defineName()
+	{
+		if(empty($this->_name)) {
+			if(!($this->_internal))	$replace = 'controller';
+			else $replace = 'Peak_Controller_Internal_';
+
+			$this->_name = str_ireplace($replace,'',get_class($this));
+		}
+	}
+
+	/**
+	 * Define module path
+	 */
+	protected function definePath()
+	{
+		if(!($this->_internal))	{
+    		$this->_path = Peak_Core::getPath('modules').'/'.$this->_name;
+    	}
+    	else {
+    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/'.$this->_name;
+    	}
+	}
 
     /**
      * Overdrive core application paths configs to a module application paths.
@@ -116,11 +114,9 @@ abstract class Peak_Application_Modules
      * Run modules requested controller
      */
     public function run()
-    {      	
-        $router = Peak_Registry::o()->router; 
-        
+    {
         //add module name to the end Peak_Router $base_uri      
-        $router->base_uri .= $this->_name.'/';
+        Peak_Registry::o()->router->base_uri .= $this->_name.'/';
  
         //re-call Peak_Application run() for handling the new routing
         Peak_Registry::o()->app->run();

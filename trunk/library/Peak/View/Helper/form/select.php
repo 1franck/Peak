@@ -5,7 +5,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_Form_Select extends Peak_View_Helper_tagattrs
+class Peak_View_Helper_form_select extends Peak_View_Helper_tagattrs
 {
     /**
      * Options data

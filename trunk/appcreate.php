@@ -309,6 +309,7 @@ function errfield($name, $msg = false)
  * HTML page
  */
 ?>
+<!DOCTYPE html>
 <html>
  <head>
   <title>Create Peak Application</title><meta charset="utf-8" />

@@ -18,7 +18,7 @@ class errorController extends Peak_Controller_Action
      */
     public function _index()
     {
-
+        header('HTTP/1.1 404 Not Found');
     }
 
     /**

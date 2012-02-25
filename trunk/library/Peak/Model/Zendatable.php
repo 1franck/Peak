@@ -132,6 +132,9 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 */
 	public function cleanArray($data)
 	{
+		//just in case zend_db have not describe table yet
+		if(empty($this->_metadata)) $this->_getCols();
+
 	    //remove unknow table key
 	    foreach($data as $k => $v) {
 	        if(!isset($this->_metadata[$k])) unset($data[$k]);

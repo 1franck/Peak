@@ -10,7 +10,6 @@ class indexController extends Peak_Controller_Action
      */
     public function preAction()
     {
-
     }
 
     /**
@@ -18,7 +17,6 @@ class indexController extends Peak_Controller_Action
      */
     public function _index()
     {
- 
     }
 
     /**
@@ -26,16 +24,5 @@ class indexController extends Peak_Controller_Action
      */
     public function postAction()
     {
-
     }
-    
-    /**
-     * Show debug bar after rendering action view
-     */
-    public function postRender()
-    {
-        //$this->view->debugbar('show');
-    }
-
-
 }

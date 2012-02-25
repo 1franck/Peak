@@ -5,7 +5,7 @@
  * @author  Francois Lajoie
  * @version $Id$
  */
-class Peak_View_Helper_tagAttrs
+class Peak_View_Helper_tagattrs
 {
     /**
      * Attributes
