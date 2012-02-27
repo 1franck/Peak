@@ -178,4 +178,40 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	{
 		return $this->_db->query($query);
 	}
+	
+	/**
+	 * Shorcut for $_db->quote()
+	 * @see Zend_Db_Adapter_Abstract
+	 */
+	public function quote($value, $type = null)
+	{
+		return $this->_db->query($query);
+	}
+	
+	/**
+	 * Shorcut for $_db->quoteInto()
+	 * @see Zend_Db_Adapter_Abstract
+	 */
+	public function quoteInto($text, $value, $type = null, $count = null)
+	{
+		return $this->_db->quoteInto($text, $value, $type, $count);
+	}
+	
+	/**
+	 * Shorcut for $_db->quoteIdentifier()
+	 * @see Zend_Db_Adapter_Abstract
+	 */
+	public function quoteIdentifier($ident, $auto=false)
+	{
+		$this->_db->quoteIdentifier($ident, $auto);
+	}
+	
+	/**
+	 * Shorcut for $_db->quoteColumnAs()
+	 * @see Zend_Db_Adapter_Abstract
+	 */
+	public function quoteColumnAs($ident, $alias, $auto=false)
+	{
+		$this->_db->quoteColumnAs($ident, $alias, $auto);
+	}
 }

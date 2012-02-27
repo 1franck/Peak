@@ -1,5 +1,7 @@
 #VERSION 0.9.3#
 
+ - added 4 new shorcut method for escaping stuff in Peak_Model_Zendatable
+
 #VERSION 0.9.2#
  
  - added class Peak_Model_Authentication to simplify authentication mechanism with database 
