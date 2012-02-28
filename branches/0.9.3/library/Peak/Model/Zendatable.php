@@ -13,6 +13,12 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * @var integer
 	 */
 	public $last_count = null;
+	
+	/**
+	 * Pagination object
+	 * @var object
+	 */
+	protected $_pagination;
 
     /**
 	 * Set db default adpater
@@ -213,5 +219,15 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	public function quoteColumnAs($ident, $alias, $auto=false)
 	{
 		$this->_db->quoteColumnAs($ident, $alias, $auto);
+	}
+	
+	/**
+	 * Instanciate and return instance of Peak_Model_Pagination
+	 * @see Zend_Db_Adapter_Abstract
+	 */
+	public function pagination()
+	{
+		if(!isset($this->_pagination)) $this->_pagination = new Peak_Model_Pagination($this);
+		return $this->_pagination;
 	}
 }
