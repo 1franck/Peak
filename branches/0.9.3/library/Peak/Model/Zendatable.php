@@ -18,7 +18,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * Pagination object
 	 * @var object
 	 */
-	protected $_pagination;
+	protected $_paging;
 
     /**
 	 * Set db default adpater
@@ -225,9 +225,9 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * Instanciate and return instance of Peak_Model_Pagination
 	 * @see Zend_Db_Adapter_Abstract
 	 */
-	public function pagination()
+	public function paging()
 	{
-		if(!isset($this->_pagination)) $this->_pagination = new Peak_Model_Pagination($this);
-		return $this->_pagination;
+		if(!isset($this->_paging)) $this->_paging = new Peak_Model_Pagination($this);
+		return $this->_paging;
 	}
 }

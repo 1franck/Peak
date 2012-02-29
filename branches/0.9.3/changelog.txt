@@ -1,6 +1,7 @@
 #VERSION 0.9.3#
 
- - added method pagination() in Peak_Model_Zendatable to access to Peak_Model_Pagination 
+ - added method calculate() in Peak_Model_Pagination
+ - added method paging() in Peak_Model_Zendatable to access to Peak_Model_Pagination 
  - added new class Peak_Model_Pagination for Peak_Model_Zendatable
  - added 4 new shorcut method for escaping stuff in Peak_Model_Zendatable
 

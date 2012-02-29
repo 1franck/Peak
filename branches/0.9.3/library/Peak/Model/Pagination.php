@@ -168,14 +168,11 @@ class Peak_Model_Pagination
     {
         return $this->_total;
     }
-
+    
     /**
-     * Calculate all the pagination stuff and return a pages items result
-     *
-     * @params string
-     * @return mixed
+     * Calculate stuff for pagination
      */
-    public function getPage($page_number)
+    public function calculate()
     {
         //check if we need to count how many total number _db_objectof items we have
         if(!isset($this->_total)) {
@@ -188,18 +185,29 @@ class Peak_Model_Pagination
         }
         else $this->_pcount = 1;
         
-        //set current page
-    	if((isset($page_number)) && (is_numeric($page_number)) && ($page_number <= $this->_pcount)) {
-    	   	$this->_curpage = $page_number;
-    	}
-    	else $this->_curpage = $page_number;
-        
         //generate pages
         $this->_pages = array();
         if($this->_pcount <= 1) $this->_pages[1] = 1;
     	else {
     		for($i = 1;$i <= $this->_pcount;++$i) $this->_pages[$i] = $i;
-    	}   	
+    	}
+        
+        return $this;
+    }
+
+    /**
+     * Calculate all the pagination stuff and return a pages items result
+     *
+     * @params string $pn page number
+     * @return mixed
+     */
+    public function getPage($pn)
+    {
+        //set current page
+    	if((isset($pn)) && (is_numeric($pn)) && ($pn <= $this->_pcount)) {
+    	   	$this->_curpage = $pn;
+    	}
+    	else $this->_curpage = 1;
         
         //prev/next page
         $this->_prevpage = ($this->_curpage > 1) ? $this->_curpage  - 1 : null;
@@ -267,6 +275,8 @@ class Peak_Model_Pagination
     public function setPagesRange($range = null)
     {
         if(is_numeric($range) && ($range <= $this->_pcount) && is_array($this->_pages)) {
+            
+            $this->_pages_range = array();
  
             $diff = $range - $range - $range;
               
@@ -311,6 +321,19 @@ class Peak_Model_Pagination
                        'pages_count'    => $this->_pcount,
                      );
         
-        return new ArrayObject($array);
+        $arrobj = new ArrayObject($array);
+        $arrobj->setFlags(ArrayObject::ARRAY_AS_PROPS);
+        return $arrobj;
+    }
+    
+    /**
+     * Check if a page exists
+     *
+     * @param  integer $page_number
+     * @return bool
+     */
+    public function isPage($page_number)
+    {
+        return (isset($this->_pages[$page_number])) ? true : false;
     }
 }
