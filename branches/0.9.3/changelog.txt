@@ -1,5 +1,6 @@
 #VERSION 0.9.3#
 
+ - added methods setValidateFilters() and setSanitizeFilters() in Peak_Filters
  - added method calculate() in Peak_Model_Pagination
  - added method paging() in Peak_Model_Zendatable to access to Peak_Model_Pagination 
  - added new class Peak_Model_Pagination for Peak_Model_Zendatable
