@@ -230,6 +230,31 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		return $filters;
 	}
 	
+		
+	/**
+	 * Set sanitize filters array
+	 *
+	 * @param array $filters
+	 */
+	public function setSanitizeFilters($filters)
+	{
+		$this->_sanitize = $filters;
+	}
+	
+	/**
+	 * Add a single sanitize data_name filter on the fly
+	 *
+	 * @param  array  $data_name
+	 * @param  array  $filter
+	 * @param  mixed  $errors
+	 * @return object $this (for chaining)
+	 */
+	public function addSanitizeFilter($data_name, $filters, $errors = null)
+	{
+		$this->_sanitize[] = array($data_name => array('filters' => $filters, 'errors' => $errrors));
+		return $this;
+	}
+		
 	/**
      * Check if data is not empty
      * 

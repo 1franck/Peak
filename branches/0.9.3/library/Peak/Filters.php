@@ -70,16 +70,6 @@ abstract class Peak_Filters
 	{
 		return $this->_sanitize;
 	}
-	
-	/**
-	 * Set sanitize filters array
-	 *
-	 * @param array $filters
-	 */
-	public function setSanitizeFilters($filters)
-	{
-		$this->_sanitize = $filters;
-	}
 
 	/**
 	 * Get global sanitize filter
@@ -99,16 +89,6 @@ abstract class Peak_Filters
 	public function getValidateFilters()
 	{
 		return $this->_validate;
-	}
-	
-	/**
-	 * Set validate filters array
-	 *
-	 * @param array $filters
-	 */
-	public function setValidateFilters($filters)
-	{
-		$this->_validate = $filters;
 	}
 
 	/**
