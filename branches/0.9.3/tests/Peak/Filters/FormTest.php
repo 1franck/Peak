@@ -19,6 +19,7 @@ require_once 'Peak/Exception.php';
 require_once dirname(__FILE__).'/FormTest/Form1.php';
 require_once dirname(__FILE__).'/FormTest/Form2.php';
 require_once dirname(__FILE__).'/FormTest/Form3.php';
+require_once dirname(__FILE__).'/FormTest/Form4.php';
 
 /**
  * @category   Peak
@@ -61,8 +62,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     	$f = new Form1();
     	
-     	if($f->validate() === false) $result = false;
-    	else $result = true;
+     	$result = ($f->validate() === false) ? false : true;
     	
     	$this->assertTrue($result);
     }
@@ -81,8 +81,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     	$f = new Form1();
     	
-     	if($f->validate() === false) $result = false;
-    	else $result = true;
+     	$result = ($f->validate() === false) ? false : true;
     	
     	$this->assertFalse($result);
     	
@@ -143,8 +142,7 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
 		
 		$f = new Form3();
 
-		if($f->validate() === false) $result = false;
-    	else $result = true;
+		$result = ($f->validate() === false) ? false : true;
    	
     	$this->assertTrue($result);	
  	}
@@ -157,12 +155,37 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
 		
 		$f = new Form3();
 
-		if($f->validate() === false) $result = false;
-    	else $result = true;
+		$result = ($f->validate() === false) ? false : true;
     	
     	//print_r($f->getErrors());
     	
     	$this->assertFalse($result);
 		
- 	}  
+ 	}
+	
+ 	function testAddValidate()
+ 	{
+		$_POST = array('my_number' => '235');
+		
+		$f = new Form4();
+		
+		//validate if number is good
+		$result = ($f->validate() === false) ? false : true;
+
+		$this->assertTrue($result);
+		
+		
+		$_POST = array('my_number' => -36);
+		//validate if number is good
+		$f = new Form4();
+		$result = ($f->validate() === false) ? false : true;
+		$this->assertFalse($result);
+		
+		
+		$_POST = array();
+		//validate if number is good
+		$f = new Form4();
+		$result = ($f->validate() === false) ? false : true;
+		$this->assertTrue($result);
+ 	}
 }

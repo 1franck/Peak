@@ -113,6 +113,8 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	public function validate()
 	{	
 		$result = array();
+		
+		if(empty($this->_validate)) return true;
 
 		foreach($this->_validate as $keyname => $keyval) {
 
@@ -236,9 +238,9 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 *
 	 * @param array $filters
 	 */
-	public function setSanitizeFilters($filters)
+	public function setValidateFilters($filters)
 	{
-		$this->_sanitize = $filters;
+		$this->_validate = $filters;
 	}
 	
 	/**
@@ -249,9 +251,10 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 * @param  mixed  $errors
 	 * @return object $this (for chaining)
 	 */
-	public function addSanitizeFilter($data_name, $filters, $errors = null)
+	public function addValidateFilter($data_name, $filters, $errors = null)
 	{
-		$this->_sanitize[] = array($data_name => array('filters' => $filters, 'errors' => $errrors));
+		if(!is_array($this->_validate)) $this->_validate = array();		
+		$this->_validate[$data_name] = array('filters' => $filters, 'errors' => $errors);
 		return $this;
 	}
 		
