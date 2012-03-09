@@ -1,5 +1,6 @@
 #VERSION 0.9.3#
 
+ - fixed an illegal string offset bug in Peak_Core::initConfig() for PHP 5.4
  - added methods addValidateFilter() and addValidateFilters() in Peak_Filters_Advanced
  - added method calculate() in Peak_Model_Pagination
  - added method paging() in Peak_Model_Zendatable to access to Peak_Model_Pagination 

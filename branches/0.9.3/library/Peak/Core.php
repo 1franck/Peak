@@ -127,11 +127,13 @@ class Peak_Core
     	}
     	
     	//add APPLICATION_ABSPATH to 'path' key value
-    	if(isset($conf->$env['path'])) {
-    		foreach($conf->$env['path'] as $pathname => $path) {
-    			$conf->$env['path'][$pathname] = $apppath.'/'.$path;
+    	if(array_key_exists('path', $conf->$env)) {
+			$conf_env = &$conf->$env;
+    		foreach($conf_env['path'] as $pathname => $path) {
+    			$conf_env['path'][$pathname] = $apppath.'/'.$path;
     		}
     	}
+		
     	
     	//merge app config paths with core app paths  	
     	if(isset($conf->all['path'])) {
