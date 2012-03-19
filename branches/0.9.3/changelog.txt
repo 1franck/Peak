@@ -1,5 +1,10 @@
 #VERSION 0.9.3#
 
+ - added a new exception constant in Peak_Controller_Exception 
+ - added method dispatchActionParams() and property $actions_with_params in Peak_Controller_Action. This allow us, when activated,
+   to call actions with arguments directly and force action url to have those arguments instead of checking them with property
+   $params and method params() inside action method. Note that this mode is more strict and force url to contains those params for
+   a specific action.
  - fixed an illegal string offset bug in Peak_Core::initConfig() for PHP 5.4
  - added methods addValidateFilter() and addValidateFilters() in Peak_Filters_Advanced
  - added method calculate() in Peak_Model_Pagination
