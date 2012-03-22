@@ -110,7 +110,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	 */
 	private function layout()
 	{
-		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/1.4.0/bootstrap.min.css');
+		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.0.2/bootstrap.min.css');
 		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>

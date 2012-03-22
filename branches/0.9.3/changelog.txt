@@ -1,5 +1,6 @@
 #VERSION 0.9.3#
 
+ - updated vendor twitter bootstrap 
  - added a new exception constant in Peak_Controller_Exception 
  - added method dispatchActionParams() and property $actions_with_params in Peak_Controller_Action. This allow us, when activated,
    to call actions with arguments directly and force action url to have those arguments instead of checking them with property
