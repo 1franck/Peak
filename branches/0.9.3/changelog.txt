@@ -1,5 +1,7 @@
 #VERSION 0.9.3#
 
+
+ - fixed unwanted double slashes of server request uri in Peak_Router::getRequestURI()
  - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
  - updated vendor twitter bootstrap 
  - added a new exception constant in Peak_Controller_Exception 
