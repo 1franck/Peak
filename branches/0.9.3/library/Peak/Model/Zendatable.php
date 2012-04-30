@@ -175,7 +175,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 
 	/**
-	 * Shorcut for $_db->query()
+	 * Shortcut for $_db->query()
 	 *
 	 * @param  string   $query
 	 * @return resource
@@ -186,12 +186,12 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 	
 	/**
-	 * Shorcut for $_db->quote()
+	 * Shortcut for $_db->quote()
 	 * @see Zend_Db_Adapter_Abstract
 	 */
 	public function quote($value, $type = null)
 	{
-		return $this->_db->query($query);
+		return $this->_db->quote($value, $type);
 	}
 	
 	/**
@@ -204,7 +204,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 	
 	/**
-	 * Shorcut for $_db->quoteIdentifier()
+	 * Shortcut for $_db->quoteIdentifier()
 	 * @see Zend_Db_Adapter_Abstract
 	 */
 	public function quoteIdentifier($ident, $auto=false)
@@ -213,7 +213,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 	
 	/**
-	 * Shorcut for $_db->quoteColumnAs()
+	 * Shortcut for $_db->quoteColumnAs()
 	 * @see Zend_Db_Adapter_Abstract
 	 */
 	public function quoteColumnAs($ident, $alias, $auto=false)
