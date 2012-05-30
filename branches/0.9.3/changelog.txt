@@ -1,6 +1,6 @@
 #VERSION 0.9.3#
 
-
+ - fixed the call of Peak_Registry::obj() to Peak_Registry::o() in Peak_Lang
  - fixed a method name error in Peak_Model_Zendatable
  - fixed unwanted double slashes of server request uri in Peak_Router::getRequestURI()
  - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
