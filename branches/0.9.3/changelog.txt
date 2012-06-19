@@ -1,5 +1,6 @@
 #VERSION 0.9.3#
 
+ - added method noRender() in class Peak_View for disabling view rendering and modified method render() to support this.
  - fixed the call of Peak_Registry::obj() to Peak_Registry::o() in Peak_Lang
  - fixed a method name error in Peak_Model_Zendatable
  - fixed unwanted double slashes of server request uri in Peak_Router::getRequestURI()
