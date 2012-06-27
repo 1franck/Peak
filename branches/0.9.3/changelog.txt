@@ -1,5 +1,6 @@
 #VERSION 0.9.3#
 
+ - changed property $actions_with_params to true by default in Peak_Controller_Action
  - added method noRender() in class Peak_View for disabling view rendering and modified method render() to support this.
  - fixed the call of Peak_Registry::obj() to Peak_Registry::o() in Peak_Lang
  - fixed a method name error in Peak_Model_Zendatable

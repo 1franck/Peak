@@ -59,7 +59,7 @@ abstract class Peak_Controller_Action
 	 * dispatch action with argument
 	 * @var bool
 	 */
-	protected $actions_with_params = false;
+	protected $actions_with_params = true;
 
 
     public function __construct()
