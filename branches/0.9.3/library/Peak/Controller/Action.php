@@ -195,7 +195,6 @@ abstract class Peak_Controller_Action
     }
 	
 	/**
-	 * Experimental!
 	 * Check action methods agrs needed and call it properly
 	 *
 	 * @param string $action_name
