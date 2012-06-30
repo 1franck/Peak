@@ -86,8 +86,8 @@ class Peak_Lang
  */
 function __($text, $replaces = null, $func = null)
 {
-	if(Peak_Registry::obj()->lang instanceof Peak_Lang)	{       
-	    return Peak_Registry::obj()->lang->translate((string)$text, $replaces, $func);
+	if(Peak_Registry::o()->lang instanceof Peak_Lang)	{       
+	    return Peak_Registry::o()->lang->translate((string)$text, $replaces, $func);
 	}
 	else return $text;
 }
