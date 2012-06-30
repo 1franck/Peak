@@ -1,3 +1,25 @@
+#VERSION 0.9.3#
+
+ - method dispatchActionParams() is no more experimental in Peak_Controller_Action
+ - changed property $actions_with_params to true by default in Peak_Controller_Action
+ - added method noRender() in class Peak_View for disabling view rendering and modified method render() to support this.
+ - fixed the call of Peak_Registry::obj() to Peak_Registry::o() in Peak_Lang
+ - fixed a method name error in Peak_Model_Zendatable
+ - fixed unwanted double slashes of server request uri in Peak_Router::getRequestURI()
+ - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
+ - updated vendor twitter bootstrap 
+ - added a new exception constant in Peak_Controller_Exception 
+ - added method dispatchActionParams() and property $actions_with_params in Peak_Controller_Action. This allow us, when activated,
+   to call actions with arguments directly and force action url to have those arguments instead of checking them with property
+   $params and method params() inside action method. Note that this mode is more strict and force url to contains those params for
+   a specific action.
+ - fixed an illegal string offset bug in Peak_Core::initConfig() for PHP 5.4
+ - added methods addValidateFilter() and addValidateFilters() in Peak_Filters_Advanced
+ - added method calculate() in Peak_Model_Pagination
+ - added method paging() in Peak_Model_Zendatable to access to Peak_Model_Pagination 
+ - added new class Peak_Model_Pagination for Peak_Model_Zendatable
+ - added 4 new shorcut method for escaping stuff in Peak_Model_Zendatable
+
 #VERSION 0.9.2#
  
  - added class Peak_Model_Authentication to simplify authentication mechanism with database 

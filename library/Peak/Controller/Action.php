@@ -54,6 +54,12 @@ abstract class Peak_Controller_Action
      * @var array
      */
     protected $params_assoc;
+	
+	/**
+	 * dispatch action with argument
+	 * @var bool
+	 */
+	protected $actions_with_params = true;
 
 
     public function __construct()
@@ -180,10 +186,46 @@ abstract class Peak_Controller_Action
         //set action filename
         if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
         else $this->file = str_replace($this->action_prefix, '',$this->action).'.php';
-        
+
         //call requested action
-        $this->$action(); 
+		if($this->actions_with_params) {
+			$this->dispatchActionParams($action);
+		}
+		else $this->$action(); 
     }
+	
+	/**
+	 * Check action methods agrs needed and call it properly
+	 *
+	 * @param string $action_name
+	 */
+	private function dispatchActionParams($action_name)
+	{
+		//get action params
+		$zf = new Peak_Zreflection();
+		$zf->loadClass($this->getName());
+		$params = $zf->class->getMethod($action_name)->getParameters();
+		
+		//fetch request params with action params
+		$args = array();
+		$errors = array();
+		if(!empty($params)) {
+			foreach($params as $p) {
+				$pname = $p->name;
+				if(isset($this->params()->$pname)) $args[] = $this->params()->$pname;
+				elseif($p->isOptional()) $args[] = $p->getDefaultValue();
+				else $errors[] = '$'.$pname;
+			}
+		}
+		
+		//if we got errors(param missing), we throw an exception
+		if(!empty($errors)) {
+			throw new Peak_Controller_Exception('ERR_CTRL_ACTION_PARAMS_MISSING', array(count($errors), $this->getName().'::'.$action_name.'()'));
+		}
+		
+		//call action with args
+		return call_user_func_array(array($this, $action_name), $args);
+	}
 
     /**
      * Check if action method name exists

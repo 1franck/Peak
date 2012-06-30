@@ -31,6 +31,12 @@ class Peak_View
      * @var object
      */
     private $_engine;
+	
+	/**
+	 * Determine if view will be rendered(view engine executed)
+	 * @var bool
+	 */
+	private $_render = true;
 
 
     /**
@@ -221,6 +227,14 @@ class Peak_View
         }
         else return null;
     }
+	
+	/**
+	 * Disable rendering
+	 */
+	public function noRender()
+	{
+		$this->_render = false;
+	}
 
     /**
      * Render Controller Action View file with the current rendering engine
@@ -231,6 +245,14 @@ class Peak_View
      */
     public function render($file,$path)
     {
+		// check here if we can render
+		if($this->_render === false) {
+			// we skip rendering but reenable it after.
+			// we do that in case we have disabled rendering, but for a particular reason, we want to enable it
+			$this->_render = true;
+			return;
+		}
+		
         if(is_object($this->_engine)) {
             $this->engine()->render($file,$path);
         }

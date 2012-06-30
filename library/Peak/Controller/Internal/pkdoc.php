@@ -24,6 +24,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		
 		$this->getFrameworkClasses();
 		$this->layout();
+		
+		error_reporting(false);
     }
 	
 	/**
@@ -110,7 +112,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	 */
 	private function layout()
 	{
-		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/1.4.0/bootstrap.min.css');
+		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.0.2/css/bootstrap.min.css');
 		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -126,16 +128,16 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 
     <!-- Le styles -->
 
-	<link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css" />
+	<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
     <style type="text/css">
 	  /* TWITTER CSS */
 	  '.$twitter_bs.'
 	  /* --------------------- */
       body {
         /*padding-top: 60px;*/
-		font-family: "Open Sans", sans-serif;
+		font-family: "Ubuntu", sans-serif;
       }
-      .topbar {
+      .navbar {
         position:inherit;
         margin-bottom:30px;
       }
@@ -195,8 +197,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 
   <body>
 
-    <div class="topbar">
-      <div class="topbar-inner">
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="'.$this->view->baseUrl('pkdoc',true).'">Peak Framework AutoDoc</a>
 		  <span style="color:#888;margin-left:-12px;padding-top:16px !important;">beta</span>
@@ -205,30 +207,32 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
     </div>
 
     <div class="container-fluid">
-      <div class="sidebar" style="width:245px;">
-        <div class="well">
-		   <h5>Framework Classes ('.count($this->view->classes).')</h5>
-		   <ul class="unstyled">';
-		
-		foreach($this->view->classes as $c) {
-			$layout .= '<li><a href="'.$this->view->baseUrl('pkdoc/c/'.$c,true).'">'.$c.'</a></li>';
-		}
-		
-		$layout .= '
-           </ul>
-		</div>
-      </div>
+		<div class="row">
+			<div class="span3" style="width:245px;">
+				<div class="well sidebar-nav">
+					<h5>Framework Classes ('.count($this->view->classes).')</h5>
+					<ul class="unstyled">';
+					
+					foreach($this->view->classes as $c) {
+						$layout .= '<li><a href="'.$this->view->baseUrl('pkdoc/c/'.$c,true).'">'.$c.'</a></li>';
+					}
+					
+					$layout .= '
+					   </ul>
+				</div>
+			</div>
 	  
-      <div class="content" style="margin-left:260px;">
+			<div class="span12" style="">
         		
-		{CONTENT}
+				{CONTENT}
         
-        <div class="clear"></div>
-        <footer>
-          <p>Peak Framework '.PK_VERSION.'</p>
-        </footer>
-      </div>
-    </div>
+				<div class="clear"></div>
+				<footer>
+					<p>Peak Framework '.PK_VERSION.'</p>
+				</footer>
+			</div>
+		</div>
+	</div>
 
   </body>
 </html>';
@@ -306,7 +310,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
         </div><!-- /hero-unit -->
 		
 		<!-- CLASS ELEMENTS LIST -->
-        <div class="row" style="margin:0 20px;width:1080px;">
+        <div class="row" style="margin:0 20px;">
           <div class="span5">
             <h2>Methods ('.count($this->ref->self_methods).')</h2><p>';
 		
@@ -343,12 +347,12 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		}
             
 		// spacer line
-        $content .= '<div class="span16" style="margin:12px 0;height:10px;">&nbsp;</div>';
+        $content .= '<div class="span9" style="margin:12px 0;height:10px;">&nbsp;</div>';
 		
 		// need to be fixed in zreflection to return an array
 		if(!empty($this->ref->constants)) {
-			$content .= '<div class="span16" style="margin:12px 0;"><h1>Constants</h1></div>';
-			$content .= '<div class="span16">';
+			$content .= '<div class="span9" style="margin:12px 0;"><h1>Constants</h1></div>';
+			$content .= '<div class="span9">';
 			foreach($this->ref->constants as $v) {
 				$content .= '<h2 id="'.$v['name'].'">'.$v['name'].'</h2>';
 				$content .= '<div class="block">value &rarr; '.htmlentities($v['value']).'</div>';
@@ -358,8 +362,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		
 		//properties details 
 		if(!empty($this->ref->self_properties)) {
-			$content .= '<div class="span16" style="margin:12px 0;"><h1>Properties</h1></div>';
-			$content .= '<div class="span16">';
+			$content .= '<div class="span9" style="margin:12px 0;"><h1>Properties</h1></div>';
+			$content .= '<div class="span9">';
 			foreach($this->ref->self_properties as $v) {
 				$content .= '<h2 id="$'.$v['name'].'">$'.$v['name'].'
 				                 '.$this->_visibility_label($v['visibility']).'
@@ -378,8 +382,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		
 		//methods details 
 		if(!empty($this->ref->self_methods)) {
-			$content .= '<div class="span16" style="margin:12px 0;"><h1>Methods</h1></div>';
-			$content .= '<div class="span16">';
+			$content .= '<div class="span9" style="margin:12px 0;"><h1>Methods</h1></div>';
+			$content .= '<div class="span15">';
 			foreach($this->ref->self_methods as $v) {
 				$content .= '<h2 id="'.$v['name'].'()">'.$v['name'].'( <small style="color:#777;">'.$v['params_string'].'</small> )
 				                 '.$this->_visibility_label($v['visibility']).'
