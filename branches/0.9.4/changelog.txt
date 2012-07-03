@@ -1,3 +1,5 @@
+#VERSION 0.9.4#
+
 #VERSION 0.9.3#
 
  - method dispatchActionParams() is no more experimental in Peak_Controller_Action
