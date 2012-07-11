@@ -24,11 +24,13 @@
  * |           | punc     |
  * |           | french   |
  * |-------------------------------------------
- * | email     |          | _filter_email()
+ * | email     | (string) | _filter_email()
  * |-------------------------------------------
- * | empty     |          | _filter_empty()
+ * | empty     | (string) | _filter_empty()
  * |-------------------------------------------
  * | enum      | (array)  | _filter_enum()
+ * |-------------------------------------------
+ * | url       | (string) | _filter_url()
  * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
@@ -324,6 +326,18 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	protected function _filter_enum($v, $opt)
 	{
 	    return (in_array($v,$opt));
+	}
+	
+	/**
+	 * Check for a valid url
+	 * 
+	 * @uses   FILTER_VALIDATE_URL
+     * @param  string $v
+     * @return bool/string
+	 */
+	protected function _filter_url($v)
+	{
+		return filter_var($v, FILTER_VALIDATE_URL);
 	}
 
 	/**

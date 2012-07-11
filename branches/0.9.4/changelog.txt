@@ -1,5 +1,7 @@
 #VERSION 0.9.4#
 
+ - added method _filter_url() to class Peak_Filters_Advanced
+
 #VERSION 0.9.3#
 
  - method dispatchActionParams() is no more experimental in Peak_Controller_Action
