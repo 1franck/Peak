@@ -90,8 +90,6 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	$this->assertFalse($result);
     	
     	$errors = $f->getErrors();
-		
-		print_r($errors);
     	    	
     	$this->assertArrayHasKey('name', $errors);
     	$this->assertTrue($errors['name'] === 'Name contains invalid chars');
