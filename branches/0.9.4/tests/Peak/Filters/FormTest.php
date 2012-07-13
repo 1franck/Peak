@@ -59,7 +59,8 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'unknow' => '123abc',
     	'number' => 3,
     	'answer' => 'test3',
-		'url'    => 'http://www.test');
+		'url'    => 'http://www.test',
+		'date'   => '2013/12/30');
     	
     	$f = new Form1();
     	
@@ -79,7 +80,8 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'unknow' => '123abc', 
     	'number' => 9,
     	'answer' => 'test2rwerwe',
-		'url'    => 'www.google.ca');
+		'url'    => 'www.google.ca',
+		'date'   => '2013-12-30');
     	
     	$f = new Form1();
     	

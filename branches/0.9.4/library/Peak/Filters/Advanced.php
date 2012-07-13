@@ -32,6 +32,8 @@
  * |-------------------------------------------
  * | url       | (string) | _filter_url()
  * |-------------------------------------------
+ * | date      | (string) | _filter_date()
+ * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
  * |-------------------------------------------
@@ -338,6 +340,42 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	protected function _filter_url($v)
 	{
 		return filter_var($v, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED);
+	}
+	
+	/**
+	 * Validate a Gregorian date
+	 *
+	 * thanks to pmmmm from http://php.net/manual/en/function.checkdate.php
+	 * 
+     * @param  string $v
+     * @param  string $format
+     * @return bool/string
+	 */
+	protected function _filter_date($v, $format = 'YYYY-MM-DD')
+	{
+		if(strlen($v) >= 8 && strlen($v) <= 10) {
+			$separator_only = str_replace(array('M','D','Y'),'', $format);
+			$separator = $separator_only[0];
+			if($separator){
+				$regexp = str_replace($separator, "\\" . $separator, $format);
+				$regexp = str_replace('MM', '(0[1-9]|1[0-2])', $regexp);
+				$regexp = str_replace('M', '(0?[1-9]|1[0-2])', $regexp);
+				$regexp = str_replace('DD', '(0[1-9]|[1-2][0-9]|3[0-1])', $regexp);
+				$regexp = str_replace('D', '(0?[1-9]|[1-2][0-9]|3[0-1])', $regexp);
+				$regexp = str_replace('YYYY', '\d{4}', $regexp);
+				$regexp = str_replace('YY', '\d{2}', $regexp);
+				if($regexp != $v && preg_match('/'.$regexp.'$/', $v)){
+					foreach (array_combine(explode($separator,$format), explode($separator,$v)) as $key=>$value) {
+						if ($key == 'YY') $year = '20'.$value;
+						if ($key == 'YYYY') $year = $value;
+						if ($key[0] == 'M') $month = $value;
+						if ($key[0] == 'D') $day = $value;
+					}
+					if (checkdate($month,$day,$year)) return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

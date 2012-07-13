@@ -39,7 +39,9 @@ class Form1 extends Peak_Filters_Form
 	                             
 	                             'errors'  => array('Answer should be test, test3 or french potatoes')),
 		   
-		   'url'        => array('filters' => array('url'), 'errors' => array('Must be a valid url'))
+		   'url'        => array('filters' => array('url'), 'errors' => array('Must be a valid url')),
+		   
+		   'date'       => array('filters' => array('date' => 'YYYY/MM/DD'), 'errors' => array('Must be a valid date')),
 		                                       
 	    );
     
