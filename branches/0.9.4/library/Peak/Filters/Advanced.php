@@ -337,7 +337,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	 */
 	protected function _filter_url($v)
 	{
-		return filter_var($v, FILTER_VALIDATE_URL);
+		return filter_var($v, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED);
 	}
 
 	/**

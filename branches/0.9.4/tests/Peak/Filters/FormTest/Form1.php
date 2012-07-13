@@ -37,7 +37,9 @@ class Form1 extends Peak_Filters_Form
 	                             
 	       'answer'     => array('filters' => array('enum' => array('test', 'test3', 'french potatoes')),
 	                             
-	                             'errors'  => array('Answer should be test, test3 or french potatoes'))                             
+	                             'errors'  => array('Answer should be test, test3 or french potatoes')),
+		   
+		   'url'        => array('filters' => array('url'), 'errors' => array('Must be a valid url'))
 		                                       
 	    );
     
