@@ -248,7 +248,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 	
 	/**
-	 * Add a single sanitize data_name filter on the fly
+	 * Add validation(s) filter(s) on the fly for a data key
 	 *
 	 * @param  array  $data_name
 	 * @param  array  $filter
