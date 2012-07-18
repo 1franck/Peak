@@ -424,14 +424,14 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	
 	/**
 	 * Same as _filter_alpha_num but some default punctuations/symbol
-	 * ().?!-_,;\'’"%$:
+	 * ().?!-_,;'’"%$:/
 	 *
 	 * @param  string $v
 	 * @return bool
 	 */
 	protected function _filter_text($v)
 	{
-	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '?', '!', '-',  '_', ',', ';', '\'', '’', '"', '%', '$', ':'));
+	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '?', '!', '-',  '_', ',', ';', '\'', '’', '"', '%', '$', ':', '/'));
 	    $regopt = $this->_filter_alpha(null, $opt, true);
 		$regopt[] = '0-9';
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
