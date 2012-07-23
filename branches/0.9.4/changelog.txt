@@ -1,5 +1,7 @@
 #VERSION 0.9.4#
 
+ - fixed method count() to support where string correctly in Peak_Model_Zendatable
+ - fixed methods calculate() and _getData() to handle correctly pages when no result in class Peak_Model_Pagination
  - added some punctuations to _filter_text() in class Peak_Filters_Advanced
  - added method _filter_date() to class Peak_Filters_Advanced
  - added method _filter_url() to class Peak_Filters_Advanced

@@ -183,11 +183,12 @@ class Peak_Model_Pagination
         if($this->_total > 0 && $this->_it_perpage > 0) {
             $this->_pcount = ceil(($this->_total / $this->_it_perpage));
         }
+        elseif($this->_total == 0) $this->_pcount = 0;
         else $this->_pcount = 1;
         
         //generate pages
         $this->_pages = array();
-        if($this->_pcount <= 1) $this->_pages[1] = 1;
+        if($this->_pcount < 1) $this->_pages = array();
     	else {
     		for($i = 1;$i <= $this->_pcount;++$i) $this->_pages[$i] = $i;
     	}
@@ -248,9 +249,10 @@ class Peak_Model_Pagination
             }
         }
         else $select = $this->_db_query;
-        
+
         //set the limit
         $limit = $this->_it_start - 1;
+        if($limit < 0) $limit = 0;
         $select .= ' LIMIT '.$limit.','.$this->_it_perpage;
 
         return $this->_db_object->query($select)->fetchAll();
