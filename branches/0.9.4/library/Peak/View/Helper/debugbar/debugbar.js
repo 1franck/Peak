@@ -1,6 +1,8 @@
 //load jquery function
 load = function() {
-    load.getScript("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+    if (typeof $  == "undefined") {
+	load.getScript("http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js");
+    }
     load.tryReady(0);
 }
 

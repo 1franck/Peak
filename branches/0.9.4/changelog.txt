@@ -1,5 +1,6 @@
 #VERSION 0.9.4#
 
+ - fixed debugbar.js to not load jquery when it's already loaded
  - modified function _autoloadAppBaseCustom() to support parent models in case of customs app models folder in autoload.php
  - fixed method count() to support where string correctly in Peak_Model_Zendatable
  - fixed methods calculate() and _getData() to handle correctly pages when no result in class Peak_Model_Pagination
