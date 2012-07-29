@@ -13,7 +13,10 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 	 * Display a bottom bar in your page
 	 */
 	public function show()
-	{		
+	{
+		//skip this, if view is set as no render
+		if($this->view->canRender() === false) return;
+		
 		//files included				
 		$files = $this->getFiles();		
 		//print_r($files);
