@@ -1,4 +1,21 @@
 /* peak debug bar */
+/* CSS RESET http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 */
+#pkdebugbar  div, #pkdebugbar  span, #pkdebugbar h1, #pkdebugbar  h2, #pkdebugbar  h3, #pkdebugbar  h4, #pkdebugbar  h5, #pkdebugbar  h6, #pkdebugbar  p, #pkdebugbar  blockquote, #pkdebugbar  pre, #pkdebugbar a, #pkdebugbar  code, #pkdebugbar del, #pkdebugbar  dfn, #pkdebugbar  em, #pkdebugbar  img, #pkdebugbar  ins, #pkdebugbar  kbd, #pkdebugbar  q, #pkdebugbar  s, #pkdebugbar  samp, #pkdebugbar small, #pkdebugbar  strike, #pkdebugbar  strong, #pkdebugbar  sub, #pkdebugbar  sup, #pkdebugbar  tt, #pkdebugbar  var, #pkdebugbar b, #pkdebugbar  u, #pkdebugbar  i, #pkdebugbar  center, #pkdebugbar dl, #pkdebugbar  dt, #pkdebugbar  dd, #pkdebugbar  ol, #pkdebugbar  ul, #pkdebugbar  li, #pkdebugbar fieldset, #pkdebugbar  #pkdebugbar  form, #pkdebugbar  label, #pkdebugbar  legend, #pkdebugbar table, #pkdebugbar  caption, #pkdebugbar  tbody, #pkdebugbar  tfoot, #pkdebugbar  thead, #pkdebugbar  tr, #pkdebugbar  th, #pkdebugbar  td, #pkdebugbar article, #pkdebugbar  aside, #pkdebugbar  canvas, #pkdebugbar  details, #pkdebugbar  embed, #pkdebugbar  figure, #pkdebugbar  figcaption, #pkdebugbar  footer, #pkdebugbar  header, #pkdebugbar  hgroup, #pkdebugbar  menu, #pkdebugbar  nav, #pkdebugbar  output, #pkdebugbar  ruby, #pkdebugbar  section, #pkdebugbar  summary, #pkdebugbar time, #pkdebugbar  mark {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+#pkdebugbar ol, #pkdebugbar  ul {
+	list-style: none;
+}
+#pkdebugbar table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 #pkdebugbar {
  position:fixed;
  bottom:0;

@@ -188,4 +188,19 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	    $this->assertType('Peak_View_Render_Layouts', $view->engine());
 	}
 	
+	function testOnOfRender()
+	{
+		$view = new Peak_View();
+		
+		$this->assertTrue($view->canRender());
+
+		$view->enableRender();
+		
+		$this->assertTrue($view->canRender());
+		
+		$view->disableRender();
+		
+		$this->assertFalse($view->canRender());
+	}
+	
 }
