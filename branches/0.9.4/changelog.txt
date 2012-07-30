@@ -2,7 +2,7 @@
 
  - added css reset to debugbar.css
  - fixed view helper debugbar to not show when rendering is disable
- - deleted previously introducted noRender() in Peak_View and added methods instead of canRender(), disableRender() and 
+ - deleted previously introducted noRender() in Peak_View and added instead methods canRender(), disableRender() and 
    enableRender() and modified method render()
  - fixed debugbar.js to not load jquery when it's already loaded
  - modified function _autoloadAppBaseCustom() to support parent models in case of customs app models folder in autoload.php
