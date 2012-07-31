@@ -1,5 +1,6 @@
 #VERSION 0.9.4#
 
+ - added method log() to debugbar helper.
  - added css reset to debugbar.css
  - fixed view helper debugbar to not show when rendering is disable
  - deleted previously introducted noRender() in Peak_View and added instead methods canRender(), disableRender() and 
