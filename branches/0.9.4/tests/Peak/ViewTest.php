@@ -26,23 +26,34 @@ require_once 'Peak/Config/Ini.php';
  */
 class Peak_ViewTest extends PHPUnit_Framework_TestCase
 {
-	
+	/**
+	 * init view
+	 */ 
 	function setUp()
 	{
 		$this->peakview = new Peak_View();
 	}
 	
+	/**
+	 * unset view
+	 */
 	function tearDown()
 	{
 		unset($this->peakview);
 	}
 	
+	/**
+	 * Create instance test
+	 */
 	function testCreateInstance()
 	{
 		$view = new Peak_View();		
 		$this->assertInstanceOf('Peak_View', $view); 
 	}
 	
+	/**
+	 * Create instance test with array
+	 */
 	function testCreateInstanceWithArray()
 	{
 		$view = new Peak_View(array('test' => 'value'));		
@@ -51,7 +62,10 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$vars = $view->getVars();		
 		$this->assertArrayHasKey('test', $vars);
 	}
-		
+	
+	/**
+	 * Test vars manpulation (get,set,isset,unset)
+	 */
 	function testManipulateVars()
 	{
 		//__isset
@@ -80,6 +94,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		
 	}
 	
+	/**
+	 * Test count var
+	 */
 	function testCountVars()
 	{
 		$this->assertTrue($this->peakview->countVars() == 0);
@@ -90,11 +107,17 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		unset($this->peakview->test);
 	}
 	
+	/**
+	 * Test get all view vars
+	 */
 	function testGetVars()
 	{
 		$this->assertTrue(is_array($this->peakview->getVars()));
 	}
 	
+	/**
+	 * Test reset(empty) all view vars
+	 */
 	function testResetVars()
 	{
 		//set a variable
@@ -108,6 +131,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(empty($vars));
 	}
 
+	/**
+	 * Test method setVars()
+	 */
 	function testSetVars()
 	{
 		$this->assertTrue($this->peakview->countVars() == 0);
@@ -117,6 +143,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->peakview->countVars() == 2);
 	}
 
+	/**
+	 * Test addVars()
+	 */
 	function testAddVars()
 	{
 		$this->assertTrue($this->peakview->countVars() == 0);
@@ -130,6 +159,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($this->peakview->countVars() == 3);
 	}
 
+	/**
+	 * Test engine() stuff
+	 */
 	function testSetEngine()
 	{
 		$name = $this->peakview->getEngineName();
@@ -159,6 +191,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
         $this->fail('An expected exception has not been raised.');
 	}
 	
+	/**
+	 * Test set var from ini file
+	 */
 	function testIniVar()
 	{
 		$this->peakview->iniVar('viewvars.ini', dirname(__FILE__).'/ViewTest/');
@@ -170,6 +205,9 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(isset($this->peakview->city));
 	}
 	
+	/**
+	 * Test adding with config ini app
+	 */
 	function testRegistryConfig()
 	{
 		$config = new Peak_Config();
@@ -188,7 +226,10 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	    $this->assertType('Peak_View_Render_Layouts', $view->engine());
 	}
 	
-	function testOnOfRender()
+	/**
+	 * Test methods enableRender(), disableRender() and canRender()
+	 */
+	function testOnOffRender()
 	{
 		$view = new Peak_View();
 		
@@ -202,5 +243,4 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertFalse($view->canRender());
 	}
-	
 }
