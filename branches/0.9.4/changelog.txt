@@ -1,5 +1,7 @@
 #VERSION 0.9.4#
 
+ - modified method initConfig() of class Peak_Core because of new method loadFile() in Peak_Config
+ - added method loadFile() to Peak_Config and modified method __construct() to support this new option too
  - added method log() to debugbar helper.
  - added css reset to debugbar.css
  - fixed view helper debugbar to not show when rendering is disable

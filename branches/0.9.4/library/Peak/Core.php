@@ -100,9 +100,7 @@ class Peak_Core
     	switch($filetype) {
 
     		case 'php' :
-    			$array = include($apppath.'/'.$file);
-    			$conf = new Peak_Config();
-    			$conf->setVars($array);
+    			$conf = new Peak_Config($apppath.'/'.$file);
     			break;
 			
 			case 'ini' : 
