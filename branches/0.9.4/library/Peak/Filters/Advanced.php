@@ -506,7 +506,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
      */
 	protected function _filter_match_key($v, $opt)
 	{
-		return ($v === ($this->_data[$opt])) ? true : false;
+		return ((isset($this->_data[$opt])) && ($v === ($this->_data[$opt]))) ? true : false;
 	}
 
     /**
