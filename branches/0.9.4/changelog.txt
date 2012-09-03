@@ -1,5 +1,6 @@
 #VERSION 0.9.4#
 
+ - updated vendor twitter bootstrap to 2.1.0
  - fixed method _filter_match_key() of class Peak_Filters_Advanced to also return false if the key doesn't exists
  - modified method initConfig() of class Peak_Core because of new method loadFile() in Peak_Config
  - added method loadFile() to Peak_Config and modified method __construct() to support this new option too
