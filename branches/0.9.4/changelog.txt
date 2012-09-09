@@ -1,5 +1,6 @@
 #VERSION 0.9.4#
 
+ - marked class Peak_View_Helper_html as deprecated
  - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
  - updated vendor twitter bootstrap to 2.1.0
  - fixed method _filter_match_key() of class Peak_Filters_Advanced to also return false if the key doesn't exists
