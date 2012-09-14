@@ -50,6 +50,12 @@ abstract class Peak_Model_Authentication extends Peak_Model_Zendatable
     protected $_password_hash_algo = null;
 	
 	/**
+     * Password optionnal salt
+     * @var string
+     */
+    protected $_password_salt      = '';
+	
+	/**
 	 * User result data
 	 * @var array
 	 */
@@ -89,17 +95,19 @@ abstract class Peak_Model_Authentication extends Peak_Model_Zendatable
 	 *
 	 * @param  string $login
 	 * @param  string $pass
-	 * @param  bool   $hash_pass
+	 * @param  bool   $hash_and_salt_pass
 	 * @return bool
 	 */
-	public function login($login, $pass, $hash_pass = true)
+	public function login($login, $pass, $hash_and_salt_pass = true)
 	{
 		//reset login status and user in case of multiple attempt
 		$this->_login_bool = false;
         $this->_user = array();
 		
-		//hash the password if needed and specified(@see $_password_hash_algo)
-		$pass = ($hash_pass === true && !is_null($this->_password_hash_algo)) ? hash($this->_password_hash_algo, $pass) : $pass;
+		//hash and salt the password if needed and specified(@see $_password_hash_algo)
+		if($hash_and_salt_pass === true && !is_null($this->_password_hash_algo)) {
+			$pass = hash($this->_password_hash_algo.$this->_password_salt, $pass);
+		}
 		
 		$select = 'SELECT * FROM `'.$this->_name.'` WHERE ';
 		
@@ -159,4 +167,15 @@ abstract class Peak_Model_Authentication extends Peak_Model_Zendatable
 	{
 		return $this->_user;
 	}
+	
+	/**
+	 * Return password salt
+	 *
+	 * @return string
+	 */
+	public function getSalt()
+	{
+		return $this->_password_salt;
+	}
+	
 }
