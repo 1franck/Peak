@@ -113,8 +113,15 @@ class Peak_Core
     	}
     	
     	//check if we got the configuration for current environment mode or at least section 'all'
+		/*
     	if((!isset($conf->$env)) && (!isset($conf->all))) {
     		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
+    	}*/
+		
+		//disabled the previous exception to allow booting an app with an empty config
+		//here we will use Peak/Application/genericapp.ini as temporary config for the lazy user when in DEVELOPMENT ENV
+		if((!isset($conf->$env)) && (!isset($conf->all)) && $env === 'development') {
+			$conf = new Peak_Config_Ini(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini', true);
     	}
     	
     	//add APPLICATION_ABSPATH to path config array if exists
@@ -125,7 +132,7 @@ class Peak_Core
     	}
     	
     	//add APPLICATION_ABSPATH to 'path' key value
-    	if(array_key_exists('path', $conf->$env)) {
+    	if(is_array($conf->$env) && (array_key_exists('path', $conf->$env))) {
 			$conf_env = &$conf->$env;
     		foreach($conf_env['path'] as $pathname => $path) {
     			$conf_env['path'][$pathname] = $apppath.'/'.$path;
@@ -138,6 +145,8 @@ class Peak_Core
     	    $conf->all['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths($apppath), $conf->all['path']);
     	}
     	else {
+			//fix a notice in case [all] section doesn't exists, we create it
+			if(!isset($conf->all)) $conf->all = array();
     		$conf->all['path'] = self::getDefaultAppPaths($apppath);
     	}
 

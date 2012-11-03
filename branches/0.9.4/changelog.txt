@@ -1,5 +1,10 @@
 #VERSION 0.9.4#
 
+ - added class Peak_Controller_Internal_Pkwelcome. This new controller is used by default in genericapp.ini
+ - added file genericapp.ini in Peak/Application
+ - disabled an exception throw in Peak_Core::initConfig() when loading an empty app config file
+ - fixed notice in method initConfig() of class Peak_Core due to the change in Peak_Config_Ini
+ - fixed an exception throw in Peak_Config_Ini in case of empty file
  - added property $_password_salt and method getSalt() to class Peak_Model_Authentication
  - marked class Peak_View_Helper_html as deprecated
  - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
