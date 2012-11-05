@@ -1,5 +1,8 @@
 #VERSION 0.9.4#
 
+ - remodified the recent change about an exception throw in Peak_Core::initConfig(), by enable it again only if 
+   app environment is not development
+ - marked as deprecated property $_extensions, methods __call() and ext() from class Peak_Core
  - added class Peak_Controller_Internal_Pkwelcome. This new controller is used by default in genericapp.ini
  - added file genericapp.ini in Peak/Application
  - disabled an exception throw in Peak_Core::initConfig() when loading an empty app config file

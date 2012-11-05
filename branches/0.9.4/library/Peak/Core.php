@@ -17,6 +17,7 @@ class Peak_Core
 {
 
     /**
+	 * @deprecated
      * core extensions object
      * @var object
      */
@@ -59,6 +60,7 @@ class Peak_Core
     }
 
     /**
+     * @deprecated
      * Try to return a extension object based the method name.
      *
      * @param  string $helper
@@ -76,6 +78,7 @@ class Peak_Core
     }
 
     /**
+	 * @depracted 
      * Load/return Core extension objects
      */
     public function ext()
@@ -112,16 +115,18 @@ class Peak_Core
 				break;
     	}
     	
-    	//check if we got the configuration for current environment mode or at least section 'all'
-		/*
-    	if((!isset($conf->$env)) && (!isset($conf->all))) {
-    		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
-    	}*/
 		
-		//disabled the previous exception to allow booting an app with an empty config
-		//here we will use Peak/Application/genericapp.ini as temporary config for the lazy user when in DEVELOPMENT ENV
-		if((!isset($conf->$env)) && (!isset($conf->all)) && $env === 'development') {
-			$conf = new Peak_Config_Ini(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini', true);
+		//check if we got the configuration for current environment mode or at least section 'all'
+		if((!isset($conf->$env)) && (!isset($conf->all))) {
+			if($env !== 'development') {
+				throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
+			}
+			//here we will use Peak/Application/genericapp.ini as temporary config for the lazy user when in DEVELOPMENT ENV
+			//This allow to booti an app with an empty config file
+			else {
+				$conf = new Peak_Config_Ini(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini', true);
+			}
+			
     	}
     	
     	//add APPLICATION_ABSPATH to path config array if exists
@@ -284,8 +289,9 @@ class Peak_Core
         if($level >= 4) {
             
             //init app&core configurations
-            if(!defined('APPLICATION_CONFIG'))
+            if(!defined('APPLICATION_CONFIG')) {
                 throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Configuration filename','APPLICATION_CONFIG'));
+            }
             
 			self::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
         }
