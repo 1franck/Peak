@@ -122,7 +122,7 @@ class Peak_Core
 				throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
 			}
 			//here we will use Peak/Application/genericapp.ini as temporary config for the lazy user when in DEVELOPMENT ENV
-			//This allow to booti an app with an empty config file
+			//This allow to boot an app with an empty config file
 			else {
 				$conf = new Peak_Config_Ini(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini', true);
 			}
