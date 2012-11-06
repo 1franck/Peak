@@ -1,5 +1,10 @@
 #VERSION 0.9.4#
 
+ - modified method initConfig in Peak_Core to support absent or unsupported application config by using genericapp.ini 
+   only in development env
+ - enhanced Peak_Controller_Internal_Pkwelcome functionality and content
+ - added a quick variables template system for Peak_View_Render_VirtualLayouts by adding method _processVariables()
+   and by modifying method render()
  - remodified the recent change about an exception throw in Peak_Core::initConfig(), by enable it again only if 
    app environment is not development
  - marked as deprecated property $_extensions, methods __call() and ext() from class Peak_Core

@@ -14,10 +14,10 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 	 */
     public function preAction()
     {
+		if(APPLICATION_ENV !== 'development') exit();
+		
         $this->view->engine('VirtualLayouts');
         $this->view->cache()->disable();
-
-		$this->layout();
 		
 		error_reporting(false);
     }
@@ -27,7 +27,31 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 	 */
     public function _index()
     {
-        $this->layout();
+
+		if(APPLICATION_CONFIG === 'genericapp.ini') {
+			$this->view->setContent('but without it\'s own settings file...');
+		}
+		else {
+			$filepath = APPLICATION_ABSPATH.'/'.APPLICATION_CONFIG;
+			if(!file_exists($filepath)) {
+				$this->view->setContent('but your configuration is missing...');
+			}
+			elseif(!in_array(pathinfo($filepath, PATHINFO_EXTENSION), array('php','ini'))) {
+				$this->view->setContent('but your configuration file type is not supported...');
+			}
+			elseif(trim(file_get_contents($filepath)) === '') {
+				$this->view->setContent('but your configuration file seems to be empty...');
+			}
+			else {
+				$this->view->setContent('but something gone wrong in your configuration... O_o');
+			}
+				
+		}
+		
+		$this->view->now = date('Y-m-n H:i:s');
+		$this->view->peak = PK_NAME.' v'.PK_VERSION;
+		
+		$this->layout();
     }
 	
 		
@@ -76,6 +100,37 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 		  height:400px;
 		  font-family: "Consolas", "Lucida Console", sans-serif;
 	  }
+	  small,table small {
+		color:#999;
+	  }
+	  .navbar a {
+		color:#000;
+		-webkit-transition-delay: 0s;
+		-webkit-transition-duration: 0.20000000298023224s;
+		-webkit-transition-property: all;
+		-webkit-transition-timing-function: linear;
+		background-color: transparent;
+		color: black;
+		cursor: auto;
+		display: block;
+		float: right;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		height: 20px;
+		line-height: 20px;
+		margin-bottom: 0px;
+		margin-left: 20px;
+		margin-right: 0px;
+		margin-top: 0px;
+		overflow-x: visible;
+		overflow-y: visible;
+		padding-bottom: 10px;
+		padding-left: 0px;
+		padding-right: 0px;
+		padding-top: 10px;
+		text-decoration: none;
+		text-shadow: rgba(255, 255, 255, 0.0980392) 0px 1px 0px, rgba(255, 255, 255, 0.121569) 0px 0px 30px;
+		
+	  }
     </style>
   </head>
 
@@ -83,9 +138,11 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="container-fluid">
+        <div class="container">
           <a class="brand" href="#">Your App</a>
+		  <ul class="nav pull-right"><li class="dropdown"><a>{$peak}</a></li></ul>
         </div>
+		
       </div>
     </div>
 
@@ -93,11 +150,59 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 			<div class="hero-unit">
         		
 				<h1>Welcome, young padawan!</h1>
-				<h4>If you see this, it\'s because you have successfully launched your Peak Framework Application but you don\'t have yet a configuration file.</h4>
+				<h4>If you see this, it\'s because you have successfully launched your Peak Framework Application
+				{content}
+				</h4>
 				<h4>As we are nice, we provided you a generic configuration to start with:</h4>
 				
+				<div style="text-align:right;">&darr; <small>'.LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini</small></div>
 				<textarea spellcheck="false">'.(file_get_contents(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini')).'</textarea>
-        
+					
+				
+				<br />
+				<hr />
+				<br />
+				
+				<h4>&darr; You will find here informations about the current environment</h4>
+				<table class="table table-striped">
+				<thead>
+				  <tr>
+					<th></th>
+					<th></th>
+					<th></th>
+					<th></th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+					<td>APPLICATION_ENV</td>
+					<td>'.APPLICATION_ENV.'</td>
+				  </tr>
+				  <tr>
+					<td>LIBRARY_ROOT</td>
+					<td>'.LIBRARY_ROOT.'<br />
+						<small>'.realpath(LIBRARY_ABSPATH).'</small></td>
+				  </tr>
+				  <tr>
+					<td>PUBLIC_ROOT</td>
+					<td>'.PUBLIC_ROOT.'<br />
+						<small>Absolute: '.realpath(PUBLIC_ABSPATH).'</small></td>
+				  </tr>
+				  <tr>
+					<td>APPLICATION_ROOT</td>
+					<td>'.APPLICATION_ROOT.'<br />
+						<small>'.realpath(APPLICATION_ABSPATH).'</small></td>
+				  </tr>
+				  <tr>
+					<td>APPLICATION_CONFIG</td>
+					<td>'.APPLICATION_CONFIG.'<br />
+						<small>'.realpath(APPLICATION_ABSPATH).APPLICATION_CONFIG.'</small>
+					</td>
+				  </tr>
+				  
+				</tbody>
+			  </table>
+				
 				<div class="clear"></div>
 			</div>
 	</div>

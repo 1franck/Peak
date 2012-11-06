@@ -65,6 +65,8 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
         else {
             $output = str_ireplace('{CONTENT}', $this->_content, $this->_layout);
         }
+        
+        $output = $this->_proccessVariables($output);
 
         $this->output($output);
     }
@@ -76,7 +78,25 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
      */
     protected function output($data)
     {
-        echo $data;    
+        echo $data;
+    }
+    
+    /**
+     * Process all the variables
+     *
+     * @param  string $content
+     * @return string
+     */
+    protected function _proccessVariables($content)
+    {
+        $vars = $this->getVars();
+        if(!empty($vars)) {
+
+            $vars_names = array();
+            foreach($vars as $k => $v) $vars_names[] = '{$'.$k.'}';
+            $content = str_ireplace($vars_names, array_values($vars), $content);
+        }
+        return $content;
     }
     
 }
