@@ -54,6 +54,15 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(isset($this->peakconfig->myvar));
 	}
 	
+	function testGetVars()
+	{
+		$array = array('myvar' => 'value', 'test', 'test2' => 'value2');
+		$this->peakconfig->setVars($array);
+		
+		$vars = $this->peakconfig->getVars();
+		$this->assertTrue($vars['myvar'] === 'value');
+	}
+	
 	function testIterator()
 	{
 		$this->peakconfig->setVars(array('myvar' => 'value', 'test', 'test2' => 'value2'));
@@ -62,5 +71,25 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		foreach($this->peakconfig as $key) ++$count;
 		
 		$this->assertTrue(count($this->peakconfig) == 3);
-	}  
+	}
+	
+	function testLoadFile()
+	{
+		$cf = new Peak_Config();		
+		$cf->loadFile(dirname(__FILE__).'/ConfigTest/appconf_example.php');
+		
+		$this->assertTrue(is_array($cf->getVars()));
+		
+		$this->assertTrue(isset($cf->all));
+	}
+	
+	function testCreateInstanceWithFile()
+	{
+		$vars = include dirname(__FILE__).'/ConfigTest/appconf_example.php';
+		$cf = new Peak_Config($vars);		
+		
+		$this->assertTrue(is_array($cf->getVars()));
+
+		$this->assertTrue(isset($cf->all));
+	}
 }

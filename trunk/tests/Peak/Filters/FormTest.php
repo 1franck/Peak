@@ -58,7 +58,9 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'repassword' => 'mypass2', 
     	'unknow' => '123abc',
     	'number' => 3,
-    	'answer' => 'test3');
+    	'answer' => 'test3',
+		'url'    => 'http://www.test',
+		'date'   => '2013/12/30');
     	
     	$f = new Form1();
     	
@@ -77,7 +79,9 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	'repassword' => 'mypassss2', 
     	'unknow' => '123abc', 
     	'number' => 9,
-    	'answer' => 'test2rwerwe');
+    	'answer' => 'test2rwerwe',
+		'url'    => 'www.google.ca',
+		'date'   => '2013-12-30');
     	
     	$f = new Form1();
     	
@@ -101,6 +105,9 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     	
     	$this->assertArrayHasKey('answer', $errors);
     	$this->assertTrue($errors['answer'] === 'Answer should be test, test3 or french potatoes');
+		
+		$this->assertArrayHasKey('url', $errors);
+    	$this->assertTrue($errors['url'] === 'Must be a valid url');
     }
     
     /**

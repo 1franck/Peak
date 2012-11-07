@@ -24,11 +24,15 @@
  * |           | punc     |
  * |           | french   |
  * |-------------------------------------------
- * | email     |          | _filter_email()
+ * | email     | (string) | _filter_email()
  * |-------------------------------------------
- * | empty     |          | _filter_empty()
+ * | empty     | (string) | _filter_empty()
  * |-------------------------------------------
  * | enum      | (array)  | _filter_enum()
+ * |-------------------------------------------
+ * | url       | (string) | _filter_url()
+ * |-------------------------------------------
+ * | date      | (string) | _filter_date()
  * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
@@ -244,7 +248,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 	
 	/**
-	 * Add a single sanitize data_name filter on the fly
+	 * Add validation(s) filter(s) on the fly for a data key
 	 *
 	 * @param  array  $data_name
 	 * @param  array  $filter
@@ -325,6 +329,54 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	{
 	    return (in_array($v,$opt));
 	}
+	
+	/**
+	 * Check for a valid url
+	 * 
+	 * @uses   FILTER_VALIDATE_URL
+     * @param  string $v
+     * @return bool/string
+	 */
+	protected function _filter_url($v)
+	{
+		return filter_var($v, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED);
+	}
+	
+	/**
+	 * Validate a Gregorian date
+	 *
+	 * thanks to pmmmm from http://php.net/manual/en/function.checkdate.php
+	 * 
+     * @param  string $v
+     * @param  string $format
+     * @return bool/string
+	 */
+	protected function _filter_date($v, $format = 'YYYY-MM-DD')
+	{
+		if(strlen($v) >= 8 && strlen($v) <= 10) {
+			$separator_only = str_replace(array('M','D','Y'),'', $format);
+			$separator = $separator_only[0];
+			if($separator){
+				$regexp = str_replace($separator, "\\" . $separator, $format);
+				$regexp = str_replace('MM', '(0[1-9]|1[0-2])', $regexp);
+				$regexp = str_replace('M', '(0?[1-9]|1[0-2])', $regexp);
+				$regexp = str_replace('DD', '(0[1-9]|[1-2][0-9]|3[0-1])', $regexp);
+				$regexp = str_replace('D', '(0?[1-9]|[1-2][0-9]|3[0-1])', $regexp);
+				$regexp = str_replace('YYYY', '\d{4}', $regexp);
+				$regexp = str_replace('YY', '\d{2}', $regexp);
+				if($regexp != $v && preg_match('/'.$regexp.'$/', $v)){
+					foreach (array_combine(explode($separator,$format), explode($separator,$v)) as $key=>$value) {
+						if ($key == 'YY') $year = '20'.$value;
+						if ($key == 'YYYY') $year = $value;
+						if ($key[0] == 'M') $month = $value;
+						if ($key[0] == 'D') $day = $value;
+					}
+					if (checkdate($month,$day,$year)) return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * Check for alpha char (a-z), with optionnaly space(s) and custom punctuation(s)
@@ -371,15 +423,15 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 	
 	/**
-	 * Same as _filter_alpha_num but some default punctuations/symbol 
-	 * ().!-?_,;'"%$
+	 * Same as _filter_alpha_num but some default punctuations/symbol
+	 * ().?!-_,;'’"%$:/
 	 *
 	 * @param  string $v
 	 * @return bool
 	 */
 	protected function _filter_text($v)
 	{
-	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '!', '-', '?', '_', ',', ';', '\'','"','%','$'));
+	    $opt = array('space' => true, 'punc' => array('(', ')', '.', '?', '!', '-',  '_', ',', ';', '\'', '’', '"', '%', '$', ':', '/'));
 	    $regopt = $this->_filter_alpha(null, $opt, true);
 		$regopt[] = '0-9';
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^['.implode('',$regopt).']+$/')));
@@ -454,7 +506,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
      */
 	protected function _filter_match_key($v, $opt)
 	{
-		return ($v === ($this->_data[$opt])) ? true : false;
+		return ((isset($this->_data[$opt])) && ($v === ($this->_data[$opt]))) ? true : false;
 	}
 
     /**
