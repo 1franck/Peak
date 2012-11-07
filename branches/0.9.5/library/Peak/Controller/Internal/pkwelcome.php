@@ -77,7 +77,7 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 	 */
 	private function layout()
 	{
-		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.1.0/css/bootstrap.min.css');
+		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/css/bootstrap.min.css');
 		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>

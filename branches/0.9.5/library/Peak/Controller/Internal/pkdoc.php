@@ -51,12 +51,12 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	public function _c()
 	{
 		if(isset($this->params[0]) && in_array($this->params[0], $this->view->classes)) {
-			
+
 			$this->ref = new Peak_Zreflection_Class();
 
 			$this->ref->loadClass($this->params[0]);
-			$this->view->class = $this->ref;
-			
+
+			$this->view->test = 'test';
 			$this->classContent();
 		}
 		else $this->redirectAction('index');
@@ -112,7 +112,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	 */
 	private function layout()
 	{
-		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.1.0/css/bootstrap.min.css');
+		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/css/bootstrap.min.css');
 		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -158,7 +158,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	  }
 	  .hero-unit table td {
 		background-color:#f9f9f9;
-		padding:6px;
+		padding:2px 6px;
+		font-size:14px;
 	  }
 	  .coda {
 
@@ -211,14 +212,18 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			<div class="span3" style="width:245px;">
 				<div class="well sidebar-nav">
 					<h5>Framework Classes ('.count($this->view->classes).')</h5>
+					<hr />
 					<ul class="unstyled">';
 					
 					foreach($this->view->classes as $c) {
-						$layout .= '<li><a href="'.$this->view->baseUrl('pkdoc/c/'.$c,true).'">'.$c.'</a></li>';
+						$layout .= '<li><a href="'.$this->view->baseUrl('pkdoc/c/'.$c,true).'">'.str_replace('Peak_','',$c).'</a></li>';
 					}
 					
 					$layout .= '
 					   </ul>
+					<hr />
+					<small>All classes are prefixed by "Peak_". We just remove it for better listing</small>
+					
 				</div>
 			</div>
 	  
@@ -295,7 +300,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
         $content .= '
 		  <p>'.$this->ref->class_doc_short.'</p>
 		  <p><span style="font-size:12px;line-height:18px;">'.nl2br($this->ref->class_doc_long).'</span></p>
-		  <table class="coda">';
+		  <table class="table table-striped">';
 		  
 	    foreach($this->ref->class_doc_tags as $tag) {
 			$content .= '<tr>

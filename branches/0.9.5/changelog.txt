@@ -1,3 +1,9 @@
+#VERSION 0.9.5#
+
+ - updated css twitter bootstrap in Peak_Controller_Internal_Pkdoc and Peak_Controller_Internal_Pkwelcome
+ - updated vendor twitter bootstrap to 2.2.1 and remove version folder to avoid changing integration url each time
+ - fixed a bug in Peak_Controller_Internal_Pkdoc introduced by changes of Peak_View_Render_VirtualLayouts in previous version
+
 #VERSION 0.9.4#
 
  - added method cleanUnknownVars() and property $_clean_all_unknown_vars in Peak_View_Render_VirtualLayouts
