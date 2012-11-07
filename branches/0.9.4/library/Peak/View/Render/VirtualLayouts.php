@@ -23,6 +23,12 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
     private $_content = null;
     
     /**
+     * Will force processVariable() to also remove unknown variables
+     * @var bool
+     */
+    private $_clean_all_unknown_vars = true;
+    
+    /**
      * Set layout content
      *
      * @param string $name
@@ -82,6 +88,16 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
     }
     
     /**
+     * Turn true/false property $_clean_all_unknown_vars
+     *
+     * @param $val bool
+     */
+    public function cleanUnknownVars($val)
+    {
+        $this->_clean_all_unknown_vars = ($value === true) ? true : false;
+    }
+    
+    /**
      * Process all the variables
      *
      * @param  string $content
@@ -95,6 +111,11 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
             $vars_names = array();
             foreach($vars as $k => $v) $vars_names[] = '{$'.$k.'}';
             $content = str_ireplace($vars_names, array_values($vars), $content);
+            
+            //remove unknown vars {$keys}
+            if($this->_clean_all_unknown_vars) {
+                $content = preg_replace('#\{\$(\w+)\}#i', '', $content);
+            }
         }
         return $content;
     }

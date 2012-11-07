@@ -1,5 +1,6 @@
 #VERSION 0.9.4#
 
+ - added method cleanUnknownVars() and property $_clean_all_unknown_vars in Peak_View_Render_VirtualLayouts
  - modified method initConfig in Peak_Core to support absent or unsupported application config by using genericapp.ini 
    only in development env
  - enhanced Peak_Controller_Internal_Pkwelcome functionality and content

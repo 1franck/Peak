@@ -27,26 +27,43 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 	 */
     public function _index()
     {
-
+		$this->view->after_intro = '';
+		
 		if(APPLICATION_CONFIG === 'genericapp.ini') {
-			$this->view->setContent('but without it\'s own settings file...');
+			$this->view->intro_warn = 'but without it\'s own settings file...';
 		}
 		else {
 			$filepath = APPLICATION_ABSPATH.'/'.APPLICATION_CONFIG;
+			$filetype = pathinfo($filepath, PATHINFO_EXTENSION);
+			
 			if(!file_exists($filepath)) {
-				$this->view->setContent('but your configuration is missing...');
+				$this->view->intro_warn = 'but your configuration is missing...';
 			}
-			elseif(!in_array(pathinfo($filepath, PATHINFO_EXTENSION), array('php','ini'))) {
-				$this->view->setContent('but your configuration file type is not supported...');
+			elseif(!in_array($filetype, array('php','ini'))) {
+				$this->view->intro_warn = 'but your configuration file type is not supported...';
 			}
 			elseif(trim(file_get_contents($filepath)) === '') {
-				$this->view->setContent('but your configuration file seems to be empty...');
+				$this->view->intro_warn = 'but your configuration file seems to be empty...';
 			}
 			else {
-				$this->view->setContent('but something gone wrong in your configuration... O_o');
-			}
-				
+				if($filetype === 'ini') {
+					//test ini to see if it, we will use genericapp.ini in dev mode only
+					try { $conf = new Peak_Config_Ini($filepath, true);	}
+					catch(Exception $e) {
+						$this->view->intro_warn = 'but something gone wrong in your configuration... O_o';
+					}
+				}
+			}	
 		}
+		
+		// inject a textarea with genericapp.ini content
+		if(isset($this->view->intro_warn)) {
+			$this->view->after_intro = '
+				<h4>As we are nice, we provided you a generic configuration to start with:</h4>
+				<div style="text-align:right;">&darr; <small>'.LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini</small></div>
+				<textarea spellcheck="false">'.(file_get_contents(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini')).'</textarea>';
+		}
+		
 		
 		$this->view->now = date('Y-m-n H:i:s');
 		$this->view->peak = PK_NAME.' v'.PK_VERSION;
@@ -151,13 +168,10 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
         		
 				<h1>Welcome, young padawan!</h1>
 				<h4>If you see this, it\'s because you have successfully launched your Peak Framework Application
-				{content}
+				{$intro_warn}
 				</h4>
-				<h4>As we are nice, we provided you a generic configuration to start with:</h4>
 				
-				<div style="text-align:right;">&darr; <small>'.LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini</small></div>
-				<textarea spellcheck="false">'.(file_get_contents(LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini')).'</textarea>
-					
+				{$after_intro}
 				
 				<br />
 				<hr />
