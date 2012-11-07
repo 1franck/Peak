@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('PK_VERSION', '0.9.3');
+define('PK_VERSION', '0.9.4');
 define('PK_NAME'   , 'PEAK');
 define('PK_DESCR'  , 'Php wEb Application Kernel');
 
@@ -17,6 +17,7 @@ class Peak_Core
 {
 
     /**
+	 * @deprecated
      * core extensions object
      * @var object
      */
@@ -59,6 +60,7 @@ class Peak_Core
     }
 
     /**
+     * @deprecated
      * Try to return a extension object based the method name.
      *
      * @param  string $helper
@@ -76,6 +78,7 @@ class Peak_Core
     }
 
     /**
+	 * @depracted 
      * Load/return Core extension objects
      */
     public function ext()
@@ -94,29 +97,65 @@ class Peak_Core
     	self::getInstance();
 
     	$env = self::getEnv();
+
+		$filepath = $apppath.'/'.$file;
     	$filetype = pathinfo($file, PATHINFO_EXTENSION);
-    	
+		
+		//we try to solve possible problem(s) here only in dev mode instead of possibly raise an exception
+		if($env === 'development') {
+			$generic_filepath = LIBRARY_ABSPATH.'/Peak/Application/genericapp.ini';
+
+			if($filetype !== 'genericapp') {
+				//non-existing file
+				if(!file_exists($filepath)) {
+					$filepath = $generic_filepath;
+					$filetype = 'genericapp';
+				}
+				//unsupported type
+				else if(!in_array($filetype, array('php','ini', 'genericapp'))) {
+					$filepath = $generic_filepath;
+					$filetype = 'genericapp';
+				}
+			}
+			else $filepath = $generic_filepath;
+		}
+
     	//load configuration object according to the file extension
-    	switch($filetype) {
+	   	switch($filetype) {
 
     		case 'php' :
-    			$array = include($apppath.'/'.$file);
-    			$conf = new Peak_Config();
-    			$conf->setVars($array);
+    			$conf = new Peak_Config($filepath);
     			break;
 			
-			case 'ini' : 
-    		    $conf = new Peak_Config_Ini($apppath.'/'.$file, true);
-    		    break;
+			case 'ini' :
+				if($env === 'development') {
+					//if it fail, we will use genericapp.ini in dev mode only
+					try { $conf = new Peak_Config_Ini($filepath, true);	}
+					catch(Exception $e) { $conf = new Peak_Config_Ini($generic_filepath, true);	}
+				}
+				else $conf = new Peak_Config_Ini($filepath, true);
+				break;
+
+			case 'genericapp' :
+				if($env === 'development') {
+					$conf = new Peak_Config_Ini($filepath, true);
+					break;
+				} //we don't break here if we are not in dev mode				
 			
 			default :
 				throw new Peak_Exception('ERR_CONFIG_FILE');
 				break;
     	}
     	
-    	//check if we got the configuration for current environment mode or at least section 'all'
-    	if((!isset($conf->$env)) && (!isset($conf->all))) {
-    		throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
+		
+		//check if we got the configuration for current environment mode or at least section 'all'
+		if((!isset($conf->$env)) && (!isset($conf->all))) {
+			if($env !== 'development') {
+				throw new Peak_Exception('ERR_CUSTOM', 'no general configurations and/or '.$env.' configurations');
+			}
+			//here we will use Peak/Application/genericapp.ini as temporary config for the lazy user when in DEVELOPMENT ENV
+			//This allow to boot an app with an empty config file
+			else $conf = new Peak_Config_Ini($generic_filepath, true);			
     	}
     	
     	//add APPLICATION_ABSPATH to path config array if exists
@@ -127,7 +166,7 @@ class Peak_Core
     	}
     	
     	//add APPLICATION_ABSPATH to 'path' key value
-    	if(array_key_exists('path', $conf->$env)) {
+    	if(is_array($conf->$env) && (array_key_exists('path', $conf->$env))) {
 			$conf_env = &$conf->$env;
     		foreach($conf_env['path'] as $pathname => $path) {
     			$conf_env['path'][$pathname] = $apppath.'/'.$path;
@@ -140,6 +179,8 @@ class Peak_Core
     	    $conf->all['path'] = $conf->arrayMergeRecursive(self::getDefaultAppPaths($apppath), $conf->all['path']);
     	}
     	else {
+			//fix a notice in case [all] section doesn't exists, we create it
+			if(!isset($conf->all)) $conf->all = array();
     		$conf->all['path'] = self::getDefaultAppPaths($apppath);
     	}
 
@@ -277,10 +318,16 @@ class Peak_Core
         if($level >= 4) {
             
             //init app&core configurations
-            if(!defined('APPLICATION_CONFIG'))
-                throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Configuration filename','APPLICATION_CONFIG'));
-            
-			self::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
+            if(!defined('APPLICATION_CONFIG')) {
+				if(self::getEnv() !== 'development') {
+					throw new Peak_Exception('ERR_CORE_INIT_CONST_MISSING', array('Configuration filename','APPLICATION_CONFIG'));
+				}
+				else {
+					define('APPLICATION_CONFIG', 'genericapp.ini');
+					self::initConfig('a.genericapp', APPLICATION_ABSPATH);
+				}
+            }
+			else self::initConfig(APPLICATION_CONFIG, APPLICATION_ABSPATH);
         }
         
         //LEVEL 5 - peak app object init

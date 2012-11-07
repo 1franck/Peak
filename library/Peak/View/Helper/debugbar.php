@@ -9,11 +9,16 @@
 class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug 
 {
 	
+	private $_console_log = array();
+	
 	/**
 	 * Display a bottom bar in your page
 	 */
 	public function show()
-	{		
+	{
+		//skip this, if view is set as no render
+		if($this->view->canRender() === false) return;
+		
 		//files included				
 		$files = $this->getFiles();		
 		//print_r($files);
@@ -53,7 +58,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		echo '<div id="pkdebugbar">
               <div class="pkdbpanel">
                <ul>
-                <li><a class="">PK v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
+                <li><a class="">Peak v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
                 <li><a class="clock pkdb_tab" id="pkdb_chrono" onclick="pkdebugShow(\'pkdb_chrono\');">'.$chrono.' ms</a></li>';
         if($zdb_profiler !== false) {
             $nb_query = $zdb_profiler->getTotalNumQueries();
@@ -65,8 +70,12 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         echo '  <li><a class="memory">'.$this->getMemoryUsage().'</a></li>
                 <li><a class="files pkdb_tab" id="pkdb_include" onclick="pkdebugShow(\'pkdb_include\');">'.$files_count.' Files</a></li>
                 <li><a class="variables pkdb_tab" id="pkdb_vars" onclick="pkdebugShow(\'pkdb_vars\');">Variables</a></li>
-                <li><a class="registry pkdb_tab" id="pkdb_registry" onclick="pkdebugShow(\'pkdb_registry\');">Registry</a></li>
-                <li id="togglebar"><a id="hideshow" class="hidebar" title="show/hide" onclick="pkdebugToggle();">&nbsp;</a></li>
+                <li><a class="registry pkdb_tab" id="pkdb_registry" onclick="pkdebugShow(\'pkdb_registry\');">Registry</a></li>';
+				
+		if(!empty($this->_console_log)) {
+			echo '<li><a class="console pkdb_tab" id="pkdb_consolelog" onclick="pkdebugShow(\'pkdb_consolelog\');">Console</a></li>';
+		}
+        echo '  <li id="togglebar"><a id="hideshow" class="hidebar" title="show/hide" onclick="pkdebugToggle();">&nbsp;</a></li>
                </ul>';
  
 
@@ -146,6 +155,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         }
         echo '</div>';
         
+		//zend db profiler
         if($zdb_profiler !== false) {
             echo '<div class="window resizable" id="pkdb_database_window">';
             echo '<h2>Database</h2>'.$nb_query.' in '.$nb_query_chrono.'<br />';
@@ -170,10 +180,42 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 			}
             echo '</div>';
         }
+		
+		if(!empty($this->_console_log)) {
+			echo '<div class="window resizable" id="pkdb_consolelog_window">';
+            echo '<h2>Console log</h2>';
+			
+			foreach($this->_console_log as $i => $item) {
+				
+				if(isset($item['title'])) echo '<strong>'.$item['title'].'</strong><br />';
+				if(is_array($item['data']) || is_object($item['data'])) {
+					echo '<pre>'.print_r($item['data'], true).'</pre>';
+				}
+				else {
+					echo '<pre>'.$item['data'].'</pre>';
+				}
+				
+				echo '<br />';
+			}
+			
+			echo '</div>';
+		}
         
         
         echo '</div><!-- /pkdbpanel --></div><!-- /pkdebugbar -->';
 	}
+	
+	/**
+	 * Add misc data to log in the debugbar
+	 *
+	 * @return this
+	 */
+	public function log($data, $title = null)
+	{
+		$this->_console_log[] = array('data' => $data, 'title' => $title);
+		return $this;
+	}
+	
     
     /**
 	 * Get CSS & JS for the bar

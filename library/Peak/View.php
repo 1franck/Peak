@@ -229,11 +229,31 @@ class Peak_View
     }
 	
 	/**
+	 * Return render option
+	 *
+	 * @return bool
+	 */
+	public function canRender()
+	{
+		return $this->_render;
+	}
+
+	/**
 	 * Disable rendering
 	 */
-	public function noRender()
+	public function disableRender()
 	{
 		$this->_render = false;
+		return $this;
+	}
+	
+	/**
+	 * Enabled rendering
+	 */
+	public function enableRender()
+	{
+		$this->_render = true;
+		return $this;
 	}
 
     /**
@@ -245,14 +265,9 @@ class Peak_View
      */
     public function render($file,$path)
     {
-		// check here if we can render
-		if($this->_render === false) {
-			// we skip rendering but reenable it after.
-			// we do that in case we have disabled rendering, but for a particular reason, we want to enable it
-			$this->_render = true;
-			return;
-		}
-		
+		//skip render part(see $_render)
+		if($this->_render === false) return;
+
         if(is_object($this->_engine)) {
             $this->engine()->render($file,$path);
         }

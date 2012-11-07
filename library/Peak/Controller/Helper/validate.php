@@ -1,6 +1,7 @@
 <?php
 /**
  * Validate Filters extension wrapper
+ * @see Peak_Filters_Advanced
  *
  * @author  Francois Lajoie
  * @version $Id$

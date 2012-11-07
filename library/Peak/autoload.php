@@ -72,7 +72,16 @@ function _autoloadAppBaseCustom($cn)
     $strtopath = strtolower(str_ireplace('app/','',_autoloadClass2File($cn)));
     $file = APPLICATION_ABSPATH.'/'.$strtopath;
 
-    if(!file_exists($file)) return false;
+    if(!file_exists($file)) {
+	
+        //check parent application CUSTOM PATH config, if exists, for models only
+        if(Peak_Registry::isRegistered('app_config')) {
+            
+            $file = Peak_Registry::o()->app_config->path['models'].'/'.str_replace('models/','',$strtopath);
+            if(!file_exists($file)) return false;
+        }
+        else return false;
+    }
     include $file;
 }
 

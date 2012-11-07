@@ -1,3 +1,39 @@
+#VERSION 0.9.4#
+
+ - added method cleanUnknownVars() and property $_clean_all_unknown_vars in Peak_View_Render_VirtualLayouts
+ - modified method initConfig in Peak_Core to support absent or unsupported application config by using genericapp.ini 
+   only in development env
+ - enhanced Peak_Controller_Internal_Pkwelcome functionality and content
+ - added a quick variables template system for Peak_View_Render_VirtualLayouts by adding method _processVariables()
+   and by modifying method render()
+ - remodified the recent change about an exception throw in Peak_Core::initConfig(), by enable it again only if 
+   app environment is not development
+ - marked as deprecated property $_extensions, methods __call() and ext() from class Peak_Core
+ - added class Peak_Controller_Internal_Pkwelcome. This new controller is used by default in genericapp.ini
+ - added file genericapp.ini in Peak/Application
+ - disabled an exception throw in Peak_Core::initConfig() when loading an empty app config file
+ - fixed notice in method initConfig() of class Peak_Core due to the change in Peak_Config_Ini
+ - fixed an exception throw in Peak_Config_Ini in case of empty file
+ - added property $_password_salt and method getSalt() to class Peak_Model_Authentication
+ - marked class Peak_View_Helper_html as deprecated
+ - updated Peak_Controller_Internal_Pkdoc with new version of twitter bootstrap
+ - updated vendor twitter bootstrap to 2.1.0
+ - fixed method _filter_match_key() of class Peak_Filters_Advanced to also return false if the key doesn't exists
+ - modified method initConfig() of class Peak_Core because of new method loadFile() in Peak_Config
+ - added method loadFile() to Peak_Config and modified method __construct() to support this new option too
+ - added method log() to debugbar helper.
+ - added css reset to debugbar.css
+ - fixed view helper debugbar to not show when rendering is disable
+ - deleted previously introducted noRender() in Peak_View and added instead methods canRender(), disableRender() and 
+   enableRender() and modified method render()
+ - fixed debugbar.js to not load jquery when it's already loaded
+ - modified function _autoloadAppBaseCustom() to support parent models in case of customs app models folder in autoload.php
+ - fixed method count() to support where string correctly in Peak_Model_Zendatable
+ - fixed methods calculate() and _getData() to handle correctly pages when no result in class Peak_Model_Pagination
+ - added some punctuations to _filter_text() in class Peak_Filters_Advanced
+ - added method _filter_date() to class Peak_Filters_Advanced
+ - added method _filter_url() to class Peak_Filters_Advanced
+
 #VERSION 0.9.3#
 
  - method dispatchActionParams() is no more experimental in Peak_Controller_Action

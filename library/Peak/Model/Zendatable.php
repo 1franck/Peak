@@ -106,7 +106,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 */
 	public function count($where = null)
 	{
-		$key_to_count = (isset($where[0])) ? $where[0]: $this->getPrimaryKey();
+		$key_to_count = (is_array($where) && isset($where[0])) ? $where[0]: $this->getPrimaryKey();
 		
 	    $select = $this->select()->from($this->_name, array('count('.$key_to_count.') as itemcount'));
 	    
@@ -114,7 +114,8 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        $where = $this->_db->quoteInto($where[0].' '.$where[1].' (?)',$where[2]);
 	        $select->where($where);
 	    }
-	    	    
+		elseif(!empty($where)) $select->where($where);
+	    
         $rows = $this->fetchAll($select);      
         return($rows[0]->itemcount);
 	}

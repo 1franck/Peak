@@ -112,7 +112,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	 */
 	private function layout()
 	{
-		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.0.2/css/bootstrap.min.css');
+		$twitter_bs = file_get_contents(LIBRARY_ABSPATH.'/Peak/Vendors/TwitterBootstrap/2.1.0/css/bootstrap.min.css');
 		$layout = '<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -197,7 +197,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 
   <body>
 
-    <div class="navbar navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
           <a class="brand" href="'.$this->view->baseUrl('pkdoc',true).'">Peak Framework AutoDoc</a>
@@ -264,9 +264,9 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
           <h1>'.$this->ref->class_name.'</h1><p>';
 		  
 		foreach($this->ref->class_declaration['properties'] as $d) {
-			if($d === 'abstract') $class = 'notice';
-			elseif($d === 'final') $class = 'important';
-			elseif($d === 'class') $class = 'success';
+			if($d === 'abstract') $class = 'label-notice';
+			elseif($d === 'final') $class = 'label-important';
+			elseif($d === 'class') $class = 'label-success';
 			else $class = '';
 			$content .= '<span class="label '.$class.'">'.$d.'</span> ';
 		}
@@ -276,7 +276,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			if(stristr($parent,'Peak_')) {
 				$content .= '<a class="nounder" href="'.$this->view->baseUrl('pkdoc/c/'.$parent,true).'">';
 			}
-			$content .= '<span class="label success"><span class="label parent">Parent</span> '.$parent.'</span>';
+			$content .= '<span class="label label-success"><span class="label parent">Parent</span> '.$parent.'</span>';
 			if(stristr($parent,'Peak_')) {
 				$content .= '</a>';
 			}
@@ -287,7 +287,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 		if(!empty($this->ref->class_declaration['interfaces'])) {
 			$content .= '<p style="margin-top:-12px;">';
 			foreach($this->ref->class_declaration['interfaces'] as $i) {
-				$content .= '<span class="label warning">'.$i.'</span> ';
+				$content .= '<span class="label label-warning">'.$i.'</span> ';
 			}
 			$content .= '</p>';
 		}
@@ -409,10 +409,10 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 	 */
 	private function _visibility_label($v)
 	{
-		if($v === 'public') $class = 'success';
-		elseif($v === 'protected') $class = 'warning';
-		elseif($v === 'private') $class = 'important';
-		elseif($v === 'static') $class = 'notice';
+		if($v === 'public') $class = 'label-success';
+		elseif($v === 'protected') $class = 'label-warning';
+		elseif($v === 'private') $class = 'label-important';
+		elseif($v === 'static') $class = 'label-notice';
 		else $class = '';
 		
 		return '<span class="label '.$class.'">'.$v.'</span>';

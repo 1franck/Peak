@@ -1,14 +1,29 @@
 /* peak debug bar */
+/* CSS RESET http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 */
+#pkdebugbar div, #pkdebugbar  span, #pkdebugbar h1, #pkdebugbar  h2, #pkdebugbar  h3, #pkdebugbar  h4, #pkdebugbar  h5, #pkdebugbar  h6, #pkdebugbar  p, #pkdebugbar  blockquote, #pkdebugbar  pre, #pkdebugbar a, #pkdebugbar  code, #pkdebugbar del, #pkdebugbar  dfn, #pkdebugbar  em, #pkdebugbar  img, #pkdebugbar  ins, #pkdebugbar  kbd, #pkdebugbar  q, #pkdebugbar  s, #pkdebugbar  samp, #pkdebugbar small, #pkdebugbar  strike, #pkdebugbar  strong, #pkdebugbar  sub, #pkdebugbar  sup, #pkdebugbar  tt, #pkdebugbar  var, #pkdebugbar b, #pkdebugbar  u, #pkdebugbar  i, #pkdebugbar  center, #pkdebugbar dl, #pkdebugbar  dt, #pkdebugbar  dd, #pkdebugbar  ol, #pkdebugbar  ul, #pkdebugbar  li, #pkdebugbar fieldset, #pkdebugbar  #pkdebugbar  form, #pkdebugbar  label, #pkdebugbar  legend, #pkdebugbar table, #pkdebugbar  caption, #pkdebugbar  tbody, #pkdebugbar  tfoot, #pkdebugbar  thead, #pkdebugbar  tr, #pkdebugbar  th, #pkdebugbar  td, #pkdebugbar article, #pkdebugbar  aside, #pkdebugbar  canvas, #pkdebugbar  details, #pkdebugbar  embed, #pkdebugbar  figure, #pkdebugbar  figcaption, #pkdebugbar  footer, #pkdebugbar  header, #pkdebugbar  hgroup, #pkdebugbar  menu, #pkdebugbar  nav, #pkdebugbar  output, #pkdebugbar  ruby, #pkdebugbar  section, #pkdebugbar  summary, #pkdebugbar time, #pkdebugbar  mark {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+#pkdebugbar ol, #pkdebugbar  ul {
+	list-style: none;
+}
+#pkdebugbar table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 #pkdebugbar {
  position:fixed;
  bottom:0;
  left:0;
  height:28px;
  color:#000;
- margin:0;
- padding:0;
  font: 11px/1.4em Lucida Grande, Lucida Sans Unicode, Courrier new,sans-serif;
- z-index: 1;
+ z-index: 100;
  width:100%;
  opacity:1;
 }
@@ -19,11 +34,13 @@
 #pkdebugbar pre {
  font:12px "Consolas", "Lucida Console", sans-serif;
  background:#f1f1f1 !important;
- border:0;
  padding:4px 7px;
 }
 #pkdebugbar small {
  font-size:10px;
+}
+#pkdebugbar strong {
+ font-weight:bold;
 }
 #pkdebugbar table {
  border:0;
@@ -41,12 +58,7 @@
  margin:0;
  color:#111;
 }
-#pkdebugbar ul {
- list-style-type:none;
- padding:0;
- margin:0;
- background:#eee;
-}
+#pkdebugbar ul { }
 #pkdebugbar ul li {
  float:left;
  border-right:1px solid #bbb;
@@ -66,7 +78,6 @@
  display:block;
  line-height:28px;
  padding:0 22px;
- margin:0;
  text-decoration:none;
  color:#000;
  background-position: 8px 5px;
@@ -79,7 +90,6 @@
 #pkdebugbar div.icon {
  width:24px;
  height:24px;
- padding:0;
  float:left;
  cursor:pointer;
 }
@@ -126,11 +136,15 @@
  background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAYdJREFUeNrEUz9IAmEUf6dlpqAQUksNDQ1NQR/NEdSSU1uEW0OrW2tjo0OLQbQcBNFik1C0tGpgglI0SpCcmXZ/v7vvu953nZWnQeDQgx/vce+93/vzvZNc14VRJAQjysgEYz1j6bAKUuibL5lKeVqSpDyqW4dSmZomWIYBQtcPVvoJgqJ1OhCNxYRJBPxdyX8ewbFt0FXVq5ZJzxLbsrJIkvl1BHTmgXPy08k4B4ZErZYNO+l5cnpRywY7+SLA2cju9jJRVQdEjAgUmnMXFMWERoPB1voCObusZDFcQRT7CExNA8viQCn3kqnDQbds0AwT2l0d3jULujThxQ0dATsoHx1fDd1HcnONxGckuC7clPFVcuORSHHYDvY4Y32JLu4Al1nqRuPQlM+9ZGg/yUazjt6Nz2funTI6ByqHpxchsrpfEjZXHnKsVpCdl1qv4MAdhBEJxJSvQwwr0efqI5hvd6x8co/f5hCvCF1wBDsQNzGBmPR1sCUxn4kwELbrJ0r//jd+CDAARWTMh3/g7aIAAAAASUVORK5CYII=");
  padding:0px 16px;
 }
+#pkdebugbar a.console {
+ background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAcVJREFUeNqkk7tKA1EQhv+ze/Yiq5IoFiJERARXLLWwyAsoVkIeQBCieQJJYWNjZ6UL2uobWImVhYXaWdgoWImIsLmY3WR3s86csBGxih4Y5lzm/2bOTaRpiv80WSqV1slP/lH/KpMkmfI87ziKooGUhmGgXC5vy263KzqdDiqVCqivFtnz1tiyPseEYQRd15HP5+B5R7wmZBzHgqpQga7rKk9zCJdmkV4/gCur1Rqo11uwbQkpTbRadbCGtQzQeMBZOJjFbN2pcbTDkMRNBEGHSrbJTAWIojADaAqgBJSZy2QIm1GYoKyfaLcTmOZQXyylQXNmlkjTMgATQ8qYrMwrz43PdXhhBpOHWxhdXYZl2QSzFeQXQBQXkZSKtL8WRvY3FWDYnUF+ZxX+7hlEYQyzB5vYON4jgOwDJJWrAMHlHWr3z6qS2sUNHHeOxGtonlzCcXJIz2/xlNzgWQBCCAVgrQKwqFdy7xAtawTWWxufp1cYeo+h0d5ZlLUgaKpEPwCO46DRaGTPhG7lA/qjj1DTlLgH6EEsS/8G+L5vaRRUrVYHeomsYa2gzGUaTP/lI9DVv3BNJlmOP9aA+pjMF//9zl8CDACdxy5frKysSgAAAABJRU5ErkJggg==");
+ padding-left:30px;
+}
 #pkdebugbar .fullscreen {
  background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAXNJREFUeNqckb9KA0EQxmfXzR1KBMHKztMmkkK0lJDGvIFgY2Nhp4ggBi3SBjFIBEFbH8AmryBprFKpWBgxnZhC8HKJyd2t+41/iGJMzoHvbnbn+w07u2ItX18SQhSIyKFoca+13lHt9mthZbHjTE/4FAQ++X5g1KFOB7lPYRiS1vAPkRCKpZRFtbrtlC7tgvK8hiNbD1StajZDQRCw/sohz0s7ynVdymQy9J84X68QNzCzUHq1zJtzM2N0lE3+CmwdXFHl5pnzi7MUgZVmhI/jNCgxadHhduLrqD+FGjzdjGw2W1xMTo3Q8d5sT/hT8MCLHKx5BZ8XJ7l5vvVBAl4wYJXWgheDwt0BVklp8TxRG0gpCayMxd7n2dy/4yaDCF4wYKVlxXlxXSXKFh/7XiI88CIHK207ziPgf1tTlDtt9IRRg6ebUfhgnlJxvO/c+Q3r2x1wA/epUl7eXUiZrYhvEBJYYbJho1EjFbEDnu3lTYABAATDUkvUTcXaAAAAAElFTkSuQmCC");
  padding:0 15px;
-
 }
+
 #pkdebugbar li a#hideshow {
  cursor:pointer;
 } 
@@ -143,7 +157,7 @@
  width:94%;
  height:420px;
  overflow:auto;
- padding:12px 20px;
+ padding:12px 25px;
  border:1px solid #ccc;
  border-bottom:0;
  text-align:left;
@@ -153,8 +167,7 @@
  -moz-border-radius:6px 6px 0 0;
  -webkit-border-radius:6px 6px 0 0;
  -o-border-radius:6px 6px 0 0;
- z-index:999;
- 
+ z-index:999999;
 }
 #pkdebugbar div.window.vsmall { width:300px; height:180px; }
 #pkdebugbar div.window.small { height:250px; }
@@ -162,7 +175,7 @@
 #pkdebugbar div.window.large { height:550px; }
 
 #pkdebugbar div.window h2 {
- margin:10px 0 10px 0;
+ margin:15px 0 15px -10px;
  font-size:18px !important;
- text-shadow:2px 2px 0 #ccc;
+ text-shadow:1px 1px 1px #aaa;
 }
