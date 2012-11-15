@@ -1,7 +1,7 @@
 <?php
 /**
  * Peak welcome controller. This is the default controller for Peak/Application/genericapp.ini
- * Its juste a welcome (hello words) page... :P
+ * Its just a welcome (hello words) page... :P
  * 
  * @author  Francois Lajoie
  * @version $Id$
