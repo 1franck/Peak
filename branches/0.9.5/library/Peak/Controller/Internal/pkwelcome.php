@@ -38,6 +38,7 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 			
 			if(!file_exists($filepath)) {
 				$this->view->intro_warn = 'but your configuration is missing...';
+				$this->view->application_folder_missing = '<br /><small style="color:red">Can\'t find this path :(</small>';
 			}
 			elseif(!in_array($filetype, array('php','ini'))) {
 				$this->view->intro_warn = 'but your configuration file type is not supported...';
@@ -203,7 +204,7 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 						<small>Absolute: '.realpath(PUBLIC_ABSPATH).'</small></td>
 				  </tr>
 				  <tr>
-					<td>APPLICATION_ROOT</td>
+					<td>APPLICATION_ROOT{$application_folder_missing}</td>
 					<td>'.APPLICATION_ROOT.'<br />
 						<small>'.realpath(APPLICATION_ABSPATH).'</small></td>
 				  </tr>
