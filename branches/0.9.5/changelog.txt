@@ -1,5 +1,7 @@
 #VERSION 0.9.5#
-
+ 
+ - added few enhancements in debugbar.js and debugbar.css
+ - fixed some js functions to use properly window size for panels in debugbar.js
  - removed deprecated file appcreate.php
  - removed vendor Geshi
  - updated css twitter bootstrap in Peak_Controller_Internal_Pkdoc and Peak_Controller_Internal_Pkwelcome

@@ -359,7 +359,7 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			$content .= '<div class="span9" style="margin:12px 0;"><h1>Constants</h1></div>';
 			$content .= '<div class="span9">';
 			foreach($this->ref->constants as $v) {
-				$content .= '<h2 id="'.$v['name'].'">'.$v['name'].'</h2>';
+				$content .= '<h4 id="'.$v['name'].'">'.$v['name'].'</h4>';
 				$content .= '<div class="block">value &rarr; '.htmlentities($v['value']).'</div>';
 			}
 			$content .= '</div>';
@@ -370,9 +370,9 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			$content .= '<div class="span9" style="margin:12px 0;"><h1>Properties</h1></div>';
 			$content .= '<div class="span9">';
 			foreach($this->ref->self_properties as $v) {
-				$content .= '<h2 id="$'.$v['name'].'">$'.$v['name'].'
+				$content .= '<h4 id="$'.$v['name'].'">$'.$v['name'].'
 				                 '.$this->_visibility_label($v['visibility']).'
-								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'</h2>';
+								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'</h4>';
 				$content .= '<div class="block"><h5>'.$v['doc']['short'].'</h5>';
 				foreach($v['doc']['tags'] as $t) {
 					$content .= '@'.$t['name'].' '.htmlentities($t['description']).'<br />';
@@ -390,10 +390,10 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 			$content .= '<div class="span9" style="margin:12px 0;"><h1>Methods</h1></div>';
 			$content .= '<div class="span15">';
 			foreach($this->ref->self_methods as $v) {
-				$content .= '<h2 id="'.$v['name'].'()">'.$v['name'].'( <small style="color:#777;">'.$v['params_string'].'</small> )
+				$content .= '<h4 id="'.$v['name'].'()">'.$v['name'].'( <small style="color:#777;">'.$v['params_string'].'</small> )
 				                 '.$this->_visibility_label($v['visibility']).'
 								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'
-								 </h2>';
+								 </h4>';
 				$content .= '<div class="block"><h5>'.htmlentities($v['doc']['short']).'</h5><h5>'.htmlentities($v['doc']['long']).'</h5><br />';
 				foreach($v['doc']['tags'] as $t) {
 					$content .= '@'.$t['name'].' '.$t['type'].' '.$t['variable'].' '.$t['description'].'<br />';
