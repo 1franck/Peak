@@ -32,10 +32,15 @@
  width:100%;
  border-top:1px solid #bbb;
 }
-#pkdebugbar pre {
+#pkdebugbar pre, #pkdebugbar .pre {
  font:12px "Consolas", "Lucida Console", sans-serif;
  background:#f1f1f1 !important;
- padding:4px 7px;
+ padding:10px 34px;
+ border:1px solid #e1e1e1;
+ border-left:0;
+ border-right:0;
+ margin:0px -25px 10px -25px;
+ border-radius:0;
 }
 #pkdebugbar small {
  font-size:10px;
@@ -53,11 +58,14 @@
 #pkdebugbar table td, #pkdebugbar table th {
  border:0;
  background:#f1f1f1;
- border-bottom:1px solid #eee;
+ border-bottom:1px solid #e5e5e5;
  font-size:11px;
  padding:1px 8px;
  margin:0;
  color:#111;
+}
+#pkdebugbar table th {
+	border-bottom:1px solid #ddd;
 }
 #pkdebugbar ul { }
 #pkdebugbar ul li {
@@ -179,8 +187,8 @@
 }
 #pkdebugbar div.window.vsmall { width:300px; height:180px; }
 #pkdebugbar div.window.small { height:250px; }
-#pkdebugbar div.window.medium { height:400px; width:600px;}
-#pkdebugbar div.window.large { height:550px; }
+#pkdebugbar div.window.medium { height:450px; width:600px;}
+#pkdebugbar div.window.large { height:600px; }
 
 #pkdebugbar div.window h2 {
  margin:15px 0 15px -10px;
