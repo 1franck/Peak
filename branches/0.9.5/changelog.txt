@@ -1,5 +1,7 @@
 #VERSION 0.9.5#
- 
+  
+ - added a new param method to model() from Peak_Controller_Action to allow injection of param(s) into the model constructor. 
+   Please note also that arguments order of this method have been changed.
  - added better zend_db profiler infos in Peak_View_Helper_Debugbar + minor css change in debugbar.css
  - added few enhancements in debugbar.js and debugbar.css
  - fixed some js functions to use properly window size for panels in debugbar.js
