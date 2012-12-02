@@ -264,7 +264,7 @@ abstract class Peak_Controller_Action
      * @param  string|null $class_varname
      * @return object      return object if $varname is null
      */
-    public function model($model_path, $params = null, $class_varname = null)
+    public function model($model_path, $class_varname = null, $params = null)
     {
         $model = str_replace('/','_',$model_path);
         $class = 'App_Models_'.$model;
