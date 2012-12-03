@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
   
+ - added bind param to method query() in Peak_Model_Zendatable
  - added a new param method to model() from Peak_Controller_Action to allow injection of param(s) into the model constructor
  - added better zend_db profiler infos in Peak_View_Helper_Debugbar + minor css change in debugbar.css
  - added few enhancements in debugbar.js and debugbar.css

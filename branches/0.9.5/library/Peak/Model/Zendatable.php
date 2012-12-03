@@ -179,11 +179,12 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * Shortcut for $_db->query()
 	 *
 	 * @param  string   $query
+	 * @param  array    $bind
 	 * @return resource
 	 */
-	public function query($query)
+	public function query($query, $bind = array())
 	{
-		return $this->_db->query($query);
+		return $this->_db->query($query, $bind);
 	}
 	
 	/**
