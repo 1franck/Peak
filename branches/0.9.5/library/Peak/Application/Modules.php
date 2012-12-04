@@ -82,7 +82,7 @@ abstract class Peak_Application_Modules
     		$this->_path = Peak_Core::getPath('modules').'/'.$this->_name;
     	}
     	else {
-    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/'.$this->_name;
+    		$this->_path = LIBRARY_ABSPATH.'/Peak/Application/Modules/'.$this->_name;
     	}
 	}
 
