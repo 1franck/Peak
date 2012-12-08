@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
   
+ - fixed a notice about array to string conversion in method _proccessVariables() of class Peak_View_Render_VirtualLayouts
  - fixed method addAction() in Peak_Codegen_Controller to discard empty action name
  - changed the path of internal module in Peak_Application_Modules
  - added bind param to method query() in Peak_Model_Zendatable
