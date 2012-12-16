@@ -13,6 +13,12 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * @var integer
 	 */
 	public $last_count = null;
+    
+    /**
+     * Adapter db link
+     * @var object
+     */
+    protected $_db;
 	
 	/**
 	 * Pagination object
@@ -100,8 +106,13 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
 	/**
 	 * Count row from a table
-	 *
-	 * @param  array|null ex: array('id','IN',array(1,2,5)) or array('id','=',2)
+	 * 
+     * $where ex:
+     *  array('id','IN',array(1,2,5))
+     *  array('id','=',2)
+     *  'id = "2"'
+     *  
+	 * @param  misc   
 	 * @return integer
 	 */
 	public function count($where = null)
@@ -115,9 +126,8 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	        $select->where($where);
 	    }
 		elseif(!empty($where)) $select->where($where);
-	    
-        $rows = $this->fetchAll($select);      
-        return($rows[0]->itemcount);
+
+        return $this->_db->fetchOne($select);
 	}
 
 	/**

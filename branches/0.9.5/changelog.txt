@@ -1,5 +1,7 @@
 #VERSION 0.9.5#
   
+ - added protected property $_db to Peak_Model_Zendatable to prevent use of db adapter object outside of the model
+ - minor refactoring of method count() in Peak_Model_Zendatable
  - fixed a notice about array to string conversion in method _proccessVariables() of class Peak_View_Render_VirtualLayouts
  - fixed method addAction() in Peak_Codegen_Controller to discard empty action name
  - changed the path of internal module in Peak_Application_Modules
