@@ -154,7 +154,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
 	    //remove unknow table key
 	    foreach($data as $k => $v) {
-	        if(!isset($this->_metadata[$k])) unset($data[$k]);
+	        if(!array_key_exists($k, $this->describe)) unset($data[$k]);
 	    }
 	    return $data;
 	}
