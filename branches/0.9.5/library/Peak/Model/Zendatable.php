@@ -172,7 +172,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    
 	    $pm = $this->getPrimaryKey();
 
-	    if(isset($data[$pm]) && !empty($data[$pm])) {
+	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
 	        $this->_db->update($this->_name, $data, $where);

@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
   
+ - fixed a potential problem with save() in Peak_Model_Zendatable by changing isset for array_key_exists
  - fixed a potential problem with cleanArray() in Peak_Model_Zendatable by changing isset for array_key_exists
  - added protected property $_db to Peak_Model_Zendatable to prevent use of db adapter object outside of the model
  - minor refactoring of method count() in Peak_Model_Zendatable
