@@ -71,7 +71,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	{
 	    if(!isset($key)) $key = $this->getPrimaryKey();
 	    
-	    $select = $this->select()->from($this->_name, $key)
+	    $select = $this->select()->from($this->getSchemaName(), $key)
 	                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
 	    
 	    $result = $this->fetchRow($select);
@@ -119,7 +119,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	{
 		$key_to_count = (is_array($where) && isset($where[0])) ? $where[0]: $this->getPrimaryKey();
 		
-	    $select = $this->select()->from($this->_name, array('count('.$key_to_count.') as itemcount'));
+	    $select = $this->select()->from($this->getSchemaName(), array('count('.$key_to_count.') as itemcount'));
 	    
 	    if(is_array($where)) {
 	        $where = $this->_db->quoteInto($where[0].' '.$where[1].' (?)',$where[2]);
@@ -129,6 +129,17 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
         return $this->_db->fetchOne($select);
 	}
+    
+    /**
+     * Return the database schema if specified and table name together
+     * ex:
+     * @use    $_schema and $_name
+     * @return string
+     */
+    public function getSchemaName()
+    {
+        return (!empty($this->_schema)) ? $this->_schema.'.'.$this->_name : $this->_name;
+    }
 
 	/**
 	 * Get default primary key string name
@@ -175,12 +186,12 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
-	        $this->_db->update($this->_name, $data, $where);
+	        $this->_db->update($this->getSchemaName(), $data, $where);
 			return $data[$pm];
 	    }
 	    else {
 	        //insert
-	        $this->_db->insert($this->_name, $data);
+	        $this->_db->insert($this->getSchemaName(), $data);
 	        return $this->_db->lastInsertId();
 	    }
 	}
