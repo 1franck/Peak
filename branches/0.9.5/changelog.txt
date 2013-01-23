@@ -1,5 +1,7 @@
 #VERSION 0.9.5#
  
+ - added method loadFile() to Peak_Lang and modified method __construct() to support this new method. This will allow us
+   the use of class Peak_Lang as standalone instead of only in framework context.
  - added method getSchemaName() in Peak_Model_Zendatable and modified methods save(), count() and exists() to use it
  - fixed a variable name error introduced in the last change in cleanArray() of Peak_Model_Zendatable
  - fixed a potential problem with save() in Peak_Model_Zendatable by changing isset for array_key_exists
