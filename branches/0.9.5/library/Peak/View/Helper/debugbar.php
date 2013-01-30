@@ -100,7 +100,8 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
             foreach($_SESSION['pkdebugbar']['pages_chrono'] as $page => $chronos) {
                 $chronos = json_decode($chronos, true);
                 $count = count($chronos);
-                $page = str_replace(array(PUBLIC_ROOT,'//'),array('','/'), $page);
+				if(!in_array(PUBLIC_ROOT, array('','/'))) $page = str_replace(PUBLIC_ROOT, '', $page);
+                $page = str_replace('//', '/', $page);
                 echo '<tr><td>'.$page.'</td><td>'.round(array_sum($chronos) / $count,2).'ms</td><td>'.$count.'</td></tr>';
             }
             echo '</table></div><script></script>';

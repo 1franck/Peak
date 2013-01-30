@@ -1,5 +1,9 @@
 #VERSION 0.9.5#
  
+ - fixed a problem with paths of files in chrono section of class Peak_View_Helper_Debugbar.
+ - added property $_is_calculated to Peak_Model_Pagination. With this, we are not forced to call calculate() before 
+   retreiving a page.
+ - added a default value to $_it_perpage in Peak_Model_Pagination.
  - added method loadFile() to Peak_Lang and modified method __construct() to support this new method. This will allow us
    the use of class Peak_Lang as standalone instead of only in framework context.
  - added method getSchemaName() in Peak_Model_Zendatable and modified methods save(), count() and exists() to use it

@@ -7,7 +7,7 @@
  */
 class Peak_Model_Pagination
 {
-    protected $_it_perpage;
+    protected $_it_perpage = 25;
     protected $_it_start;
     protected $_it_end;
 
@@ -28,6 +28,8 @@ class Peak_Model_Pagination
     protected $_db_by = null;
 
     protected $_db_query = null;
+    
+    private $_is_calculated = false;
     
     /**
      * Create object, add db object if specified
@@ -193,6 +195,8 @@ class Peak_Model_Pagination
     		for($i = 1;$i <= $this->_pcount;++$i) $this->_pages[$i] = $i;
     	}
         
+        $this->_is_calculated = true;
+        
         return $this;
     }
 
@@ -204,6 +208,8 @@ class Peak_Model_Pagination
      */
     public function getPage($pn)
     {
+        if($this->_is_calculated == false) $this->calculate();
+        
         //set current page
     	if((isset($pn)) && (is_numeric($pn)) && ($pn <= $this->_pcount)) {
     	   	$this->_curpage = $pn;
