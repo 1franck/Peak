@@ -14,7 +14,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 	/**
 	 * Display a bottom bar in your page
 	 */
-	public function show()
+	public function show($minimized = false)
 	{
 		//skip this, if view is set as no render
 		if($this->view->canRender() === false) return;
@@ -211,6 +211,10 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 			
 			echo '</div>';
 		}
+		
+		if($minimized === true) {
+            echo '<script>pkdebugToggle();</script>';
+        }
         
         
         echo '</div><!-- /pkdbpanel --></div><!-- /pkdebugbar -->';
