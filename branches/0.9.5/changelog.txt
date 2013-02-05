@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
  
+ - added a default unknow error in class Peak_Controller_Internal_PkError
  - added a param to method show() of class Peak_View_Helper_Debugbar that make the bar starting minimized. 
    By default, this new param is set to false.
  - fixed a notice about object to string conversion in method _proccessVariables() of class Peak_View_Render_VirtualLayouts

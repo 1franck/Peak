@@ -48,10 +48,13 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
             	        break;    
             	}
             }
-            else {
+            elseif($this->exception instanceof Exception) {
                 $this->_error();
             }
+            else $this->_unknow();
+
         }
+        else $this->_unknow();
     }
     
     /**
@@ -92,6 +95,15 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
         $this->view->title = 'Service Unavailable';
         $this->view->title_desc = '503 - The server is currently unavailable.';
         $this->devmode();
+    }
+
+    /**
+     * Unknow error action
+     */
+    public function _unknow()
+    {
+        $this->view->title = 'With great power comes great responsibility';
+        $this->view->title_desc = 'what are you doign here?';
     }
     
     /**
