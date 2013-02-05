@@ -103,7 +103,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
     public function _unknow()
     {
         $this->view->title = 'With great power comes great responsibility';
-        $this->view->title_desc = 'what are you doign here?';
+        $this->view->title_desc = 'what are you doing here?';
     }
     
     /**
