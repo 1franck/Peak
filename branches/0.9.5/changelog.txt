@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
  
+ - added method getMethodCodeBlock() to class Peak_Zreflection
  - fixed a bug that return empty array with Peak_Filters::globalSanitize() when no filter is set. This method will now
    apply a default string sanitize if no filter is set.
  - added a default unknow error in class Peak_Controller_Internal_PkError
