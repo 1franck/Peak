@@ -17,12 +17,12 @@ class Peak_Model_Zendatable_Mutator extends Peak_Model_Zendatable
      */
     public function __construct($tablename = null, $primary = null, $schema = null)
     {
-        $this->change($tablename, $primary, $schema );
-        parent::__construct();
+        parent::__construct(); //important
+        $this->change($tablename, $primary, $schema);
     }
     
     /** 
-     * Change the table, primary key and schema name(database name)
+     * Change the table, primary key and schema(db name)
      *
      * @param  string|null $tablename
      * @param  string|null $primary
@@ -34,7 +34,24 @@ class Peak_Model_Zendatable_Mutator extends Peak_Model_Zendatable
         if(isset($tablename)) $this->_name    = $tablename;
         if(isset($primary))   $this->_primary = $primary;
         if(isset($schema))    $this->_schema  = $schema;
-        
+
+        // we need to reset some stuff
+        $this->_cols = null;
+        $this->_metadata = $this->_db->describeTable($this->_name, $this->_schema);
+        $this->_getCols();
+
         return $this;
     }
+    
+    /**
+	 * Public method for $_db->query()
+	 *
+	 * @param  string   $query
+	 * @param  array    $bind
+	 * @return resource
+	 */
+	public function query($query, $bind = array())
+	{
+		return $this->_db->query($query, $bind);
+	}
 }

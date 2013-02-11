@@ -203,7 +203,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * @param  array    $bind
 	 * @return resource
 	 */
-	public function query($query, $bind = array())
+	protected function query($query, $bind = array())
 	{
 		return $this->_db->query($query, $bind);
 	}

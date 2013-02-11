@@ -1,5 +1,7 @@
 #VERSION 0.9.5#
  
+ - added method query() in Peak_Model_Zendatable_Mutator with public visibility.
+ - passed method query() visibility to protected in class Peak_Model_Zendatable.
  - added class Peak_Model_Zendatable_Mutator. This allow us to perform stuff on the fly on multiples tables.
  - added method getMethodCodeBlock() to class Peak_Zreflection
  - fixed a bug that return empty array with Peak_Filters::globalSanitize() when no filter is set. This method will now
