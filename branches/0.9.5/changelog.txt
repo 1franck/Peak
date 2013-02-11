@@ -1,5 +1,6 @@
 #VERSION 0.9.5#
  
+ - fixed Peak_Model_Pagination because of changed visibility of method Peak_Model_Zendatable::query()
  - added method query() in Peak_Model_Zendatable_Mutator with public visibility.
  - passed method query() visibility to protected in class Peak_Model_Zendatable.
  - added class Peak_Model_Zendatable_Mutator. This allow us to perform stuff on the fly on multiples tables.

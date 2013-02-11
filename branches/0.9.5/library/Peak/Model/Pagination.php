@@ -261,7 +261,8 @@ class Peak_Model_Pagination
         if($limit < 0) $limit = 0;
         $select .= ' LIMIT '.$limit.','.$this->_it_perpage;
 
-        return $this->_db_object->query($select)->fetchAll();
+        $db = $this->_db_object->getDefaultAdapter();
+        return $db->query($select)->fetchAll();
     }
 
     /**
