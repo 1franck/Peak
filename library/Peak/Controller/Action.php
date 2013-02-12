@@ -253,23 +253,28 @@ abstract class Peak_Controller_Action
     /**
      * Instanciate models
      * 
-     * @example 
-     * $page = $this->model('test/page')  is the same as $page = new App_Models_Test_Page();
-     * $this->model('test/page', 'page')  is the same as $this->page = new App_Models_Test_Page();
+     * @examples:
+     *  - $page = $this->model('test/model')  is the same as $mymodel = new App_Models_Test_Model();
+     *  - $this->model('test/model', null, 'mymodel')  is the same as $this->mymodel = new App_Models_Test_Model();
+     *  - $this->model('mypath/model', $myname) is the same as $model = new App_Models_Test_Model($myname);
+     *  - $this->model('mypath/model', $myname, 'mymodel') is the same as $this->mymodel = new App_Models_Test_Model($myname);
      *
-     * @param  string $model_path
-     * @param  string $varname
-     * @return objct    return object if $varname is null
+     * @param  string      $model_path
+     * @param  misc|null   $params (new in 0.9.5, note $class_varname and $params order have been inversed)
+     * @param  string|null $class_varname
+     * @return object      return object if $varname is null
      */
-    public function model($model_path, $varname = null)
+    public function model($model_path, $class_varname = null, $params = null)
     {
         $model = str_replace('/','_',$model_path);
         $class = 'App_Models_'.$model;
-        if(isset($varname)) {
-            $this->$varname = new $class();
+        if(isset($class_varname)) {
+			$this->$class_varname = (!is_null($params)) ? new $class($params): new $class();
             return $this;
         }
-        else return new $class();
+        else {
+			return (!is_null($params)) ? new $class($params): new $class();
+		}
     }
 
     /**

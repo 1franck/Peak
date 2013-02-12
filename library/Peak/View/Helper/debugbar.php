@@ -14,7 +14,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 	/**
 	 * Display a bottom bar in your page
 	 */
-	public function show()
+	public function show($start_minimized = false)
 	{
 		//skip this, if view is set as no render
 		if($this->view->canRender() === false) return;
@@ -58,7 +58,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		echo '<div id="pkdebugbar">
               <div class="pkdbpanel">
                <ul>
-                <li><a class="">Peak v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
+                <li><a class="thebar">&nbsp;&nbsp;&nbsp;Peak v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
                 <li><a class="clock pkdb_tab" id="pkdb_chrono" onclick="pkdebugShow(\'pkdb_chrono\');">'.$chrono.' ms</a></li>';
         if($zdb_profiler !== false) {
             $nb_query = $zdb_profiler->getTotalNumQueries();
@@ -96,14 +96,15 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
             echo 'Fastest request: '.$short.'ms<br />';
             echo 'Longest request: '.$long.'ms<br /><br />';
             
-            echo 'Request(s) stats:<br /><table><thead><tr><th>URI</th><th style="width:1px;">Average</th><th style="width:1px;">Count</th></tr></thead>';
+            echo 'Request(s) stats:<br /><div class="pre"><table><thead><tr><th>URI</th><th style="width:1px;">Average</th><th style="width:1px;">Count</th></tr></thead>';
             foreach($_SESSION['pkdebugbar']['pages_chrono'] as $page => $chronos) {
                 $chronos = json_decode($chronos, true);
                 $count = count($chronos);
-                $page = str_replace(array(PUBLIC_ROOT,'//'),array('','/'), $page);
+				if(!in_array(PUBLIC_ROOT, array('','/'))) $page = str_replace(PUBLIC_ROOT, '', $page);
+                $page = str_replace('//', '/', $page);
                 echo '<tr><td>'.$page.'</td><td>'.round(array_sum($chronos) / $count,2).'ms</td><td>'.$count.'</td></tr>';
             }
-            echo '</table><script></script>';
+            echo '</table></div><script></script>';
 		}
         elseif($chrono === 'n/a') {
             echo 'To get chrono, you must use Peak_Chrono::start() in your app launcher.<br />
@@ -157,30 +158,40 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
         
 		//zend db profiler
         if($zdb_profiler !== false) {
-            echo '<div class="window resizable" id="pkdb_database_window">';
-            echo '<h2>Database</h2>'.$nb_query.' in '.$nb_query_chrono.'<br />';
+            echo '<div class="window large" id="pkdb_database_window">';
+            echo '<h2>Database</h2><strong>'.$nb_query.' in '.$nb_query_chrono.'<br />';
 
 			if($zdb_profiler->getTotalNumQueries() > 0) {
-				
+
 				$longest_query_chrono  = 0;
 				$longest_query = null;
 				
-				foreach ($zdb_profiler->getQueryProfiles() as $query) {
+				foreach ($zdb_profiler->getQueryProfiles() as $i => $query) {
 					if ($query->getElapsedSecs() > $longest_query_chrono) {
 						$longest_query_chrono = $query->getElapsedSecs();
 						$longest_query = htmlentities($query->getQuery());
+						$longest_query_no = $i + 1;
 					}
 				}
 				$longest_query_chrono = round($longest_query_chrono * 1000,2);
 				$longest_query_percent = round($longest_query_chrono / ($zdb_profiler->getTotalElapsedSecs() * 1000) * 100);
-				$average = round(($zdb_profiler->getTotalElapsedSecs() /$zdb_profiler->getTotalNumQueries()) *1000, 2);
+				$average = round(($zdb_profiler->getTotalElapsedSecs() /$zdb_profiler->getTotalNumQueries()) *1000, 3);
 	
-				echo 'Average: '.$average.' ms / query<br /><br />';
-				echo 'Longest query &rarr; '.$longest_query_chrono.' ms ('.$longest_query_percent.'%)<pre>' . $longest_query . '</pre><br />';
+				echo 'Average: '.$average.' ms / query<br />';
+				echo 'Longest query is #'.$longest_query_no.' with '.$longest_query_chrono.' ms ('.$longest_query_percent.'%)</strong><br /><br />';
+				
+				foreach ($zdb_profiler->getQueryProfiles() as $i => $query) {
+						$query_chrono = $query->getElapsedSecs() * 1000;
+						$query_percent = round(($query_chrono / 10) / ($zdb_profiler->getTotalElapsedSecs()));
+						$query = htmlentities($query->getQuery());
+						
+						echo 'Query #'.($i + 1).' &nbsp;&nbsp;&nbsp; '.round($query_chrono,3).' ms ('.$query_percent.'%)<br /><br /><pre>' . $query . '</pre>';
+				}
 			}
             echo '</div>';
         }
 		
+		//console log (see method log())
 		if(!empty($this->_console_log)) {
 			echo '<div class="window resizable" id="pkdb_consolelog_window">';
             echo '<h2>Console log</h2>';
@@ -200,6 +211,10 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 			
 			echo '</div>';
 		}
+		
+		if($start_minimized === true) {
+            echo '<script>pkdebugToggle();</script>';
+        }
         
         
         echo '</div><!-- /pkdbpanel --></div><!-- /pkdebugbar -->';
@@ -215,7 +230,6 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		$this->_console_log[] = array('data' => $data, 'title' => $title);
 		return $this;
 	}
-	
     
     /**
 	 * Get CSS & JS for the bar

@@ -109,7 +109,11 @@ class Peak_View_Render_VirtualLayouts extends Peak_View_Render
         if(!empty($vars)) {
 
             $vars_names = array();
-            foreach($vars as $k => $v) $vars_names[] = '{$'.$k.'}';
+            foreach($vars as $k => $v) {
+                //remove arrays from view vars otherwise php will throw a notice about array to string conversion
+                if(is_array($v) || is_object($v)) unset($vars[$k]); 
+                else $vars_names[] = '{$'.$k.'}';
+            }
             $content = str_ireplace($vars_names, array_values($vars), $content);
             
             //remove unknown vars {$keys}

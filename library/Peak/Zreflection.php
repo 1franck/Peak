@@ -1,6 +1,6 @@
 <?php
 /**
- * Zend reflection class wrapper
+ * Zend reflection wrapper specialized for Class Reflection
  * 
  * @descr    This will help you to resolve some complex treatments needed to gather informations about php classes from Zend_Reflection components.
  * 
@@ -230,6 +230,41 @@ class Peak_Zreflection
         if($m->isDestructor())  $declaration[] = 'destructor';
         
         return $declaration;
+    }
+    
+    /**
+     * Get a class method code block
+     *
+     * @param  string $name              The class method nmae
+     * @param  bool   $return_as_string  Return code block as a string instead of an array
+     *
+     * @return string|array
+     */
+    public function getMethodCodeBlock($name, $return_as_string = false)
+    {
+        // get the current filepath of class
+        $file  = $this->class->getFileName();
+        
+        // check if this class is a file
+        if(empty($file)) {
+            return ($return_as_string === false) ? array() : '';
+        }
+        
+        $start = $this->class->getMethod($name)->getStartLine();
+        $end   = $this->class->getMethod($name)->getEndLine();
+        $code  = array();
+        $i     = 1;
+
+        // retreive the portion of code of this method
+        $fh = fopen($file, 'r');
+        while(($buffer = fgets($fh, 4096)) !== false) {
+            if($i >= $start && $i <= $end) $code[] = $buffer;
+            elseif($i > $end) break;
+            ++$i;
+        }
+        fclose($fh);
+        
+        return ($return_as_string === false) ? $code : implode("\n", $code);
     }
 
     /**
