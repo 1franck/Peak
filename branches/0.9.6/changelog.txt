@@ -1,3 +1,7 @@
+#VERSION 0.9.6#
+
+ - updated vendor twitter bootstrap to 2.3.0
+
 #VERSION 0.9.5#
  
  - fixed Peak_Model_Pagination because of changed visibility of method Peak_Model_Zendatable::query()
