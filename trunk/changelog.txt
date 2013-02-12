@@ -1,3 +1,42 @@
+#VERSION 0.9.5#
+ 
+ - fixed Peak_Model_Pagination because of changed visibility of method Peak_Model_Zendatable::query()
+ - added method query() in Peak_Model_Zendatable_Mutator with public visibility.
+ - passed method query() visibility to protected in class Peak_Model_Zendatable.
+ - added class Peak_Model_Zendatable_Mutator. This allow us to perform stuff on the fly on multiples tables.
+ - added method getMethodCodeBlock() to class Peak_Zreflection
+ - fixed a bug that return empty array with Peak_Filters::globalSanitize() when no filter is set. This method will now
+   apply a default string sanitize if no filter is set.
+ - added a default unknow error in class Peak_Controller_Internal_PkError
+ - added a param to method show() of class Peak_View_Helper_Debugbar that make the bar starting minimized. 
+   By default, this new param is set to false.
+ - fixed a notice about object to string conversion in method _proccessVariables() of class Peak_View_Render_VirtualLayouts
+ - fixed a problem with paths of files in chrono section of class Peak_View_Helper_Debugbar.
+ - added property $_is_calculated to Peak_Model_Pagination. With this, we are not forced to call calculate() before 
+   retreiving a page.
+ - added a default value to $_it_perpage in Peak_Model_Pagination.
+ - added method loadFile() to Peak_Lang and modified method __construct() to support this new method. This will allow us
+   the use of class Peak_Lang as standalone instead of only in framework context.
+ - added method getSchemaName() in Peak_Model_Zendatable and modified methods save(), count() and exists() to use it
+ - fixed a variable name error introduced in the last change in cleanArray() of Peak_Model_Zendatable
+ - fixed a potential problem with save() in Peak_Model_Zendatable by changing isset for array_key_exists
+ - fixed a potential problem with cleanArray() in Peak_Model_Zendatable by changing isset for array_key_exists
+ - added protected property $_db to Peak_Model_Zendatable to prevent use of db adapter object outside of the model
+ - minor refactoring of method count() in Peak_Model_Zendatable
+ - fixed a notice about array to string conversion in method _proccessVariables() of class Peak_View_Render_VirtualLayouts
+ - fixed method addAction() in Peak_Codegen_Controller to discard empty action name
+ - changed the path of internal module in Peak_Application_Modules
+ - added bind param to method query() in Peak_Model_Zendatable
+ - added a new param method to model() from Peak_Controller_Action to allow injection of param(s) into the model constructor
+ - added better zend_db profiler infos in Peak_View_Helper_Debugbar + minor css change in debugbar.css
+ - added few enhancements in debugbar.js and debugbar.css
+ - fixed some js functions to use properly window size for panels in debugbar.js
+ - removed deprecated file appcreate.php
+ - removed vendor Geshi
+ - updated css twitter bootstrap in Peak_Controller_Internal_Pkdoc and Peak_Controller_Internal_Pkwelcome
+ - updated vendor twitter bootstrap to 2.2.1 and remove version folder to avoid changing integration url each time
+ - fixed a bug in Peak_Controller_Internal_Pkdoc introduced by changes of Peak_View_Render_VirtualLayouts in previous version
+
 #VERSION 0.9.4#
 
  - added method cleanUnknownVars() and property $_clean_all_unknown_vars in Peak_View_Render_VirtualLayouts

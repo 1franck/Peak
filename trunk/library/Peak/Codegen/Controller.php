@@ -49,10 +49,13 @@ class Peak_Codegen_Controller extends Peak_Codegen
 	{
 		if(is_array($action)) {
 			foreach($action as $act) {
-				$this->class->method('_'.$act)->docblock()->setTitle($act.' Action');
+				$act = trim($act);
+				if(!empty($act)) $this->class->method('_'.$act)->docblock()->setTitle($act.' Action');
 			}
 		}
-		else $this->class->method('_'.$action)->docblock()->setTitle($action.' Action');
+		else {
+			if(!empty($action)) $this->class->method('_'.$action)->docblock()->setTitle($action.' Action');
+		}
 		return $this;
 	}
 	

@@ -27,17 +27,20 @@ class Peak_Lang
 
 
     /**
-     * Call lang()
+     * Load translation if specified
      *
      * @param string $lang
      */
-	public function __construct($lang = 'en')
+	public function __construct($lang = 'en', $filepath = null)
 	{
-	    $this->load($lang);
+        if(isset($lang)) {
+            if(!isset($filepath)) $this->load($lang);
+            else $this->loadFile($lang, $filepath);
+        }
 	}
 
 	/**
-     * Load lang translation files
+     * Load lang based on current application translation files
      *
      * @param string $lang
      */
@@ -55,6 +58,24 @@ class Peak_Lang
 		
 		if(!is_array($this->translations)) $this->translations = array();
 	}
+    
+    /**
+     * Load language file directly. Usefull when class needed as standalone
+     *
+     * @param string $lang
+     * @param string $filepath
+     */
+    public function loadFile($lang, $filepath)
+    {
+        $this->_lang = trim(strtolower((string)$lang));	
+		$this->_file = $filepath;
+        
+        if(file_exists($this->_file)) {
+		    $this->translations = include $this->_file;
+		}
+        
+        if(!is_array($this->translations)) $this->translations = array();
+    }
 
 	/**
 	 * Translate text

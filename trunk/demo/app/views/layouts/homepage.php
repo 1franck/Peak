@@ -14,7 +14,6 @@
       <div class="fill">
         <div class="container">
           <a class="brand" href="#"><strong>Pe</strong>ak Fr<strong>a</strong>mewor<strong>k</strong></a>
-
           <ul class="nav">
           </ul>
         </div>
@@ -34,7 +33,7 @@
           <div class="span4">
             <h3>What's next?</h3>
             <ul>
-             <li><a href="#">Coming soon...</a></li>
+             <li><a href="<?php $this->baseUrl('pkdoc'); ?>">Consult Peak API</a></li>
              <!--
              <li><a href="#">How to start</a></li>
              <li><a href="#">Requirements</a></li>

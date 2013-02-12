@@ -109,7 +109,12 @@ abstract class Peak_Filters
 	    $filter = isset($this->_global_sanitize['filter']) ? $this->_global_sanitize['filter'] : null;
 	    $flags  = isset($this->_global_sanitize['flags'])  ? $this->_global_sanitize['flags']  : null;
 	    
-	    $this->_data = $this->_globalSanitizeRecursive($this->_data, $filter, $flags);
+	    // if no global sanitize filter is set, we use a default string sanitize
+        if(is_null($filter)) {
+            $filter = FILTER_SANITIZE_STRING;
+            $flags  = array(FILTER_FLAG_STRIP_HIGH, FILTER_FLAG_STRIP_LOW);
+        }
+        $this->_data = $this->_globalSanitizeRecursive($this->_data, $filter, $flags);
 	    
 	    return $this->_data;
 	}

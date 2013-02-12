@@ -128,7 +128,7 @@ class Peak_Codegen_Class_Method extends Peak_Codegen_Class_Element
 		if(isset($this->_code)) {
 			$data .= $indent . $indent . $this->_code . Peak_Codegen::LINE_BREAK;
 		}
-		$data .= Peak_Codegen::LINE_BREAK.$indent.'}'.Peak_Codegen::LINE_BREAK;
+		$data .= $indent.'}'.Peak_Codegen::LINE_BREAK;
 		
 		return $data;
 	}
