@@ -184,17 +184,71 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    $pm = $this->getPrimaryKey();
 
 	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
+
+	    	//before update
+	    	$this->beforeUpdate($data);
+
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
 	        $this->_db->update($this->getSchemaName(), $data, $where);
+
+	        //after update
+	        $this->afterUpdate($data);
+
 			return $data[$pm];
 	    }
 	    else {
+
+	    	//before insert
+	    	$this->beforeInsert($data);
+
 	        //insert
 	        $this->_db->insert($this->getSchemaName(), $data);
-	        return $this->_db->lastInsertId();
+	        $id = $this->_db->lastInsertId();
+
+	        //after insert
+	        $this->afterInsert($data, $id);
+
+	        //return the last insert id
+	        return $id;
 	    }
 	}
+
+	/**
+	 * Execute stuff before insert data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array $data Data to be insert
+	 */
+	public function beforeInsert(&$data) {}
+
+	/**
+	 * Execute stuff after insert data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array          $data Data inserted
+	 * @param  string|interer $id   Represent lastInsertId() if any. 
+	 *                              Passed by reference, you can modify what "insert" save() method will return.
+	 */
+	public function afterInsert($data, &$id) {}
+
+	/**
+	 * Execute stuff before update data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array $data Data to be updated
+	 */
+	public function beforeUpdate(&$data) {}
+
+	/**
+	 * Execute stuff after update data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array          $data Data update
+	 * @param  string|interer $id   Represent lastInsertId() if any. 
+	 *                              Passed by reference, you can modify what "insert" save() method will return.
+	 */
+	public function afterUpdate(&$data) {}
 
 	/**
 	 * Shortcut for $_db->query()

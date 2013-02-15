@@ -1,5 +1,8 @@
 #VERSION 0.9.6#
 
+ - modified method save() of class Peak_Model_Zendatable to handle new before/after methods.
+ - added 4 new methods to class Peak_Model_Zendatable : beforeInsert(), afterInsert(), beforeUpdate() and afterUpdate().
+   Those new methods do nothing by default. Children classes can now implement those ones if needed to alter the way save() work
  - updated vendor twitter bootstrap to 2.3.0
 
 #VERSION 0.9.5#
