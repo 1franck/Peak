@@ -1,5 +1,9 @@
 #VERSION 0.9.6#
-
+ 
+ - renamed class View_Helper_assets to Peak_View_Helper_assets as it should have been.
+ - fixed an uncaught exception throw in getFromMethod() of Peak_Annotations when method don't exists
+ - fixed params parsing problem with Peak_Annotations::parse() when param contains "-" char
+ - replaced method add() by setTags() in class Peak_Annotations. Modified method parse() to accept different var type of $_tags.
  - added class View_Helper_assets for facilitating multiples insertions of files like css/js/img/etc. in views
  - changed method __construct of Peak_Model_Zendatable_Mutator to prevent database change if no table/primary/schema specified
  - modified method save() of class Peak_Model_Zendatable to handle new before/after methods.
