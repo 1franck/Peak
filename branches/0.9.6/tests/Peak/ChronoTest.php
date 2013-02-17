@@ -18,7 +18,9 @@ require_once 'Peak/Chrono.php';
  */
 class Peak_ChronoTest extends PHPUnit_Framework_TestCase
 {
-	
+	/**
+     * test global chrono start and stop
+     */
     function testGlobalChrono()
     {   	
         Peak_Chrono::start();
@@ -28,14 +30,21 @@ class Peak_ChronoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Peak_Chrono::get() >= 0.10);
     }
     
+    /**
+     * test global chrono start() and get()
+     */
     function testGlobalChrono2()
     {   	
         Peak_Chrono::start();
         usleep(149992);
         $this->assertTrue(Peak_Chrono::get() >= 0.10);
+        //previous get() should have stop the global timer
         $this->assertTrue(Peak_Chrono::isCompleted());
     }
     
+    /**
+     * test global chrono verifications
+     */
     function testGlobalChronoChecks()
     {
         $this->assertFalse(Peak_Chrono::isOn());
@@ -57,11 +66,12 @@ class Peak_ChronoTest extends PHPUnit_Framework_TestCase
         Peak_Chrono::start();
         $time = Peak_Chrono::get();
         $this->assertTrue(Peak_Chrono::isCompleted());
-        $this->assertFalse(Peak_Chrono::isOn());
-
-               
+        $this->assertFalse(Peak_Chrono::isOn());        
     }
     
+    /**
+     * test custom chrono start() and stop()
+     */
     function testCustomChrono2()
     {
         Peak_Chrono::start('timer1');
@@ -71,13 +81,20 @@ class Peak_ChronoTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(Peak_Chrono::isCompleted('timer1'));     
     }
     
+    /**
+     * test custom chrono start() and get()
+     */
     function testCustomChrono()
     {
         Peak_Chrono::start('timer1');
         usleep(100000);
-        $this->assertTrue(Peak_Chrono::get('timer1') >= 0.10);        
+        $this->assertTrue(Peak_Chrono::get('timer1') >= 0.10);
+        $this->assertTrue(Peak_Chrono::isCompleted('timer1'));    
     }
     
+    /**
+     * test custom chrono verifications
+     */
     function testCustomChronoChecks()
     {
         $this->assertFalse(Peak_Chrono::isOn('timser1'));
@@ -94,8 +111,6 @@ class Peak_ChronoTest extends PHPUnit_Framework_TestCase
         Peak_Chrono::start('timer1');
         Peak_Chrono::stop('timer1');
         $this->assertTrue(Peak_Chrono::isCompleted('timer1'));
-        
-        
     }
     	  
 }
