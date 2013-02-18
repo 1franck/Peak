@@ -1,5 +1,6 @@
 #VERSION 0.9.6#
  
+ - modified Peak_View_Helper_Debugbar and debugbar.js to correctly start the bar minimized when debugbar.js need to load jquery cdn
  - renamed class View_Helper_assets to Peak_View_Helper_assets as it should have been.
  - fixed an uncaught exception throw in getFromMethod() of Peak_Annotations when method don't exists
  - fixed params parsing problem with Peak_Annotations::parse() when param contains "-" char

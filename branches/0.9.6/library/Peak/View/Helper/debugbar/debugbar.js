@@ -38,6 +38,11 @@ load.tryReady = function(time_elapsed) {
                 $('.window.resizable').css({ height: newheight, width : newwidth });
                 
             });
+
+            //check if starting minized
+            if(pkdebugbar_start_minimized !== undefined) {
+                if(pkdebugbar_start_minimized) pkdebugToggle();
+            }
         });
     }
 }

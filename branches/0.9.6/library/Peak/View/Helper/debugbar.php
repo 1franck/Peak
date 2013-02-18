@@ -213,7 +213,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug
 		}
 		
 		if($start_minimized === true) {
-            echo '<script>pkdebugToggle();</script>';
+            echo '<script>pkdebugbar_start_minimized = true;</script>';
         }
         
         
