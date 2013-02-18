@@ -22,8 +22,9 @@ class Peak_View_Helper_assets
 
     /**
      * Init the class and set default assets path and base url optionnaly
-     * 
-     * @param string|null $path
+     *
+     * @example ('css', array('theme/css/myfile1.css', ...)) will call method _asset_css() with the file(s) path(s)
+     * @param   string|null $path
      */
     public function __construct($path = null, $url = null)
     {

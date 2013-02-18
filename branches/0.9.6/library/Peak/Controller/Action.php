@@ -133,6 +133,8 @@ abstract class Peak_Controller_Action
     
     /**
      * Get array of controller "actions"(methods)
+     *
+     * @return  array
      */
     public function getActions()
     {
@@ -251,13 +253,13 @@ abstract class Peak_Controller_Action
     
 
     /**
-     * Instanciate models
-     * 
-     * @examples:
-     *  - $page = $this->model('test/model')  is the same as $mymodel = new App_Models_Test_Model();
-     *  - $this->model('test/model', null, 'mymodel')  is the same as $this->mymodel = new App_Models_Test_Model();
-     *  - $this->model('mypath/model', $myname) is the same as $model = new App_Models_Test_Model($myname);
-     *  - $this->model('mypath/model', $myname, 'mymodel') is the same as $this->mymodel = new App_Models_Test_Model($myname);
+     * Instanciate models. Examples :
+     *
+     *  $page = $this->model('test/model')  is the same as $mymodel = new App_Models_Test_Model();
+     *  $this->model('test/model', null, 'mymodel')  is the same as $this->mymodel = new App_Models_Test_Model();
+     *  $this->model('mypath/model', $myname) is the same as $model = new App_Models_Test_Model($myname);
+     *  $this->model('mypath/model', $myname, 'mymodel') is the same as $this->mymodel = new App_Models_Test_Model($myname);
+     *   
      *
      * @param  string      $model_path
      * @param  misc|null   $params (new in 0.9.5, note $class_varname and $params order have been inversed)
