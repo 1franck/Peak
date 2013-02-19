@@ -40,9 +40,7 @@ load.tryReady = function(time_elapsed) {
             });
 
             //check if starting minized
-            if(pkdebugbar_start_minimized !== undefined) {
-                if(pkdebugbar_start_minimized) pkdebugToggle();
-            }
+            if(pkdebugbar_start_minimized == true) pkdebugToggle();
         });
     }
 }
