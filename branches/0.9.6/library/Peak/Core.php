@@ -1,7 +1,7 @@
 <?php
 /**
  * Peak Core
- * 
+ *
  * @author   Francois Lajoie
  * @version  $Id$ 
  */
@@ -12,16 +12,13 @@ define('PK_DESCR'  , 'Php wEb Application Kernel');
 
 //handle all uncaught exceptions (try/catch block missing)
 set_exception_handler('pkexception');
+function pkexception($e) { die('<b>Uncaught Exception</b>: '. $e->getMessage()); }
+
+//php >= 5.3
+if(function_exists('class_alias')) class_alias('Peak_Core', 'Peak', false);
 
 class Peak_Core
 {
-
-    /**
-	 * @deprecated
-     * core extensions object
-     * @var object
-     */
-    protected $_extensions;
 
     /**
      * Current Environment
@@ -57,34 +54,6 @@ class Peak_Core
         	//faster...?
         	ini_set('error_reporting', (!function_exists('class_alias')) ? E_ALL|E_STRICT : E_ALL|E_DEPRECATED);
         }
-    }
-
-    /**
-     * @deprecated
-     * Try to return a extension object based the method name.
-     *
-     * @param  string $helper
-     * @param  null   $args not used
-     * @return object
-     */
-    public function __call($extension, $args = null)
-    {
-    	if((isset($this->ext()->$extension)) || ($this->ext()->exists($extension))) {
-        	return $this->ext()->$extension;
-        }
-        elseif(self::getEnv() === 'development') {
-            trigger_error('DEV_MODE: Core/Extension method '.$extension.'() doesn\'t exists');
-        }
-    }
-
-    /**
-	 * @depracted 
-     * Load/return Core extension objects
-     */
-    public function ext()
-    {        
-        if(!is_object($this->_extensions)) $this->_extensions = new Peak_Core_Extensions();
-    	return $this->_extensions;
     }
 
     /**
@@ -342,21 +311,4 @@ class Peak_Core
             return new Peak_Application();
         }
     }
-}
-
-/**
- * MISC USEFULL FUNCS
- */
-function _clean($str) {
-    $str = stripslashes($str); $str = strip_tags($str); $str = trim($str); $str = htmlspecialchars($str,ENT_NOQUOTES); $str = htmlentities($str);
-    return $str;
-}
-function _cleans($strs, $keys_to_clean = null, $remove_keys = null) {
-	if(is_array($remove_keys)) { foreach($remove_keys as $k) { unset($strs[$key]); } }
-    if(is_array($keys_to_clean)) {  foreach($keys_to_clean as $k => $v) { if(isset($strs[$v])) $strs[$v] = _clean($strs[$v]); } }
-    else { foreach($strs as $k => $v) $strs[$k] = _clean($v); }
-    return $strs;
-}
-function pkexception($e) {
-	die('<b>Uncaught Exception</b>: '. $e->getMessage());
 }

@@ -1,5 +1,8 @@
 #VERSION 0.9.6#
  
+ - added the class alias "Peak" to class "Peak_Core" if PHP >= 5.3
+ - removed old functions _clean() and _cleans() from Core.php file
+ - removed deprecated property $_extensions and methods __call() and ext() from class Peak_Core
  - fixed a problem with default controller action name. We moved default action name verification to getRoute() and simplified method 
    dispatchAction() in class Peak_Controller_Action
  - modified Peak_View_Helper_Debugbar and debugbar.js to correctly start the bar minimized when debugbar.js need to load jquery cdn
