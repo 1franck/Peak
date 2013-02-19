@@ -20,7 +20,7 @@ abstract class Peak_Controller_Action
     public $path;
 
     /**
-     * action called by handleRequest()
+     * action called by dispatchAction()
      * @var string
      */
     public $action;
@@ -156,9 +156,11 @@ abstract class Peak_Controller_Action
      */
     public function getRoute()
     {
-        $this->params = Peak_Registry::o()->router->params;        
+        $this->params       = Peak_Registry::o()->router->params;        
         $this->params_assoc = new Peak_Config(Peak_Registry::o()->router->params_assoc);
-        $this->action = $this->action_prefix . Peak_Registry::o()->router->action;
+        $this->action       = $this->action_prefix . Peak_Registry::o()->router->action;
+        //set default ctrl action if none present
+        if($this->action === $this->action_prefix) $this->action  = $this->action_prefix.'index';
     }    
     
     /**
@@ -175,15 +177,10 @@ abstract class Peak_Controller_Action
      * Dispatch action requested by router or the default action(_index)
      */
     public function dispatchAction()
-    {
-        $action = $this->action;
-        if($action === $this->action_prefix) $action = $this->action_prefix . 'index';
-        
-        if(($this->isAction($action))) $this->action = $action;
-        elseif(($action !== 'index') && (!($this->isAction($action)))) {
-        	throw new Peak_Controller_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($action, $this->getName()));
+    { 
+        if($this->isAction($this->action) === false) {
+            throw new Peak_Controller_Exception('ERR_CTRL_ACTION_NOT_FOUND', array($this->action, $this->getName()));
         }
-        else throw new Peak_Controller_Exception('ERR_CTRL_DEFAULT_ACTION_NOT_FOUND');       
 
         //set action filename
         if($this->action_prefix === '_') $this->file = substr($this->action,1).'.php';
@@ -191,7 +188,7 @@ abstract class Peak_Controller_Action
 
         //call requested action
 		if($this->actions_with_params) {
-			$this->dispatchActionParams($action);
+			$this->dispatchActionParams($this->action);
 		}
 		else $this->$action(); 
     }

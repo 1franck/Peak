@@ -1,5 +1,7 @@
 #VERSION 0.9.6#
  
+ - fixed a problem with default controller action name. We moved default action name verification to getRoute() and simplified method 
+   dispatchAction() in class Peak_Controller_Action
  - modified Peak_View_Helper_Debugbar and debugbar.js to correctly start the bar minimized when debugbar.js need to load jquery cdn
  - renamed class View_Helper_assets to Peak_View_Helper_assets as it should have been.
  - fixed an uncaught exception throw in getFromMethod() of Peak_Annotations when method don't exists
