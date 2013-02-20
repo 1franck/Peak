@@ -24,22 +24,25 @@
  * |           | punc     |
  * |           | french   |
  * |-------------------------------------------
- * | email     | (string) | _filter_email()
+ * | email     |          | _filter_email()
  * |-------------------------------------------
- * | empty     | (string) | _filter_empty()
+ * | empty     |          | _filter_empty()
  * |-------------------------------------------
  * | enum      | (array)  | _filter_enum()
  * |-------------------------------------------
- * | url       | (string) | _filter_url()
+ * | url       |          | _filter_url()
  * |-------------------------------------------
  * | date      | (string) | _filter_date()
+ * |-------------------------------------------
+ * | phone     | separator| _filter_phone()
+ * |           | type     |
  * |-------------------------------------------
  * | int       | min      | _filter_int()
  * |           | max      |
  * |-------------------------------------------
  * | float     | min      | _filter_float()
  * |           | max      |
- * |           | thousansd|
+ * |           | thousand |
  * |-------------------------------------------
  * | length    | min      | _filter_length()
  * |           | max      |
@@ -379,6 +382,44 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
 	/**
+	 * Validate phone number format
+	 * 
+	 * @uses   _filter_regexp()
+	 * @param  string $v
+	 * @param  array  $opt
+	 * @return bool
+	 */
+	protected function _filter_phone($v, $opt = null)
+	{
+		if(!is_array($opt)) $opt = array();
+
+    	// phone number separator and type
+		$sep  = (array_key_exists('separator', $opt)) ? $opt['separator'] : '-';
+		$type = (array_key_exists('type', $opt)) ? $opt['type'] : 'default';
+
+		// separator that need to be escaped
+		if($sep === '.') $sep = '\.';
+	    		
+		switch($type) {
+
+			case '7'    : $regex = "/^[0-9]{3}".$sep."[0-9]{4}$/i";
+						  break;
+			
+			case '9'    : $regex = "/^[0-9]{3}".$sep."[0-9]{3}".$sep."[0-9]{4}$/i";
+						  break;
+
+			case '10'   : $regex = "/^[1]".$sep."[0-9]{3}".$sep."[0-9]{3}".$sep."[0-9]{4}$/i";
+						  break;
+				// default is 10 or 9 number length 						  
+			default     : $regex = "/^([1]".$sep.")?[0-9]{3}".$sep."[0-9]{3}".$sep."[0-9]{4}$/i";
+						  break;
+
+		}
+
+		return $this->_filter_regexp($v, $regex);
+	}
+
+	/**
 	 * Check for alpha char (a-z), with optionnaly space(s) and custom punctuation(s)
 	 *
 	 * @uses   FILTER_VALIDATE_REGEXP
@@ -522,5 +563,7 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
 	}
 	
+
+
 	
 }
