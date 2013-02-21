@@ -42,6 +42,8 @@ class Form1 extends Peak_Filters_Form
 		   'url'        => array('filters' => array('url'), 'errors' => array('Must be a valid url')),
 		   
 		   'date'       => array('filters' => array('date' => 'YYYY/MM/DD'), 'errors' => array('Must be a valid date')),
+
+           'phone'      => array('filters' => array('required' ,'phone'), 'errors' => array('Must be a valid phone number')),
 		                                       
 	    );
     
