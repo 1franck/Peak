@@ -1,5 +1,7 @@
 #VERSION 0.9.6#
 
+ - fixed bug in login() of Peak_Model_Authentication when hashing and salting the password. We use hashStr() now instead.
+ - added method hashStr() to class Peak_Model_Authentication
  - added method _filter_phone() to class Peak_Filters_Advanced
  - added the class alias "Peak" to class "Peak_Core" if PHP >= 5.3
  - removed old functions _clean() and _cleans() from Core.php file
