@@ -1,5 +1,10 @@
 #VERSION 0.9.6#
 
+ - added method renderArray() to Peak_View_Render. This new method we use method render() for each files.
+ - added a new exception constant ERR_VIEW_FILE_NOT_FOUND to Peak_View_Exception
+ - changed the default path used by method render() in Peak_View_Render_Layouts. This path now point to apppath "theme" instead
+   of apppath "theme_layouts". This will imply some changes in existing apps, but it will be more flexible and simpler to 
+   include files contents of application related to views.
  - modified Peak_Core::initConfig() to support json config file.
  - added property $_allow_comments to class Peak_Config_Json. This option is set to false by default. If true, json file can
    have comment(s) syntax like /* */ and //. Modified methods __construct() and loadString() to support this new property.
