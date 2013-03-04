@@ -1,5 +1,6 @@
 #VERSION 0.9.6#
 
+ - added an auto-detect file extension to Peak_View_Helper_assets
  - added method renderArray() to Peak_View_Render. This new method we use method render() for each files.
  - added a new exception constant ERR_VIEW_FILE_NOT_FOUND to Peak_View_Exception
  - changed the default path used by method render() in Peak_View_Render_Layouts. This path now point to apppath "theme" instead

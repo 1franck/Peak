@@ -23,7 +23,6 @@ class Peak_View_Helper_assets
     /**
      * Init the class and set default assets path and base url optionnaly
      *
-     * @example ('css', array('theme/css/myfile1.css', ...)) will call method _asset_css() with the file(s) path(s)
      * @param   string|null $path
      */
     public function __construct($path = null, $url = null)
@@ -37,6 +36,8 @@ class Peak_View_Helper_assets
 
     /**
      * Delegate type method/args to process()
+     *
+     * @example ('css', array('theme/css/myfile1.css', ...)) will call method _asset_css() with the file(s) path(s)
      * 
      * @param  string $method   
      * @param  string $args 
@@ -82,16 +83,31 @@ class Peak_View_Helper_assets
     public function process($type, $paths)
     {
         $output = '';
-        $type   = '_asset_'.$type;
+        $mtype  = '_asset_'.$type;
 
-        if(!method_exists($this, $type)) return;
+        // force paths to be an array
+        if(!is_array($paths)) $paths = array($paths);
+        if(empty($paths)) return;
 
-        if(is_array($paths) && !empty($paths)) {
+        // if asset type doesn't exists
+        if(!method_exists($this, $mtype)) {
+
+            // if type is auto, we will retreive asset based on file extension if asset method exists
+            if(in_array($type, ['auto', 'auto-detect', 'autodetect'])) {
+
+                foreach($paths as $p) {
+                    $ext = '_asset_'.pathinfo($p, PATHINFO_EXTENSION);
+                    if(method_exists($this, $ext)) $output .= $this->$ext($p);
+                }
+
+            }
+            else return;
+        }
+        else {
             foreach($paths as $p) {
-                $output .= $this->$type($p);
+                $output .= $this->$mtype($p);
             }
         }
-        else $output = $this->$type($paths);
 
         return $output;
     }
