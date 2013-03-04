@@ -1,5 +1,8 @@
 #VERSION 0.9.6#
 
+ - modified Peak_Core::initConfig() to support json config file.
+ - added property $_allow_comments to class Peak_Config_Json. This option is set to false by default. If true, json file can
+   have comment(s) syntax like /* */ and //. Modified methods __construct() and loadString() to support this new property.
  - fixed bug in login() of Peak_Model_Authentication when hashing and salting the password. We use hashStr() now instead.
  - added method hashStr() to class Peak_Model_Authentication
  - added method _filter_phone() to class Peak_Filters_Advanced

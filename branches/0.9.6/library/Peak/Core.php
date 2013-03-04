@@ -81,7 +81,7 @@ class Peak_Core
 					$filetype = 'genericapp';
 				}
 				//unsupported type
-				else if(!in_array($filetype, array('php','ini', 'genericapp'))) {
+				else if(!in_array($filetype, array('php','ini', 'json', 'genericapp'))) {
 					$filepath = $generic_filepath;
 					$filetype = 'genericapp';
 				}
@@ -104,6 +104,10 @@ class Peak_Core
 				}
 				else $conf = new Peak_Config_Ini($filepath, true);
 				break;
+
+            case 'json' :
+                $conf = new Peak_Config_Json($filepath, true);
+                break;
 
 			case 'genericapp' :
 				if($env === 'development') {
