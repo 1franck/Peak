@@ -1,5 +1,7 @@
 #VERSION 0.9.6#
 
+ - fixed old bug in class "Peak_Helpers" that prevented methods __get() and exists() from sometimes validate a file's existence 
+   on an case sensitive os.
  - added method getLanguages() to Peak_Controller_Helper_Request
  - added an auto-detect file extension to Peak_View_Helper_assets
  - added method renderArray() to Peak_View_Render. This new method we use method render() for each files.

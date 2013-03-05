@@ -49,35 +49,27 @@ abstract class Peak_Helpers
 		if(isset($this->_objects[$name])) return $this->_objects[$name];
 		else
 		{		
-			$name = trim(stripslashes(strip_tags($name)));
+			$name     = trim(stripslashes(strip_tags($name)));
+			$filepath = $this->exists($name, true);
 
-			$file_found = false;
-			foreach($this->_paths as $k => $v) {
-				$helper_file = $v.'/'.$name.'.php';
-				if(file_exists($helper_file)) {
-					$file_found = true;
-					break;
-				}
-			}
-
-			if($file_found) {
-				include_once $helper_file;
+			if($filepath !== false) {
+				include_once $filepath;
 				
 				if(!is_array($this->_prefix)) $this->_prefix = array($this->_prefix);
 		
 				foreach($this->_prefix as $prefix) {
-					if(!class_exists($prefix.$name,false)) continue;
+					if(!class_exists($prefix.$name, false)) continue;
 					else {
 						$helper_class_name = $prefix.$name;
 						break;
 					}
 				}
-				if(!isset($helper_class_name)) throw new $this->_exception_class($this->_exception,$name);
+				if(!isset($helper_class_name)) throw new $this->_exception_class($this->_exception, $name);
 				
 				$this->_objects[$name] = new $helper_class_name();
 				return $this->_objects[$name];
 			}
-			else throw new $this->_exception_class($this->_exception,$name);
+			else throw new $this->_exception_class($this->_exception, $name);
 		}
 	}
 
@@ -106,15 +98,20 @@ abstract class Peak_Helpers
 	 * Check recursively if helper file exists based on $_path
 	 *
 	 * @param  string $helper_name
+	 * @param  string $return_filepath if file found, return filepath instead of true
 	 * @return bool
 	 */
-	public function exists($name)
+	public function exists($name, $return_filepath = false)
 	{
 		$file_found = false;
 		foreach($this->_paths as $k => $v) {
-			if(file_exists($v.'/'.$name.'.php')) {
-				$file_found = true;	
-				break;
+			$helper_file = $v.'/'.$name.'.php';
+			$helper_file_cs = $v.'/'.ucfirst($name).'.php';
+			if(file_exists($helper_file)) {
+				return ($return_filepath) ? $helper_file : true;
+			}
+			elseif(file_exists($helper_file_cs)) {
+				return ($return_filepath) ? $helper_file_cs : true;
 			}
 		}
 		return $file_found; 
