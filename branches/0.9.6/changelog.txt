@@ -1,5 +1,6 @@
 #VERSION 0.9.6#
 
+ - added method saveTransaction() to class Peak_Model_Zendatable
  - removed deprecated class Peak_View_Helper_Calendar
  - renamed helpers file with first capital letter
  - fixed table/schema name in _getData() of class Peak_Model_Pagination

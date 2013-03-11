@@ -215,6 +215,39 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 
 	/**
+	 * This method allow inserting/updating multiple row using transaction
+	 *
+	 * @uses   method save()
+	 * 
+	 * @param  array $multiple_data
+	 * @return array|object Return ids inserted/updated. If a query fail, it will return the exception object
+	 */
+	public function saveTransaction($multiple_data)
+	{
+		$ids = array();
+		$this->_db->beginTransaction();
+
+		try {
+
+			// insert/update each data set with method save()
+			foreach($multiple_data as $data) $ids[] = $this->save($data);
+
+			// commit
+			$this->_db->commit();
+		}
+		catch(Exception $e) {
+
+			//rollback the changes
+			$this->_db->rollback();
+
+			// return exception object
+			return $e;
+		}
+
+		return $ids;
+	}
+
+	/**
 	 * Execute stuff before insert data with method save()
 	 * Do nothing by default. Can be overloaded by child class.
 	 * 
