@@ -6,7 +6,7 @@
  * @version $Id: debugbar.php 591 2013-02-19 15:48:31Z snake386@hotmail.com $
  * @uses    jQuery, Fugue icons, Peak_View_Helper_Debug, Peak_Chrono  
  */
-class Peak_View_Helper_Debugbar extends Peak_View_Helper_debug 
+class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug 
 {
 	
 	private $_console_log = array();
