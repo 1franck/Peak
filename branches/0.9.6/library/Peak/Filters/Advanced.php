@@ -8,83 +8,24 @@
  * 
  * FILTERS LIST FOR VALIDATION. 
  * if you want more info on what a filter do, checkout the filter method docblock 
- *  ____________________________________________
- * | NAME      | OPTIONS* | METHOD NAME
- * |____________________________________________
- * |           |          |
- * | alpha     | lower    | _filter_alpha()   
- * |           | upper    |
- * |           | space    |
- * |           | punc     |
- * |           | french   |
- * |-------------------------------------------
- * | alpha_num | lower    | _filter_alpha_num()
- * |           | upper    |
- * |           | space    |
- * |           | punc     |
- * |           | french   |
- * |-------------------------------------------
- * | email     |          | _filter_email()
- * |-------------------------------------------
- * | empty     |          | _filter_empty()
- * |-------------------------------------------
- * | enum      | (array)  | _filter_enum()
- * |-------------------------------------------
- * | url       |          | _filter_url()
- * |-------------------------------------------
- * | date      | (string) | _filter_date()
- * |-------------------------------------------
- * | phone     | separator| _filter_phone()
- * |           | type     |
- * |-------------------------------------------
- * | int       | min      | _filter_int()
- * |           | max      |
- * |-------------------------------------------
- * | float     | min      | _filter_float()
- * |           | max      |
- * |           | thousand |
- * |-------------------------------------------
- * | length    | min      | _filter_length()
- * |           | max      |
- * |-------------------------------------------
- * | match     | (string) | _filter_match()
- * |-------------------------------------------
- * | not_empty |          | _filter_not_empty()
- * |-------------------------------------------
- * | text      |          | _filter_text()
- * |-------------------------------------------
- * | regexp    | (string) | _filter_regexp()
- * |___________________________________________
- * 
- * 
- * VALIDATION SPECIAL FILTERS
- *  ____________________________________________
- * | NAME          |  DESCRIPTION
- * |____________________________________________
- * | required      |  Generate an error if
- * |               |  data key not set
- * |-------------------------------------------
- * | if_not_empty  |  Process other filters if
- * |               |  data key is not empty.
- * |               |  Otherwise skip data key
- * |               |  without generating error
- * |___________________________________________
- * 
- *   *options can be array keyname or variable type
+ *
+ * List of filters : 
+ *  alpha, alpha_num, email, empty, not_empty, enum, url, date, phone, time, int, float, length, match, text, regexp
+ *
+ * Special filters :
+ *  required, if_not_empty
  * 
  * Note that you can also define your own filters in your extended class
  * by adding methods _filter_[youfiltername]
  */
 abstract class Peak_Filters_Advanced extends Peak_Filters 
 {
-
 	/**
 	 * Keep unknow key in $_data when using sanitize()
 	 * If false, each key that exists in $_data but not in $_sanitize will be removed (default behavior of filter_* functions)
 	 * @var bool
 	 */
 	protected $_keep_unknown_key_in_sanitize = false;
-
 
 	/**
 	 * Sanitize $_data using $_sanitize filters
@@ -238,7 +179,6 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		}
 		return $filters;
 	}
-	
 		
 	/**
 	 * Set sanitize filters array
@@ -420,6 +360,29 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	}
 
 	/**
+	 * Validate time string
+	 * 		
+	 * @param  string $v
+	 * @param  mixed  $opt if $opt is a string, $opt will be the format. if $opt is an array, keys 'format' and 'separator' are supported
+	 * @return bool
+	 */
+	public function _filter_time($v, $opt = null)
+	{
+		if(!is_array($opt)) {
+			if(!empty($opt)) $opt = array('format' => $opt);
+			else $opt = array();
+		}
+
+		$sep    = (array_key_exists('separator', $opt)) ? $opt['separator'] : ':';
+		$format = (array_key_exists('format', $opt) && in_array($opt['format'], array('12h', '24h'))) ? $opt['format'] : '24h';
+
+		if($format === '24h') $regex = '#^(?:0?[0-9]|1[0-9]|2[0-3])'.$sep.'[0-5][0-9]$#';
+		else if($format === '12h') $regex = '#^(?:0?[0-9]|1[0-2])'.$sep.'[0-5][0-9]$#';
+
+		return $this->_filter_regexp($v, $regex);
+	}
+
+	/**
 	 * Check for alpha char (a-z), with optionnaly space(s) and custom punctuation(s)
 	 *
 	 * @uses   FILTER_VALIDATE_REGEXP
@@ -561,9 +524,5 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 	protected function _filter_regexp($v, $regexp)
 	{
 		return filter_var($v, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp)));
-	}
-	
-
-
-	
+	}	
 }

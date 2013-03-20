@@ -1,5 +1,6 @@
 #VERSION 0.9.6#
 
+ - added method _filter_time() to class Peak_Filters_Advanced
  - fixed extended class name typo in Peak_View_Helper_Debugbar
  - added method saveTransaction() to class Peak_Model_Zendatable
  - removed deprecated class Peak_View_Helper_Calendar
