@@ -301,10 +301,10 @@ abstract class Peak_Controller_Action
      * Call front controller redirect() method
      *
      * @param string     $ctrl
-     * @param string     $action
+     * @param string     $action 'index' by default
      * @param array|null $params
      */
-    public function redirect($ctrl, $action, $params = null)
+    public function redirect($ctrl, $action = 'index', $params = null)
     {
         Peak_Registry::o()->app->front->redirect($ctrl, $action, $params);
     }
