@@ -93,7 +93,7 @@ class Peak_View_Helper_Assets
         if(!method_exists($this, $mtype)) {
 
             // if type is auto, we will retreive asset based on file extension if asset method exists
-            if(in_array($type, array('auto', 'auto-detect', 'autodetect')) {
+            if(in_array($type, array('auto', 'auto-detect', 'autodetect'))) {
 
                 foreach($paths as $p) {
                     $ext = '_asset_'.pathinfo($p, PATHINFO_EXTENSION);
