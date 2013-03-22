@@ -1,4 +1,4 @@
 Deny from all
-<FilesMatch "\.(css|js|jpe?g|png|gif|ttf|otf|eot|woff|wav)$">
+<FilesMatch "\.(css|js|jpe?g|png|gif|ttf|otf|eot|woff)$">
   Allow from all
 </FilesMatch>
