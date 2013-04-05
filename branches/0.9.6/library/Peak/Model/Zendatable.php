@@ -63,20 +63,34 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	/**
 	 * Check if a specific key exists in table
 	 *
-	 * @param  misc $val
-	 * @param  string $key
-	 * @return bool
+	 * @param  misc       $val
+	 * @param  string     $key
+	 * @param  bool       $return_row if true, the method will return the row found if any instead of returning true
+	 * @return bool|array
 	 */
-	public function exists($val, $key = null)
+	public function exists($val, $key = null, $return_row = false)
 	{
 	    if(!isset($key)) $key = $this->getPrimaryKey();
+
+	    if(!$return_row) {
+	    	
+		    $select = $this->select()->from($this->getSchemaName(), $key)
+		                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
+		    
+		    $result = $this->fetchRow($select);
+		    
+		    return (is_null($result)) ? false : true;
+	    }
+	    else {
+
+	    	$select = $this->select()->from($this->getSchemaName(), '*')
+		                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
+		    
+		    $result = $this->fetchRow($select);
+		    
+		    return (is_null($result)) ? false : $result;
+	    }
 	    
-	    $select = $this->select()->from($this->getSchemaName(), $key)
-	                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
-	    
-	    $result = $this->fetchRow($select);
-	    
-	    return (is_null($result)) ? false : true;
 	}
 
 	/**
