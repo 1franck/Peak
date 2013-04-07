@@ -72,25 +72,15 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	{
 	    if(!isset($key)) $key = $this->getPrimaryKey();
 
-	    if(!$return_row) {
-	    	
-		    $select = $this->select()->from($this->getSchemaName(), $key)
-		                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
-		    
-		    $result = $this->fetchRow($select);
-		    
-		    return (is_null($result)) ? false : true;
-	    }
-	    else {
+	    $field = (!$return_row) ? $key : '*';
 
-	    	$select = $this->select()->from($this->getSchemaName(), '*')
-		                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
-		    
-		    $result = $this->fetchRow($select);
-		    
-		    return (is_null($result)) ? false : $result;
-	    }
+	    $select = $this->select()->from($this->getSchemaName(), $field)
+	                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
 	    
+	    $result = $this->fetchRow($select);
+
+	    if(!$return_row) return (is_null($result)) ? false : true;
+	    else return (is_null($result)) ? false : $result;
 	}
 
 	/**
