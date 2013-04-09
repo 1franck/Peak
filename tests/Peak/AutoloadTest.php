@@ -25,6 +25,9 @@ require_once 'Peak/autoload.php';
  */
 class Peak_AutoloadTest extends PHPUnit_Framework_TestCase
 {
+	/**
+	 * Set up basic env
+	 */
 	public function setUp()
 	{
 		if(!defined('LIBRARY_ABSPATH')) {
@@ -41,21 +44,33 @@ class Peak_AutoloadTest extends PHPUnit_Framework_TestCase
 		Peak_Registry::set('config', $config);
 	}
 	
+	/**
+	 * test Peak class loading
+	 */
 	public function testLibraryPath()
 	{
 		$this->assertTrue(class_exists('Peak_Application') === true);
 	}
 	
+	/**
+	 * test Peak vendors path class loading
+	 */
 	public function testVendorsPath()
 	{
 		$this->assertTrue(class_exists('Zend_Exception') === true);
 	}
 	
+	/**
+	 * test application controller class loading
+	 */
 	public function testControllersPath()
 	{
 		$this->assertTrue(class_exists('indexController') === true);
 	}
 	
+	/**
+	 * test application custom class loading
+	 */
 	public function testAppPath()
 	{
 		$this->assertTrue(class_exists('App_Misc_Test') === true);

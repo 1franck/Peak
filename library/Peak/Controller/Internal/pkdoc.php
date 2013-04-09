@@ -128,14 +128,16 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 
     <!-- Le styles -->
 
-	<link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet" type="text/css">
     <style type="text/css">
+    <!--
 	  /* TWITTER CSS */
 	  '.$twitter_bs.'
 	  /* --------------------- */
+	  html { font-family: "Open Sans", sans-serif; }
       body {
         /*padding-top: 60px;*/
-		font-family: "Ubuntu", sans-serif;
+		font-family: "Open Sans", sans-serif;
       }
       .navbar {
         position:inherit;
@@ -192,7 +194,8 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
        clear:right;
        height:1px;
       }
-	  
+      .wh1 { width:1px }
+	  -->
     </style>
   </head>
 
@@ -394,11 +397,13 @@ class Peak_Controller_Internal_Pkdoc extends Peak_Controller_Action
 				                 '.$this->_visibility_label($v['visibility']).'
 								 '.(($v['static'] === true) ? $this->_visibility_label('static') : '').'
 								 </h4>';
-				$content .= '<div class="block"><h5>'.htmlentities($v['doc']['short']).'</h5><h5>'.htmlentities($v['doc']['long']).'</h5><br />';
+				$content .= '<div class="block"><h5>'.htmlentities($v['doc']['short']).'</h5>'.(!empty($v['doc']['long']) ? '<pre>'.htmlentities($v['doc']['long']).'</pre>' : '') .'';
+
+				$content .= '<table class="table table-bordered table-striped">';
 				foreach($v['doc']['tags'] as $t) {
-					$content .= '@'.$t['name'].' '.$t['type'].' '.$t['variable'].' '.$t['description'].'<br />';
+					$content .= '<tr><td class="wh1">'.$t['name'].'</td><td class="wh1">'.$t['type'].'</td><td class="wh1">'.$t['variable'].'</td><td>'.$t['description'].'</td></tr>';
 				}
-				$content .= '</div>';
+				$content .= '</table></div>';
 			}
 			$content .= '</div>';
 		}

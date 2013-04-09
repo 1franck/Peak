@@ -18,7 +18,7 @@ class Peak_Model_Zendatable_Mutator extends Peak_Model_Zendatable
     public function __construct($tablename = null, $primary = null, $schema = null)
     {
         parent::__construct(); //important
-        $this->change($tablename, $primary, $schema);
+        if(isset($tablename) || isset($primary) || isset($schema)) $this->change($tablename, $primary, $schema);
     }
     
     /** 

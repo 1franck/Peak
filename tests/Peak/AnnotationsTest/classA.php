@@ -20,4 +20,14 @@ class classA
 	 * @model table/test/tablename t_tablename
 	 */
     public function funcA()	{ }
+
+    /**
+	 * I am function B!
+	 *
+	 * @annotationToGet "i am a string" 987
+	 * @barfoo          "i am foobar for u"
+	 *
+	 * @return string
+	 */
+    public function funcB()	{ }
 }

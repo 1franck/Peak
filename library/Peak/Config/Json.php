@@ -11,12 +11,19 @@ class Peak_Config_Json extends Peak_Config
 {
 	
 	/**
+	 * Allow comments in json data
+	 * @var boolean
+	 */
+	protected $_allow_comments = false;
+
+	/**
 	 * Load file on class construct
 	 *
 	 * @see loadFile()
 	 */
-	public function __construct($file = null)
+	public function __construct($file = null, $allow_comments = false)
 	{
+		$this->_allow_comments = $allow_comments;
 		if(isset($file)) $this->loadFile($file);
 	}
 	
@@ -43,6 +50,11 @@ class Peak_Config_Json extends Peak_Config
 	 */
 	public function loadString($data)
 	{
+		// remove comments before decoding
+		if($this->_allow_comments === true) {
+			$data = preg_replace("#(/\*([^*]|[\r\n]|(\*+([^*/]|[\r\n])))*\*+/)|([\s\t](//).*)#", '', $data);
+		}
+
 		$this->_vars = json_decode($data, true);
 		$this->_jsonError();
 		return $this->_vars;

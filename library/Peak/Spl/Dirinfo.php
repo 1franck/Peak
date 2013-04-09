@@ -2,7 +2,7 @@
 /**
  * Retreive directory sizes and number of files
  * 
- * @uses    RecursiveDirectoryIterator
+ * @uses    DirectoryIterator or RecursiveDirectoryIterator
  * @author  Francois Lajoie
  * @version $Id$
  */
@@ -25,14 +25,24 @@ class Peak_Spl_Dirinfo
 	 * 
 	 * @param string $path
 	 */
-	public function __construct($path) 
+	public function __construct($path, $recursive = true) 
 	{
-		$it = new RecursiveDirectoryIterator($path);
+		if($recursive) {
+			$it = new RecursiveDirectoryIterator($path);
 
-		foreach (new RecursiveIteratorIterator($it) as $f => $c) {
-			$size = $c->getSize();
-			$this->_size += $size;
-			++$this->_nbfiles;
+			foreach (new RecursiveIteratorIterator($it) as $f => $c) {
+				$size = $c->getSize();
+				$this->_size += $size;
+				++$this->_nbfiles;
+			}
+		}
+		else {
+			foreach(new DirectoryIterator($path) as $f) {
+			    if($f->isDot()) continue;
+			    $size = $f->getSize();
+				$this->_size += $size;
+				++$this->_nbfiles;
+			}
 		}
 	}
 

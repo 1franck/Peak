@@ -51,16 +51,17 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     
     function testForm1ValidatePass1()
     {	
-    	$_POST = array(
-    	'namef' => 'mrjohn1', 
-    	'email' => 'mrjohn1@hotmail.com',
-    	'password' => 'mypass2', 
-    	'repassword' => 'mypass2', 
-    	'unknow' => '123abc',
-    	'number' => 3,
-    	'answer' => 'test3',
-		'url'    => 'http://www.test',
-		'date'   => '2013/12/30');
+        $_POST = array(
+        'namef'      => 'mrjohn1', 
+        'email'      => 'mrjohn1@hotmail.com',
+        'password'   => 'mypass2', 
+        'repassword' => 'mypass2', 
+        'unknow'     => '123abc',
+        'number'     => 3,
+        'answer'     => 'test3',
+        'url'        => 'http://www.test',
+        'date'       => '2013/12/30',
+        'phone'      => '123-145-1568');
     	
     	$f = new Form1();
     	
@@ -73,15 +74,15 @@ class Peak_FiltersFormTest extends PHPUnit_Framework_TestCase
     function testForm1ValidateFail1()
     {
     	$_POST = array(
-    	'name' => 'mrjohn1%', 
-    	'email' => 'mrjohn1hotmail.com', 
-    	'password' => 'mypass2', 
-    	'repassword' => 'mypassss2', 
-    	'unknow' => '123abc', 
-    	'number' => 9,
-    	'answer' => 'test2rwerwe',
-		'url'    => 'www.google.ca',
-		'date'   => '2013-12-30');
+        'name'       => 'mrjohn1%', 
+        'email'      => 'mrjohn1hotmail.com', 
+        'password'   => 'mypass2', 
+        'repassword' => 'mypassss2', 
+        'unknow'     => '123abc', 
+        'number'     => 9,
+        'answer'     => 'test2rwerwe',
+        'url'        => 'www.google.ca',
+        'date'       => '2013-12-30');
     	
     	$f = new Form1();
     	

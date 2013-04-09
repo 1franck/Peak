@@ -1,3 +1,48 @@
+#VERSION 0.9.6#
+
+ - Peak_View_Helper_Debugbar chrono now use $_SERVER['REQUEST_TIME_FLOAT'] if php >= 5.4
+ - modified class Peak_Spl_Dirinfo to support recursive and non-recursive directory iterator
+ - added param $return_row to method exists() in class Peak_Model_Zendatable
+ - fixed missing default value for param $action of method redirect() in Peak_Controller_Action
+ - removed php5.4 array syntax in method process() of class Peak_View_Helper_Assets
+ - added method _filter_time() to class Peak_Filters_Advanced
+ - fixed extended class name typo in Peak_View_Helper_Debugbar
+ - added method saveTransaction() to class Peak_Model_Zendatable
+ - removed deprecated class Peak_View_Helper_Calendar
+ - renamed helpers file with first capital letter
+ - fixed table/schema name in _getData() of class Peak_Model_Pagination
+ - fixed old bug in class "Peak_Helpers" that prevented methods __get() and exists() from sometimes validate a file's existence 
+   on an case sensitive os.
+ - added method getLanguages() to Peak_Controller_Helper_Request
+ - added an auto-detect file extension to Peak_View_Helper_assets
+ - added method renderArray() to Peak_View_Render. This new method we use method render() for each files.
+ - added a new exception constant ERR_VIEW_FILE_NOT_FOUND to Peak_View_Exception
+ - changed the default path used by method render() in Peak_View_Render_Layouts. This path now point to apppath "theme" instead
+   of apppath "theme_layouts". This will imply some changes in existing apps, but it will be more flexible and simpler to 
+   include files contents of application related to views.
+ - modified Peak_Core::initConfig() to support json config file.
+ - added property $_allow_comments to class Peak_Config_Json. This option is set to false by default. If true, json file can
+   have comment(s) syntax like /* */ and //. Modified methods __construct() and loadString() to support this new property.
+ - fixed bug in login() of Peak_Model_Authentication when hashing and salting the password. We use hashStr() now instead.
+ - added method hashStr() to class Peak_Model_Authentication
+ - added method _filter_phone() to class Peak_Filters_Advanced
+ - added the class alias "Peak" to class "Peak_Core" if PHP >= 5.3
+ - removed old functions _clean() and _cleans() from Core.php file
+ - removed deprecated property $_extensions and methods __call() and ext() from class Peak_Core
+ - fixed a problem with default controller action name. We moved default action name verification to getRoute() and simplified method 
+   dispatchAction() in class Peak_Controller_Action
+ - modified Peak_View_Helper_Debugbar and debugbar.js to correctly start the bar minimized when debugbar.js need to load jquery cdn
+ - renamed class View_Helper_assets to Peak_View_Helper_assets as it should have been.
+ - fixed an uncaught exception throw in getFromMethod() of Peak_Annotations when method don't exists
+ - fixed params parsing problem with Peak_Annotations::parse() when param contains "-" char
+ - replaced method add() by setTags() in class Peak_Annotations. Modified method parse() to accept different var type of $_tags.
+ - added class View_Helper_assets for facilitating multiples insertions of files like css/js/img/etc. in views
+ - changed method __construct of Peak_Model_Zendatable_Mutator to prevent database change if no table/primary/schema specified
+ - modified method save() of class Peak_Model_Zendatable to handle new before/after methods.
+ - added 4 new methods to class Peak_Model_Zendatable : beforeInsert(), afterInsert(), beforeUpdate() and afterUpdate().
+   Those new methods do nothing by default. Children classes can now implement those ones if needed to alter the way save() work
+ - updated vendor twitter bootstrap to 2.3.0
+
 #VERSION 0.9.5#
  
  - fixed Peak_Model_Pagination because of changed visibility of method Peak_Model_Zendatable::query()

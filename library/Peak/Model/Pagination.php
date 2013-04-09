@@ -240,7 +240,7 @@ class Peak_Model_Pagination
         //if query is not preset, we generate a query
         if(!isset($this->_db_query)) {
             
-            $select = 'SELECT '.$this->_db_fields.' FROM `'.$this->_db_object->info('name').'`';
+            $select = 'SELECT '.$this->_db_fields.' FROM '.$this->_db_object->getSchemaName();
             
             if(isset($this->_db_where)) {
                 if(is_array($this->_db_where)) {
