@@ -24,8 +24,14 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
 		//print_r($files);
 		$files_count = count($files['app']) + count($files['peak']);
 
-		if(Peak_Chrono::isCompleted() || Peak_Chrono::isOn()) { $chrono = Peak_Chrono::getMs(null,4); }
-		else $chrono = 'n/a';
+		//php 5.4, use $_SERVER['REQUEST_TIME_FLOAT']
+        if(version_compare(PHP_VERSION, '5.4.0') >= 0) {
+            $chrono = (round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 4) * 1000);
+        }
+        else {
+            if(Peak_Chrono::isCompleted() || Peak_Chrono::isOn()) { $chrono = Peak_Chrono::getMs(null,4); }
+            else $chrono = 'n/a';
+        }
 		
         //save chronos into session if exists
 		$sid = session_id();
