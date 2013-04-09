@@ -1,5 +1,6 @@
 #VERSION 0.9.6#
 
+ - modified class Peak_Spl_Dirinfo to support recursive and non-recursive directory iterator
  - added param $return_row to method exists() in class Peak_Model_Zendatable
  - fixed missing default value for param $action of method redirect() in Peak_Controller_Action
  - removed php5.4 array syntax in method process() of class Peak_View_Helper_Assets
