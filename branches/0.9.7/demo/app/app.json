@@ -1,0 +1,37 @@
+{
+    // default config, will be merged with environment config
+    "all" : {
+
+        "php" : {
+            "display_errors"        : 1,
+            "display_startup_errors": 1,
+            "date" : {
+                "timezone" : "America/Montreal"
+            }
+        },
+
+        "front" : {
+            "allow_internal_controllers": 1,
+            "default_controller"        : "index",
+            "error_controller"          : "pkerror"
+        },
+
+        "view" : {
+            "engine"   : "Layouts",
+            "useLayout": "homepage"
+        }
+    },
+
+    "development": { },
+    
+    "testing"    : { },
+    
+    "staging"    : { },
+
+    "production" : {
+        "php" : {
+            "display_errors"        : 1,
+            "display_startup_errors": 1
+        }
+    }
+}

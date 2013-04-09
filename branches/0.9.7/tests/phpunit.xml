@@ -1,0 +1,5 @@
+<phpunit>
+   <testsuite name='PeakFrameworkTestSuite'>
+      <directory suffix='Test.php'>./Peak</directory>
+   </testsuite>
+</phpunit>
