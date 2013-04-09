@@ -19,11 +19,17 @@ require_once 'Peak/Config.php';
 class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 {
 	
+	/**
+	 * instanciate class for tests
+	 */
 	function setUp()
 	{		
 		$this->peakconfig = new Peak_Config();
 	}
-		    
+		 
+	/**
+	 * test new instance
+	 */  
 	function testCreateInstance()
 	{
 		$cf = new Peak_Config();		
@@ -31,6 +37,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertObjectHasAttribute('_vars', $cf);
 	}
 	
+	/**
+	 * test object isset() and unset
+	 */
 	function testSetIssetUnset()
 	{
 		$this->peakconfig->myvar = 'value';		
@@ -40,6 +49,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse(isset($this->peakconfig->myvar));		
 	}
 	
+	/**
+	 * test object count()
+	 */
 	function testCount()
 	{
 		$this->assertTrue(count($this->peakconfig) == 0);		
@@ -47,6 +59,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(count($this->peakconfig) == 1);	
 	}
 	
+	/**
+	 * test method setVars()
+	 */
 	function testSetVars()
 	{
 		$array = array('myvar' => 'value', 'test', 'test2' => 'value2');
@@ -54,6 +69,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(isset($this->peakconfig->myvar));
 	}
 	
+	/**
+	 * test method getVars()
+	 */
 	function testGetVars()
 	{
 		$array = array('myvar' => 'value', 'test', 'test2' => 'value2');
@@ -63,6 +81,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue($vars['myvar'] === 'value');
 	}
 	
+	/**
+	 * test class iterator
+	 */
 	function testIterator()
 	{
 		$this->peakconfig->setVars(array('myvar' => 'value', 'test', 'test2' => 'value2'));
@@ -73,6 +94,9 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(count($this->peakconfig) == 3);
 	}
 	
+	/**
+	 * test method loadFile()
+	 */
 	function testLoadFile()
 	{
 		$cf = new Peak_Config();		
@@ -82,8 +106,24 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertTrue(isset($cf->all));
 	}
+
+	/**
+	 * test new instance with an array as param
+	 */
+	function testCreateInstanceWithArray()
+	{
+		$vars = array('test' => 'testvalue');
+		$cf = new Peak_Config($vars);		
+		
+		$this->assertTrue(is_array($cf->getVars()));
+
+		$this->assertTrue(isset($cf->test));
+	}
 	
-	function testCreateInstanceWithFile()
+	/**
+	 * test new instance with php var file
+	 */
+	function testCreateInstanceWithArrayFile()
 	{
 		$vars = include dirname(__FILE__).'/ConfigTest/appconf_example.php';
 		$cf = new Peak_Config($vars);		
@@ -91,5 +131,31 @@ class Peak_ConfigTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue(is_array($cf->getVars()));
 
 		$this->assertTrue(isset($cf->all));
+	}
+
+	/**
+	 * test new instance with non-php var file
+	 */
+	function testCreateInstanceWithMiscFile()
+	{
+		$cf = new Peak_Config(dirname(__FILE__).'/../phpunit.xml');		
+		
+		$this->assertTrue(is_array($cf->getVars()));
+
+		$this->assertTrue(count($cf) == 0);
+	}
+
+	/**
+	 * test new instance with an random string
+	 */
+	function testCreateInstanceWithString()
+	{
+		$vars = 'test';
+		$cf = new Peak_Config($vars);		
+		
+		$this->assertTrue(is_array($cf->getVars()));
+
+		// should return 0 since instanciate object with a random string will try to load a file that do not exists
+		$this->assertTrue(count($cf) == 0);
 	}
 }

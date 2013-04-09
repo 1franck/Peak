@@ -18,6 +18,21 @@ abstract class Peak_View_Render
 	abstract protected function output($data);
 
     /**
+     * Same as render() but handle an array of file instead
+     * 
+     * @param  array  $files
+     */
+    public function renderArray(array $files)
+    {
+        if(!empty($files)) {
+            foreach($files as $k => $v) {
+                if(!is_numeric($k)) $this->render($k, $v); // file is path
+                else $this->render($k);
+            }
+        }
+    }
+
+    /**
      * Point to Peak_View __get method
      *
      * @param  string $name represent view var name

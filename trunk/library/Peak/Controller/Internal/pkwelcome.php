@@ -201,7 +201,7 @@ class Peak_Controller_Internal_Pkwelcome extends Peak_Controller_Action
 				  <tr>
 					<td>PUBLIC_ROOT</td>
 					<td>'.PUBLIC_ROOT.'<br />
-						<small>Absolute: '.realpath(PUBLIC_ABSPATH).'</small></td>
+						<small>'.realpath(PUBLIC_ABSPATH).'</small></td>
 				  </tr>
 				  <tr>
 					<td>APPLICATION_ROOT{$application_folder_missing}</td>

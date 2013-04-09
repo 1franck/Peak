@@ -63,20 +63,24 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	/**
 	 * Check if a specific key exists in table
 	 *
-	 * @param  misc $val
-	 * @param  string $key
-	 * @return bool
+	 * @param  misc       $val
+	 * @param  string     $key
+	 * @param  bool       $return_row if true, the method will return the row found if any instead of returning true
+	 * @return bool|array
 	 */
-	public function exists($val, $key = null)
+	public function exists($val, $key = null, $return_row = false)
 	{
 	    if(!isset($key)) $key = $this->getPrimaryKey();
-	    
-	    $select = $this->select()->from($this->getSchemaName(), $key)
+
+	    $field = (!$return_row) ? $key : '*';
+
+	    $select = $this->select()->from($this->getSchemaName(), $field)
 	                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
 	    
 	    $result = $this->fetchRow($select);
-	    
-	    return (is_null($result)) ? false : true;
+
+	    if(!$return_row) return (is_null($result)) ? false : true;
+	    else return (is_null($result)) ? false : $result;
 	}
 
 	/**
@@ -184,17 +188,104 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    $pm = $this->getPrimaryKey();
 
 	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
+
+	    	//before update
+	    	$this->beforeUpdate($data);
+
 	        //update
 	        $where = $this->_db->quoteInto($pm.' = ?',$data[$pm]);
 	        $this->_db->update($this->getSchemaName(), $data, $where);
+
+	        //after update
+	        $this->afterUpdate($data);
+
 			return $data[$pm];
 	    }
 	    else {
+
+	    	//before insert
+	    	$this->beforeInsert($data);
+
 	        //insert
 	        $this->_db->insert($this->getSchemaName(), $data);
-	        return $this->_db->lastInsertId();
+	        $id = $this->_db->lastInsertId();
+
+	        //after insert
+	        $this->afterInsert($data, $id);
+
+	        //return the last insert id
+	        return $id;
 	    }
 	}
+
+	/**
+	 * This method allow inserting/updating multiple row using transaction
+	 *
+	 * @uses   method save()
+	 * 
+	 * @param  array $multiple_data
+	 * @return array|object Return ids inserted/updated. If a query fail, it will return the exception object
+	 */
+	public function saveTransaction($multiple_data)
+	{
+		$ids = array();
+		$this->_db->beginTransaction();
+
+		try {
+
+			// insert/update each data set with method save()
+			foreach($multiple_data as $data) $ids[] = $this->save($data);
+
+			// commit
+			$this->_db->commit();
+		}
+		catch(Exception $e) {
+
+			//rollback the changes
+			$this->_db->rollback();
+
+			// return exception object
+			return $e;
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Execute stuff before insert data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array $data Data to be insert
+	 */
+	public function beforeInsert(&$data) {}
+
+	/**
+	 * Execute stuff after insert data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array          $data Data inserted
+	 * @param  string|interer $id   Represent lastInsertId() if any. 
+	 *                              Passed by reference, you can modify what "insert" save() method will return.
+	 */
+	public function afterInsert($data, &$id) {}
+
+	/**
+	 * Execute stuff before update data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array $data Data to be updated
+	 */
+	public function beforeUpdate(&$data) {}
+
+	/**
+	 * Execute stuff after update data with method save()
+	 * Do nothing by default. Can be overloaded by child class.
+	 * 
+	 * @param  array          $data Data update
+	 * @param  string|interer $id   Represent lastInsertId() if any. 
+	 *                              Passed by reference, you can modify what "insert" save() method will return.
+	 */
+	public function afterUpdate(&$data) {}
 
 	/**
 	 * Shortcut for $_db->query()

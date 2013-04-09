@@ -2,6 +2,8 @@
 /**
  * Peak Annotations
  *
+ * Parse DocBlock tags of classes and methods
+ * 
  * @author  Francois Lajoie
  * @version $Id$
  */
@@ -9,30 +11,35 @@ class Peak_Annotations
 {
     /**
      * Class reflection object
-     * @var object
+     * @var object ReflectionClass
      */ 
     protected $_class;
     
     /**
-     * Class Name
+     * Class name to work on
      * @var string
      */
     protected $_class_name;
     
     /**
-     * Annotation tags 
-     * @var array
+     * Contains list of annotation tags to be detected. 
+     * By default no tags will be detected.
+     * @var array|string
      */
-    protected $_tags = array();
+    protected $_tags;
     
     /**
-     * Setup a class to use
+     * Setup a class to use and tags to detect
+     *
+     * @uses  setClass(), setTags()
      *
      * @param stirng|null $class_name
+     * @param stirng|null $class_name
      */
-    public function __construct($class_name = null)
+    public function __construct($class_name = null, $tags = null)
     {
         if(isset($class_name)) $this->setClass($class_name);
+        if(isset($tags)) $this->setTags($tags);
     }
     
     /**
@@ -47,16 +54,17 @@ class Peak_Annotations
         $this->_class = new ReflectionClass($class);
         return $this;
     }
-    
+
     /**
-     * Add annotation tag
+     * Add annotation tag(s) to be detected
      *
-     * @param  string $tagname
+     * @param  array|string $tagname Accept a string or an array of tags 
+     *                               string '*' act as a wildcard so all tags will be detected
      * @return $this
      */
-    public function add($tagname)
+    public function setTags($tags)
     {
-        $this->_tags[] = $tagname;
+        $this->_tags = $tags;
         return $this;
     }
     
@@ -68,7 +76,13 @@ class Peak_Annotations
      */
     public function getFromMethod($method_name)
     {
-        $method = new ReflectionMethod($this->_class_name, $method_name);
+        try {
+            $method = new ReflectionMethod($this->_class_name, $method_name);
+        }
+        catch(ReflectionException $e) {
+            return array();
+        }
+
         return $this->parse($method->getDocComment());
     }
     
@@ -110,10 +124,13 @@ class Peak_Annotations
         //in case we don't have any tag to detect or an empty doc comment, we skip this method
         if(empty($this->_tags) || empty($string)) return array();
    
-        $tags = implode('|', $this->_tags);
+        //check what is the type of $_tags (array|string|wildcard)
+        if(is_array($this->_tags)) $tags = '('.implode('|', $this->_tags).')';
+        elseif($this->_tags === '*') $tags = '[a-zA-Z0-9]';
+        else $tags = '('.$this->_tags.')';
         
         //find @[tag] [params...]
-        $regex = '#\* @(?P<tag>['.$tags.']*)\s+((?P<params>[\s"a-zA-Z0-9$\\._/-^]+)){1,}#si';
+        $regex = '#\* @(?P<tag>'.$tags.'+)\s+((?P<params>[\s"a-zA-Z0-9\-$\\._/-^]+)){1,}#si';
         preg_match_all($regex, $string, $matches, PREG_SET_ORDER);
         
         $final = array();
