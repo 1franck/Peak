@@ -321,6 +321,43 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 		return false;
 	}
 
+
+	/**
+	 * Validate time string
+	 * 		
+	 * @param  string $v
+	 * @param  mixed  $opt if $opt is a string, $opt will be the format. if $opt is an array, keys 'format' and 'separator' are supported
+	 * @return bool
+	 */
+	public function _filter_time($v, $opt = null)
+	{
+		if(!is_array($opt)) {
+			if(!empty($opt)) $opt = array('format' => $opt);
+			else $opt = array();
+		}
+
+		$sep    = (array_key_exists('separator', $opt)) ? $opt['separator'] : ':';
+		$format = (array_key_exists('format', $opt) && in_array($opt['format'], array('12h', '24h'))) ? $opt['format'] : '24h';
+
+		if($format === '24h') $regex = '#^(?:0?[0-9]|1[0-9]|2[0-3])'.$sep.'[0-5][0-9]$#';
+		else if($format === '12h') $regex = '#^(?:0?[0-9]|1[0-2])'.$sep.'[0-5][0-9]$#';
+
+		return $this->_filter_regexp($v, $regex);
+	}
+
+	/**
+	 * Validate a date string with strtotime()
+	 * 
+	 * @param  string $v   
+	 * @param  mixed  $opt 
+	 * @return bool      
+	 */
+	public function _filter_datetime($v, $opt = null)
+	{
+		$timestamp = strtotime($v);
+		return ($timestamp === false) ? false : true;
+	}
+
 	/**
 	 * Validate phone number format
 	 * 
@@ -355,29 +392,6 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 						  break;
 
 		}
-
-		return $this->_filter_regexp($v, $regex);
-	}
-
-	/**
-	 * Validate time string
-	 * 		
-	 * @param  string $v
-	 * @param  mixed  $opt if $opt is a string, $opt will be the format. if $opt is an array, keys 'format' and 'separator' are supported
-	 * @return bool
-	 */
-	public function _filter_time($v, $opt = null)
-	{
-		if(!is_array($opt)) {
-			if(!empty($opt)) $opt = array('format' => $opt);
-			else $opt = array();
-		}
-
-		$sep    = (array_key_exists('separator', $opt)) ? $opt['separator'] : ':';
-		$format = (array_key_exists('format', $opt) && in_array($opt['format'], array('12h', '24h'))) ? $opt['format'] : '24h';
-
-		if($format === '24h') $regex = '#^(?:0?[0-9]|1[0-9]|2[0-3])'.$sep.'[0-5][0-9]$#';
-		else if($format === '12h') $regex = '#^(?:0?[0-9]|1[0-2])'.$sep.'[0-5][0-9]$#';
 
 		return $this->_filter_regexp($v, $regex);
 	}
