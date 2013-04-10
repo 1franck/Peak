@@ -1,6 +1,12 @@
-#VERSION 0.9.7#
+VERSION 0.9.7
+-------------
+Release Date: ?
 
-#VERSION 0.9.6#
+
+
+VERSION 0.9.6 
+-------------
+Release Date: 2013-04-09
 
  - Peak_View_Helper_Debugbar chrono now use $_SERVER['REQUEST_TIME_FLOAT'] if php >= 5.4
  - modified class Peak_Spl_Dirinfo to support recursive and non-recursive directory iterator
@@ -45,7 +51,10 @@
    Those new methods do nothing by default. Children classes can now implement those ones if needed to alter the way save() work
  - updated vendor twitter bootstrap to 2.3.0
 
-#VERSION 0.9.5#
+
+VERSION 0.9.5
+-------------
+Release Date: 2013-02-12
  
  - fixed Peak_Model_Pagination because of changed visibility of method Peak_Model_Zendatable::query()
  - added method query() in Peak_Model_Zendatable_Mutator with public visibility.
@@ -84,7 +93,9 @@
  - updated vendor twitter bootstrap to 2.2.1 and remove version folder to avoid changing integration url each time
  - fixed a bug in Peak_Controller_Internal_Pkdoc introduced by changes of Peak_View_Render_VirtualLayouts in previous version
 
-#VERSION 0.9.4#
+VERSION 0.9.4
+-------------
+Release Date: 2012-11-06
 
  - added method cleanUnknownVars() and property $_clean_all_unknown_vars in Peak_View_Render_VirtualLayouts
  - modified method initConfig in Peak_Core to support absent or unsupported application config by using genericapp.ini 
@@ -120,7 +131,9 @@
  - added method _filter_date() to class Peak_Filters_Advanced
  - added method _filter_url() to class Peak_Filters_Advanced
 
-#VERSION 0.9.3#
+VERSION 0.9.3
+-------------
+Release Date: 2012-06-30
 
  - method dispatchActionParams() is no more experimental in Peak_Controller_Action
  - changed property $actions_with_params to true by default in Peak_Controller_Action
@@ -142,7 +155,9 @@
  - added new class Peak_Model_Pagination for Peak_Model_Zendatable
  - added 4 new shorcut method for escaping stuff in Peak_Model_Zendatable
 
-#VERSION 0.9.2#
+VERSION 0.9.2
+-------------
+Release Date: 2012-02-24
  
  - added class Peak_Model_Authentication to simplify authentication mechanism with database 
  - fixed method preAction() of Peak_Controller_Internal_PkError due to recent change in Peak_View_Cache
@@ -162,7 +177,9 @@
  - fixed another class name problem on certain case sensitive os with Peak_View_Helper_form, Peak_View_Helper_form_select, 
    Peak_View_Helper_form_input and Peak_View_Helper_tagattrs
 
-#VERSION 0.9.1#
+VERSION 0.9.1
+-------------
+Release Date: 2011-11-28
 
  - added class Peak_Annotations
  - fixed class name case sensitive problem on certain os with Peak_View_Helper_form, Peak_View_Helper_form_select and
@@ -186,7 +203,9 @@
  - minor change to css in Peak_View_Helper_Debugbar
  - added method postDispatchController() in Peak_Controller_Front
 
-#VERSION 0.9.0#
+VERSION 0.9.0
+-------------
+Release Date: 2011-10-02
 
  - fixed problem with method getProperties() with value when class is abstract or is an interface in class Peak_Zreflection
  - rewrited method getConstants() from Peak_Zreflection
@@ -235,7 +254,9 @@
  - added abstract method render() and output() to Peak_View_Render
  - deleted deprecated file boot.php. Use Peak_Core::init() instead
 
-#VERSION 0.8.7#
+VERSION 0.8.7
+-------------
+Release Date: 2011-08-22
 
  - udpated method matchRegex() from Peak_Router to accept regex named subpatterns as controller params
  - modified token separator from '.' to more natural '/' char in Peak_Router::addRegex()
@@ -257,7 +278,9 @@
  - fixed method Peak_Application::_construct() due to missing keywork "new" before Peak_Controller_Front object
  - added View helper js
 
-#VERSION 0.8.6#
+VERSION 0.8.6
+-------------
+Release Date: 2011-05-29
 
  - added params to method helper() in Peak_View
  - fixed problem with $params in method Peak_Controller_Front::redirect() and modified method Peak_Router::setRequest() accordingly
@@ -283,7 +306,9 @@
  - fixed method validate() for array key errors that do not exists in Peak_Filters_Advanced
  - updated method output of Peak_View_Helper_Form_Select and Peak_View_Helper_Form_Input
 
-#VERSION 0.8.5#
+VERSION 0.8.5
+-------------
+Release Date: 2011-03-12
 
  - added Peak_View_Helper_TagAttrs, Peak_View_Helper_Form, Peak_View_Helper_Form_Select, Peak_View_Helper_Form_Input
  - added special filters in Peak_Filters_Advanced and fixed method validate()
@@ -319,7 +344,9 @@
  - fixed Peak_Application_Modules to load default Peak front controller if modules don't have his own
  - added class Peak_Filters_Data
 
-#VERSION 0.8.4#
+VERSION 0.8.4
+-------------
+Release Date: 2011-02-07
  
  - simplified class Peak_Controller_Helper_Validate
  - created Peak_Controller_Helper class and moved there method __call() from Peak_Controller_Helpers
@@ -351,7 +378,9 @@
  - added abstract class Peak_Filters
  - renamed constants _VERSION_, _NAME_ and _DESCR_ to PK_VERSION, PK_NAME and PK_DESCR
 
-#VERSION 0.8.3#
+VERSION 0.8.3
+-------------
+Release Date: 2010-12-17
 
  - added class Peak_Controller_Helper_Validate
  - modified Peak_Controller_Helpers to support peak library controller helpers too
@@ -393,7 +422,9 @@
  - moved string to array conversion from matchRegex to addRegex in Peak_Router 
  - deleted deprecated folder views/functions
 
-#VERSION 0.8.2#
+VERSION 0.8.2
+-------------
+Release Date: 2010-12-10
 
  - fixed getRequestURI() when $base_uri = '/' (it mean that app located at the base of server url ex: http://example.com)
  - fixed double slash in url of method Peak_Router::setBaseUri() and Peak_Render::baseUrl()
@@ -426,7 +457,9 @@
  - minor fix of method baseUrl() in Peak_View_Render
  - minor fix of method _load in Peak_Config_Ini
 
-#VESRION 0.8.1#
+VERSION 0.8.1
+-------------
+Release Date: 2010-11-17
  
  - modified Peak_View_Helper_Debug and added Peak_View_Helper_Debugbar.  
  - modified Peak_Helpers to support array of class name prefixes, library view helpers classes prefix renamed to 
@@ -456,7 +489,9 @@
  - added classes Peak_Config_Ini and Peak_Config_Json.
  - visibility of $_vars from Peak_Config has been changed to protected to have the ability of extending the class.
 
-#VERSION 0.8.0#
+VERSION 0.8.0
+-------------
+Release Date: 2010-11-05
 
  - added constant ERR_CUSTOM to Peak_Exception
  - autoload.php > remove deprecated function _autoloadAppMod()
@@ -481,7 +516,9 @@
                                  when we do not use cache functionnality
  - Peak_View_Render > added methods deleteCache()
 
-#VERSION 0.7.99#
+VERSION 0.7.99
+--------------
+Release Date: 2010-08-16
 
  - View_Helper_Debug > added methods getControllerSource() and getScriptSource()
  - Peak_Controller_Action > remove deprecated method view()
@@ -511,7 +548,9 @@
                       controller dispatching process to Peak_Controller_Front.
  - added Peak_Controller_Front > moved dispatching logic of Peak_Application in this new object
 
-#VERSION 0.7.98#
+VERSION 0.7.98
+--------------
+Release Date: 2010-08-07
 
  - Peak_View_Render > added magic method that point to Peak_View __isset()
  - Peak_View > added magic method __isset()
@@ -537,7 +576,9 @@
  - Peak_Core > lighten the file by moving/deling methods getModules(), getModule(), getCachedModules()
                and property $_modules
 
-#VERSION 0.7.97#
+VERSION 0.7.97
+--------------
+Release Date: 2010-08-04
 
  - Peak_Core > method initModule() moved to a new extension file(Peak_Core_Extension_Modules) and renamed init()
  - added Peak_Core_Extensions derived from Peak_Helpers, ext() method simplified in Peak_Core 
@@ -567,7 +608,9 @@
                                        duplicating the code for almost the same behavior. Extends this class
                                        to create your own helpers objects container with multiple paths.
 
-#VERSION 0.7.96#
+VERSION 0.7.96
+--------------
+Release Date: 2010-07-29
 
  - Peak_Core > added method isInternalController(), updated run() method from Peak_Application to use this. 
  - Peak_Application > fix method run() to set router variables instead of using getRequestUri() 
@@ -583,7 +626,9 @@
  - Peak_View_Render > fixed baseUrl(). remove unwanted double slash // in url
  - fixed Peak_View_Helper_Download problem with file name.
 
-#VERSION 0.7.95#
+VERSION 0.7.95
+--------------
+Release Date: 2010-07-19
 
  - added Zend_Mail and Zend_Mime, updated files to zend version 1.10.6
  - Peak_View_Render > fixed baseUrl(). Sanitize url and add boolean option $return
@@ -607,7 +652,9 @@
  - Peak_Exception > added method getDebugTrace(), added constants ERR_VIEW_HELPER_NOT_FOUND and ERR_CTRL_HELPER_NOT_FOUND.
                     updated Peak_View_Helpers and Peak_Controller_Helpers accordly to this.
 
-#VERSION 0.7.9#
+VERSION 0.7.9
+-------------
+Release Date: 2010-07-09
 
  - Peak_Application > change to sha1 all md5 in validSession()
  - added class Peak_Controller_Helpers > fixed Peak_Controller helper(). Same changes as Peak_View helper()
@@ -648,7 +695,7 @@
                   Classes names mimic the directory structure that Peak use but under your application folder.
                   Ex: class Application_Models_User    = file: application/yourapp/models/user.php,
                       class Application_Libs_Tools_Xyz = file: application/yourapp/libs/tools/xyz.php,...
-#VERSION 0.7.8# 
+VERSION 0.7.8 
 
  - Peak_Application > fixed modules class load of method run()
  - Added Zend_Db to the framework
@@ -667,7 +714,7 @@
  - Peak_Render > added methods : isCachedBlock(), getCacheBlock(), cacheBlockEnd().
    Those new functions help to cache a block of text/code inside views
 
-#VERSION 0.7.7#
+VERSION 0.7.7
 
  - Peak_Render > added methods : genCacheId() and getCacheIdFile().
    enableCache() and disableCache() can be used inside controller and bootstrap.
@@ -727,7 +774,7 @@
                application controllers actions views. For now we have
                Partials, Layouts, Json engines. 
 
-#VERSION 0.7.6#
+VERSION 0.7.6
 
  - Peak_View_Theme > renamed method iniOptions() to set setOptions()
  - Peak_View > moved $options, getOptions(), getFunctionsFiles(), iniOptions() to new
@@ -777,7 +824,7 @@
    Renamed method handleRequest() to handleAction()
    Renamed property $request to $params
 
-#VERSION 0.7.5#
+VERSION 0.7.5
 
  - class.registry.php > added method getObjectList()
  - class.wyn.php > !IMPORTANT Replaced route() method by new method run().
@@ -824,7 +871,7 @@
    @see tests/pattern.php
  - create somes tests unit for wyn application start and wyn system classes
 
-#VERSION 0.7.4#
+VERSION 0.7.4
 
  - added php tests for wyn with SimpleTest1.0.1 php unit tester
  - class.wyn_view.php > added method getOptions()
@@ -850,7 +897,7 @@
  - almost all path constant in configs.php have been moved to core/constants.php.
    configs.php is now more short and sweet
 
-#VERSION 0.7.3#
+VERSION 0.7.3
 
  - class.wyn_core.php > moved here constants W_VIEWSCRIPTS_ABSPATH,
    W_VIEWINI_ABSPATH, W_CACHE_ABSPATH
@@ -873,7 +920,7 @@
  - added core/class.zreflection.php > Zend_Reflection_Class wrapper. 
    (use libs/zend/reflection/... )
 
-#VERSION 0.7.2#
+VERSION 0.7.2
 
  - added core/class.pattern.php > Check different string pattern validation
  - class.wyn_view.php > moved method debug() to view helpers
@@ -897,7 +944,7 @@
    remove W_LOGIN and W_PASS for array of config
  - class.wyn_core.php > change visibility of var $w_modules and $w_controller to protected
 
-#VERSION 0.7.1#
+VERSION 0.7.1
 
  - autoload.php > fixed _autoload() > after checking all class path, 
    if file is not found, it throw a trigger_error()
@@ -927,7 +974,7 @@
    will simply ignore it. 
  - class.wyn_core.php > added method getLang()
 
-#VERSION 0.7.0#
+VERSION 0.7.0
 
  - added great shorcut functions in class.wyn_view.php for view object:
    view(), view_hlp(), view_get(), view_echo().
@@ -966,7 +1013,7 @@
  - class.wyn.php > route() : modules and controller are now verified and throw wyn_exception if failed
  - added /core/class.wyn_exception.php
 
-#VERSION 0.6.9#
+VERSION 0.6.9
 
  - class.wyn_controller.php > moved checkAlert() to wyn_core class 
    and renamed it checkConfigs()
@@ -990,7 +1037,7 @@
  - fix class.wyn_controller.php > render() to support wyn controllers folder
    render priority : wdashboard controller, [controller], [modules]
 
-#VERSION 0.6.8#
+VERSION 0.6.8
 
  - fix autoload.php: added controllers class detection
  - added /controllers/ folders and move all controllers in /core/ there.
@@ -1011,7 +1058,7 @@
    if $file is not specified
  - dashboard -> added 'about' action
 
-#VERSION 0.6.7#
+VERSION 0.6.7
 
  - added view helpers. They are stored in core/helpers/view.[title].php
    ex:  view.calendar.php  - $tpl->helper('calendar');
