@@ -2,6 +2,7 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - added new view helper Peak_View_Helper_Grid
  - added method _filter_datetime() to class Peak_Filters_Advanced
  - updated vendor twitter bootstrap to 2.3.1
 
