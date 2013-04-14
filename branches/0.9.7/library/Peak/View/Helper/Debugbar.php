@@ -206,10 +206,10 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
 				
 				if(isset($item['title'])) echo '<strong>'.$item['title'].'</strong><br />';
 				if(is_array($item['data']) || is_object($item['data'])) {
-					echo '<pre>'.print_r($item['data'], true).'</pre>';
+					echo '<pre>'.htmlentities(print_r($item['data'], true)).'</pre>';
 				}
 				else {
-					echo '<pre>'.$item['data'].'</pre>';
+					echo '<pre>'.htmlentities($item['data']).'</pre>';
 				}
 				
 				echo '<br />';

@@ -10,7 +10,6 @@ class indexController extends Peak_Controller_Action
      */
     public function preAction()
     {
-        $this->view->arraytest = array('test1', 'test2' => array('4','re','fd'));
     }
 
     /**

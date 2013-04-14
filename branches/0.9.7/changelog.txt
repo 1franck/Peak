@@ -2,6 +2,7 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - added htmlentities encode in console log of Peak_View_Helper_Debugbar
  - removed deprecated method display() in class Peak_View_Helper_Debug
  - added new view helper Peak_View_Helper_Grid
  - added method _filter_datetime() to class Peak_Filters_Advanced
