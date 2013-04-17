@@ -2,6 +2,9 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - updated debugbar.js
+ - updated Peak_View_Helper_Debugbar to support new css
+ - added a less file for Peak_View_Helper_Debugbar, updated icons, added a dark theme and compressed debugbar css
  - added htmlentities encode in console log of Peak_View_Helper_Debugbar
  - removed deprecated method display() in class Peak_View_Helper_Debug
  - added new view helper Peak_View_Helper_Grid

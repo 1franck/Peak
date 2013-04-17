@@ -14,7 +14,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
 	/**
 	 * Display a bottom bar in your page
 	 */
-	public function show($start_minimized = false)
+	public function show($start_minimized = false, $theme = 'default')
 	{
 		//skip this, if view is set as no render
 		if($this->view->canRender() === false) return;
@@ -59,9 +59,10 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
             if($zdb_profiler->getEnabled() === false) $zdb_profiler = false;
         }
          
+        $theme = ($theme === 'dark') ? 'th-dark' : '';
 		
 		//debug bar html
-		echo '<div id="pkdebugbar">
+		echo '<div id="pkdebugbar" class="'.$theme.'">
               <div class="pkdbpanel">
                <ul>
                 <li><a class="thebar">&nbsp;&nbsp;&nbsp;Peak v'.PK_VERSION.'/PHP '.phpversion().'</a></li>
@@ -247,6 +248,13 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
                 '.(file_get_contents(dirname(__FILE__).'/debugbar/debugbar.css')).
                 '-->
                 </style>
-                <script type="text/javascript">'.(file_get_contents(dirname(__FILE__).'/debugbar/debugbar.js')).'</script>';
+                <script type="text/javascript">'.(file_get_contents(dirname(__FILE__).'/debugbar/debugbar.js')).'</script>
+                <!--[if lt IE 9]>
+                <style>
+                    #pkdebugbar .clock, #pkdebugbar .memory, #pkdebugbar .files, #pkdebugbar .variables, #pkdebugbar .registry, #pkdebugbar .db,
+                    #pkdebugbar .hidebar, #pkdebugbar .showbar, #pkdebugbar .console, #pkdebugbar .thebar 
+                    { background-image: none !important; }
+                </style>
+                <![endif]-->';
     }
 }

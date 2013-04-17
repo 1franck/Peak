@@ -1,6 +1,6 @@
 //load jquery function
 load = function() {
-    if(typeof $  == "undefined") load.getScript("http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js");
+    if(typeof $  == "undefined") load.getScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
     load.tryReady(0);
 }
 
@@ -72,8 +72,8 @@ function pkdebugShow(id) {
     //fit window to screen
     if($(target).hasClass('resizable')) {
 		
-		var newheight = ($(window).outerHeight()) - 80,
-			newwidth = $('body').width() - 80;
+		var newheight = ($(window).outerHeight()) - 60,
+			newwidth = $('body').width() - 70;
 			
         $(target).css('height',newheight);
         $(target).css('width',newwidth);
