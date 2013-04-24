@@ -97,7 +97,17 @@ class Peak_Lang
 	    if(isset($func)) eval('$translation = '.$func.'(\''.$result.'\');');
 	    
 	    return $translation;
-	}	
+	}
+
+    /**
+     * Return current lang abbr ($_lang)
+     * 
+     * @return string
+     */
+    public function getLang()
+    {
+        return $this->_lang;
+    }
 }
 
 /**
