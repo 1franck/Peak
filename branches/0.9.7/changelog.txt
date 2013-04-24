@@ -2,6 +2,7 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - modified option punc of method _filter_alpha() in class Peak_Filters_Advanced to accept also a string as list of punctuations
  - added param $force_insert to method save() of class Peak_Model_Zendatable
  - updated debugbar.js
  - updated Peak_View_Helper_Debugbar to support new css

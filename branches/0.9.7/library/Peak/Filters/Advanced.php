@@ -418,6 +418,13 @@ abstract class Peak_Filters_Advanced extends Peak_Filters
 			        $regopt[] = '\\'.$punc;
 			    }
 			}
+			elseif(isset($opt['punc'])) {
+				$punc   = $opt['punc'];
+				$strlen = strlen($punc);
+				for($i = 0; $i < $strlen; $i++) {
+				    $regopt[] = '\\'.$punc{$i};
+				}
+			}
 		}
 		else $regopt = array('a-z','A-Z','À-ÿ');
 

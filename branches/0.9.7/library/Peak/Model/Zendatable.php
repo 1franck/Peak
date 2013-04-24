@@ -179,15 +179,16 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * Support only one primary key
 	 *
 	 * @param  array $data
+	 * @param  bool  $force_insert if true, will insert event if primary key is present
 	 * @return null|integer
 	 */
-	public function save($data)
+	public function save($data, $force_insert = false)
 	{
 	    $data = $this->cleanArray($data);
 	    
 	    $pm = $this->getPrimaryKey();
 
-	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
+	    if(array_key_exists($pm, $data) && !empty($data[$pm]) && $force_insert === false) {
 
 	    	//before update
 	    	$this->beforeUpdate($data);
