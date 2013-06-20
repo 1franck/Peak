@@ -367,6 +367,25 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 
 	/**
+	 * Rearrange an array with a new key and on value
+	 * Usefull to re-index your array from associative fetch to a simple list
+	 * 
+	 * @param  array  $data 
+	 * @param  string $key  
+	 * @return array 	   
+	 */
+	public function swapKeyVal($data, $key, $valkey)
+	{
+		if(!is_array($data) || count($data) < 1 || !array_key_exists($key, $data[0]) || !array_key_exists($valkey, $data[0])) return $data;
+		$final = array();
+		foreach($data as $k => $v) { 
+			$final[$v[$key]] = $v[$valkey];
+		}
+
+		return $final;
+	}
+
+	/**
 	 * Rearrange an array key&values with callbacks
 	 *
 	 * We could have wrote this method in fewer line, 

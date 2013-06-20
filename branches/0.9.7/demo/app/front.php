@@ -9,6 +9,6 @@ class front extends Peak_Controller_Front
      */
     public function postRender()
     {
-        $this->controller->view->debugbar()->show();
+        $this->controller->view->debugbar()->show(false, '');
     }
 }

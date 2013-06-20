@@ -125,15 +125,16 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
      */
     private function _exception2table()
     {
-        $table = '<table>';
+        $content = '<table>';
         $exception = array('Message' => $this->exception->getMessage(),
                            'Exception' => get_class($this->exception),
                            'File' => str_replace(array('\\',SVR_ABSPATH),array('/',''),$this->exception->getFile()),
                            'Line' => $this->exception->getLine(),
-                           'Code' => $this->exception->getCode(),
-                           'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
+                           'Suspect' => '#SUSPECT#',
+                           'Code' => $this->exception->getCode());
+                           //'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
                            
-        $trace = explode('<br />',$exception['Trace']);
+        /*$trace = explode('<br />',$exception['Trace']);
         $result = '';
         foreach($trace as $line) {
             $line_data = explode(' ',$line);
@@ -152,17 +153,92 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                 $result .= '<br />';
             }
             else $result .= $line.'<br />';
-        }
-        $exception['Trace'] = $result;
+        }*/
+
+        //$exception['Trace'] = $result;
+        //$exception['Trace'] = $this->getExceptionTraceAsString($this->exception);
                                   
         $exception['Time'] = (!method_exists($this->exception,'getTime')) ? date('Y-m-d H:i:s') : $this->exception->getTime();       
                            
         foreach($exception as $k => $v) {
             if($k === 'Message') $v = '<strong>'.$v.'</strong>';
-            $table .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';
+            $content .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';
         }
-        
-        return $table.'</table>';
+        $content .= '</table>';
+
+        $trace = $this->getExceptionTraceAsString($this->exception);
+
+        $content = str_replace('#SUSPECT#', $trace['suspect'], $content);
+
+        $content .= '<hr />
+                    <table>
+                    <thead>
+                        <tr>
+                            <th colspan="4">Trace:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    '.$trace['result'].'
+                    </tbody>
+                    <table>';
+
+
+
+        return $content;
+    }
+
+    private function getExceptionTraceAsString($exception) 
+    {
+        $rtn     = '';
+        $suspect = '';
+        $count   = 0;
+
+        foreach ($exception->getTrace() as $frame) {
+            $args = '';
+            if (isset($frame['args'])) {
+                $args = array();
+                foreach ($frame['args'] as $arg) {
+                    if (is_string($arg)) {
+                        $args[] = '\'' . $arg . '\'';
+                    } elseif (is_array($arg)) {
+                        $args[] = 'Array';
+                    } elseif (is_null($arg)) {
+                        $args[] = 'NULL';
+                    } elseif (is_bool($arg)) {
+                        $args[] = ($arg) ? 'true' : 'false';
+                    } elseif (is_object($arg)) {
+                        $args[] = get_class($arg);
+                    } elseif (is_resource($arg)) {
+                        $args[] = get_resource_type($arg);
+                    } else {
+                        $args[] = $arg;
+                    }   
+                }   
+                $args = join(', ', $args);
+            }
+            $frame['file'] = str_replace(APPLICATION_ABSPATH, '', $frame['file']);
+
+            $temp = sprintf('<tr><td>#%s</td><td><code><strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small></td></tr>',
+                                     $count,
+                                     $frame['function'],
+                                     $args,
+                                     $frame['file'],
+                                     $frame['line']
+                                      );
+
+            if($count == 0) {
+                $suspect = sprintf('<code><strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small>',
+                                     $frame['function'],
+                                     $args,
+                                     $frame['file'],
+                                     $frame['line']);
+            }
+
+            $rtn .= $temp;
+                                     
+            $count++;
+        }
+        return array('result' => $rtn, 'suspect' => $suspect);
     }
     
     /**
@@ -179,8 +255,9 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
  <meta name="robots" content="noindex,nofollow" />
  <style type="text/css">
   <!--
- .pkerrbox table { margin:0; border: 0 !important; }
- .pkerrbox table td { padding:4px 8px; border: 0 !important; }
+
+ .pkerrbox table { margin:0; border: 0px !important; }
+ .pkerrbox table td, th { padding:4px 8px; border: 0px solid #eee !important; vertical-align:top; text-align:left;}
  .pkerrbox {
    margin:80px;
    font:12px "Verdana" !important;
@@ -250,6 +327,11 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
   margin-top:15px;
   color:#111;
   text-shadow:none;
+ }
+ .pkerrbox hr {
+    border:0 !important;
+    border-top:1px solid #eee !important;
+    margin:10px 0;
  }
  .pkerrbox .block p {
   padding:10px 5px;
