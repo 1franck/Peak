@@ -24,9 +24,6 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
     public function postAction()
     {
         $this->view->setLayout($this->_layout());
-        //force render and exit script
-        //$this->view->render('','');
-        //exit();
     }   
     
     /**
