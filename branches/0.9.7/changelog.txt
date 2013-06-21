@@ -2,7 +2,8 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
- - added methods swapKey() and swapKeyValCallback() to Peak_Model_Zendatable
+ - added method getTriggerTrace() to Peak_Exception. This method retreive element trace who triggered the exception
+ - added methods swapKey(), swapKeyVal(), swapKeyValCallback() to Peak_Model_Zendatable
  - added the notion of param(s) after url to Peak_View_Helper_Assets
  - added method getLang() to class Peak_Lang
  - modified option punc of method _filter_alpha() in class Peak_Filters_Advanced to accept also a string as list of punctuations

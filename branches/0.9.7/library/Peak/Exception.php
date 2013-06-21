@@ -83,6 +83,42 @@ class Peak_Exception extends Exception
 		
 		return $debug;
 	}
+
+	/**
+	 * Get exception element trigger trace 
+	 * 
+	 * @return array
+	 */
+	public function getTriggerTrace()
+	{
+        foreach ($this->getTrace() as $frame) {
+            $args = '';
+            if (isset($frame['args'])) {
+                $args = array();
+                foreach ($frame['args'] as $arg) {
+                    if (is_string($arg)) {
+                        $args[] = '\'' . $arg . '\'';
+                    } elseif (is_array($arg)) {
+                        $args[] = 'Array';
+                    } elseif (is_null($arg)) {
+                        $args[] = 'NULL';
+                    } elseif (is_bool($arg)) {
+                        $args[] = ($arg) ? 'true' : 'false';
+                    } elseif (is_object($arg)) {
+                        $args[] = get_class($arg);
+                    } elseif (is_resource($arg)) {
+                        $args[] = get_resource_type($arg);
+                    } else {
+                        $args[] = $arg;
+                    }   
+                }   
+                $args = join(', ', $args);
+            }
+            $frame['file'] = str_replace(APPLICATION_ABSPATH, '', $frame['file']);
+            break;
+        }
+        return $frame;
+	}
 	
 	public function getErrkey() { return $this->_errkey; }
 
