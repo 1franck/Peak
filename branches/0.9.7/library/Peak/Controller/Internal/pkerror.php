@@ -129,31 +129,6 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                            'Line' => $this->exception->getLine(),
                            'Suspect' => '#SUSPECT#',
                            'Code' => $this->exception->getCode());
-                           //'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
-                           
-        /*$trace = explode('<br />',$exception['Trace']);
-        $result = '';
-        foreach($trace as $line) {
-            $line_data = explode(' ',$line);
-            if(count($line_data) >= 3) {
-                foreach($line_data as $i => $col) {
-					if(!isset($temp)) $temp = '';
-                    if($i == 1 && !empty($col)) {
-                        $temp = str_replace('):',')',$col);
-                        $temp = explode('(',$temp);
-						if(!is_array($temp)  || count($temp < 2)) $temp = '';
-                        else $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
-                    }
-                    elseif($i == 2) $result .= ' <strong><code>'.$col.'</code> --> </strong> '.$temp;
-                    else $result .= ' '.$col;
-                }
-                $result .= '<br />';
-            }
-            else $result .= $line.'<br />';
-        }*/
-
-        //$exception['Trace'] = $result;
-        //$exception['Trace'] = $this->getExceptionTraceAsString($this->exception);
                                   
         $exception['Time'] = (!method_exists($this->exception,'getTime')) ? date('Y-m-d H:i:s') : $this->exception->getTime();       
                            
@@ -177,7 +152,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                     <tbody>
                     '.$trace['result'].'
                     </tbody>
-                    <table>';
+                    </table>';
 
 
 
@@ -255,8 +230,20 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
 
  .pkerrbox table { margin:0; border: 0px !important; }
  .pkerrbox table td, th { padding:4px 8px; border: 0px solid #eee !important; vertical-align:top; text-align:left;}
+ .pkerrbox-overlay {
+  background:rgba(0,0,0,0.5);
+  position:absolute !important;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+
+  /*overflow:hidden !important;*/
+ }
  .pkerrbox {
+
    margin:80px;
+  width:80%;
    font:12px "Verdana" !important;
    padding:15px 20px;
    border: 1px solid #8ec1da;
@@ -278,8 +265,8 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
    color: #3985a8;
  }
  .pkerrbox.yellow {
-   border: 1px solid #EEE679;
    background-color: #F8F7C5;
+   border: 1px solid #EEE679;
    box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
    -o-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
    -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
@@ -324,6 +311,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
   margin-top:15px;
   color:#111;
   text-shadow:none;
+  border:1px solid #ccc;
  }
  .pkerrbox hr {
     border:0 !important;
@@ -334,8 +322,14 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
   padding:10px 5px;
   margin:0;
  }
+ .pkerrbox code {
+  background:none !important;
+  border:0 !important;
+  color:#000 !important;
+  font-family:"Consolas", "Monaco", sans-serif;
+ }
  .pkerrbox, .pkerrbox .block {
-  border-radius: 4px; -moz-border-radius: 4px; -o-border-radius:4px, -webkit-border-radius:4px;
+  /*border-radius: 4px; -moz-border-radius: 4px; -o-border-radius:4px, -webkit-border-radius:4px;*/
  }
   -->
  </style>
@@ -346,6 +340,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
 <h2>'.$this->view->title_desc.'</h2>
 {CONTENT}
 </div>
+
 </body>
 </html>';
     }
