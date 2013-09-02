@@ -138,7 +138,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
         }
         $content .= '</table>';
 
-        $trace = $this->getExceptionTraceAsString($this->exception);
+        $trace = $this->getExceptionTraceAsRow($this->exception);
 
         $content = str_replace('#SUSPECT#', $trace['suspect'], $content);
 
@@ -159,7 +159,13 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
         return $content;
     }
 
-    private function getExceptionTraceAsString($exception) 
+    /**
+     * Get exception trace as table row
+     * 
+     * @param  object $exception
+     * @return array        
+     */
+    private function getExceptionTraceAsRow($exception) 
     {
         $rtn     = '';
         $suspect = '';
@@ -188,10 +194,26 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                 }   
                 $args = join(', ', $args);
             }
-            $frame['file'] = str_replace(APPLICATION_ABSPATH, '', $frame['file']);
 
-            $temp = sprintf('<tr><td>#%s</td><td><code><strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small></td></tr>',
+            // skip php internal php class error.
+            if(!array_key_exists('file', $frame) || !array_key_exists('line', $frame)) {
+                continue;
+            }           
+
+            // add class prefix if any
+            if(!array_key_exists('class', $frame)) $frame['class'] = '';
+            else $frame['class'] .= '::';
+
+            // format paths
+            $frame['file'] = str_replace('\\','/', $frame['file']);
+            $apppath       = str_replace('\\','/', APPLICATION_ABSPATH);
+            //$libpath       = str_replace('\\','/', LIBRARY_ABSPATH);
+            $pubpath       = str_replace('\\','/', PUBLIC_ABSPATH);
+            $frame['file'] = str_replace(array($apppath, $pubpath), '', $frame['file']);
+
+            $temp = sprintf('<tr><td>#%s</td><td><code>%s<strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small></td></tr>',
                                      $count,
+                                     $frame['class'],
                                      $frame['function'],
                                      $args,
                                      $frame['file'],
@@ -199,7 +221,8 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
                                       );
 
             if($count == 0) {
-                $suspect = sprintf('<code><strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small>',
+                $suspect = sprintf('<code>%s<strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small>',
+                                     $frame['class'],
                                      $frame['function'],
                                      $args,
                                      $frame['file'],
@@ -242,9 +265,9 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
  }
  .pkerrbox {
 
-   margin:80px;
+   margin:50px 80px;
   width:80%;
-   font:12px "Verdana" !important;
+   font:14px "Verdana" !important;
    padding:15px 20px;
    border: 1px solid #8ec1da;
    background-color: #ddeef6;
