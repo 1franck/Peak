@@ -2,6 +2,8 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - added in class Peak_View_Header methods codeAsStr(), holdOn(), holdOff(), renamed resetHeader() to reset() and 
+   finally added some params to method release() and setRCode()
  - added method header() to Peak_View and modified method render() to support this new method
  - added new class Peak_View_Header to facilitate view http headers
  - added method getTriggerTrace() to Peak_Exception. This method retreive element trace who triggered the exception
