@@ -2,6 +2,8 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - added method header() to Peak_View and modified method render() to support this new method
+ - added new class Peak_View_Header to facilitate view http headers
  - added method getTriggerTrace() to Peak_Exception. This method retreive element trace who triggered the exception
  - added methods swapKey(), swapKeyVal(), swapKeyValCallback() to Peak_Model_Zendatable
  - added the notion of param(s) after url to Peak_View_Helper_Assets
