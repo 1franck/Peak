@@ -2,6 +2,8 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - deleted Peak_View_Helper_Js class given that Peak_View_Helper_Assets do the same thing
+ - added method exists() to Peak_View_Helper_Assets
  - deleted deprecated Peak_View_Helper_Html class
  - deleted Peak_View_Helper_Download class given that Peak_View_Header class is implementing this functionnality
  - moved code of Peak_View_Helper_Redirect to new class Peak_View_Header and deleted Peak_View_Helper_Redirect

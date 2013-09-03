@@ -78,10 +78,23 @@ class Peak_View_Helper_Assets
     }
 
     /**
+     * Check if javascript file exists
+     *
+     * @param  string $file
+     * @return bool
+     */
+    public function exists($file)
+    {
+        $filepath = $this->_assets_path.'/'.$file;
+        return file_exists($filepath);
+    }
+
+    /**
      * Proccess a single or a bunch of assets file
      *
      * @param  string        $type
      * @param  array|string  $paths
+     * @param  string|null   $param add url param if specified
      *
      * @return string
      */
