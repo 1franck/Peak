@@ -179,15 +179,16 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 * Support only one primary key
 	 *
 	 * @param  array $data
+	 * @param  bool  $force_insert if true, will insert event if primary key is present
 	 * @return null|integer
 	 */
-	public function save($data)
+	public function save($data, $force_insert = false)
 	{
 	    $data = $this->cleanArray($data);
 	    
 	    $pm = $this->getPrimaryKey();
 
-	    if(array_key_exists($pm, $data) && !empty($data[$pm])) {
+	    if(array_key_exists($pm, $data) && !empty($data[$pm]) && $force_insert === false) {
 
 	    	//before update
 	    	$this->beforeUpdate($data);
@@ -271,7 +272,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
 	/**
 	 * Execute stuff before update data with method save()
-	 * Do nothing by default. Can be overloaded by child class.
+	 * Do nothing by default. Can be overloaded by child class or called manually
 	 * 
 	 * @param  array $data Data to be updated
 	 */
@@ -279,7 +280,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 
 	/**
 	 * Execute stuff after update data with method save()
-	 * Do nothing by default. Can be overloaded by child class.
+	 * Do nothing by default. Can be overloaded by child class or called manually
 	 * 
 	 * @param  array          $data Data update
 	 * @param  string|interer $id   Represent lastInsertId() if any. 
@@ -343,5 +344,98 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	{
 		if(!isset($this->_paging)) $this->_paging = new Peak_Model_Pagination($this);
 		return $this->_paging;
+	}
+
+
+	/**
+	 * Rearrange an array with a new key
+	 * Usefull to re-index your array from associative fetch
+	 * 
+	 * @param  array  $data 
+	 * @param  string $key  
+	 * @return array 	   
+	 */
+	public function swapKey($data, $key)
+	{
+		if(!is_array($data) || count($data) < 1 || !array_key_exists($key, $data[0])) return $data;
+		$final = array();
+		foreach($data as $k => $v) { 
+			$final[$v[$key]] = $v;
+		}
+
+		return $final;
+	}
+
+	/**
+	 * Rearrange an array with a new key and on value
+	 * Usefull to re-index your array from associative fetch to a simple list
+	 * 
+	 * @param  array  $data 
+	 * @param  string $key  
+	 * @return array 	   
+	 */
+	public function swapKeyVal($data, $key, $valkey)
+	{
+		if(!is_array($data) || count($data) < 1 || !array_key_exists($key, $data[0]) || !array_key_exists($valkey, $data[0])) return $data;
+		$final = array();
+		foreach($data as $k => $v) { 
+			$final[$v[$key]] = $v[$valkey];
+		}
+
+		return $final;
+	}
+
+	/**
+	 * Rearrange an array key&values with callbacks
+	 *
+	 * We could have wrote this method in fewer line, 
+	 * but we duplicate foreach to optimize the iteration for 
+	 * case depending on method args
+	 * 
+	 * @param  array          $data            
+	 * @param  string|closure $callback_key    
+	 * @param  closure        $callback_values 
+	 * @return array                 
+	 */
+	public function swapKeyValCallback($data, $callback_key, $callback_values = null)
+	{
+
+		$final = array();
+
+		if(!is_array($data) || count($data) < 1) return $data;
+
+		// callback key is a string
+		if(is_string($callback_key)) {
+			if(!array_key_exists($callback_key, $data[0])) return $data;
+			else {
+				// with callback key as string and maybe callback value
+				foreach($data as $k => $v) {
+					$value = (is_callable($callback_values)) ? $callback_values($k, $v) : $v;
+					$final[$v[$callback_key]] = $value;
+				}
+
+				return $final;
+			}
+		}
+		elseif(!is_callable($callback_key)) {
+			return $data;
+		}
+
+		// with callback key instead of string
+		if(is_callable($callback_values)) {
+			foreach($data as $k => $v) {
+				// callback key and value
+				$final[$callback_key($k, $v)] = $callback_values($k, $v);
+			}
+		}
+		// with callback key with no value callback
+		else {
+			foreach($data as $k => $v) {
+				// callback key and value
+				$final[$callback_key($k, $v)] = $v;
+			}
+		}
+
+		return $final;
 	}
 }

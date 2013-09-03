@@ -1,10 +1,10 @@
 <?php
 /**
- * Template variables registry, helpers object, theme object, rendering object
+ * Template variables registry with objects httpheader, helpers, theme, rendering
  * 
  * @author   Francois Lajoie
  * @version  $Id$  
- * @uses     Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
+ * @uses     Peak_View_Header, Peak_View_Theme, Peak_View_Helpers, Peak_View_Render, Peak_View_Render_*
  */
 class Peak_View
 {
@@ -19,6 +19,12 @@ class Peak_View
      * @var object
      */
     private $_helpers;
+
+    /**
+     * view header object
+     * @var object
+     */
+    private $_header;
 
     /**
      * view theme object
@@ -268,10 +274,31 @@ class Peak_View
 		//skip render part(see $_render)
 		if($this->_render === false) return;
 
+
         if(is_object($this->_engine)) {
+
+            // check if we got http header
+            if(is_object($this->_header)) {
+                $this->_header->release();
+            }
+
             $this->engine()->render($file,$path);
         }
         else throw new Peak_View_Exception('ERR_VIEW_ENGINE_NOT_SET');
+    }
+
+    /**
+     * Load/get HTTP header object
+     *
+     * @return object Peak_View_Header
+     */
+    public function header()
+    {
+        if(!is_object($this->_header)) {
+            $this->_header = new Peak_View_Header();
+        }
+
+        return $this->_header;
     }
 
     /**
