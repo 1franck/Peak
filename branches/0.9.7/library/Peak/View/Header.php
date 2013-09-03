@@ -255,6 +255,19 @@ class Peak_View_Header
     }
 
     /**
+     * Redirect to an url and halt the script
+     * 
+     * @param  string  $url  redirect url location
+     * @param  integer $code
+     */
+    public function redirect($url, $code = 302)
+    {
+        $this->setRCode($code);
+        $this->set('Location: '.$url);
+        $this->release(true);
+    }
+
+    /**
      * Set header to download a file
      * 
      * @param  string $fielpath  full path file
