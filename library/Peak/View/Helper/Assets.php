@@ -45,7 +45,12 @@ class Peak_View_Helper_Assets
      */
     public function __call($method, $args)
     {
-        return $this->process($method, $args[0]);
+        if(array_key_exists(1, $args)) {
+            return $this->process($method, $args[0], $args[1]);
+        }
+        else {
+            return $this->process($method, $args[0]);
+        }
     }
 
     /**
@@ -73,14 +78,27 @@ class Peak_View_Helper_Assets
     }
 
     /**
+     * Check if javascript file exists
+     *
+     * @param  string $file
+     * @return bool
+     */
+    public function exists($file)
+    {
+        $filepath = $this->_assets_path.'/'.$file;
+        return file_exists($filepath);
+    }
+
+    /**
      * Proccess a single or a bunch of assets file
      *
      * @param  string        $type
      * @param  array|string  $paths
+     * @param  string|null   $param add url param if specified
      *
      * @return string
      */
-    public function process($type, $paths)
+    public function process($type, $paths, $param = null)
     {
         $output = '';
         $mtype  = '_asset_'.$type;
@@ -97,7 +115,7 @@ class Peak_View_Helper_Assets
 
                 foreach($paths as $p) {
                     $ext = '_asset_'.pathinfo($p, PATHINFO_EXTENSION);
-                    if(method_exists($this, $ext)) $output .= $this->$ext($p);
+                    if(method_exists($this, $ext)) $output .= $this->$ext($p, $param);
                 }
 
             }
@@ -105,7 +123,7 @@ class Peak_View_Helper_Assets
         }
         else {
             foreach($paths as $p) {
-                $output .= $this->$mtype($p);
+                $output .= $this->$mtype($p, $param);
             }
         }
 
@@ -121,9 +139,7 @@ class Peak_View_Helper_Assets
      */
     protected function _asset_url($filepath)
     {
-        $url = $this->_assets_base_url.'/'.$this->_assets_path.'/'.$filepath;
-
-        return $url;
+        return $this->_assets_base_url.'/'.$this->_assets_path.'/'.$filepath;
     }
 
 
@@ -134,9 +150,10 @@ class Peak_View_Helper_Assets
      *
      * @return string
      */
-    protected function _asset_js($filepath)
+    protected function _asset_js($filepath, $param = null)
     {
-        return '<script type="text/javascript" src="'.$this->_asset_url($filepath).'"></script>';
+        $url = $this->_asset_url($filepath).((isset($param)) ? '?'.$param : '');
+        return '<script type="text/javascript" src="'.$url.'"></script>';
     }
 
     /**
@@ -146,9 +163,10 @@ class Peak_View_Helper_Assets
      *
      * @return string
      */
-    protected function _asset_css($filepath)
+    protected function _asset_css($filepath, $param = null)
     {
-        return '<link rel="stylesheet" href="'.$this->_asset_url($filepath).'">';
+        $url = $this->_asset_url($filepath).((isset($param)) ? '?'.$param : '');
+        return '<link rel="stylesheet" href="'.$url.'">';
     }
 
 }

@@ -24,9 +24,6 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
     public function postAction()
     {
         $this->view->setLayout($this->_layout());
-        //force render and exit script
-        //$this->view->render('','');
-        //exit();
     }   
     
     /**
@@ -125,44 +122,118 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
      */
     private function _exception2table()
     {
-        $table = '<table>';
+        $content = '<table>';
         $exception = array('Message' => $this->exception->getMessage(),
                            'Exception' => get_class($this->exception),
                            'File' => str_replace(array('\\',SVR_ABSPATH),array('/',''),$this->exception->getFile()),
                            'Line' => $this->exception->getLine(),
-                           'Code' => $this->exception->getCode(),
-                           'Trace' => str_replace('#','<br />#',$this->exception->getTraceAsString()));
-                           
-        $trace = explode('<br />',$exception['Trace']);
-        $result = '';
-        foreach($trace as $line) {
-            $line_data = explode(' ',$line);
-            if(count($line_data) >= 3) {
-                foreach($line_data as $i => $col) {
-					if(!isset($temp)) $temp = '';
-                    if($i == 1 && !empty($col)) {
-                        $temp = str_replace('):',')',$col);
-                        $temp = explode('(',$temp);
-						if(!is_array($temp)  || count($temp < 2)) $temp = '';
-                        else $temp = str_replace(array('\\',SVR_ABSPATH),array('/',''),$temp[0]).'('.$temp[1];
-                    }
-                    elseif($i == 2) $result .= ' <strong><code>'.$col.'</code> --> </strong> '.$temp;
-                    else $result .= ' '.$col;
-                }
-                $result .= '<br />';
-            }
-            else $result .= $line.'<br />';
-        }
-        $exception['Trace'] = $result;
+                           'Suspect' => '#SUSPECT#',
+                           'Code' => $this->exception->getCode());
                                   
         $exception['Time'] = (!method_exists($this->exception,'getTime')) ? date('Y-m-d H:i:s') : $this->exception->getTime();       
                            
         foreach($exception as $k => $v) {
             if($k === 'Message') $v = '<strong>'.$v.'</strong>';
-            $table .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';
+            $content .= '<tr><td><strong>'.$k.'</strong>:&nbsp;</td><td>'.$v.'</td></tr>';
         }
-        
-        return $table.'</table>';
+        $content .= '</table>';
+
+        $trace = $this->getExceptionTraceAsRow($this->exception);
+
+        $content = str_replace('#SUSPECT#', $trace['suspect'], $content);
+
+        $content .= '<hr />
+                    <table>
+                    <thead>
+                        <tr>
+                            <th colspan="4">Trace:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    '.$trace['result'].'
+                    </tbody>
+                    </table>';
+
+
+
+        return $content;
+    }
+
+    /**
+     * Get exception trace as table row
+     * 
+     * @param  object $exception
+     * @return array        
+     */
+    private function getExceptionTraceAsRow($exception) 
+    {
+        $rtn     = '';
+        $suspect = '';
+        $count   = 0;
+
+        foreach ($exception->getTrace() as $frame) {
+            $args = '';
+            if (isset($frame['args'])) {
+                $args = array();
+                foreach ($frame['args'] as $arg) {
+                    if (is_string($arg)) {
+                        $args[] = '\'' . $arg . '\'';
+                    } elseif (is_array($arg)) {
+                        $args[] = 'Array';
+                    } elseif (is_null($arg)) {
+                        $args[] = 'NULL';
+                    } elseif (is_bool($arg)) {
+                        $args[] = ($arg) ? 'true' : 'false';
+                    } elseif (is_object($arg)) {
+                        $args[] = get_class($arg);
+                    } elseif (is_resource($arg)) {
+                        $args[] = get_resource_type($arg);
+                    } else {
+                        $args[] = $arg;
+                    }   
+                }   
+                $args = join(', ', $args);
+            }
+
+            // skip php internal php class error.
+            if(!array_key_exists('file', $frame) || !array_key_exists('line', $frame)) {
+                continue;
+            }           
+
+            // add class prefix if any
+            if(!array_key_exists('class', $frame)) $frame['class'] = '';
+            else $frame['class'] .= '::';
+
+            // format paths
+            $frame['file'] = str_replace('\\','/', $frame['file']);
+            $apppath       = str_replace('\\','/', APPLICATION_ABSPATH);
+            //$libpath       = str_replace('\\','/', LIBRARY_ABSPATH);
+            $pubpath       = str_replace('\\','/', PUBLIC_ABSPATH);
+            $frame['file'] = str_replace(array($apppath, $pubpath), '', $frame['file']);
+
+            $temp = sprintf('<tr><td>#%s</td><td><code>%s<strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small></td></tr>',
+                                     $count,
+                                     $frame['class'],
+                                     $frame['function'],
+                                     $args,
+                                     $frame['file'],
+                                     $frame['line']
+                                      );
+
+            if($count == 0) {
+                $suspect = sprintf('<code>%s<strong>%s(%s)</strong></code><br /><small><i>&nbsp;%s</i> line %s</small>',
+                                     $frame['class'],
+                                     $frame['function'],
+                                     $args,
+                                     $frame['file'],
+                                     $frame['line']);
+            }
+
+            $rtn .= $temp;
+                                     
+            $count++;
+        }
+        return array('result' => $rtn, 'suspect' => $suspect);
     }
     
     /**
@@ -179,11 +250,24 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
  <meta name="robots" content="noindex,nofollow" />
  <style type="text/css">
   <!--
- .pkerrbox table { margin:0; border: 0 !important; }
- .pkerrbox table td { padding:4px 8px; border: 0 !important; }
+
+ .pkerrbox table { margin:0; border: 0px !important; }
+ .pkerrbox table td, th { padding:4px 8px; border: 0px solid #eee !important; vertical-align:top; text-align:left;}
+ .pkerrbox-overlay {
+  background:rgba(0,0,0,0.5);
+  position:absolute !important;
+  top:0px;
+  left:0px;
+  width:100%;
+  height:100%;
+
+  /*overflow:hidden !important;*/
+ }
  .pkerrbox {
-   margin:80px;
-   font:12px "Verdana" !important;
+
+   margin:50px 80px;
+  width:80%;
+   font:14px "Verdana" !important;
    padding:15px 20px;
    border: 1px solid #8ec1da;
    background-color: #ddeef6;
@@ -204,8 +288,8 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
    color: #3985a8;
  }
  .pkerrbox.yellow {
-   border: 1px solid #EEE679;
    background-color: #F8F7C5;
+   border: 1px solid #EEE679;
    box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
    -o-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
    -webkit-box-shadow: inset 0 1px 3px #fff, inset 0 -45px #EEE679, 0 0 3px #F8F7C5;
@@ -250,13 +334,25 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
   margin-top:15px;
   color:#111;
   text-shadow:none;
+  border:1px solid #ccc;
+ }
+ .pkerrbox hr {
+    border:0 !important;
+    border-top:1px solid #eee !important;
+    margin:10px 0;
  }
  .pkerrbox .block p {
   padding:10px 5px;
   margin:0;
  }
+ .pkerrbox code {
+  background:none !important;
+  border:0 !important;
+  color:#000 !important;
+  font-family:"Consolas", "Monaco", sans-serif;
+ }
  .pkerrbox, .pkerrbox .block {
-  border-radius: 4px; -moz-border-radius: 4px; -o-border-radius:4px, -webkit-border-radius:4px;
+  /*border-radius: 4px; -moz-border-radius: 4px; -o-border-radius:4px, -webkit-border-radius:4px;*/
  }
   -->
  </style>
@@ -267,6 +363,7 @@ class Peak_Controller_Internal_PkError extends Peak_Controller_Action
 <h2>'.$this->view->title_desc.'</h2>
 {CONTENT}
 </div>
+
 </body>
 </html>';
     }
