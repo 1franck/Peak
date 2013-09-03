@@ -1,6 +1,11 @@
-VERSION 0.9.7
+VERSION 0.9.8
 -------------
 Release Date: ?
+
+
+VERSION 0.9.7
+-------------
+Release Date: 2013-09-02
 
  - deleted Peak_View_Helper_Js class given that Peak_View_Helper_Assets do the same thing
  - added method exists() to Peak_View_Helper_Assets
