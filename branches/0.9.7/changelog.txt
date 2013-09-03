@@ -2,6 +2,7 @@ VERSION 0.9.7
 -------------
 Release Date: ?
 
+ - deleted Peak_View_Helper_Download class given that Peak_View_Header class is implementing this functionnality
  - moved code of Peak_View_Helper_Redirect to new class Peak_View_Header and deleted Peak_View_Helper_Redirect
  - enhanced Peak_Controller_Internal_PkError debug trace output and maded various fixes
  - added in class Peak_View_Header methods codeAsStr(), holdOn(), holdOff(), renamed resetHeader() to reset() and 
