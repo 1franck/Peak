@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - changed method baseUrl() from class Peak_View_Render to detect properly https url
  - updated method Peak_Controller_Action::redirectUrl() to use Peak_View_Header class
 
 VERSION 0.9.7
