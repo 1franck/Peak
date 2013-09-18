@@ -28,9 +28,12 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
         if(version_compare(PHP_VERSION, '5.4.0') >= 0) {
             $chrono = (round(microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'], 4) * 1000);
         }
+        //php 5.1, use $_SERVER['REQUEST_TIME']
+        elseif(version_compare(PHP_VERSION, '5.1.0') >= 0) {
+            $chrono = (round(microtime(true) - $_SERVER['REQUEST_TIME'], 4) * 1000);
+        }
         else {
-            if(Peak_Chrono::isCompleted() || Peak_Chrono::isOn()) { $chrono = Peak_Chrono::getMs(null,4); }
-            else $chrono = 'n/a';
+            $chrono = 'n/a';
         }
 		
         //save chronos into session if exists

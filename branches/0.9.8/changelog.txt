@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - updated class Peak_View_Helper_Debugbar to use REQUEST_TIME or REQUEST_TIME_FLOAT of $_SERVER instead of Peak_Chrono
  - changed method baseUrl() from class Peak_View_Render to detect properly https url
  - updated method Peak_Controller_Action::redirectUrl() to use Peak_View_Header class
 
@@ -17,7 +18,7 @@ Release Date: 2013-09-02
  - enhanced Peak_Controller_Internal_PkError debug trace output and maded various fixes
  - added in class Peak_View_Header methods codeAsStr(), holdOn(), holdOff(), renamed resetHeader() to reset() and 
    finally added some params to method release() and setRCode()
- - added method header() to Peak_View and modified method render() to support this new method
+ - added method header() to Peak_View and modified method render() t<o support this new method
  - added new class Peak_View_Header to facilitate view http headers
  - added method getTriggerTrace() to Peak_Exception. This method retreive element trace who triggered the exception
  - added methods swapKey(), swapKeyVal(), swapKeyValCallback() to Peak_Model_Zendatable
