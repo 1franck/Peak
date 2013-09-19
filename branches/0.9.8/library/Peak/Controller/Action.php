@@ -126,8 +126,12 @@ abstract class Peak_Controller_Action
      *
      * @return string
      */
-    public function getAction()
+    public function getAction($noprefix = false)
     {
+        if($noprefix) {
+            return substr($this->action, 1);
+        }
+
         return $this->action;
     }
     
