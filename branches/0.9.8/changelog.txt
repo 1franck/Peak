@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - modified method setColumns() of Peak_View_Helper_Grid for trimming the keys of columns
  - added a param to method getAction() of class Peak_Controller_Action to return action without the prefix
  - updated class Peak_View_Helper_Debugbar to use REQUEST_TIME or REQUEST_TIME_FLOAT of $_SERVER instead of Peak_Chrono
  - changed method baseUrl() from class Peak_View_Render to detect properly https url
