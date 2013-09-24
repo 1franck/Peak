@@ -2,6 +2,8 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - rewrited a good portion of class Peak_Lang. It's now more granular, supports multiple translations files and more 
+   independent from others Peak components
  - modified method setColumns() of Peak_View_Helper_Grid for trimming the keys of columns
  - added a param to method getAction() of class Peak_Controller_Action to return action without the prefix
  - updated class Peak_View_Helper_Debugbar to use REQUEST_TIME or REQUEST_TIME_FLOAT of $_SERVER instead of Peak_Chrono
