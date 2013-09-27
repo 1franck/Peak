@@ -2,6 +2,8 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - fixed Peak_Config methods to use array_key_exists() instead of isset()
+ - fixed Peak_View_Helpers by preventing in jection of view object if this helper extends Peak_Config class
  - rewrited a good portion of class Peak_Lang. It's now more granular, supports multiple translations files and more 
    independent from others Peak components
  - modified method setColumns() of Peak_View_Helper_Grid for trimming the keys of columns
