@@ -31,7 +31,7 @@ class Peak_Model_ActiveRecord
      * Can we overwrite $_data ?
      * @var boolean
      */
-    protected $_readonly = true;
+    protected $_readonly = false;
 
     /**
      * This flag tell if the record is a valid existing record of the model
@@ -112,7 +112,7 @@ class Peak_Model_ActiveRecord
      */
     public function __set($key, $name)
     {
-        if($this->_readonly === true) $this->_data[$key] = $name;
+        if($this->_readonly === false) $this->_data[$key] = $name;
     }
 
     /**
