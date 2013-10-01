@@ -35,6 +35,22 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 
 	/**
+     * Unknow method, we try to call the method in $_db
+     *
+     * @param string $method
+     * @param array  $args
+     */
+    public function  __call($method, $args = null)
+    {
+        if(method_exists($this->_db, $method)) {
+        	return call_user_func_array(array($this->_db, $method), $args);        
+        }
+        else {
+        	throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': unknow method '.strip_tags($method).'()');
+        }
+    }
+
+	/**
 	 * Get table columns
 	 *
 	 * @return array
@@ -287,54 +303,6 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	 *                              Passed by reference, you can modify what "insert" save() method will return.
 	 */
 	public function afterUpdate(&$data) {}
-
-	/**
-	 * Shortcut for $_db->query()
-	 *
-	 * @param  string   $query
-	 * @param  array    $bind
-	 * @return resource
-	 */
-	protected function query($query, $bind = array())
-	{
-		return $this->_db->query($query, $bind);
-	}
-	
-	/**
-	 * Shortcut for $_db->quote()
-	 * @see Zend_Db_Adapter_Abstract
-	 */
-	public function quote($value, $type = null)
-	{
-		return $this->_db->quote($value, $type);
-	}
-	
-	/**
-	 * Shorcut for $_db->quoteInto()
-	 * @see Zend_Db_Adapter_Abstract
-	 */
-	public function quoteInto($text, $value, $type = null, $count = null)
-	{
-		return $this->_db->quoteInto($text, $value, $type, $count);
-	}
-	
-	/**
-	 * Shortcut for $_db->quoteIdentifier()
-	 * @see Zend_Db_Adapter_Abstract
-	 */
-	public function quoteIdentifier($ident, $auto=false)
-	{
-		$this->_db->quoteIdentifier($ident, $auto);
-	}
-	
-	/**
-	 * Shortcut for $_db->quoteColumnAs()
-	 * @see Zend_Db_Adapter_Abstract
-	 */
-	public function quoteColumnAs($ident, $alias, $auto=false)
-	{
-		$this->_db->quoteColumnAs($ident, $alias, $auto);
-	}
 	
 	/**
 	 * Instanciate and return instance of Peak_Model_Pagination

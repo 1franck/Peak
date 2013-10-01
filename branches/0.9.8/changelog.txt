@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - added magic method __call() to Peak_Model_Zendatable and get rid of all shortcut methods
  - added a basic but usefull class model Peak_Model_ActiveRecord based on ActiveRecord pattern
  - fixed Peak_Config methods to use array_key_exists() instead of isset()
  - fixed Peak_View_Helpers by preventing in jection of view object if this helper extends Peak_Config class
