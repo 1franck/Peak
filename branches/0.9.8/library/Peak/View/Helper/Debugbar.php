@@ -17,7 +17,7 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
 	public function show($start_minimized = false, $theme = 'default')
 	{
         //skip if env is not dev
-        if(APPLICATION_ENV !== 'developement') return;
+        if(APPLICATION_ENV !== 'development') return;
 
 		//skip this, if view is set as no render
 		if($this->view->canRender() === false) return;
