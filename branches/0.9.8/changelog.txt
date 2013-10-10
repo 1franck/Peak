@@ -2,6 +2,8 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - added 3 new methods in class Peak_Helpers : addPath(), setPaths(), getPaths().
+ - added method helperObject() to Peak_View. This create/return instance of Peak_View_Helpers.
  - added a fix to Peak_View_Helper_Debugbar to prevent showing the bar on production env
  - added magic method __call() to Peak_Model_Zendatable and get rid of all shortcut methods
  - added a basic but usefull class model Peak_Model_ActiveRecord based on ActiveRecord pattern

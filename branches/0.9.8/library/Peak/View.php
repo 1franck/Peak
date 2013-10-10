@@ -339,6 +339,17 @@ class Peak_View
     }
 
     /**
+     * Create/Retreive helpers container object
+     * 
+     * @return object
+     */
+    public function helperObject()
+    {
+        if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
+        return $this->_helpers;
+    }
+
+    /**
      * Load ini file into view vars
      *
      * @param string $file

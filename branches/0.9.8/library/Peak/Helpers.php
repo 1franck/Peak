@@ -116,4 +116,35 @@ abstract class Peak_Helpers
 		}
 		return $file_found; 
 	}
+
+	/**
+	 * Add a path to current paths where helper will look in
+	 * This preserve other path
+	 * 
+	 * @param string $path
+	 * 
+	 */
+	public function addPath($path)
+	{
+		$this->_paths[] = $path;
+	}
+
+	/**
+	 * Set paths array where helper will look in
+	 * 
+	 * @param array $path
+	 */
+	public function setPaths($path)
+	{
+		$this->_paths = $path;
+	}
+	/**
+	 * Return the list of path(s) where helper look
+	 * 
+	 * @return array
+	 */
+	public function getPaths()
+	{
+		return $this->_paths;
+	}
 }
