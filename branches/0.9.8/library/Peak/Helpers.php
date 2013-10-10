@@ -12,13 +12,13 @@ abstract class Peak_Helpers
 	 * Class name prefix
 	 * @var string|array
 	 */
-	protected $_prefix = '';
+    protected $_prefix = '';
 
 	/**
 	 * Helpers file path(s)
 	 * @var array
 	 */
-	protected $_paths = array();
+    protected $_paths = array();
 
 	/**
 	 * Helpers objects
