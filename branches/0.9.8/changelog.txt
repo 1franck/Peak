@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - added method getLoadedFiles() to Peak_Lang. Also, when loading file, if lang abbreviation is missing, an exception is thrown.
  - added 3 new methods in class Peak_Helpers : addPath(), setPaths(), getPaths().
  - added method helperObject() to Peak_View. This create/return instance of Peak_View_Helpers.
  - added a fix to Peak_View_Helper_Debugbar to prevent showing the bar on production env

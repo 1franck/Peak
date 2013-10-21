@@ -64,6 +64,9 @@ class Peak_Lang
      */
     public function loadFile($filepath, $return = false)
     {       
+        if(empty($this->_lang)) {
+            throw new Exception(__CLASS__.': You must set the language abbreviation before loading a translation file.');
+        }
 
         $filepath = $this->_exists($filepath);
 
@@ -73,8 +76,10 @@ class Peak_Lang
             $tmp = include $filepath;
             if(!is_array($tmp)) $tmp = array();
 
+            $this->_loaded_files[] = $filepath;
+
             if($return) return $tmp;
-            else $this->translations = $tmp;            
+            else $this->translations = $tmp;
         }
         elseif($return) return array();
     }
@@ -96,6 +101,16 @@ class Peak_Lang
                 }
             }
         }
+    }
+
+    /**
+     * Return loaded translation files
+     * 
+     * @return array
+     */
+    public function getLoadedFiles()
+    {
+        return $this->_loaded_files;
     }
 
     /**
