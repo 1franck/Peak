@@ -2,6 +2,9 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - improved method addRegex() of Peak_Router by supporting quick pattern {param_name}:validator in regex. Validator are:
+   :any, :negnum, :posnum, :negfloat, :posfloat, :float, :permalink, :alphanum, :alpha, :year, :month, :day. Also, those
+   quick validators are searched/replaced by default, but can be turn off with the third param of addRegex()
  - added method getLoadedFiles() to Peak_Lang. Also, when loading file, if lang abbreviation is missing, an exception is thrown.
  - added 3 new methods in class Peak_Helpers : addPath(), setPaths(), getPaths().
  - added method helperObject() to Peak_View. This create/return instance of Peak_View_Helpers.
