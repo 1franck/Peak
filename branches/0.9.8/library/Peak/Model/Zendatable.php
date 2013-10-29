@@ -91,7 +91,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    $field = (!$return_row) ? $key : '*';
 
 	    $select = $this->select()->from($this->getSchemaName(), $field)
-	                             ->where($this->_db->quoteInto($key.' = ?',$val));                     
+	                             ->where($this->_db->quoteInto('`'.$key.'` = ?',$val));                     
 	    
 	    $result = $this->fetchRow($select);
 

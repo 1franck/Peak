@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - fixed a bug in method exists() of class Peak_Model_Zendatable that occur when field key name is also a reserved word.
  - improved method addRegex() of Peak_Router by supporting quick pattern {param_name}:validator in regex. Validator are:
    :any, :negnum, :posnum, :negfloat, :posfloat, :float, :permalink, :alphanum, :alpha, :year, :month, :day. Also, those
    quick validators are searched/replaced by default, but can be turn off with the third param of addRegex()
