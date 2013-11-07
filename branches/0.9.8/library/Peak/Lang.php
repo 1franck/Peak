@@ -145,14 +145,14 @@ class Peak_Lang
      */
     public function translate($item, $replaces = null)
     {           
-        $translation = (isset($this->translations[$item])) ? $this->translations[$item] : $item;
+        $tr = (isset($this->translations[$item])) ? $this->translations[$item] : $item;
 
         if(isset($replaces)) {
-            if(is_array($replaces)) $translation = vsprintf($result,$replaces);
-            else $translation = sprintf($result,$replaces);         
+            if(is_array($replaces)) $tr = vsprintf($tr, $replaces);
+            else $tr = sprintf($tr, $replaces);         
         }
         
-        return $translation;
+        return $tr;
     }
 
 }

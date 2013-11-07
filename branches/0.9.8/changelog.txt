@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - fixed variable name problem in method translate() of class Peak_Lang
  - fixed a bug in method exists() of class Peak_Model_Zendatable that occur when field key name is also a reserved word.
  - improved method addRegex() of Peak_Router by supporting quick pattern {param_name}:validator in regex. Validator are:
    :any, :negnum, :posnum, :negfloat, :posfloat, :float, :permalink, :alphanum, :alpha, :year, :month, :day. Also, those
