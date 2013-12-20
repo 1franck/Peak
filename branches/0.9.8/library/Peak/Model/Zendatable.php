@@ -50,6 +50,30 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
         }
     }
 
+    /**
+     * Work like quoteIdentifier() but accept multiple identifiers as string seperated by , or an array
+     * 
+     * @param  string|array $val
+     * @return string
+     */
+    public function quoteIdentifiers($val)
+    {	
+    	$final = '';
+
+    	if(!is_array($val)) {
+    		$val = explode(',', $val);
+    	}
+
+    	if(!empty($val)) {
+    		foreach($val as $i => $v) {
+    			$val[$i] = $this->_db->quoteIdentifier(trim($v));
+    		}
+    	}
+    	$final = implode(',', $val);
+
+    	return $final;
+    }
+
 	/**
 	 * Get table columns
 	 *
