@@ -250,7 +250,7 @@ class Peak_Model_Pagination
             }
             if(isset($this->_db_group)) $select .= ' GROUP BY '.$this->_db_group;
             if(isset($this->_db_order)) {
-                $select .= ' ORDER BY '.$this->_db_order;
+                $select .= ' ORDER BY `'.$this->_db_order.'`';
                 if(isset($this->_db_by)) $select .= ' '.$this->_db_by;
             }
         }

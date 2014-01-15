@@ -2,6 +2,7 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - fixed order by unquoted identifier of method _getData() in Peak_Model_Pagination
  - added method quoteIdentifiers() in Peak_Model_Zendatable
  - fixed variable name problem in method translate() of class Peak_Lang
  - fixed a bug in method exists() of class Peak_Model_Zendatable that occur when field key name is also a reserved word.
