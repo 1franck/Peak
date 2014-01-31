@@ -8,12 +8,15 @@
 abstract class Peak_Controller_Action_Json extends Peak_Controller_Action
 {
     /**
-     * Prepare the controller with Json render engine
+     * Prepare the controller with Json render engine and proper http header
      */
     public function __construct()
     {
         parent::__construct();
+        
         $this->view->engine('Json');
+
+        $this->view->header()->set('Content-Type: application/json');
     }
 
     /**
