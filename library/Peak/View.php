@@ -56,7 +56,6 @@ class Peak_View
             if(is_array($vars)) $this->_vars = $vars;
             else $this->iniVar($vars);
         }
-        $this->_registryConfig();
     }   
 
     /**
@@ -132,21 +131,6 @@ class Peak_View
     }
 
     /**
-     * Get array 'view' from registered object 'config' if exists
-     */
-    private function _registryConfig()
-    {
-    	if(isset(Peak_Registry::o()->config->view)) {
-    		foreach(Peak_Registry::o()->config->view as $k => $v) { 			
-    			if(is_array($v)) {
-    				foreach($v as $p1 => $p2) $this->$k($p1,$p2);
-    			}
-    			else $this->$k($v);
-    		}
-    	}
-    }
-
-    /**
      * Set/overwrite view variable
      * 
      * @see    __set()
@@ -214,7 +198,11 @@ class Peak_View
     public function engine($engine_name = null)
     {
         if(isset($engine_name)) {
+            $engine_name = strip_tags(ucfirst($engine_name));
             $engine_class = 'Peak_View_Render_'.$engine_name;
+            if(!class_exists($engine_class)) {
+                throw new Peak_View_Exception('ERR_VIEW_ENGINE_NOT_FOUND', $engine_name);
+            }
             $this->_engine = new $engine_class();
         }
         
@@ -336,6 +324,17 @@ class Peak_View
     	}
     	
     	return $this->_helpers;
+    }
+
+    /**
+     * Create/Retreive helpers container object
+     * 
+     * @return object
+     */
+    public function helperObject()
+    {
+        if(!is_object($this->_helpers)) $this->_helpers = new Peak_View_Helpers();
+        return $this->_helpers;
     }
 
     /**

@@ -6,98 +6,45 @@
  * @version  $Id$
  */
 class Peak_Lang
-{	  
-	/**
-	 * Language abbreviation
-	 * @var string
-	 */
-    private $_lang;
-
+{     
     /**
-     * File translation
+     * Language abbreviation
      * @var string
      */
-    private $_file;  
+    protected $_lang;
+
+    /**
+     * List of language file loaded
+     * @var array
+     */
+    protected $_loaded_files = array();
 
     /**
      * Array of translation
      * @var array
      */
-    public  $translations = array();
-
+    public $translations = array();
 
     /**
-     * Load translation if specified
+     * Set lang abbr if specified
      *
      * @param string $lang
      */
-	public function __construct($lang = 'en', $filepath = null)
-	{
-        if(isset($lang)) {
-            if(!isset($filepath)) $this->load($lang);
-            else $this->loadFile($lang, $filepath);
-        }
-	}
-
-	/**
-     * Load lang based on current application translation files
-     *
-     * @param string $lang
-     */
-	public function load($lang = 'en')
-	{
-	    $this->_lang = trim(strtolower((string)$lang));	
-		$this->_file = Peak_Core::getPath('lang').'/'.$this->_lang.'.php';
-		
-		if(file_exists($this->_file)) {
-		    $this->translations = include($this->_file);
-		}
-		elseif(file_exists(Peak_Core::getPath('lang').'/en.php')) {
-		    $this->translations = include(Peak_Core::getPath('lang').'/en.php');
-		}
-		
-		if(!is_array($this->translations)) $this->translations = array();
-	}
-    
-    /**
-     * Load language file directly. Usefull when class needed as standalone
-     *
-     * @param string $lang
-     * @param string $filepath
-     */
-    public function loadFile($lang, $filepath)
+    public function __construct($lang = null)
     {
-        $this->_lang = trim(strtolower((string)$lang));	
-		$this->_file = $filepath;
-        
-        if(file_exists($this->_file)) {
-		    $this->translations = include $this->_file;
-		}
-        
-        if(!is_array($this->translations)) $this->translations = array();
+        if(isset($lang)) $this->setLang($lang);
     }
 
-	/**
-	 * Translate text
-	 *
-	 * @param  string $item
-	 * @param  string $replaces text replacements
-     * @param  string $func callback function
-	 * @return string
-	 */
-	public function translate($item)
-	{		    
-		$translation = (isset($this->translations[$item])) ? $this->translations[$item] : $item;
-
-	    if(isset($replaces)) {
-	        if(is_array($replaces)) $translation = vsprintf($result,$replaces);
-	        else $translation = sprintf($result,$replaces);	        
-	    }
-	    
-	    if(isset($func)) eval('$translation = '.$func.'(\''.$result.'\');');
-	    
-	    return $translation;
-	}
+    /**
+     * Set the language abbr
+     * 
+     * @param string $lang_abbr
+     */
+    public function setLang($lang_abbr)
+    {
+        $this->_lang = trim(strtolower($lang_abbr));
+        return $this;
+    }
 
     /**
      * Return current lang abbr ($_lang)
@@ -108,6 +55,106 @@ class Peak_Lang
     {
         return $this->_lang;
     }
+    
+    /**
+     * Load language file directly. Usefull when class needed as standalone
+     *
+     * @param string $filepath
+     * @param bool   $return    if false, file content won't be added to $this->translatation
+     */
+    public function loadFile($filepath, $return = false)
+    {       
+        if(empty($this->_lang)) {
+            throw new Exception(__CLASS__.': You must set the language abbreviation before loading a translation file.');
+        }
+
+        $filepath = $this->_exists($filepath);
+
+        // file exists
+        if($filepath !== false) {
+
+            $tmp = include $filepath;
+            if(!is_array($tmp)) $tmp = array();
+
+            $this->_loaded_files[] = $filepath;
+
+            if($return) return $tmp;
+            else $this->translations = $tmp;
+        }
+        elseif($return) return array();
+    }
+
+    /**
+     * Add file(s) to the current translations var
+     * 
+     * @param string|array $files
+     */
+    public function addFiles($files)
+    {
+        if(is_array($files)) {
+            if(!empty($files)) {
+                foreach($files as $f) {
+                    
+                    $tmp = $this->loadFile($f, true);
+                    $this->translations = array_merge($this->translations, $tmp);
+
+                }
+            }
+        }
+    }
+
+    /**
+     * Return loaded translation files
+     * 
+     * @return array
+     */
+    public function getLoadedFiles()
+    {
+        return $this->_loaded_files;
+    }
+
+    /**
+     * Return false if file don't exists, return complete filepath if exists
+     * 
+     * @param  string      $file 
+     * @return bool|string       
+     */
+    protected function _exists($file)
+    {
+        if(file_exists($file)) {
+            return $file;
+        }
+
+        // relative path to the current application if context apply
+        elseif(defined('APPLICATION_ABSPATH')) {
+            $filepath = APPLICATION_ABSPATH.'/'.$file;
+            if(file_exists($filepath)) {
+                return $filepath;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * Translate text
+     *
+     * @param  string $item
+     * @param  string $replaces text replacements
+     * @return string
+     */
+    public function translate($item, $replaces = null)
+    {           
+        $tr = (isset($this->translations[$item])) ? $this->translations[$item] : $item;
+
+        if(isset($replaces)) {
+            if(is_array($replaces)) $tr = vsprintf($tr, $replaces);
+            else $tr = sprintf($tr, $replaces);         
+        }
+        
+        return $tr;
+    }
+
 }
 
 /**
@@ -117,10 +164,10 @@ class Peak_Lang
  */
 function __($text, $replaces = null, $func = null)
 {
-	if(Peak_Registry::o()->lang instanceof Peak_Lang)	{       
-	    return Peak_Registry::o()->lang->translate((string)$text, $replaces, $func);
-	}
-	else return $text;
+    if(Peak_Registry::o()->lang instanceof Peak_Lang)   {       
+        return Peak_Registry::o()->lang->translate((string)$text, $replaces, $func);
+    }
+    else return $text;
 }
 
 /**

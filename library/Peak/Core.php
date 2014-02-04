@@ -6,7 +6,7 @@
  * @version  $Id$ 
  */
 
-define('PK_VERSION', '0.9.7');
+define('PK_VERSION', '0.9.8');
 define('PK_NAME'   , 'PEAK');
 define('PK_DESCR'  , 'Php wEb Application Kernel');
 

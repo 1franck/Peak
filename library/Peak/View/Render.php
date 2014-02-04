@@ -75,16 +75,19 @@ abstract class Peak_View_Render
      */
     public function baseUrl($path = null, $return = false)
     {
-    	if(defined('PUBLIC_URL')) $url = PUBLIC_URL.'/'.$path;
-    	elseif(isset($_SERVER['SERVER_NAME'])) {
-    		$url = 'http://'.$_SERVER['SERVER_NAME'].'/'.PUBLIC_ROOT.'/'.$path;
-    	}
-    	//remove double slash(//) inside url
-    	$url_part = explode('http://', $url);
-    	$url = 'http://'.str_replace(array('///','//'),'/',$url_part[1]);
-    	
-    	if(!$return) echo $url;  
-    	else return $url;
+    	$schema_name = (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) === 'on')) ? 'https://': 'http://';
+        
+        if(defined('PUBLIC_URL')) $url = PUBLIC_URL.'/'.$path;
+        elseif(isset($_SERVER['SERVER_NAME'])) {
+            $url = $schema_name.$_SERVER['SERVER_NAME'].'/'.PUBLIC_ROOT.'/'.$path;
+        }
+
+        //remove double slash(//) inside url
+        $url_part    = explode($schema_name, $url);
+        $url         = $schema_name.str_replace(array('///','//'),'/',$url_part[1]);
+        
+        if(!$return) echo $url;  
+        else return $url;
     }
 
     /**

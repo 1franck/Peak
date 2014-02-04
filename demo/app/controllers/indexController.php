@@ -10,7 +10,6 @@ class indexController extends Peak_Controller_Action
      */
     public function preAction()
     {
-        $this->view->debugbar()->log('Test');
     }
 
     /**

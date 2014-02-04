@@ -94,7 +94,8 @@ class Peak_View_Helper_Grid
      */
     public function setColumns($cols)
     {
-        $this->_columns = $cols;
+        $this->_columns = array();
+        foreach($cols as $k => $v) $this->_columns[trim($k)] = $v;
         return $this;
     }
     
@@ -257,7 +258,7 @@ class Peak_View_Helper_Grid
         }
 
         //ok, sample is there, we can check
-        if(array_key_exists($title, $row_sample) === true) return true;
+        if(array_key_exists(trim($title), $row_sample) === true) return true;
         else return false;
     }
     

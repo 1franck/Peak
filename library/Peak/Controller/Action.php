@@ -126,8 +126,12 @@ abstract class Peak_Controller_Action
      *
      * @return string
      */
-    public function getAction()
+    public function getAction($noprefix = false)
     {
+        if($noprefix) {
+            return substr($this->action, 1);
+        }
+
         return $this->action;
     }
     
@@ -331,9 +335,7 @@ abstract class Peak_Controller_Action
 	public function redirectUrl($url, $http_code = 302, $base_url = true)
 	{
 		if($base_url) $url = $this->view->baseUrl($url,true);
-		$this->view->redirect()->url($url, $http_code);
-		//prevent the execution of the rest of controller action 
-		exit();
+		$this->view->header()->redirect($url, $http_code);
 	}
 
     /**
