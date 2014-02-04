@@ -10,8 +10,5 @@ class Bootstrap extends Peak_Application_Bootstrap
      */
     public function _initEnv()
     {
-
     }
-
-
 }
