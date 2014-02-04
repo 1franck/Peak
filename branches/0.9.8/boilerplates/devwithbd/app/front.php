@@ -12,6 +12,7 @@ class front extends Peak_Controller_Front
     public function preDispatch()
     {
     }
+    
     /**
      * Load debugbar for all controllers
      */

@@ -2,6 +2,14 @@ VERSION 0.9.8
 -------------
 Release Date: ?
 
+ - added a new exception ERR_VIEW_ENGINE_NOT_FOUND to handle error of loading unknown view rendering engine
+ - !IMPORTANT: changed the prefix of methods automatically called by Peak_Application_Bootstrap.
+   Old prefix : _init  New prefix: init
+ - renamed method boot to _boot() in Peak_Application_Bootstrap
+ - Peak_Application_Bootstrap now handle app configs injection in Peak_View and Peak_Router.
+   Added methods _configView() and _configRouter() for that purpose.
+   This also mean that you can add yours own customs regex routes directly in your app config file.
+ - removed method _registryConfig() in Peak_View
  - added class Peak_Controller_Action_Json
  - fixed group by unquoted identifier of method _getData() in Peak_Model_Pagination
  - fixed order by unquoted identifier of method _getData() in Peak_Model_Pagination
