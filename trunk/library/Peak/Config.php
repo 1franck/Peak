@@ -8,44 +8,44 @@
  */
 class Peak_Config implements IteratorAggregate, Countable
 {
-	/**
-	 * Contains all variables
-	 * @var array
-	 */
-	protected $_vars = array();
+    /**
+     * Contains all variables
+     * @var array
+     */
+    protected $_vars = array();
 
-	/**
-	 * Set array of data OR a file optionnaly
-	 *
-	 * @param array $vars
-	 */
-	public function __construct($vars = null)
-	{
-	    if(is_array($vars)) $this->setVars($vars);
-		elseif(is_string($vars)) $this->loadFile($vars);
-	}
+    /**
+     * Set array of data OR a file optionnaly
+     *
+     * @param array $vars
+     */
+    public function __construct($vars = null)
+    {
+        if(is_array($vars)) $this->setVars($vars);
+        elseif(is_string($vars)) $this->loadFile($vars);
+    }
 
-	/**
-	 * Load a php file as an arrays of data
-	 *
-	 * @param string $file
-	 */
-	public function loadFile($file)
-	{
-		if(pathinfo($file, PATHINFO_EXTENSION) === 'php' && file_exists($file)) {
-			$vars = include $file;
-			$this->setVars($vars);
-		}
-	}
-	/**
-	 * Set a new variable
-	 *
-	 * @param string $name
-	 * @param misc   $val
-	 */
+    /**
+     * Load a php file as an arrays of data
+     *
+     * @param string $file
+     */
+    public function loadFile($file)
+    {
+        if(pathinfo($file, PATHINFO_EXTENSION) === 'php' && file_exists($file)) {
+            $vars = include $file;
+            $this->setVars($vars);
+        }
+    }
+    /**
+     * Set a new variable
+     *
+     * @param string $name
+     * @param misc   $val
+     */
     public function __set($name,$val)
     {
-    	$this->_vars[$name] = $val;
+        $this->_vars[$name] = $val;
     }
 
     /**
@@ -56,8 +56,8 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function &__get($name)
     {
-    	if(isset($this->_vars[$name])) return $this->_vars[$name];
-    	else return ${null};
+        if(array_key_exists($name, $this->_vars)) return $this->_vars[$name];
+        else return ${null};
     }
 
     /**
@@ -68,7 +68,7 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function __isset($name)
     {
-    	return (isset($this->_vars[$name])) ? true : false;
+        return (array_key_exists($name, $this->_vars)) ? true : false;
     }
 
     /**
@@ -78,15 +78,15 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function __unset($name)
     {
-    	if(isset($this->_vars[$name])) unset($this->_vars[$name]);
+        if(array_key_exists($name, $this->_vars)) unset($this->_vars[$name]);
     }
 
     /**
-	 * Create iterator for $config
-	 *
-	 * @return iterator
-	 */
-	public function getIterator()
+     * Create iterator for $config
+     *
+     * @return iterator
+     */
+    public function getIterator()
     {
         return new ArrayIterator($this->_vars);
     }
@@ -98,7 +98,7 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function count()
     {
-    	return count($this->_vars);
+        return count($this->_vars);
     }
 
     /**
@@ -108,7 +108,7 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function getVars()
     {
-    	return $this->_vars;
+        return $this->_vars;
     }
 
     /**
@@ -118,7 +118,7 @@ class Peak_Config implements IteratorAggregate, Countable
      */
     public function setVars($array)
     {
-    	$this->_vars = $array;
+        $this->_vars = $array;
     }
 
     /**
@@ -130,29 +130,29 @@ class Peak_Config implements IteratorAggregate, Countable
     }
 
     /**
-	 * Merge two arrays recursively overwriting the keys in the first array
-	 * if such key already exists
-	 *
-	 * @param  mixed $a Left array to merge right array into
-	 * @param  mixed $b Right array to merge over the left array
-	 * @return mixed
-	 */
-	public function arrayMergeRecursive($a, $b)
-	{
-		// merge arrays if both variables are arrays
-		if (is_array($a) && is_array($b)) {
-			// loop through each right array's entry and merge it into $a
-			foreach ($b as $key => $value) {
-				if (isset($a[$key])) {
-					$a[$key] = $this->arrayMergeRecursive($a[$key], $value);
-				} else {
-					if($key === 0) $a= array(0 => $this->arrayMergeRecursive($a, $value));
-					else $a[$key] = $value;
-				}
-			}
-		} 
-		else $a = $b; // one of values is not an array
+     * Merge two arrays recursively overwriting the keys in the first array
+     * if such key already exists
+     *
+     * @param  mixed $a Left array to merge right array into
+     * @param  mixed $b Right array to merge over the left array
+     * @return mixed
+     */
+    public function arrayMergeRecursive($a, $b)
+    {
+        // merge arrays if both variables are arrays
+        if (is_array($a) && is_array($b)) {
+            // loop through each right array's entry and merge it into $a
+            foreach ($b as $key => $value) {
+                if (isset($a[$key])) {
+                    $a[$key] = $this->arrayMergeRecursive($a[$key], $value);
+                } else {
+                    if($key === 0) $a= array(0 => $this->arrayMergeRecursive($a, $value));
+                    else $a[$key] = $value;
+                }
+            }
+        } 
+        else $a = $b; // one of values is not an array
 
-		return $a;
-	}
+        return $a;
+    }
 }

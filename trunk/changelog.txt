@@ -1,6 +1,43 @@
+VERSION 0.9.8
+-------------
+Release Date: 2014-02-04
+
+ - added a new exception ERR_VIEW_ENGINE_NOT_FOUND to handle error of loading unknown view rendering engine
+ - !IMPORTANT: changed the prefix of methods automatically called by Peak_Application_Bootstrap.
+   Old prefix : _init  New prefix: init
+ - renamed method boot to _boot() in Peak_Application_Bootstrap
+ - Peak_Application_Bootstrap now handle app configs injection in Peak_View and Peak_Router.
+   Added methods _configView() and _configRouter() for that purpose.
+   This also mean that you can add yours own customs regex routes directly in your app config file.
+ - removed method _registryConfig() in Peak_View
+ - added class Peak_Controller_Action_Json
+ - fixed group by unquoted identifier of method _getData() in Peak_Model_Pagination
+ - fixed order by unquoted identifier of method _getData() in Peak_Model_Pagination
+ - added method quoteIdentifiers() in Peak_Model_Zendatable
+ - fixed variable name problem in method translate() of class Peak_Lang
+ - fixed a bug in method exists() of class Peak_Model_Zendatable that occur when field key name is also a reserved word.
+ - improved method addRegex() of Peak_Router by supporting quick pattern {param_name}:validator in regex. Validator are:
+   :any, :negnum, :posnum, :negfloat, :posfloat, :float, :permalink, :alphanum, :alpha, :year, :month, :day. Also, those
+   quick validators are searched/replaced by default, but can be turn off with the third param of addRegex()
+ - added method getLoadedFiles() to Peak_Lang. Also, when loading file, if lang abbreviation is missing, an exception is thrown.
+ - added 3 new methods in class Peak_Helpers : addPath(), setPaths(), getPaths().
+ - added method helperObject() to Peak_View. This create/return instance of Peak_View_Helpers.
+ - added a fix to Peak_View_Helper_Debugbar to prevent showing the bar on production env
+ - added magic method __call() to Peak_Model_Zendatable and get rid of all shortcut methods
+ - added a basic but usefull class model Peak_Model_ActiveRecord based on ActiveRecord pattern
+ - fixed Peak_Config methods to use array_key_exists() instead of isset()
+ - fixed Peak_View_Helpers by preventing in jection of view object if this helper extends Peak_Config class
+ - rewrited a good portion of class Peak_Lang. It's now more granular, supports multiple translations files and more 
+   independent from others Peak components
+ - modified method setColumns() of Peak_View_Helper_Grid for trimming the keys of columns
+ - added a param to method getAction() of class Peak_Controller_Action to return action without the prefix
+ - updated class Peak_View_Helper_Debugbar to use REQUEST_TIME or REQUEST_TIME_FLOAT of $_SERVER instead of Peak_Chrono
+ - changed method baseUrl() from class Peak_View_Render to detect properly https url
+ - updated method Peak_Controller_Action::redirectUrl() to use Peak_View_Header class
+
 VERSION 0.9.7
 -------------
-Release Date: ?
+Release Date: 2013-09-02
 
  - deleted Peak_View_Helper_Js class given that Peak_View_Helper_Assets do the same thing
  - added method exists() to Peak_View_Helper_Assets
@@ -10,7 +47,7 @@ Release Date: ?
  - enhanced Peak_Controller_Internal_PkError debug trace output and maded various fixes
  - added in class Peak_View_Header methods codeAsStr(), holdOn(), holdOff(), renamed resetHeader() to reset() and 
    finally added some params to method release() and setRCode()
- - added method header() to Peak_View and modified method render() to support this new method
+ - added method header() to Peak_View and modified method render() t<o support this new method
  - added new class Peak_View_Header to facilitate view http headers
  - added method getTriggerTrace() to Peak_Exception. This method retreive element trace who triggered the exception
  - added methods swapKey(), swapKeyVal(), swapKeyValCallback() to Peak_Model_Zendatable

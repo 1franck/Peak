@@ -138,7 +138,7 @@ class Peak_View_Header
     }
 
     /**
-     * Hold the header relising
+     * Hold the header releasing
      */
     public function holdOn()
     {
@@ -147,7 +147,7 @@ class Peak_View_Header
     }
 
     /**
-     * Hold the header relising
+     * Hold the header releasing
      */
     public function holdOff()
     {

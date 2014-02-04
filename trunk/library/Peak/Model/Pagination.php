@@ -237,6 +237,8 @@ class Peak_Model_Pagination
      */
     protected function _getData()
     {
+        $db = $this->_db_object->getDefaultAdapter();
+
         //if query is not preset, we generate a query
         if(!isset($this->_db_query)) {
             
@@ -248,9 +250,9 @@ class Peak_Model_Pagination
                 }
                 $select .= ' WHERE '.$this->_db_where;
             }
-            if(isset($this->_db_group)) $select .= ' GROUP BY '.$this->_db_group;
+            if(isset($this->_db_group)) $select .= ' GROUP BY '.$db->quoteIdentifiers($this->_db_group);
             if(isset($this->_db_order)) {
-                $select .= ' ORDER BY '.$this->_db_order;
+                $select .= ' ORDER BY '.$db->quoteIdentifiers($this->_db_order);
                 if(isset($this->_db_by)) $select .= ' '.$this->_db_by;
             }
         }
@@ -261,7 +263,6 @@ class Peak_Model_Pagination
         if($limit < 0) $limit = 0;
         $select .= ' LIMIT '.$limit.','.$this->_it_perpage;
 
-        $db = $this->_db_object->getDefaultAdapter();
         return $db->query($select)->fetchAll();
     }
 
