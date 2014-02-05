@@ -2,6 +2,7 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - added array empty check in new methods _configView() and _configRouter() in Peak_Application_Bootstrap
  - fixed regression introduced in 0.9.8 >
    "fixed group by unquoted identifier of method _getData() in Peak_Model_Pagination"
 

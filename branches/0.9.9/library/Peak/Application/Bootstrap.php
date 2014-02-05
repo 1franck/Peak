@@ -27,8 +27,10 @@ abstract class Peak_Application_Bootstrap
     {
         $c_methods = get_class_methods(get_class($this));
         $l = strlen($prefix);
-        foreach($c_methods as $m) {            
-            if(substr($m, 0, $l) === $prefix) $this->$m();
+        if(!empty($c_methods)) {
+            foreach($c_methods as $m) {            
+                if(substr($m, 0, $l) === $prefix) $this->$m();
+            }
         }
     }
 
@@ -37,16 +39,20 @@ abstract class Peak_Application_Bootstrap
      */
     protected function _configView()
     {
-
         if(!isset(Peak_Registry::o()->config->view) || 
             !Peak_Registry::isRegistered('view')) return;
 
-        foreach(Peak_Registry::o()->config->view as $k => $v) {
+        $view  = Peak_Registry::o()->view;
+        $cview = Peak_Registry::o()->config->view;
 
-            if(is_array($v)) {
-                foreach($v as $p1 => $p2) Peak_Registry::o()->view->$k($p1,$p2);
+        if(!empty($cview)) {
+            foreach($cview as $k => $v) {
+
+                if(is_array($v)) {
+                    foreach($v as $p1 => $p2) $view->$k($p1,$p2);
+                }
+                else $view->$k($v);
             }
-            else Peak_Registry::o()->view->$k($v);
         }
     }
 
@@ -58,13 +64,16 @@ abstract class Peak_Application_Bootstrap
         if(!isset(Peak_Registry::o()->config->router['addregex']) || 
             !Peak_Registry::isRegistered('router')) return;
 
-        $r = Peak_Registry::o()->router;
+        $r      = Peak_Registry::o()->router;
+        $routes = Peak_Registry::o()->config->router['addregex'];
 
-        foreach(Peak_Registry::o()->config->router['addregex'] as $i => $exp) {
-            $parts = explode(' | ', $exp);
-            if(count($parts) == 2) {
-                $r->addRegex(trim($parts[0]), trim($parts[1]));
+        if(!empty($routes)) {
+            foreach($routes as $i => $exp) {
+                $parts = explode(' | ', $exp);
+                if(count($parts) == 2) {
+                    $r->addRegex(trim($parts[0]), trim($parts[1]));
 
+                }
             }
         }
     }
