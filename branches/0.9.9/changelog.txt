@@ -2,6 +2,9 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - fixed a bug of cleanArray() in Peak_Model_Zendatable that let pass valid column data even if is 
+   value is an array(notice array to string converstion). Now if its a valid column and data is an array,
+   it will be transformed into json string automatically.
  - added array empty check in new methods _configView() and _configRouter() in Peak_Application_Bootstrap
  - fixed regression introduced in 0.9.8 >
    "fixed group by unquoted identifier of method _getData() in Peak_Model_Pagination"
