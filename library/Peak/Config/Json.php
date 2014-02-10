@@ -59,6 +59,42 @@ class Peak_Config_Json extends Peak_Config
 		$this->_jsonError();
 		return $this->_vars;
 	}
+
+	/**
+	 * Load json url
+	 * 
+	 * @param  string     $url 
+	 * @param  array|null $post_data post data if specified
+	 * @return false|array           return false in case url cant be reach
+	 */
+	public function loadUrl($url, $post_data = null)
+	{
+		if(!function_exists('curl_init')) {
+			throw new Peak_Exception('ERR_CUSTOM', __CLASS__.'::loadUrl() need CURL php extension');
+		}
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+
+		// post data
+		if(is_array($post_data) && !empty($post_data)) {
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		}
+
+		// receive server response ...
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$response = curl_exec($ch);
+
+		curl_close($ch);
+
+		if($response !== false) {
+			return $this->loadString($response);
+		}
+		else return false;
+	}
 	
 	/**
 	 * Get last json error if exists
