@@ -42,14 +42,16 @@ class Peak_Model_ActiveRecord
     /**
      * Constructor
      * 
-     * @param array|integer|null $data
-     * @param null|string        $model if specified, $model is used instead of $this->_model_classname
+     * @param null|array|integer $data
+     * @param null|string|object $model if specified, $model is used instead of $this->_model_classname
+     * @param bool               $realonly false by default
      */
     public function __construct($data = null, $model = null, $readonly = false)
     { 
         // load model object
         if(!is_null($model) && !empty($model)) {
-            $classname = $model;
+            if(is_object($model)) $this->_tbl = $model;
+            else $classname = $model;
         }
         elseif(!empty($this->_model_classname)) {
             $classname = $this->_model_classname;
@@ -59,26 +61,28 @@ class Peak_Model_ActiveRecord
         if(isset($classname)) {
             if(class_exists($classname)) {
                 $this->_tbl = new $classname();
-                if(!($this->_tbl instanceof Peak_Model_Zendatable)) {
-                    throw new Exception('ActiveRecord: Model class '.$classname.' is not an instance of Peak_Model_Zendatable in '.__CLASS__);
-                }
             }
             else {
-                throw new Exception('ActiveRecord: Model class '.$classname.' found for '.__CLASS__);
+                throw new Exception(__CLASS__.' : Model class '.$classname.' not found');
             }
+        }
+
+        //model check
+        if(is_object($this->_tbl) && !($this->_tbl instanceof Peak_Model_Zendatable)) {
+            throw new Exception(__CLASS__.' : Model class '.get_class($this->_tbl).' is not an instance of Peak_Model_Zendatable');
         }
 
         // load data 
         if(is_array($data)) {
             $safe = true;
-            if(!isset($classname)) $safe = false; //raw data, no check
+            if(!is_object($this->_tbl)) $safe = false; //raw data, no check
             $this->setData($data, $safe);
         }
         elseif(is_string($data) || is_numeric($data)) {
             $this->_data = $this->_tbl->findId($data);
         }
         elseif(!is_null($data)) {
-            throw new Exception('ActiveRecord: Invalid var format for constructor $data in '.__CLASS__.'. Only array or integer is supported');
+            throw new Exception(__CLASS__.' : Invalid var format for constructor $data. Only array or integer is supported');
         }
 
         // test the record existence (need a model)
