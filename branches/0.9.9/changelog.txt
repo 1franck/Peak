@@ -2,6 +2,7 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - added method loadUrl() for Peak_Config_Json. Support get/post url. Require php extension CURL.
  - added the support of passing an object as well for the model param in Peak_Model_ActiveRecord
  - removed new array syntax in Peak_Model_ActiveRecord to keep backward compatibility with php < 5.3
  - rewrited method __construct() of Peak_Model_ActiveRecord for more flexibility and added final method readOnly()
