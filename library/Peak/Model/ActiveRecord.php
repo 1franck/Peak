@@ -28,13 +28,13 @@ class Peak_Model_ActiveRecord
     protected $_model_classname;
 
     /**
-     * Can we overwrite $_data ?
+     * Can we overwrite $_data ? Will also "lock" this object.
      * @var boolean
      */
     protected $_readonly = false;
 
     /**
-     * This flag tell if the record is a valid existing record of the model
+     * This flag tell if the record is a valid existing record of the model. 
      * @var boolean
      */
     private $_exists = false;
@@ -45,35 +45,34 @@ class Peak_Model_ActiveRecord
      * @param array|integer|null $data
      * @param null|string        $model if specified, $model is used instead of $this->_model_classname
      */
-    public function __construct($data = null, $model = null)
-    {
-        
+    public function __construct($data = null, $model = null, $readonly = false)
+    { 
         // load model object
-        
-        if(isset($model)) $classname = $model;
+        if(!is_null($model) && !empty($model)) {
+            $classname = $model;
+        }
         elseif(!empty($this->_model_classname)) {
             $classname = $this->_model_classname;
         }
-        else {
-            throw new Exception('ActiveRecord: No model found for '.__CLASS__);
-        }
 
-        if(class_exists($classname)) {
-
-            $this->_tbl = new $classname();
-
-            if(!($this->_tbl instanceof Peak_Model_Zendatable)) {
-                throw new Exception('ActiveRecord: Model class '.$classname.' is not an instance of Peak_Model_Zendatable in '.__CLASS__);
+        // try to load model
+        if(isset($classname)) {
+            if(class_exists($classname)) {
+                $this->_tbl = new $classname();
+                if(!($this->_tbl instanceof Peak_Model_Zendatable)) {
+                    throw new Exception('ActiveRecord: Model class '.$classname.' is not an instance of Peak_Model_Zendatable in '.__CLASS__);
+                }
+            }
+            else {
+                throw new Exception('ActiveRecord: Model class '.$classname.' found for '.__CLASS__);
             }
         }
-        else {
-            throw new Exception('ActiveRecord: Model class '.$classname.' found for '.__CLASS__);
-        }
 
-        // load data
-        
+        // load data 
         if(is_array($data)) {
-            $this->setData($data);
+            $safe = true;
+            if(!isset($classname)) $safe = false; //raw data, no check
+            $this->setData($data, $safe);
         }
         elseif(is_string($data) || is_numeric($data)) {
             $this->_data = $this->_tbl->findId($data);
@@ -82,14 +81,18 @@ class Peak_Model_ActiveRecord
             throw new Exception('ActiveRecord: Invalid var format for constructor $data in '.__CLASS__.'. Only array or integer is supported');
         }
 
-        // test the record existence
-        
-        $pk = $this->_tbl->getPrimaryKey();
-        if(array_key_exists($pk, $this->_data)) {
+        // test the record existence (need a model)
+        if(is_object($this->_tbl)) {
+            $pk = $this->_tbl->getPrimaryKey();
+            if(array_key_exists($pk, $this->_data)) {
 
-            $test = $this->_tbl->findId($this->_data[$pk]);
-            $this->_exists = (empty($test)) ? false : true;
+                $test = $this->_tbl->findId($this->_data[$pk]);
+                $this->_exists = (empty($test)) ? false : true;
+            }
         }
+
+        // turn on readonly
+        if($readonly === true) $this->readOnly();
     }
 
     /**
@@ -134,6 +137,8 @@ class Peak_Model_ActiveRecord
      */
     public function setData($array, $safe = true)
     {
+        if($this->_readonly === true) return;
+        
         if(!$safe) {
             $this->_data = $array;
             return;
@@ -170,6 +175,9 @@ class Peak_Model_ActiveRecord
      */
     public function save()
     {
+        //readonly skip this
+        if($this->_readonly === true) return false;
+        
         $pk = $this->_tbl->getPrimaryKey();
 
         // force save
@@ -190,8 +198,8 @@ class Peak_Model_ActiveRecord
      */
     public function delete()
     {
-        // don't exists, skip this
-        if(!$this->exists()) return false;
+        // don't exists or readonly, skip this
+        if(!$this->exists() || $this->_readonly === true) return false;
 
         $pk     = $this->_tbl->getPrimaryKey();
         $where  = $this->_tbl->quoteInto($pk.' = ?', $this->_data[$pk]);
@@ -202,5 +210,16 @@ class Peak_Model_ActiveRecord
         }
 
         return $result;
+    }
+
+    /**
+     * Mark as readonly. save(),delete() won't work and $_tbl will be null
+     *
+     * @final
+     */
+    final public function readOnly()
+    {
+        $this->_readonly = true;
+        $this->_tbl = null;
     }
 }
