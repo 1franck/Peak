@@ -206,27 +206,6 @@ class Peak_ViewTest extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * Test adding with config ini app
-	 */
-	function testRegistryConfig()
-	{
-		$config = new Peak_Config();
-		
-		$config->view = array('set' => array('test' => 'value',
-		                                     'test2' => 'value2'),
-		                      'engine' => 'Layouts');
-		                                     
-	    Peak_Registry::set('config', $config);
-	    $view = new Peak_View();
-	    
-	    $this->assertTrue(isset($view->test));
-	    $this->assertTrue(isset($view->test2));
-	    $this->assertFalse(isset($view->test3));
-	    
-	    $this->assertType('Peak_View_Render_Layouts', $view->engine());
-	}
-	
-	/**
 	 * Test methods enableRender(), disableRender() and canRender()
 	 */
 	function testOnOffRender()
