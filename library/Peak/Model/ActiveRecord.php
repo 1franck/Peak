@@ -13,7 +13,7 @@ class Peak_Model_ActiveRecord
      * Entity data
      * @var array
      */
-    protected $_data = [];
+    protected $_data = array();
 
     /**
      * Table model

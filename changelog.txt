@@ -2,7 +2,8 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
- - rewrited method __construct() of Peak_Model_ActiveRecord() for more flexibility and added final method readOnly()
+ - removed new array syntax in Peak_Model_ActiveRecord to keep backward compatibility with php < 5.3
+ - rewrited method __construct() of Peak_Model_ActiveRecord for more flexibility and added final method readOnly()
  - fixed a bug in Peak_Model_ActiveRecord $_readonly was not evaluated in save() and delete()
  - fixed a bug of cleanArray() in Peak_Model_Zendatable that let pass valid column data even if is 
    value is an array(notice array to string converstion). Now if its a valid column and data is an array,
