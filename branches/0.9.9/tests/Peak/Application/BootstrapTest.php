@@ -30,11 +30,4 @@ class Peak_BootstrapTest extends PHPUnit_Framework_TestCase
 		$boot = new Bootstrap();
 		$this->assertTrue($boot->i == 2);
 	}
-	
-	function testGetEnv()
-	{
-		$boot = new Bootstrap();		
-		$this->assertTrue($boot->getEnv() === 'production');
-	}
-
 }
