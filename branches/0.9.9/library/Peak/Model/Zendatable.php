@@ -120,7 +120,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	    $result = $this->fetchRow($select);
 
 	    if(!$return_row) return (is_null($result)) ? false : true;
-	    else return (is_null($result)) ? false : $result;
+	    else return (is_null($result)) ? false : $result->toArray();
 	}
 
 	/**
