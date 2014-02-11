@@ -81,7 +81,7 @@ class Peak_Model_ActiveRecord
         elseif(is_string($data) || is_numeric($data)) {
             $this->_data = $this->_tbl->findId($data);
         }
-        elseif(!is_null($data)) {
+        elseif(!isset($data)) {
             throw new Exception(__CLASS__.' : Invalid var format for constructor $data. Only array or integer is supported');
         }
 
