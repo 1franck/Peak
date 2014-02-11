@@ -2,6 +2,7 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - modified method exists() in Peak_Zendatable to return an array instead whole object when $return_row is true
  - added method loadUrl() for Peak_Config_Json. Support get/post url. Require php extension CURL.
  - added the support of passing an object as well for the model param in Peak_Model_ActiveRecord
  - removed new array syntax in Peak_Model_ActiveRecord to keep backward compatibility with php < 5.3
