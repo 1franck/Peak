@@ -149,6 +149,99 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	}
 
 	/**
+     * Get a single row (fetch)
+     * 
+     * @param  @see _get()
+     * @return array
+     */
+    public function get($p)
+    {
+        return $this->_get($p)->fetch();
+    }
+
+    /**
+     * Get all rows (fetchAll)
+     * 
+     * @param  @see _get()
+     * @return array
+     */
+    public function getAll($p)
+    {
+        return $this->_get($p)->fetchAll();
+    }
+
+    /**
+     * Internal _get() manly used by get() and getAll(). 
+     * You need to apply one of fetch methods on result to get array
+     * 
+     * @param  array $p Params array. Possible options are: "fields", "where", "bind", "group", "order", "by", "limit".
+     *                  Options "fields" and "bind" values are arrays, others are string
+     * 
+     * @return Zend_Db_Statement_Pdo
+     */
+    public function _get($p = array())
+    {
+        //selected fields
+        if(!isset($p['fields']) || empty($p['fields']) || !is_array($p['fields']) || $p['fields'] === '*') {
+            $fields = '*';
+        }
+        else {
+
+            // detect special field like COUNT(myfield) as total
+            function isCustom($i) {
+                $r = preg_match('#(?<func>[a-zA-Z]+)\((?<field>[a-zA-Z0-9]+)\)#', $i, $match);
+                return (!$r) ? false : $match;
+            }
+
+            foreach($p['fields'] as $i => $f) {
+                if(is_numeric($i)) {
+                    $p['fields'][$i] = $this->quoteIdentifier($f);
+                }
+                else {
+                    $s = isCustom($i);
+                    if($s !== false) {
+                        $p['fields'][] = $s['func'].'('.$this->quoteIdentifier($s['field']).') AS '.$this->quoteIdentifier($f);
+                    }
+                    else {
+                        $p['fields'][] = $this->quoteIdentifier($i).' AS '.$this->quoteIdentifier($f);
+                    }
+                    unset($p['fields'][$i]);
+                }
+            }
+            $fields = implode(',', $p['fields']);
+        }
+
+        $req = 'SELECT '.$fields.' FROM '.$this->getSchemaName();
+
+        // where
+        if(isset($p['where']) && !empty($p['where'])) {
+            $req .= ' WHERE '.$p['where'];
+        }
+
+        // where bind
+        $bind = (!isset($p['bind'])) ? null : $p['bind'];
+
+        // group by
+        if(isset($p['group']) && !empty($p['group'])) {
+            $req .= ' GROUP BY '.$this->quoteIdentifiers($p['group']);
+        }
+
+        // order by
+        if(isset($p['order']) && !empty($p['order'])) {
+            $req .= ' ORDER BY '.$this->quoteIdentifiers($p['order']);
+            if(isset($p['by']) && strtolower($p['by']) === 'desc') $req .= ' DESC';
+            else $req .= ' ASC';
+        }
+
+        // limit
+        if(isset($p['limit'])) {
+            $req .= ' LIMIT '.$p['limit'];
+        }
+
+        return $this->_db->query($req, $bind);
+    }
+
+	/**
 	 * Count row from a table
 	 * 
      * $where ex:
