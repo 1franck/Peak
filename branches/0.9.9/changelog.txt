@@ -2,6 +2,8 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - added 3 methods to Peak_Zendatable : get(), getAll() and _get(). Those new methods simplifies table models 
+   by writing less code for select statements
  - changed if condition is_null to isset in Peak/Model/ActiveRecord.php construtor for $data
  - modified method exists() in Peak_Zendatable to return an array instead whole object when $return_row is true
  - added method loadUrl() for Peak_Config_Json. Support get/post url. Require php extension CURL.
