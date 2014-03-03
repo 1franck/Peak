@@ -426,14 +426,20 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
 	
 	/**
 	 * Instanciate and return instance of Peak_Model_Pagination
-	 * @see Zend_Db_Adapter_Abstract
+     *
+     * @param  array|null $query_params 
+     * @return object
 	 */
-	public function paging()
+	public function paging($query_params = null)
 	{
-		if(!isset($this->_paging)) $this->_paging = new Peak_Model_Pagination($this);
+		if(!isset($this->_paging)) {
+            $this->_paging = new Peak_Model_Pagination($this);
+            if(is_array($query_params)) {
+                $this->_paging->setQueryParams($query_params);
+            }
+        }
 		return $this->_paging;
 	}
-
 
 	/**
 	 * Rearrange an array with a new key

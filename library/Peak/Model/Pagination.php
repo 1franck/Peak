@@ -21,13 +21,9 @@ class Peak_Model_Pagination
     protected $_pages_range = null;
 
     protected $_db_object;
-    protected $_db_fields = '*';
-    protected $_db_where = null;
-    protected $_db_group = null;
-    protected $_db_order = null;
-    protected $_db_by = null;
 
-    protected $_db_query = null;
+    // query params
+    protected $_params = array();
     
     private $_is_calculated = false;
     
@@ -39,92 +35,6 @@ class Peak_Model_Pagination
     public function __construct($db_object = null)
     {
         $this->_db_object = $db_object;
-    }
-
-    /**
-     * Set Peak_Model_Zendatable object instance
-     *
-     * @param  object $db
-     * @return object $this
-     */
-    public function setDbObject(Peak_Model_Zendatable $db)
-    {
-        $this->_db_object = $db;
-        return $this;
-    }
-
-    /**
-     * Set query order by
-     *
-     * @param  string $order
-     * @param  string $by
-     * @return object $this
-     */
-    public function setDbOrderBy($order, $by = 'ASC')
-    {
-        $this->_db_order = $order;
-        $this->_db_by = $by;
-        return $this;
-    }
-
-    /**
-     * Set query selected field(s) string
-     *
-     * @param  string $fields
-     * @return object $this
-     */
-    public function setDbFields($fields)
-    {
-        $this->_db_fields = $fields;
-        return $this;
-    }
-
-    /**
-     * Set query where
-     *
-     * @param  string $where
-     * @return object $this
-     */
-    public function setDbWhere($where)
-    {
-        $this->_db_where = $where;
-        return $this;
-    }
-
-    /**
-     * Set query group by
-     *
-     * @param  string $order
-     * @param  $by    $order
-     * @return object $this
-     */
-    public function setDbGroup($group)
-    {
-        $this->_db_group = $group;
-        return $this;
-    }
-
-    /**
-     * Set db query
-     *
-     * @param  string $order
-     * @param  $by    $order
-     * @return object $this
-     */
-    public function setDbQuery($query)
-    {
-        $this->_db_query = $query;
-        return $this;
-    }
-
-    /**
-     * Get db query
-     *
-     * @return string
-     */
-    public function getDbQuery()
-    {
-        return $this->_db_query;
     }
 
     /**
@@ -153,7 +63,8 @@ class Peak_Model_Pagination
      * Set the total number of items of all pages
      * by DEFAULT, this value is the table total number of primary key items
      *
-     * If you user
+     * @param  integer $total
+     * @return object  $this
      */
     public function setTotal($total)
     {
@@ -170,15 +81,36 @@ class Peak_Model_Pagination
     {
         return $this->_total;
     }
-    
+
+    /**
+     * Set query params
+     *
+     * @see    Peak_Model_Zendatable::_get() for params
+     * 
+     * @param  array  $p
+     * @return object $this
+     */
+    public function setQueryParams($p)
+    {
+        $this->_params = $p;
+        return $this;
+    }
+
     /**
      * Calculate stuff for pagination
      */
     public function calculate()
     {
-        //check if we need to count how many total number _db_objectof items we have
+        //check if we need to count how many total number _db_object of items we have
         if(!isset($this->_total)) {
-            $this->_total = $this->_db_object->count($this->_db_where);
+
+            $count_params           = $this->_params;
+            $count_params['fields'] = array('count('.$this->_db_object->getPrimaryKey().')' => 'count');
+
+            if(isset($count_params['limit'])) unset($count_params['limit']);
+
+            $row                    = $this->_db_object->get($count_params);
+            $this->_total           = $row['count'];
         }
         
         //calculate how many page
@@ -191,9 +123,9 @@ class Peak_Model_Pagination
         //generate pages
         $this->_pages = array();
         if($this->_pcount < 1) $this->_pages = array();
-    	else {
-    		for($i = 1;$i <= $this->_pcount;++$i) $this->_pages[$i] = $i;
-    	}
+        else {
+            for($i = 1;$i <= $this->_pcount;++$i) $this->_pages[$i] = $i;
+        }
         
         $this->_is_calculated = true;
         
@@ -211,21 +143,21 @@ class Peak_Model_Pagination
         if($this->_is_calculated == false) $this->calculate();
         
         //set current page
-    	if((isset($pn)) && (is_numeric($pn)) && ($pn <= $this->_pcount)) {
-    	   	$this->_curpage = $pn;
-    	}
-    	else $this->_curpage = 1;
+        if((isset($pn)) && (is_numeric($pn)) && ($pn <= $this->_pcount)) {
+            $this->_curpage = $pn;
+        }
+        else $this->_curpage = 1;
         
         //prev/next page
         $this->_prevpage = ($this->_curpage > 1) ? $this->_curpage  - 1 : null;
-    	$this->_nextpage = (($this->_curpage + 1) <= $this->_pcount) ? $this->_curpage + 1 : null;
-    	
+        $this->_nextpage = (($this->_curpage + 1) <= $this->_pcount) ? $this->_curpage + 1 : null;
+        
         //item start/end page
-    	$this->_it_start = (($this->_curpage - 1) * $this->_it_perpage);
-    	$this->_it_end = $this->_it_start + $this->_it_perpage;
+        $this->_it_start = (($this->_curpage - 1) * $this->_it_perpage);
+        $this->_it_end = $this->_it_start + $this->_it_perpage;
         
         if(($this->_total != 0)) ++$this->_it_start;
-    	if($this->_it_end > $this->_total) $this->_it_end = $this->_total;
+        if($this->_it_end > $this->_total) $this->_it_end = $this->_total;
         
         return $this->_getData();
     }
@@ -236,34 +168,15 @@ class Peak_Model_Pagination
      * @param mixed
      */
     protected function _getData()
-    {
-        $db = $this->_db_object->getDefaultAdapter();
-
-        //if query is not preset, we generate a query
-        if(!isset($this->_db_query)) {
-            
-            $select = 'SELECT '.$this->_db_fields.' FROM '.$this->_db_object->getSchemaName();
-            
-            if(isset($this->_db_where)) {
-                if(is_array($this->_db_where)) {
-                    $this->_db_where = $this->_db_object->quoteInto($this->_db_where[0].' '.$this->_db_where[1].' (?)',$this->_db_where[2]);
-                }
-                $select .= ' WHERE '.$this->_db_where;
-            }
-            if(isset($this->_db_group)) $select .= ' GROUP BY '.$this->_db_object->quoteIdentifiers($this->_db_group);
-            if(isset($this->_db_order)) {
-                $select .= ' ORDER BY '.$this->_db_object->quoteIdentifiers($this->_db_order);
-                if(isset($this->_db_by)) $select .= ' '.$this->_db_by;
-            }
-        }
-        else $select = $this->_db_query;
+    {       
+        $p = $this->_params;
 
         //set the limit
         $limit = $this->_it_start - 1;
         if($limit < 0) $limit = 0;
-        $select .= ' LIMIT '.$limit.','.$this->_it_perpage;
+        $p['limit'] = $limit.','.$this->_it_perpage;
 
-        return $db->query($select)->fetchAll();
+        return $this->_db_object->getAll($p);
     }
 
     /**
