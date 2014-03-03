@@ -2,6 +2,9 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - added a optionnal params to paging() of Peak_Zendatable
+ - simplified a lot Peak_Model_Pagination by using new method _get() from Peak_Zendatable. This remove query building 
+   process duplication, give more flexibility, fix previous errors and security issues and standardize the whole thing.
  - added 3 methods to Peak_Zendatable : get(), getAll() and _get(). Those new methods simplifies table models 
    by writing less code for select statements
  - changed if condition is_null to isset in Peak/Model/ActiveRecord.php construtor for $data
