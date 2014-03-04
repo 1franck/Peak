@@ -15,6 +15,7 @@ abstract class Peak_Application_Bootstrap
     {
         $this->_configView();
         $this->_configRouter();
+        $this->_autoZendDbConnect();
         $this->_boot();
     }
 
@@ -76,5 +77,18 @@ abstract class Peak_Application_Bootstrap
                 }
             }
         }
+    }
+
+    /**
+     * Auto connect to zend db if db.autoconnect = 1 found
+     */
+    protected function _autoZendDbConnect()
+    {
+        if(!isset(Peak_Registry::o()->config->db['autoconnect']) ||
+             Peak_Registry::o()->config->db['autoconnect'] != 1) return;
+
+        $dbc = Peak_Registry::o()->config->db;
+        $db = Zend_Db::factory($dbc['adapter'], $dbc['params']);
+        Zend_Db_Table::setDefaultAdapter($db);
     }
 }
