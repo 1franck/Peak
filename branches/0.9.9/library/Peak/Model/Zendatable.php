@@ -234,8 +234,6 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
             $req .= ' LIMIT '.$p['limit'];
         }
 
-        echo $req;
-
         return $this->_db->query($req, $bind);
     }
 
