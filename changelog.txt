@@ -2,6 +2,7 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - fixed _get() preg_match verification in Peak_Zendatable
  - added auto zend db connection config in Peak_Application_Bootstrap
  - added a optionnal params to paging() of Peak_Zendatable
  - simplified a lot Peak_Model_Pagination by using new method _get() from Peak_Zendatable. This remove query building 
