@@ -154,7 +154,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
      * @param  @see _get()
      * @return array
      */
-    public function get($p)
+    public function get($p = array())
     {
         return $this->_get($p)->fetch();
     }
@@ -165,7 +165,7 @@ abstract class Peak_Model_Zendatable extends Zend_Db_Table_Abstract
      * @param  @see _get()
      * @return array
      */
-    public function getAll($p)
+    public function getAll($p = array())
     {
         return $this->_get($p)->fetchAll();
     }
