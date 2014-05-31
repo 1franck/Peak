@@ -19,8 +19,11 @@ class Peak_View_Helper_Debugbar extends Peak_View_Helper_Debug
         //skip if env is not dev
         if(APPLICATION_ENV !== 'development') return;
 
-		//skip this, if view is set as no render
+		//skip if view rendering is disabled
 		if($this->view->canRender() === false) return;
+
+        //skip if view engine is Json
+        if(strtolower($this->view->getEngineName()) === 'json') return;
 		
 		//files included				
 		$files = $this->getFiles();		
