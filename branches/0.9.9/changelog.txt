@@ -2,6 +2,7 @@ VERSION 0.9.9
 -------------
 Release Date: ?
 
+ - fixed Peak_View_Helper_Debugbar() to not render the bar when view engine is json
  - added methods enablePersistence() and export2file() to Peak_Config_Json. 
  - fixed _get() preg_match verification in Peak_Zendatable
  - added auto zend db connection config in Peak_Application_Bootstrap
