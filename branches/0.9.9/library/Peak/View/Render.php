@@ -27,7 +27,7 @@ abstract class Peak_View_Render
         if(!empty($files)) {
             foreach($files as $k => $v) {
                 if(!is_numeric($k)) $this->render($k, $v); // file is path
-                else $this->render($k);
+                else $this->render($v);
             }
         }
     }
