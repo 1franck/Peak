@@ -1,6 +1,6 @@
 VERSION 0.9.9
 -------------
-Release Date: ?
+Release Date: 2015-01-04
 
  - fixed bug in renderArray() of Peak_View_Render. Wrong variable was pushed to render().
  - fixed Peak_View_Helper_Debugbar() to not render the bar when view engine is json
