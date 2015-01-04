@@ -17,6 +17,12 @@ class Peak_Config_Json extends Peak_Config
 	protected $_allow_comments = false;
 
 	/**
+	 * Loaded file path by loadFile()
+	 * @var string
+	 */
+	protected $_loaded_file;
+
+	/**
 	 * Load file on class construct
 	 *
 	 * @see loadFile()
@@ -37,6 +43,7 @@ class Peak_Config_Json extends Peak_Config
 	{
 		if(!file_exists($file)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.' has tried to load non-existent json file');
 		else {
+			$this->_loaded_file = $file;
 			$content = file_get_contents($file);
 			return $this->loadString($content);
 		}
@@ -58,6 +65,42 @@ class Peak_Config_Json extends Peak_Config
 		$this->_vars = json_decode($data, true);
 		$this->_jsonError();
 		return $this->_vars;
+	}
+
+	/**
+	 * Load json url
+	 * 
+	 * @param  string     $url 
+	 * @param  array|null $post_data post data if specified
+	 * @return false|array           return false in case url cant be reach
+	 */
+	public function loadUrl($url, $post_data = null)
+	{
+		if(!function_exists('curl_init')) {
+			throw new Peak_Exception('ERR_CUSTOM', __CLASS__.'::loadUrl() need CURL php extension');
+		}
+
+		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+
+		// post data
+		if(is_array($post_data) && !empty($post_data)) {
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+		}
+
+		// receive server response ...
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$response = curl_exec($ch);
+
+		curl_close($ch);
+
+		if($response !== false) {
+			return $this->loadString($response);
+		}
+		else return false;
 	}
 	
 	/**
@@ -92,5 +135,42 @@ class Peak_Config_Json extends Peak_Config
 			if(isset($e)) throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': '.$e);
 		}
 	}
+
+	/**
+	 * Enable File write persistence. At each end of script, file data will be written to a file
+	 * using php register_shutdown_function() and class export2file()
+	 * 
+	 * @param  string|null $filepath if null, $_loaded_file is used instead
+	 */
+	public function enablePersistence($filepath = null)
+	{
+		if(!isset($filepath)) $filepath = $this->_loaded_file;
+
+		register_shutdown_function(array($this, 'export2file'), $filepath);
+	}
 	
+	/**
+	 * Write json to file
+	 * 
+	 * @param  string|null $filepath if null, $_loaded_file is used instead
+	 */
+	public function export2file($filepath = null)
+	{
+		if(!isset($filepath)) {
+			if(!empty($this->_loaded_file)) {
+				$filepath = $this->_loaded_file;
+			}
+			else {
+				throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': No file specified for export');
+			}
+		}
+
+		$data = $this->getVars();
+
+		$result = file_put_contents($filepath, json_encode($data));
+		if($result === false) {
+			throw new Peak_Exception('ERR_CUSTOM', __CLASS__.': Fail to write file: '.$filepath);
+		}
+
+	}
 }

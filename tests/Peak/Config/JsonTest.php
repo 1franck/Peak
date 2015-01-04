@@ -83,7 +83,7 @@ class Peak_ConfigJsonTest extends PHPUnit_Framework_TestCase
 			try {
 				$this->peakconfig->loadFile(dirname(__FILE__).'/JsonTest/appwitherror.json', true);
 			}
-			catch (InvalidArgumentException $expected) {
+			catch (Exception $expected) {
 				return;
 
 			}
