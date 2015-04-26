@@ -120,6 +120,15 @@ abstract class Peak_Controller_Action
         }
         else return str_ireplace('controller', '', $this->getName());  
     }
+
+    /**
+     * Get view scripts absolute path
+     * @return string
+     */
+    public function getScriptsPath()
+    {
+        return Peak_Core::getPath('theme_scripts').'/'.$this->getTitle();
+    }
         
     /**
      * Get current action method name
