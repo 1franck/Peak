@@ -21,7 +21,7 @@
 	height:28px;
 	color:#000;
 	font: 11px/1.4em "Lucida Grande", "Lucida Sans Unicode", "Courrier new", sans-serif;
-	z-index: 100;
+	z-index: 999999;
 	width:100%;
 	opacity:1;
 
@@ -203,12 +203,19 @@
 		background:#e9e9e9;
 		font-size:12px;
 		z-index:999999;
+		font:Menlo,Monaco,Consolas,"Courier New",monospace;
 
 		h2 {
 			margin:15px 0 15px -10px;
 			font-size:18px !important;
 			font-weight:bold;
-			/*text-shadow:1px 1px 1px #aaa;*/
+			text-shadow:1px 1px 1px #aaa;
+			color:#000;
+		}
+
+		a {
+			text-decoration: underline;
+			color:#666;
 		}
 
 		&.vsmall { width:300px; height:180px; }
