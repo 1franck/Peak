@@ -3,7 +3,7 @@
  * Pagination model for Peak_Model_Zendatable
  *
  * @author  Francois Lajoie
- * @version $Id$
+ * @version $Id: Pagination.php 694 2014-03-03 21:16:42Z snake386@hotmail.com $
  */
 class Peak_Model_Pagination
 {
@@ -168,32 +168,8 @@ class Peak_Model_Pagination
      * @param mixed
      */
     protected function _getData()
-<<<<<<< HEAD
-    {
-        $db = $this->_db_object->getDefaultAdapter();
-
-        //if query is not preset, we generate a query
-        if(!isset($this->_db_query)) {
-            
-            $select = 'SELECT '.$this->_db_fields.' FROM '.$this->_db_object->getSchemaName();
-            
-            if(isset($this->_db_where)) {
-                if(is_array($this->_db_where)) {
-                    $this->_db_where = $this->_db_object->quoteInto($this->_db_where[0].' '.$this->_db_where[1].' (?)',$this->_db_where[2]);
-                }
-                $select .= ' WHERE '.$this->_db_where;
-            }
-            if(isset($this->_db_group)) $select .= ' GROUP BY '.$this->_db_object->quoteIdentifiers($this->_db_group);
-            if(isset($this->_db_order)) {
-                $select .= ' ORDER BY '.$this->_db_object->quoteIdentifiers($this->_db_order);
-                if(isset($this->_db_by)) $select .= ' '.$this->_db_by;
-            }
-        }
-        else $select = $this->_db_query;
-=======
     {       
         $p = $this->_params;
->>>>>>> 0.9.9
 
         //set the limit
         $limit = $this->_it_start - 1;
