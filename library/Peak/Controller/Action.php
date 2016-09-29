@@ -203,7 +203,10 @@ abstract class Peak_Controller_Action
 		if($this->actions_with_params) {
 			$this->dispatchActionParams($this->action);
 		}
-		else $this->$action(); 
+		else{
+            $method = $this->action;
+            $this->$method(); 
+        } 
     }
 	
 	/**
