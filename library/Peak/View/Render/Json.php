@@ -24,6 +24,8 @@ class Peak_View_Render_Json extends Peak_View_Render
         $this->scripts_path = $path;
 
         $viewvars = Peak_Registry::o()->view->getVars();
+
+        header('Content-Type: application/json');
         
         $json = json_encode($viewvars);
 
